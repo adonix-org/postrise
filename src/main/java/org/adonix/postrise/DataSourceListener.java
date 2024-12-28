@@ -1,6 +1,8 @@
 package org.adonix.postrise;
 
-interface DataSourceListener {
+import java.util.EventListener;
+
+interface DataSourceListener extends EventListener {
 
     void onCreate(ConnectionSettings settings);
 }
