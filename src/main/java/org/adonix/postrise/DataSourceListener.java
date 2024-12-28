@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-interface ConnectionListener {
+interface DataSourceListener {
 
     void onCreate(ConnectionSettings settings);
 }

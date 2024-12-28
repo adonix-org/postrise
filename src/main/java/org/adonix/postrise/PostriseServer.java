@@ -14,7 +14,7 @@ import org.adonix.postrise.security.UserSecurity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements Server, ConnectionListener {
+public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
