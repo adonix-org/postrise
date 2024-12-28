@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import org.adonix.postrise.exception.CreateDataSourceException;
 import org.adonix.postrise.security.DefaultUserSecurity;
 import org.adonix.postrise.security.UserSecurityListener;
 import org.apache.logging.log4j.LogManager;
