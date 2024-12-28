@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.EventListener;
 
-public interface SecurityEventListener extends EventListener {
+public interface UserSecurityListener extends EventListener {
 
     void onLogin(Connection connection, String user) throws SQLException;
 

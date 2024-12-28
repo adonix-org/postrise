@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class DefaultUserSecurity implements SecurityEventListener {
+public final class DefaultUserSecurity implements UserSecurityListener {
 
     private static final String SQL_CHECK_LOGIN_USER = String.join(" ",
             "SELECT",
