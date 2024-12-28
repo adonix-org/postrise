@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.adonix.postrise.exception.CreateDataSourceException;
 import org.adonix.postrise.security.DefaultUserSecurity;
-import org.adonix.postrise.security.UserSecurity;
+import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +24,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
-    private static final UserSecurity DEFAULT_USER_SECURITY = new DefaultUserSecurity();
+    private static final SecurityEventListener DEFAULT_USER_SECURITY = new DefaultUserSecurity();
 
     private final Map<String, DatabaseConnectionListener> listeners = new HashMap<>();
 
@@ -33,14 +33,14 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     protected final void add(final DatabaseConnectionListener listener) {
 
         Guard.check("listener", listener);
-        Guard.check("listener.getDatabase()", listener.getDatabaseName());
+        Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
 
         if (listeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing settings for database '{}'", listener.getDatabaseName());
         }
     }
 
-    protected UserSecurity getUserSecurity() {
+    protected SecurityEventListener getUserSecurity() {
         return DEFAULT_USER_SECURITY;
     }
 

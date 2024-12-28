@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class DisableUserSecurity implements UserSecurity {
+public final class DisableUserSecurity implements SecurityEventListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
