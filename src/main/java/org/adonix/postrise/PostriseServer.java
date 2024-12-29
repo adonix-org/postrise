@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -126,10 +125,8 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     @Override
     public final synchronized void close() {
-        final Iterator<ConnectionProvider> iT = databasePools.values().iterator();
         try {
-            while (iT.hasNext()) {
-                final ConnectionProvider provider = iT.next();
+            for (ConnectionProvider provider : databasePools.values()) {
                 LOGGER.debug("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl());
                 try {
                     provider.close();
