@@ -5,8 +5,11 @@ import org.adonix.postrise.PostriseServer;
 
 public class Localhost extends PostriseServer {
 
+    public Localhost() {
+        addListener(new AdonixDatabase());
+    }
+
     @Override
     public void onCreate(final ConnectionSettings settings) {
-        settings.setUsername("adonix_user");
     }
 }
