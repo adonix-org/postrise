@@ -33,10 +33,6 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    public PostriseServer() {
-        addListener(this);
-    }
-
     public final void addListener(final DatabaseConnectionListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
@@ -97,6 +93,9 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider provider = getConnectionProvider(database);
+
+        onCreate(provider);
+
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.onCreate(provider);
             dataSourceListeners.remove(listener);
