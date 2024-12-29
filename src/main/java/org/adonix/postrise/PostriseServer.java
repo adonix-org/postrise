@@ -104,14 +104,15 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
         LOGGER.debug("Creating datasource: {}", provider.getJdbcUrl());
 
-        final DatabaseConnectionListener listener = dataBaseListeners.get(getKey(database));
+        final String key = getKey(database);
+        final DatabaseConnectionListener listener = dataBaseListeners.get(key);
         if (listener != null) {
             LOGGER.debug("Data source listener onCreate() '{}'", database);
             listener.onCreate(provider);
-            dataBaseListeners.remove(getKey(database));
+            dataBaseListeners.remove(key);
         }
 
-        // Create the first connection to validate all settings and 
+        // Create the first connection to validate all settings and
         // initialize the connection pool.
         try (final Connection connection = provider.getConnection()) {
 
