@@ -7,5 +7,4 @@ module org.adonix.postrise {
 
     exports org.adonix.postrise;
     exports org.adonix.postrise.security;
-    exports org.adonix.postrise.exception;
 }

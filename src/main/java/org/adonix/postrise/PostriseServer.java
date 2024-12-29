@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.adonix.postrise.security.DefaultUserSecurity;
@@ -25,18 +27,27 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final UserSecurityListener DEFAULT_USER_SECURITY = new DefaultUserSecurity();
 
-    private final Map<String, DatabaseConnectionListener> listeners = new HashMap<>();
+    private final Map<String, DatabaseConnectionListener> dataBaseListeners = new HashMap<>();
+
+    private final Set<DataSourceListener> dataSourceListeners = new HashSet<>();
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    protected final void add(final DatabaseConnectionListener listener) {
+    public PostriseServer() {
+        addListener(this);
+    }
 
+    public final void addListener(final DatabaseConnectionListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
-
-        if (listeners.put(getKey(listener), listener) != null) {
+        if (dataBaseListeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing settings for database '{}'", listener.getDatabaseName());
         }
+    }
+
+    public final void addListener(final DataSourceListener listener) {
+        Guard.check("listener", listener);
+        dataSourceListeners.add(listener);
     }
 
     protected UserSecurityListener getUserSecurity() {
@@ -86,21 +97,24 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider provider = getConnectionProvider(database);
-
-        onCreate(provider);
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.onCreate(provider);
+            dataSourceListeners.remove(listener);
+        }
 
         LOGGER.debug("Creating datasource: {}", provider.getJdbcUrl());
 
-        final DatabaseConnectionListener listener = listeners.get(getKey(database));
+        final DatabaseConnectionListener listener = dataBaseListeners.get(getKey(database));
         if (listener != null) {
             LOGGER.debug("Data source listener onCreate() '{}'", database);
             listener.onCreate(provider);
+            dataBaseListeners.remove(getKey(database));
         }
 
-        // Create the first connection to validate all settings.
+        // Create the first connection to validate all settings and 
+        // initialize the connection pool.
         try (final Connection connection = provider.getConnection()) {
 
-            // Check the login user.
             getUserSecurity().onLogin(connection, provider.getUsername());
             return provider;
 
