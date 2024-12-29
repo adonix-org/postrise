@@ -150,4 +150,9 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private static final String getKey(final DatabaseConnectionListener listener) {
         return getKey(listener.getDatabaseName());
     }
+
+    @Override
+    public String toString() {
+        return this.getHostname() + ":" + this.getPort();
+    }
 }
