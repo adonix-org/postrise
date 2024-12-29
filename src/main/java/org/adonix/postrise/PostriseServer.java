@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.adonix.postrise.security.DefaultUserSecurity;
-import org.adonix.postrise.security.UserSecurityListener;
+import org.adonix.postrise.security.UserSecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
-    private static final UserSecurityListener DEFAULT_USER_SECURITY = new DefaultUserSecurity();
+    private static final UserSecurityProvider DEFAULT_USER_SECURITY = new DefaultUserSecurity();
 
     private final Map<String, DatabaseConnectionListener> dataBaseListeners = new HashMap<>();
 
@@ -46,7 +46,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         dataSourceListeners.add(listener);
     }
 
-    protected UserSecurityListener getUserSecurity() {
+    protected UserSecurityProvider getUserSecurity() {
         return DEFAULT_USER_SECURITY;
     }
 
