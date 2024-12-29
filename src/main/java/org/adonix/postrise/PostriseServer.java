@@ -79,7 +79,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         final Connection connection = provider.getConnection();
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
 
-            // Perform security checks on the role.
+            // Security check on the role.
             getUserSecurity().onConnection(connection, role);
 
             // Set the role on the connection to be returned.
@@ -112,7 +112,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
             dataBaseListeners.remove(key);
         }
 
-        // Create the first connection to validate all settings and
+        // Create the first connection to validate settings and
         // initialize the connection pool.
         try (final Connection connection = provider.getConnection()) {
 
