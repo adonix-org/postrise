@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class DisableUserSecurity implements UserSecurityProvider {
+public final class DisableSecurity implements SecurityProvider {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public DisableUserSecurity() {
-        LOGGER.warn("User security is disabled");
+    public DisableSecurity() {
+        LOGGER.warn("Security is disabled");
     }
 
     @Override

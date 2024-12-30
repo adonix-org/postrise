@@ -3,7 +3,7 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface UserSecurityProvider {
+public interface SecurityProvider {
 
     void onLogin(Connection connection, String user) throws SQLException;
 

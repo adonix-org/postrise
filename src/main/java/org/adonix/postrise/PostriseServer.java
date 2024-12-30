@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import org.adonix.postrise.security.DefaultUserSecurity;
-import org.adonix.postrise.security.UserSecurityProvider;
+import org.adonix.postrise.security.DefaultSecurity;
+import org.adonix.postrise.security.SecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +24,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
-    private static final UserSecurityProvider DEFAULT_USER_SECURITY = new DefaultUserSecurity();
+    private static final SecurityProvider DEFAULT_USER_SECURITY = new DefaultSecurity();
 
     private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
@@ -45,7 +45,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         dataSourceListeners.add(listener);
     }
 
-    protected UserSecurityProvider getUserSecurity() {
+    protected SecurityProvider getSecurityProvider() {
         return DEFAULT_USER_SECURITY;
     }
 
@@ -75,7 +75,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
 
             // Security check on the role.
-            getUserSecurity().onConnection(connection, role);
+            getSecurityProvider().onConnection(connection, role);
 
             // Set the role on the connection to be returned.
             stmt.setString(1, role);
@@ -112,7 +112,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         // initialize the connection pool.
         try (final Connection connection = provider.getConnection()) {
 
-            getUserSecurity().onLogin(connection, provider.getUsername());
+            getSecurityProvider().onLogin(connection, provider.getUsername());
             return provider;
 
         } catch (SQLException e) {
