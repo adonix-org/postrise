@@ -1,0 +1,29 @@
+name: Manual Package Without Deployment
+
+on:
+    workflow_dispatch:
+        inputs:
+            ref:
+                description: "Branch or tag ref"
+
+env:
+    JAVA_VERSION: "23"
+
+jobs:
+    build-and-deploy:
+        name: Build and Package
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.event.inputs.ref }}
+            - name: Set up JDK ${{ env.JAVA_VERSION }}
+              uses: actions/setup-java@v3
+              with:
+                  distribution: adopt
+                  java-version: ${{ env.JAVA_VERSION }}
+            - name: maven-settings-xml-action
+              uses: whelk-io/maven-settings-xml-action@v21
+            - name: Maven Package
+              run: mvn -B package --file pom.xml
+              continue-on-error: false
