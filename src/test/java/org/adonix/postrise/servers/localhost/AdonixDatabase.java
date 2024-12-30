@@ -1,12 +1,12 @@
 package org.adonix.postrise.servers.localhost;
 
 import org.adonix.postrise.ConnectionSettings;
-import org.adonix.postrise.DatabaseConnectionListener;
+import org.adonix.postrise.DatabaseListener;
 
-class AdonixDatabase implements DatabaseConnectionListener {
+class AdonixDatabase implements DatabaseListener {
 
     @Override
-    public void onCreate(ConnectionSettings settings) {
+    public void onConfigure(final ConnectionSettings settings) {
         settings.setUsername("adonix_user");
     }
 

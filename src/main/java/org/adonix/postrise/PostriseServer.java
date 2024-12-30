@@ -26,13 +26,13 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final UserSecurityProvider DEFAULT_USER_SECURITY = new DefaultUserSecurity();
 
-    private final Map<String, DatabaseConnectionListener> dataBaseListeners = new HashMap<>();
+    private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
     private final Set<DataSourceListener> dataSourceListeners = new HashSet<>();
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    public final void addListener(final DatabaseConnectionListener listener) {
+    public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         if (dataBaseListeners.put(getKey(listener), listener) != null) {
@@ -93,19 +93,19 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
         final ConnectionProvider provider = getConnectionProvider(database);
 
-        onCreate(provider);
+        onConfigure(provider);
 
         for (final DataSourceListener listener : dataSourceListeners) {
-            listener.onCreate(provider);
+            listener.onConfigure(provider);
         }
 
         LOGGER.debug("Creating datasource: {}", provider.getJdbcUrl());
 
         final String key = getKey(database);
-        final DatabaseConnectionListener listener = dataBaseListeners.get(key);
+        final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
             LOGGER.debug("Data source listener onCreate() '{}'", database);
-            listener.onCreate(provider);
+            listener.onConfigure(provider);
         }
 
         // Create the first connection to validate settings and
@@ -124,7 +124,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     @Override
     public final synchronized void close() {
         try {
-            for (ConnectionProvider provider : databasePools.values()) {
+            for (final ConnectionProvider provider : databasePools.values()) {
                 LOGGER.debug("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl());
                 try {
                     provider.close();
@@ -141,7 +141,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         return database.trim();
     }
 
-    private static final String getKey(final DatabaseConnectionListener listener) {
+    private static final String getKey(final DatabaseListener listener) {
         return getKey(listener.getDatabaseName());
     }
 

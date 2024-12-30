@@ -10,6 +10,6 @@ public class Localhost extends PostriseServer {
     }
 
     @Override
-    public void onCreate(final ConnectionSettings settings) {
+    public void onConfigure(final ConnectionSettings settings) {
     }
 }
