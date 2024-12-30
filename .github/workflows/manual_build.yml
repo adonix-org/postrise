@@ -10,8 +10,8 @@ env:
     JAVA_VERSION: "23"
 
 jobs:
-    build-and-deploy:
-        name: Build and Package
+    build:
+        name: Build
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
