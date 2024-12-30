@@ -1,4 +1,4 @@
-name: Manual Package Without Deployment
+name: Manual Package
 
 on:
     workflow_dispatch:
