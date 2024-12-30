@@ -183,9 +183,4 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public void close() {
         delegate.close();
     }
-
-    @Override
-    public int getAvailableProcessors() {
-        return Runtime.getRuntime().availableProcessors();
-    }
 }

@@ -55,7 +55,5 @@ interface ConnectionPoolSettings {
 
     int getTotalConnections();
 
-    int getAvailableProcessors();
-
     void close();
 }
