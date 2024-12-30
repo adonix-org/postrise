@@ -17,7 +17,6 @@
 package org.adonix.postrise.security;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,12 +29,12 @@ public final class DisableSecurity implements SecurityEventListener {
     }
 
     @Override
-    public void onLogin(final Connection connection, final String user) throws SQLException {
+    public void onLogin(final Connection connection, final String user) {
         // No user login security checks.
     }
 
     @Override
-    public void onConnection(final Connection connection, final String role) throws SQLException {
+    public void onConnection(final Connection connection, final String role) {
         // No role security checks.
     }
 }
