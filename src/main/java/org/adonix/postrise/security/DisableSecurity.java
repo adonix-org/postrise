@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class DisableSecurity implements SecurityProvider {
+public final class DisableSecurity implements SecurityEventListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -31,11 +31,11 @@ public final class DisableSecurity implements SecurityProvider {
 
     @Override
     public void onLogin(final Connection connection, final String user) throws SQLException {
-        // Disable user login security checks.
+        // No user login security checks.
     }
 
     @Override
     public void onConnection(final Connection connection, final String role) throws SQLException {
-        // Disable role security checks.
+        // No role security checks.
     }
 }

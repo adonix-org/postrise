@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.adonix.postrise.security.DefaultSecurity;
-import org.adonix.postrise.security.SecurityProvider;
+import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
-    private static final SecurityProvider DEFAULT_USER_SECURITY = new DefaultSecurity();
+    private static final SecurityEventListener DEFAULT_SECURITY_PROVIDER = new DefaultSecurity();
 
     private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
@@ -61,8 +61,8 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         dataSourceListeners.add(listener);
     }
 
-    protected SecurityProvider getSecurityProvider() {
-        return DEFAULT_USER_SECURITY;
+    protected SecurityEventListener getSecurityProvider() {
+        return DEFAULT_SECURITY_PROVIDER;
     }
 
     protected ConnectionProvider getConnectionProvider(final String database) {
