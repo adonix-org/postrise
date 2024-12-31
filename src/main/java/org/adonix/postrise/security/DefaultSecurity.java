@@ -21,7 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DefaultSecurity extends RoleSecurity {
+public class DefaultSecurity implements SecurityEventListener {
 
     private static final String SQL_CHECK_LOGIN_USER = String.join(" ",
             "SELECT",
@@ -29,23 +29,6 @@ public class DefaultSecurity extends RoleSecurity {
             "pg_roles.rolcanlogin AS is_login_user",
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
-
-    private static final String SQL_SET_ROLE = String.join(" ",
-            "WITH role_security_check AS (",
-            "SELECT", 
-            "CASE WHEN EXISTS (",
-            "SELECT 1 FROM pg_roles WHERE",
-            "pg_roles.rolname = ?", 
-            "AND pg_roles.rolsuper = false",
-            "AND pg_roles.rolcanlogin = false)",
-            "THEN set_config('ROLE', ?, false)",
-            "ELSE current_user",
-            "END AS role_name,",
-            "r.rolsuper AS is_super_user,",
-            "r.rolcanlogin AS is_login_user",
-            "FROM pg_roles r",
-            "WHERE r.rolname = ?", 
-            ") SELECT * FROM role_security_check");
 
     @Override
     public void onLogin(final Connection connection, final String user) throws SQLException {
@@ -66,22 +49,7 @@ public class DefaultSecurity extends RoleSecurity {
     }
 
     @Override
-    public void setRole(Connection connection, String role) throws SQLException {
-        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
-            stmt.setString(1, role);
-            stmt.setString(2, role);
-            stmt.setString(3, role);
-            try (final ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    throw new SQLException("ERROR: role '" + role + "' does not exist");
-                }
-                if (rs.getBoolean("is_login_user")) {
-                    throw new SQLException("ERROR: role '" + role + "' is a login user");
-                }
-                if (rs.getBoolean("is_super_user")) {
-                    throw new SQLException("ERROR: role '" + role + "' is a super user");
-                }
-            }
-        }
+    public void onConnection(Connection connection, String role) throws SQLException {
+        // TODO: maybe check if role is secure.
     }
 }
