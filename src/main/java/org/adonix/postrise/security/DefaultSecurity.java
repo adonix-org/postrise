@@ -56,7 +56,7 @@ public class DefaultSecurity extends RoleSecurity {
                     throw new SQLException("ERROR: user '" + user + "' does not exist");
                 }
                 if (!rs.getBoolean("is_login_user")) {
-                    throw new SQLException("ERROR: '" + user + "' is not a login user");
+                    throw new SQLException("ERROR: user '" + user + "' is not a login user");
                 }
                 if (rs.getBoolean("is_super_user")) {
                     throw new SQLException("ERROR: login user '" + user + "' is a super user");
@@ -76,10 +76,10 @@ public class DefaultSecurity extends RoleSecurity {
                     throw new SQLException("ERROR: role '" + role + "' does not exist");
                 }
                 if (rs.getBoolean("is_login_user")) {
-                    throw new SQLException("ERROR: '" + role + "' is a login user");
+                    throw new SQLException("ERROR: role '" + role + "' is a login user");
                 }
                 if (rs.getBoolean("is_super_user")) {
-                    throw new SQLException("ERROR: login role '" + role + "' is a super user");
+                    throw new SQLException("ERROR: role '" + role + "' is a super user");
                 }
             }
         }
