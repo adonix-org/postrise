@@ -40,7 +40,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final SecurityEventListener DEFAULT_SECURITY_PROVIDER = new DefaultSecurity();
 
-    private static final String SQL_SET_ROLE = "RESET ROLE; SELECT set_config('ROLE', ?, false)";
+    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
     
     private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
