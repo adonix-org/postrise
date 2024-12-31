@@ -40,11 +40,14 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final SecurityEventListener DEFAULT_SECURITY_PROVIDER = new DefaultSecurity();
 
+    private static final String SQL_SET_ROLE = "RESET ROLE; SELECT set_config('ROLE', ?, false)";
+    
     private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
     private final Set<DataSourceListener> dataSourceListeners = new HashSet<>();
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
+
 
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
@@ -157,8 +160,6 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private static final String getKey(final DatabaseListener listener) {
         return getKey(listener.getDatabaseName());
     }
-
-    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     private static final void setRole(final Connection connection, final String role) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
