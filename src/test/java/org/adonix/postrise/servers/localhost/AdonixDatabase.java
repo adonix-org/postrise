@@ -30,5 +30,4 @@ class AdonixDatabase implements DatabaseListener {
     public String getDatabaseName() {
         return "adonix";
     }
-
 }
