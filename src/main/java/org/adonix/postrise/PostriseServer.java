@@ -19,8 +19,8 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,13 +41,12 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private static final SecurityEventListener DEFAULT_SECURITY_PROVIDER = new DefaultSecurity();
 
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
-    
-    private final Map<String, DatabaseListener> dataBaseListeners = new HashMap<>();
 
-    private final Set<DataSourceListener> dataSourceListeners = new HashSet<>();
+    private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
+
+    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
-
 
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
