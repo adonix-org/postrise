@@ -17,11 +17,14 @@
 package org.adonix.postrise.security;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class DisableSecurity implements SecurityEventListener {
+public final class DisableSecurity extends RoleSecurity {
 
+    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public DisableSecurity() {
@@ -34,7 +37,10 @@ public final class DisableSecurity implements SecurityEventListener {
     }
 
     @Override
-    public void onConnection(final Connection connection, final String role) {
-        // No role security checks.
+    public void setRole(Connection connection, String role) throws SQLException {
+        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
+            stmt.setString(1, role);
+            stmt.execute();
+        }
     }
 }

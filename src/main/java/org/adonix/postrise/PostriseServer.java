@@ -17,7 +17,6 @@
 package org.adonix.postrise;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,8 +32,6 @@ import org.apache.logging.log4j.Logger;
 public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
-    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     private static final int DEFAULT_POSTGRES_PORT = 5432;
 
@@ -88,18 +85,15 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(database), _ -> create(database));
 
         final Connection connection = provider.getConnection();
-        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
-
+        try {
             // Security check on the role.
             getSecurityProvider().onConnection(connection, role);
 
-            // Set the role on the connection to be returned.
-            stmt.setString(1, role);
-            stmt.execute();
-
+            // Security check passed and ROLE has been set.
             return connection;
 
         } catch (SQLException e) {
+            // Security check failed.
             connection.close();
             throw e;
         }
