@@ -48,17 +48,21 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
+    public PostriseServer() {
+        addListener(this);
+    }
+
+    public final void addListener(final DataSourceListener listener) {
+        Guard.check("listener", listener);
+        dataSourceListeners.add(listener);
+    }
+
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         if (dataBaseListeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing settings for database '{}'", listener.getDatabaseName());
         }
-    }
-
-    public final void addListener(final DataSourceListener listener) {
-        Guard.check("listener", listener);
-        dataSourceListeners.add(listener);
     }
 
     protected SecurityEventListener getSecurityProvider() {
@@ -108,9 +112,8 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
         final ConnectionProvider provider = getConnectionProvider(database);
 
-        onConfigure(provider);
-
         for (final DataSourceListener listener : dataSourceListeners) {
+            LOGGER.debug("Data source listener onConfigure() {} '{}'", listener.getClass().getSimpleName(), database);
             listener.onConfigure(provider);
         }
 
@@ -119,7 +122,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
-            LOGGER.debug("Data source listener onConfigure() '{}'", database);
+            LOGGER.debug("Database listener onConfigure() '{}'", database);
             listener.onConfigure(provider);
         }
 
