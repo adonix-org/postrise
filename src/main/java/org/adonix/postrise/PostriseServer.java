@@ -34,7 +34,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final int DEFAULT_POSTGRES_PORT = 5432;
+    private static final int DEFAULT_PORT = 5432;
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
@@ -75,7 +75,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     @Override
     public int getPort() {
-        return DEFAULT_POSTGRES_PORT;
+        return DEFAULT_PORT;
     }
 
     @Override
