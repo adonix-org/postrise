@@ -38,7 +38,7 @@
         <org.json.version>20240303</org.json.version>
         <org.postgresql.version>42.7.4</org.postgresql.version>
         <com.zaxxer.hikaricp.version>6.2.1</com.zaxxer.hikaricp.version>
-        <org.junit.jupiter.version>5.11.4</org.junit.jupiter.version>
+        <junit.version>4.13.2</junit.version>
         <org.testcontainers.version>1.20.4</org.testcontainers.version>
     </properties>
 
@@ -73,11 +73,10 @@
         </dependency>
 
         <!-- Test -->
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${org.junit.jupiter.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
