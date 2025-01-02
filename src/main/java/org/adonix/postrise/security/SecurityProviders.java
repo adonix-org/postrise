@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-package org.adonix.postrise.servers;
+package org.adonix.postrise.security;
 
-import org.adonix.postrise.Server;
-import org.adonix.postrise.servers.localhost.Localhost;
-import org.adonix.postrise.servers.localhost.LocalhostSuper;
+public abstract class SecurityProviders {
 
-public class Servers {
-
-    private static final Server LOCALHOST = new Localhost();
-    private static final Server LOCALHOST_SUPER = new LocalhostSuper();
-
-    public static final Server getLocalhost() {
-        return LOCALHOST;
-    }
-
-    public static final Server getLocalhostSuper() {
-        return LOCALHOST_SUPER;
-    }
+    // TODO: Create strict developer security to check roles during development.
+    public static final SecurityEventListener DEFAULT_SECURITY = new DefaultSecurity();
+    public static final SecurityEventListener DISABLE_SECURITY = new DisableSecurity();
 }

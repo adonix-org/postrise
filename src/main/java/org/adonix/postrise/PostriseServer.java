@@ -16,6 +16,8 @@
 
 package org.adonix.postrise;
 
+import static org.adonix.postrise.security.SecurityProviders.DEFAULT_SECURITY;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,7 +27,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import org.adonix.postrise.security.DefaultSecurity;
 import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,7 +65,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     }
 
     protected SecurityEventListener getSecurityProvider() {
-        return new DefaultSecurity();
+        return DEFAULT_SECURITY;
     }
 
     protected ConnectionProvider getConnectionProvider(final String database) {
@@ -109,10 +110,10 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider provider = getConnectionProvider(database);
-        LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());
 
         for (final DataSourceListener listener : dataSourceListeners) {
-            LOGGER.debug("Data source listener onConfigure() {} '{}'", listener.getClass().getSimpleName(), database);
+            LOGGER.debug("Data source listener {}.onConfigure() Database: '{}'",
+                    listener.getClass().getSimpleName(), database);
             listener.onConfigure(provider);
         }
 
@@ -122,6 +123,8 @@ public abstract class PostriseServer implements Server, DataSourceListener {
             LOGGER.debug("Database listener onConfigure() '{}'", database);
             listener.onConfigure(provider);
         }
+
+        LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());
 
         // Create the first connection to validate settings and
         // initialize the connection pool.

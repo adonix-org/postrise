@@ -26,7 +26,7 @@
     <developers>
         <developer>
             <name>Ty Busby</name>
-            <email>ty.busby@gmail.com</email>
+            <email>tybusby@gmail.com</email>
         </developer>
     </developers>
 
@@ -38,27 +38,18 @@
         <org.json.version>20240303</org.json.version>
         <org.postgresql.version>42.7.4</org.postgresql.version>
         <com.zaxxer.hikaricp.version>6.2.1</com.zaxxer.hikaricp.version>
-        <junit.version>4.13.2</junit.version>
+        <org.junit.jupiter.version>5.11.4</org.junit.jupiter.version>
+        <org.testcontainers.version>1.20.4</org.testcontainers.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- Compile -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${org.json.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${org.postgresql.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -67,9 +58,26 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${com.zaxxer.hikaricp.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Runtime -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${org.postgresql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Test -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${org.junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -93,10 +101,16 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>${com.zaxxer.hikaricp.version}</version>
-            <scope>compile</scope>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${org.testcontainers.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
