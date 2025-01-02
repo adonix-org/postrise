@@ -31,11 +31,11 @@ public final class DisableSecurity implements SecurityEventListener {
 
     @Override
     public void onLogin(final Connection connection, final String user) {
-        // No user login security check.
+        // Disable user login security check.
     }
 
     @Override
     public void onConnection(Connection connection, String role) throws SQLException {
-        // No role security check.
+        // Disable role security check.
     }
 }

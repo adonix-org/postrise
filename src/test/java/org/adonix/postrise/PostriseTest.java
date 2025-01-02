@@ -24,11 +24,9 @@ import org.junit.Test;
 
 public class PostriseTest {
 
-    private static final PostgresTestServer server = new PostgresTestServer();
-
     @Before
     public void before() {
-        server.start();
+        PostgresTestServer.start();
     }
 
     @Test
@@ -41,6 +39,6 @@ public class PostriseTest {
 
     @After
     public void after() {
-        server.stop();
+        PostgresTestServer.stop();
     }
 }

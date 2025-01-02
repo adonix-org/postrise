@@ -27,15 +27,15 @@ public class PostgresTestServer implements DataSourceListener {
 
     private static final DockerImageName IMAGE_NAME = DockerImageName.parse("postgres:17");
 
-    private static PostgreSQLContainer<?> container = new PostgreSQLContainer<>(IMAGE_NAME);
+    private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>(IMAGE_NAME);
 
-    public void start() {
+    public static void start() {
         LOGGER.info("Starting container {}...", IMAGE_NAME);
         container.start();
         LOGGER.info("Container {} started", IMAGE_NAME);
     }
 
-    public void stop() {
+    public static void stop() {
         LOGGER.info("Stopping container {}...", IMAGE_NAME);
         container.stop();
         LOGGER.info("Container {} stopped", IMAGE_NAME);
