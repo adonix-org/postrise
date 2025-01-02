@@ -27,7 +27,7 @@ public class PostgresTestServer implements DataSourceListener {
 
     private static final DockerImageName IMAGE_NAME = DockerImageName.parse("postgres:17");
 
-    static PostgreSQLContainer<?> container = new PostgreSQLContainer<>(IMAGE_NAME);
+    private static PostgreSQLContainer<?> container = new PostgreSQLContainer<>(IMAGE_NAME);
 
     public void start() {
         LOGGER.info("Starting container {}...", IMAGE_NAME);
