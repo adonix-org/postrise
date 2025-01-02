@@ -23,7 +23,7 @@ import java.sql.SQLException;
 
 public class DefaultSecurity implements SecurityEventListener {
 
-    private static final String SQL_CHECK_LOGIN_USER = String.join(" ",
+    protected static final String SQL_CHECK_LOGIN_USER = String.join(" ",
             "SELECT",
             "pg_roles.rolsuper AS is_super_user,",
             "pg_roles.rolcanlogin AS is_login_user",
