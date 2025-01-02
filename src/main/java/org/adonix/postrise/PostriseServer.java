@@ -38,8 +38,6 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     private static final String DEFAULT_HOST_NAME = "localhost";
 
-    private static final SecurityEventListener DEFAULT_SECURITY_PROVIDER = new DefaultSecurity();
-
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
@@ -66,7 +64,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     }
 
     protected SecurityEventListener getSecurityProvider() {
-        return DEFAULT_SECURITY_PROVIDER;
+        return new DefaultSecurity();
     }
 
     protected ConnectionProvider getConnectionProvider(final String database) {
@@ -111,13 +109,12 @@ public abstract class PostriseServer implements Server, DataSourceListener {
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider provider = getConnectionProvider(database);
+        LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());
 
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener onConfigure() {} '{}'", listener.getClass().getSimpleName(), database);
             listener.onConfigure(provider);
         }
-
-        LOGGER.debug("Creating datasource: {}", provider.getJdbcUrl());
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
@@ -172,6 +169,6 @@ public abstract class PostriseServer implements Server, DataSourceListener {
 
     @Override
     public String toString() {
-        return this.getHostname() + ":" + this.getPort();
+        return getHostname() + ":" + getPort();
     }
 }

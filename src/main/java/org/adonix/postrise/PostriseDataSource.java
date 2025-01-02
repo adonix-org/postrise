@@ -24,6 +24,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate = new HikariDataSource();
 
+    /** {@inheritDoc} */
     @Override
     public Connection getConnection() throws SQLException {
         return delegate.getConnection();
