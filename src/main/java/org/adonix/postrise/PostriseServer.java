@@ -65,7 +65,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         }
     }
 
-    protected SecurityEventListener getSecurityProvider() {
+    protected SecurityEventListener getSecurity() {
         return DEFAULT_SECURITY_PROVIDER;
     }
 
@@ -94,7 +94,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         final Connection connection = provider.getConnection();
         try {
             // Security check on the role.
-            getSecurityProvider().onConnection(connection, role);
+            getSecurity().onConnection(connection, role);
 
             // Security check passed, set ROLE.
             setRole(connection, role);
@@ -130,7 +130,7 @@ public abstract class PostriseServer implements Server, DataSourceListener {
         // initialize the connection pool.
         try (final Connection connection = provider.getConnection()) {
 
-            getSecurityProvider().onLogin(connection, provider.getUsername());
+            getSecurity().onLogin(connection, provider.getUsername());
             return provider;
 
         } catch (SQLException e) {
