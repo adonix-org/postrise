@@ -110,14 +110,14 @@ public abstract class PostriseServer implements Server {
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
                     listener.getClass().getSimpleName(), database);
-            listener.onConfigure(database, provider);
+            listener.onConfigure(provider);
         }
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
             LOGGER.debug("Database listener onConfigure() '{}'", database);
-            listener.onConfigure(database, provider);
+            listener.onConfigure(provider);
         }
 
         LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());

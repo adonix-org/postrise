@@ -1,3 +1,4 @@
+-- Comment Test
 DROP DATABASE IF EXISTS adonix;
 CREATE DATABASE adonix
     WITH

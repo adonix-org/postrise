@@ -18,6 +18,8 @@ package org.adonix.postrise;
 
 public interface ConnectionSettings extends ConnectionPoolSettings {
 
+    String getDatabase();
+
     void setJdbcUrl(String url);
 
     String getJdbcUrl();
