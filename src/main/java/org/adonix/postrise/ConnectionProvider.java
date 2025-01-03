@@ -25,7 +25,7 @@ interface ConnectionProvider extends ConnectionSettings {
      * Get a connection to the data source.
      * 
      * @return A {@link Connection} to the data source.
-     * @throws SQLException If a database error occurs.
+     * @throws SQLException if a database error occurs.
      */
     Connection getConnection() throws SQLException;
 }

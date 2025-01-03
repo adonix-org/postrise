@@ -16,17 +16,17 @@
 
 package org.adonix.postrise;
 
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 
 public class TestEnvironment {
 
-    @BeforeClass
+    @BeforeAll
     public static void before() {
         PostgresTestServer.start();
     }
 
-    @AfterClass
+    @AfterAll
     public static void after() {
         PostgresTestServer.stop();
     }
