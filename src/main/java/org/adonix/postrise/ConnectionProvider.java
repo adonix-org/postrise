@@ -22,7 +22,7 @@ import java.sql.SQLException;
 interface ConnectionProvider extends ConnectionSettings {
 
     /**
-     * Get a connection to the data source.
+     * Get a connection from the data source.
      * 
      * @return A {@link Connection} to the data source.
      * @throws SQLException if a database error occurs.
