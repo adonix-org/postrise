@@ -24,6 +24,10 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
 
     String getJdbcUrl();
 
+    String getJdbcUrl(final Server server);
+
+    String getJdbcUrl(final String host, final Integer port);
+
     void setDriverClassName(String driverClassName);
 
     String getDriverClassName();

@@ -24,6 +24,22 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate = new HikariDataSource();
 
+    public PostriseDataSource(final String database) {
+        this.database = database;
+    }
+
+    protected final String database;
+
+    @Override
+    public String getDatabase() {
+        return database;
+    }
+
+    @Override
+    public String getJdbcUrl(final Server server) {
+        return getJdbcUrl(server.getHostname(), server.getPort());
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
         return delegate.getConnection();
