@@ -26,6 +26,12 @@ class PostgresDataSource extends PostriseDataSource {
         addDataSourceProperty("tcpKeepAlive", "true");
     }
 
+    public PostgresDataSource(final String host, final Integer port, final String database) {
+        super(database);
+        setJdbcUrl(getJdbcUrl(host, port));
+        addDataSourceProperty("tcpKeepAlive", "true");
+    }
+
     @Override
     public String getJdbcUrl(final String host, final Integer port) {
         return POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabase();
