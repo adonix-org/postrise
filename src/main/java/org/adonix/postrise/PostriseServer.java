@@ -31,13 +31,13 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements Server {
+public class PostriseServer implements Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
+    
+    private static final String DEFAULT_HOST = "localhost";
+    
     private static final int DEFAULT_PORT = 5432;
-
-    private static final String DEFAULT_HOST_NAME = "localhost";
 
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
@@ -74,8 +74,8 @@ public abstract class PostriseServer implements Server {
     }
 
     @Override
-    public String getHostname() {
-        return DEFAULT_HOST_NAME;
+    public String getHost() {
+        return DEFAULT_HOST;
     }
 
     @Override
@@ -168,6 +168,6 @@ public abstract class PostriseServer implements Server {
 
     @Override
     public String toString() {
-        return getHostname() + ":" + getPort();
+        return getHost() + ":" + getPort();
     }
 }
