@@ -29,24 +29,27 @@ public class PostriseTest extends TestEnvironment {
     @DisplayName("Run")
     @Test
     public void run() throws Exception {
-        final Connection connection = LOCALHOST_SUPER.getConnection("test", "test");
-        connection.setAutoCommit(false);
-        LOGGER.info("run");
+        try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
+            connection.setAutoCommit(false);
+            LOGGER.info("run");
+        }
     }
 
-    @DisplayName("Run2")
+    @DisplayName("Run2 Use Restricted User")
     @Test
     public void run2() throws Exception {
-        final Connection connection = LOCALHOST.getConnection("adonix", "test");
-        connection.setAutoCommit(false);
-        LOGGER.info("run2");
+        try (final Connection connection = LOCALHOST.getConnection("adonix", "test")) {
+            connection.setAutoCommit(false);
+            LOGGER.info("run2");
+        }
     }
 
     @DisplayName("Run3")
     @Test
     public void run3() throws Exception {
-        final Connection connection = LOCALHOST_SUPER.getConnection("test", "test");
-        connection.setAutoCommit(false);
-        LOGGER.info("run3");
+        try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
+            connection.setAutoCommit(false);
+            LOGGER.info("run3");
+        }
     }
 }
