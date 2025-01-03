@@ -37,7 +37,7 @@ public class PostriseTest extends TestEnvironment {
     @DisplayName("Run2")
     @Test
     public void run2() throws Exception {
-        final Connection connection = LOCALHOST.getConnection("test", "test");
+        final Connection connection = LOCALHOST.getConnection("adonix", "test");
         connection.setAutoCommit(false);
         LOGGER.info("run2");
     }
