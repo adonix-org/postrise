@@ -27,7 +27,7 @@ class AdonixDatabase implements DatabaseListener {
     }
 
     @Override
-    public void onConfigure(final ConnectionSettings settings) {
+    public void onConfigure(final String database, final ConnectionSettings settings) {
         settings.setUsername("adonix_user");
     }
 }

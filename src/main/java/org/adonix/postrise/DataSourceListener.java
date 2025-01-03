@@ -20,5 +20,5 @@ import java.util.EventListener;
 
 public interface DataSourceListener extends EventListener {
 
-    void onConfigure(ConnectionSettings settings);
+    void onConfigure(String database, ConnectionSettings settings);
 }

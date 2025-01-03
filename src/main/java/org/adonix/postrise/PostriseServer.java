@@ -69,7 +69,7 @@ public abstract class PostriseServer implements Server {
     }
 
     @Override
-    public int getPort() {
+    public Integer getPort() {
         return DEFAULT_PORT;
     }
 
@@ -110,14 +110,14 @@ public abstract class PostriseServer implements Server {
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
                     listener.getClass().getSimpleName(), database);
-            listener.onConfigure(provider);
+            listener.onConfigure(database, provider);
         }
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
             LOGGER.debug("Database listener onConfigure() '{}'", database);
-            listener.onConfigure(provider);
+            listener.onConfigure(database, provider);
         }
 
         LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());
