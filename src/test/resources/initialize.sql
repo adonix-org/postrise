@@ -1,13 +1,20 @@
 DROP DATABASE IF EXISTS adonix;
 CREATE DATABASE adonix
     WITH
-    OWNER = postgres
+    OWNER = test
     ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.UTF-8'
-    LC_CTYPE = 'en_US.UTF-8'
-    LOCALE_PROVIDER = 'libc'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
+CREATE ROLE login_user WITH
+    LOGIN
+    NOSUPERUSER
+    NOINHERIT
+    NOCREATEDB
+    NOCREATEROLE
+    NOREPLICATION
+    NOBYPASSRLS
+    ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
+GRANT test TO login_user;

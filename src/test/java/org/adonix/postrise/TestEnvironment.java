@@ -16,8 +16,9 @@
 
 package org.adonix.postrise;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.SQLException;
 import org.adonix.postrise.servers.Servers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
@@ -40,28 +41,11 @@ public class TestEnvironment {
         PostgresTestServer.stop();
     }
 
-    public static void initialze() throws SQLException {
+    public static void initialze() throws Exception {
         try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
-            connection.prepareStatement(SQL).executeUpdate();
+            String str = Files.readString(
+                    Paths.get(TestEnvironment.class.getClassLoader().getResource("initialize.sql").toURI()));
+            connection.prepareStatement(str).executeUpdate();
         }
     }
-
-    private static final String SQL = String.join(" ",
-            "DROP DATABASE IF EXISTS adonix;",
-            "CREATE DATABASE adonix",
-            "    WITH",
-            "    OWNER = test",
-            "    ENCODING = 'UTF8'",
-            "    CONNECTION LIMIT = -1",
-            "    IS_TEMPLATE = False;",
-            "CREATE ROLE login_user WITH",
-            "LOGIN",
-            "NOSUPERUSER",
-            "NOINHERIT",
-            "NOCREATEDB",
-            "NOCREATEROLE",
-            "NOREPLICATION",
-            "NOBYPASSRLS",
-            "ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';",
-            "GRANT test TO login_user;");
 }
