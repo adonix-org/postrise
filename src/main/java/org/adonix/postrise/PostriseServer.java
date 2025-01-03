@@ -108,7 +108,7 @@ public abstract class PostriseServer implements Server {
         final ConnectionProvider provider = getConnectionProvider(database);
 
         for (final DataSourceListener listener : dataSourceListeners) {
-            LOGGER.debug("Data source listener {}.onConfigure() Database: '{}'",
+            LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
                     listener.getClass().getSimpleName(), database);
             listener.onConfigure(provider);
         }

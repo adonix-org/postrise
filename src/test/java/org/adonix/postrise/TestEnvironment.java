@@ -22,12 +22,12 @@ import org.junit.jupiter.api.AfterAll;
 public class TestEnvironment {
 
     @BeforeAll
-    public static void before() {
+    public static void beforeAll() {
         PostgresTestServer.start();
     }
 
     @AfterAll
-    public static void after() {
+    public static void afterAll() {
         PostgresTestServer.stop();
     }
 }
