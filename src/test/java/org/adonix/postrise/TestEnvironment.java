@@ -43,9 +43,13 @@ public class TestEnvironment {
 
     public static void initialze() throws Exception {
         try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
-            String str = Files.readString(
-                    Paths.get(TestEnvironment.class.getClassLoader().getResource("initialize.sql").toURI()));
-            connection.prepareStatement(str).executeUpdate();
+            executeFile(connection, "initialize.sql");
         }
+    }
+
+    public static void executeFile(final Connection connection, final String fileName) throws Exception {
+        String str = Files.readString(
+                Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
+        connection.prepareStatement(str).executeUpdate();
     }
 }
