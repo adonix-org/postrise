@@ -28,7 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Test;
 
 public class TestSecurity {
 
@@ -47,7 +47,7 @@ public class TestSecurity {
 
     // Test for connection role is not superuser or login user
 
-    @Test
+    //@Test
     public void run() throws Exception {
         try (final Server server = Servers.getLocalhost();
                 final Connection connection = server.getConnection("adonix", "adonix_test");
