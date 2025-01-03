@@ -43,11 +43,14 @@ public class TestEnvironment {
 
     public static void initialze() throws Exception {
         try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
-            executeFile(connection, "initialize.sql");
+            execute(connection, "initialize.sql");
+        }
+        try (final Connection connection = LOCALHOST_SUPER.getConnection("adonix", "test")) {
+            execute(connection, "adonix.sql");
         }
     }
 
-    public static void executeFile(final Connection connection, final String fileName) throws Exception {
+    public static void execute(final Connection connection, final String fileName) throws Exception {
         String str = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
         connection.prepareStatement(str).executeUpdate();
