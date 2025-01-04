@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package org.adonix.postrise.security.postgres;
+package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.adonix.postrise.security.SecurityEventListener;
 
 public class DefaultSecurity implements SecurityEventListener {
 

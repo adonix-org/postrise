@@ -16,7 +16,7 @@
 
 package org.adonix.postrise.servers.localhost;
 
-import static org.adonix.postrise.security.postgres.SecurityProviders.DISABLE_SECURITY;
+import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
 
 import org.adonix.postrise.PostgresServer;
 import org.adonix.postrise.SuperUserAccess;
