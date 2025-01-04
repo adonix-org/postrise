@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.adonix.postrise.security;
+package org.adonix.postrise.security.postgres;
+
+import org.adonix.postrise.security.SecurityEventListener;
 
 public abstract class SecurityProviders {
 

@@ -16,8 +16,6 @@
 
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.SecurityProviders.DEFAULT_SECURITY;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -30,7 +28,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
- public abstract class PostriseServer implements Server {
+public abstract class PostriseServer implements Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -44,6 +42,8 @@ import org.apache.logging.log4j.Logger;
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
+    protected abstract SecurityEventListener getSecurityProvider();
+
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         dataSourceListeners.add(listener);
@@ -55,10 +55,6 @@ import org.apache.logging.log4j.Logger;
         if (dataBaseListeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
         }
-    }
-
-    protected SecurityEventListener getSecurityProvider() {
-        return DEFAULT_SECURITY;
     }
 
     @Override

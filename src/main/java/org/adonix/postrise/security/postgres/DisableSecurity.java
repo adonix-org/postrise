@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package org.adonix.postrise.security;
+package org.adonix.postrise.security.postgres;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
