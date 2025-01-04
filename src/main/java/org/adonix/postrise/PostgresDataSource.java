@@ -18,7 +18,7 @@ package org.adonix.postrise;
 
 class PostgresDataSource extends PostriseDataSource {
 
-    public static final String POSTGRES_DEFAULT_HOST = "localhost";
+    public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
 
     public static final Integer POSTGRES_DEFAULT_PORT = 5432;
 
