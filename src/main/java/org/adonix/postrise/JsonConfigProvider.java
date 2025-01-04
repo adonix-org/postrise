@@ -30,5 +30,6 @@ public class JsonConfigProvider implements DataSourceListener {
     public void onConfigure(final ConnectionSettings settings) {
         settings.setJdbcUrl(settings.getJdbcUrl("hostname", 5432));
         settings.setUsername("username");
+        settings.setPassword("password");
     }
 }
