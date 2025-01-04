@@ -38,7 +38,7 @@ public abstract class PostriseServer implements Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    protected abstract ConnectionProvider getConnectionProvider(final String database);
+    protected abstract ConnectionProvider getDataSource(final String database);
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
@@ -84,32 +84,32 @@ public abstract class PostriseServer implements Server {
 
     private ConnectionProvider create(final String database) {
 
-        final ConnectionProvider provider = getConnectionProvider(database);
+        final ConnectionProvider dataSource = getDataSource(database);
 
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
                     listener.getClass().getSimpleName(), database);
-            listener.onConfigure(provider);
+            listener.onConfigure(dataSource);
         }
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
             LOGGER.debug("Database listener onConfigure() '{}'", database);
-            listener.onConfigure(provider);
+            listener.onConfigure(dataSource);
         }
 
-        LOGGER.debug("Creating data source: {}", provider.getJdbcUrl());
+        LOGGER.debug("Creating data source: {}", dataSource.getJdbcUrl());
 
         // Create the first connection to validate settings and
         // initialize the connection pool.
-        try (final Connection connection = provider.getConnection()) {
+        try (final Connection connection = dataSource.getConnection()) {
 
-            getSecurityProvider().onLogin(connection, provider.getUsername());
-            return provider;
+            getSecurityProvider().onLogin(connection, dataSource.getUsername());
+            return dataSource;
 
         } catch (SQLException e) {
-            provider.close();
+            dataSource.close();
             throw new CreateDataSourceException(e);
         }
     }
