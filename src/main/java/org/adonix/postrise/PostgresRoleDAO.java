@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RoleDAO {
+public class PostgresRoleDAO {
 
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 

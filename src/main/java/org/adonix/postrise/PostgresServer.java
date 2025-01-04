@@ -43,7 +43,7 @@ public class PostgresServer extends PostriseServer {
 
     @Override
     protected void setRole(final Connection connection, final String role) throws SQLException {
-        RoleDAO.setRole(connection, role);
+        PostgresRoleDAO.setRole(connection, role);
     }
 
     @Override
