@@ -34,10 +34,6 @@ import org.apache.logging.log4j.Logger;
 public class PostriseServer implements Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    
-    private static final String DEFAULT_HOST = "localhost";
-    
-    private static final int DEFAULT_PORT = 5432;
 
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
@@ -70,12 +66,12 @@ public class PostriseServer implements Server {
 
     @Override
     public Integer getPort() {
-        return DEFAULT_PORT;
+        return PostgresDataSource.DEFAULT_PORT;
     }
 
     @Override
     public String getHost() {
-        return DEFAULT_HOST;
+        return PostgresDataSource.DEFAULT_HOST;
     }
 
     @Override
