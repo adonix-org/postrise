@@ -159,6 +159,7 @@ public class PostriseServer implements Server {
         return getKey(listener.getDatabaseName());
     }
 
+    // TODO: Determine if this and SQL should go in a DAO class.
     private static final void setRole(final Connection connection, final String role) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
             stmt.setString(1, role);
