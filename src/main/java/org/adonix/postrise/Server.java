@@ -21,7 +21,7 @@ import java.sql.SQLException;
 
 public interface Server extends AutoCloseable {
 
-    String getHost();
+    String getHostName();
 
     Integer getPort();
 

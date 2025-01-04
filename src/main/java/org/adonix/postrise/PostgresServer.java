@@ -27,7 +27,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 public class PostgresServer extends PostriseServer {
 
     @Override
-    public String getHost() {
+    public String getHostName() {
         return POSTGRES_DEFAULT_HOST;
     }
 

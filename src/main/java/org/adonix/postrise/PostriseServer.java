@@ -140,6 +140,6 @@ public abstract class PostriseServer implements Server {
 
     @Override
     public String toString() {
-        return getHost() + ":" + getPort();
+        return getHostName() + ":" + getPort();
     }
 }
