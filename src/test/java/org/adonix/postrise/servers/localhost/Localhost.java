@@ -16,10 +16,10 @@
 
 package org.adonix.postrise.servers.localhost;
 
-import org.adonix.postrise.PostriseServer;
+import org.adonix.postrise.PostgresServer;
 import org.adonix.postrise.RestrictedUserAccess;
 
-public class Localhost extends PostriseServer {
+public class Localhost extends PostgresServer {
 
     public Localhost() {
         addListener(new RestrictedUserAccess());

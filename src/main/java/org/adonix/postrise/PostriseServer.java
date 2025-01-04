@@ -19,7 +19,6 @@ package org.adonix.postrise;
 import static org.adonix.postrise.security.SecurityProviders.DEFAULT_SECURITY;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -31,17 +30,19 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PostriseServer implements Server {
+ public abstract class PostriseServer implements Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
-    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
 
     private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
+
+    protected abstract ConnectionProvider getConnectionProvider(final String database);
+
+    protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
@@ -60,20 +61,6 @@ public class PostriseServer implements Server {
         return DEFAULT_SECURITY;
     }
 
-    protected ConnectionProvider getConnectionProvider(final String database) {
-        return new PostgresDataSource(this, database);
-    }
-
-    @Override
-    public Integer getPort() {
-        return PostgresDataSource.DEFAULT_PORT;
-    }
-
-    @Override
-    public String getHost() {
-        return PostgresDataSource.DEFAULT_HOST;
-    }
-
     @Override
     public final Connection getConnection(final String database, final String role) throws SQLException {
 
@@ -87,7 +74,7 @@ public class PostriseServer implements Server {
             // Security check on the role.
             getSecurityProvider().onConnection(connection, role);
 
-            // Security check passed, set ROLE.
+            // Security check passed, set role on the connection.
             setRole(connection, role);
 
             return connection;
@@ -153,14 +140,6 @@ public class PostriseServer implements Server {
 
     private static final String getKey(final DatabaseListener listener) {
         return getKey(listener.getDatabaseName());
-    }
-
-    // TODO: Determine if this and SQL should go in a DAO class.
-    private static final void setRole(final Connection connection, final String role) throws SQLException {
-        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
-            stmt.setString(1, role);
-            stmt.execute();
-        }
     }
 
     @Override
