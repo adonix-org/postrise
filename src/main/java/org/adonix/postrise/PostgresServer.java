@@ -16,8 +16,8 @@
 
 package org.adonix.postrise;
 
-import static org.adonix.postrise.PostgresDataSource.DEFAULT_HOST;
-import static org.adonix.postrise.PostgresDataSource.DEFAULT_PORT;
+import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_HOST;
+import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_PORT;
 import static org.adonix.postrise.security.postgres.SecurityProviders.DEFAULT_SECURITY;
 
 import java.sql.Connection;
@@ -28,12 +28,12 @@ public class PostgresServer extends PostriseServer {
 
     @Override
     public String getHost() {
-        return DEFAULT_HOST;
+        return POSTGRES_DEFAULT_HOST;
     }
 
     @Override
     public Integer getPort() {
-        return DEFAULT_PORT;
+        return POSTGRES_DEFAULT_PORT;
     }
 
     @Override

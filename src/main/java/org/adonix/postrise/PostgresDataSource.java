@@ -18,11 +18,11 @@ package org.adonix.postrise;
 
 class PostgresDataSource extends PostriseDataSource {
 
-    public static final String DEFAULT_HOST = "localhost";
+    public static final String POSTGRES_DEFAULT_HOST = "localhost";
 
-    public static final int DEFAULT_PORT = 5432;
+    public static final Integer POSTGRES_DEFAULT_PORT = 5432;
 
-    private static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
+    protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
     public PostgresDataSource(final Server server, final String database) {
         this(database);
@@ -36,7 +36,7 @@ class PostgresDataSource extends PostriseDataSource {
 
     @Override
     public String getJdbcUrl(String host) {
-        return getJdbcUrl(host, DEFAULT_PORT);
+        return getJdbcUrl(host, POSTGRES_DEFAULT_PORT);
     }
 
     @Override
