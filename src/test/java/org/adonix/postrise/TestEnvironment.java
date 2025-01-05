@@ -21,16 +21,18 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import org.adonix.postrise.servers.Servers;
 import org.junit.jupiter.api.BeforeAll;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.junit.jupiter.api.AfterAll;
 
 public class TestEnvironment {
 
+    protected static final JdbcDatabaseContainer<PostgresDockerContainer> CONTAINER = new PostgresDockerContainer();
     protected static final Server LOCALHOST_SUPER = Servers.getLocalhostSuper();
     protected static final Server LOCALHOST = Servers.getLocalhost();
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        PostgresTestServer.start();
+        CONTAINER.start();
         initialze();
     }
 
@@ -38,7 +40,7 @@ public class TestEnvironment {
     public static void afterAll() throws Exception {
         LOCALHOST.close();
         LOCALHOST_SUPER.close();
-        PostgresTestServer.stop();
+        CONTAINER.stop();
     }
 
     public static void initialze() throws Exception {
