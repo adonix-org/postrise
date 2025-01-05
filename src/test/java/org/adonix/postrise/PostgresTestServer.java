@@ -18,26 +18,23 @@ package org.adonix.postrise;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
 public class PostgresTestServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final DockerImageName DOCKER_IMAGE_NAME = DockerImageName.parse("postgres:17");
-
-    protected static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>(DOCKER_IMAGE_NAME);
+    protected static final JdbcDatabaseContainer<PostgresContainer> container = new PostgresContainer();
 
     public static void start() {
-        LOGGER.info("Starting container {}...", DOCKER_IMAGE_NAME);
+        LOGGER.info("Starting container {}...", container);
         container.start();
-        LOGGER.info("Container {} started", DOCKER_IMAGE_NAME);
+        LOGGER.info("Container {} started", container);
     }
 
     public static void stop() {
-        LOGGER.info("Stopping container {}...", DOCKER_IMAGE_NAME);
+        LOGGER.info("Stopping container {}...", container);
         container.stop();
-        LOGGER.info("Container {} stopped", DOCKER_IMAGE_NAME);
+        LOGGER.info("Container {} stopped", container);
     }
 }
