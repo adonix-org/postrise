@@ -24,17 +24,17 @@ public class PostgresTestServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected static final JdbcDatabaseContainer<PostgresContainer> container = new PostgresContainer();
+    protected static final JdbcDatabaseContainer<PostgresDockerContainer> container = new PostgresDockerContainer();
 
     public static void start() {
-        LOGGER.info("Starting container {}...", container);
+        LOGGER.info("Starting container {}...", container.getDockerImageName());
         container.start();
-        LOGGER.info("Container {} started", container);
+        LOGGER.info("Container {} started", container.getDockerImageName());
     }
 
     public static void stop() {
-        LOGGER.info("Stopping container {}...", container);
+        LOGGER.info("Stopping container {}...", container.getDockerImageName());
         container.stop();
-        LOGGER.info("Container {} stopped", container);
+        LOGGER.info("Container {} stopped", container.getDockerImageName());
     }
 }
