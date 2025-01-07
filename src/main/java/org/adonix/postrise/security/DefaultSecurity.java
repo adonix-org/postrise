@@ -30,6 +30,9 @@ public class DefaultSecurity implements SecurityEventListener {
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
+    public DefaultSecurity() {
+    }
+
     @Override
     public void onLogin(final Connection connection, final String user) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_CHECK_LOGIN_USER)) {
