@@ -121,7 +121,7 @@ public abstract class PostriseServer implements Server {
     public final synchronized void close() {
         try {
             for (final ConnectionProvider provider : databasePools.values()) {
-                LOGGER.debug("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl());
+                LOGGER.info("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl());
                 try {
                     provider.close();
                 } catch (Exception e) {
