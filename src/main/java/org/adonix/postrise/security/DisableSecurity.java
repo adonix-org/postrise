@@ -18,15 +18,8 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 final class DisableSecurity implements SecurityEventListener {
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    private final AtomicBoolean WARNED = new AtomicBoolean(false);
 
     public DisableSecurity() {
     }
@@ -34,19 +27,10 @@ final class DisableSecurity implements SecurityEventListener {
     @Override
     public void onLogin(final Connection connection, final String user) {
         // Disable user login security check.
-        warn();
-
     }
 
     @Override
     public void onConnection(Connection connection, String role) throws SQLException {
         // Disable role security check.
-        warn();
-    }
-
-    private void warn() {
-        if (!WARNED.getAndSet(true)) {
-            LOGGER.warn("Postrise security is disabled");
-        }
     }
 }
