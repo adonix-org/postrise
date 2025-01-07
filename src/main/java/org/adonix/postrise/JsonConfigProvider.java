@@ -20,9 +20,10 @@ import java.nio.file.Path;
 
 public class JsonConfigProvider implements DataSourceListener {
 
-    public final Path jsonFilePath;
+    protected final Path jsonFilePath;
 
     public JsonConfigProvider(final Path jsonFilePath) {
+        // TODO: Parse json configuation file.
         this.jsonFilePath = jsonFilePath;
     }
 
