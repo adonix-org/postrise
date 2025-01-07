@@ -27,6 +27,7 @@ final class DisableSecurity implements SecurityEventListener {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public DisableSecurity() {
+        // TODO: Fix this message called by constructor in SecurityProviders.
         LOGGER.warn("Security is disabled");
     }
 
