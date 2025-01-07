@@ -44,6 +44,9 @@ public abstract class PostriseServer implements Server {
 
     protected abstract SecurityEventListener getSecurityProvider();
 
+    public PostriseServer() {
+    }
+
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         dataSourceListeners.add(listener);
