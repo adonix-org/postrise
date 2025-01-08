@@ -26,13 +26,13 @@ import org.junit.jupiter.api.AfterAll;
 
 public class TestEnvironment {
 
-    protected static final JdbcDatabaseContainer<PostgresDockerContainer> CONTAINER = new PostgresDockerContainer();
+    protected static final JdbcDatabaseContainer<PostgresDockerContainer> container = new PostgresDockerContainer();
     protected static final Server LOCALHOST_SUPER = Servers.getLocalhostSuper();
     protected static final Server LOCALHOST = Servers.getLocalhost();
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        CONTAINER.start();
+        container.start();
         initialze();
     }
 
@@ -40,7 +40,7 @@ public class TestEnvironment {
     public static void afterAll() throws Exception {
         LOCALHOST.close();
         LOCALHOST_SUPER.close();
-        CONTAINER.stop();
+        container.stop();
     }
 
     public static void initialze() throws Exception {
