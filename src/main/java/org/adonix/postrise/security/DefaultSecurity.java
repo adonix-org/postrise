@@ -39,13 +39,13 @@ public class DefaultSecurity implements SecurityEventListener {
             stmt.setString(1, user);
             try (final ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
-                    throw new SQLException("ERROR: user '" + user + "' does not exist");
+                    throw new SecurityException(user);
                 }
                 if (!rs.getBoolean("is_login_user")) {
-                    throw new SQLException("ERROR: user '" + user + "' is not a login user");
+                    throw new SecurityException("ERROR: user '" + user + "' is not a login user");
                 }
                 if (rs.getBoolean("is_super_user")) {
-                    throw new SQLException("ERROR: login user '" + user + "' is a super user");
+                    throw new SecurityException(user);
                 }
             }
         }
