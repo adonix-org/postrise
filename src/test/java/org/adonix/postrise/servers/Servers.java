@@ -20,7 +20,7 @@ import org.adonix.postrise.Server;
 import org.adonix.postrise.servers.localhost.Localhost;
 import org.adonix.postrise.servers.localhost.LocalhostSuper;
 
-public class Servers {
+public final class Servers {
 
     private static final Server LOCALHOST = new Localhost();
     private static final Server LOCALHOST_SUPER = new LocalhostSuper();

@@ -20,8 +20,8 @@ public class SuperUserAccess extends TestEnvironment implements DataSourceListen
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(container.withDatabaseName(settings.getDatabase()).getJdbcUrl());
-        settings.setUsername(container.getUsername());
-        settings.setPassword(container.getPassword());
+        settings.setJdbcUrl(postgresContainer.withDatabaseName(settings.getDatabase()).getJdbcUrl());
+        settings.setUsername(postgresContainer.getUsername());
+        settings.setPassword(postgresContainer.getPassword());
     }
 }
