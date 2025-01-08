@@ -17,11 +17,18 @@
 package org.adonix.postrise;
 
 import java.util.Properties;
-
 import javax.sql.DataSource;
 
 /**
- * This represents configuration paramters for a connection to the database.
+ * This interface provides configuration parameters for a connection to the
+ * database.
+ * 
+ * Apply specific {@link ConnectionSettings} for the data source by
+ * implementing the {@link DataSourceListener} interface.
+ * <p>
+ * Most implementations will call {@link #setUsername(String)} and
+ * {@link #setPassword(String)} from the
+ * {@link DataSourceListener#onConfigure(ConnectionSettings)} method.
  */
 public interface ConnectionSettings extends ConnectionPoolSettings {
 
@@ -36,41 +43,45 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     /**
      * Set the JDBC Url for this connection.
      * 
-     * @param url a valid JDBC Url often in the fomat
+     * @param url a valid JDBC Url most often in the fomat
      *            jdbc:db://hostname:port/database
      */
     void setJdbcUrl(String url);
 
     /**
+     * This method will return the current JDBC Url.
+     * 
      * @return the JDBC Url for this data source.
      */
     String getJdbcUrl();
 
     /**
+     * Implementations must return a valid JDBC Url with the given {@link Server}.
      * 
      * @param server the server providing a host and port to create a connection to
      *               the database.
-     * @return the JDBC Url for this data source.
+     * @return a valid JDBC Url for this data source.
      * @see Server
      */
     String getJdbcUrl(final Server server);
 
     /**
-     * Use the given host and the default port to build a JDBC Url string.
+     * Implementations must return a valid JDBC Url with the given hostname.
      * 
-     * @param host the hostname.
-     * @return the JDBC Url for this data source.
+     * @param hostname the hostname to the database.
+     * @return a valid JDBC Url for this data source.
      */
-    String getJdbcUrl(final String host);
+    String getJdbcUrl(final String hostname);
 
     /**
-     * Use the given host and the port to build a JDBC Url string.
+     * Implementations must return a valid JDBC Url with the given hostname and
+     * port.
      * 
-     * @param host the database server hostname.
-     * @param port the database server port.
-     * @return the built JDBC Url for this data source.
+     * @param hostname the database server hostname.
+     * @param port     the database server port.
+     * @return a valid JDBC Url for this data source.
      */
-    String getJdbcUrl(final String host, final Integer port);
+    String getJdbcUrl(final String hostname, final Integer port);
 
     void setDriverClassName(String driverClassName);
 
