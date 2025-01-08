@@ -28,7 +28,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements Server {
+public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -45,6 +45,7 @@ public abstract class PostriseServer implements Server {
     protected abstract SecurityEventListener getSecurityProvider();
 
     public PostriseServer() {
+        addListener(this);
     }
 
     public final void addListener(final DataSourceListener listener) {
@@ -58,6 +59,11 @@ public abstract class PostriseServer implements Server {
         if (dataBaseListeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
         }
+    }
+
+    @Override
+    public void onConfigure(final ConnectionSettings settings) {
+        // NO-OP - Override in subclass if required.
     }
 
     @Override
