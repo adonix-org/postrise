@@ -20,5 +20,9 @@ import java.util.EventListener;
 
 public interface DataSourceListener extends EventListener {
 
+    /**
+     * 
+     * @param settings
+     */
     void onConfigure(ConnectionSettings settings);
 }

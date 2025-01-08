@@ -189,6 +189,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
         return delegate.getHikariPoolMXBean().getIdleConnections();
     }
 
+    /**
+     * @return
+     */
     @Override
     public int getTotalConnections() {
         return delegate.getHikariPoolMXBean().getTotalConnections();

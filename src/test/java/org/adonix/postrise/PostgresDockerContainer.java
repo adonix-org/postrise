@@ -20,7 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerContainer> {
+public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerContainer> implements DataSourceListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -42,5 +42,10 @@ public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerC
         LOGGER.info("Stopping container {}...", getDockerImageName());
         super.stop();
         LOGGER.info("Container {} stopped", getDockerImageName());
+    }
+
+    @Override
+    public void onConfigure(final ConnectionSettings settings) {
+        settings.setJdbcUrl(withDatabaseName(settings.getDatabase()).getJdbcUrl());
     }
 }
