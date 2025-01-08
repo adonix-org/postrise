@@ -48,16 +48,16 @@ public class TestEnvironment {
 
     public static void initialze() throws Exception {
         try (final Connection connection = LOCALHOST_SUPER.getConnection("test", "test")) {
-            execute(connection, "initialize.sql");
+            executeSql(connection, "initialize.sql");
         }
         try (final Connection connection = LOCALHOST_SUPER.getConnection("adonix", "test")) {
-            execute(connection, "adonix.sql");
+            executeSql(connection, "adonix.sql");
         }
     }
 
-    public static void execute(final Connection connection, final String fileName) throws Exception {
+    public static void executeSql(final Connection connection, final String fileName) throws Exception {
         String str = Files.readString(
-                Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
+                Paths.get(TestEnvironment.class.getClassLoader().getResource("sql/" + fileName).toURI()));
         connection.prepareStatement(str).executeUpdate();
     }
 }
