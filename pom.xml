@@ -35,7 +35,7 @@
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <log4j.version>2.24.3</log4j.version>
-        <org.json.version>20241224</org.json.version>
+        <org.json.version>20250107</org.json.version>
         <org.postgresql.version>42.7.4</org.postgresql.version>
         <com.zaxxer.hikaricp.version>6.2.1</com.zaxxer.hikaricp.version>
         <org.junit.jupiter.version>5.11.4</org.junit.jupiter.version>

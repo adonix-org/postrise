@@ -16,21 +16,26 @@
 
 package org.adonix.postrise;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
-public class JsonConfigProvider implements DataSourceListener {
+public abstract class JsonConfigurationProvider implements DataSourceListener {
 
-    protected final Path jsonFilePath;
+    private final JSONObject configuration;
 
-    public JsonConfigProvider(final Path jsonFilePath) {
-        // TODO: Parse json configuation file.
-        this.jsonFilePath = jsonFilePath;
+    public JsonConfigurationProvider() {
+        try {
+            configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile())));
+        } catch (Exception e) {
+            throw new JsonConfigurationException(e);
+        }
     }
 
-    @Override
-    public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(settings.getJdbcUrl("hostname", 5432));
-        settings.setUsername("username");
-        settings.setPassword("password");
+    public final JSONObject getConfiguration() {
+        return configuration;
     }
+
+    protected abstract Path getJsonFile();
 }
