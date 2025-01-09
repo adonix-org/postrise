@@ -27,14 +27,15 @@ import org.junit.jupiter.api.AfterAll;
 public class TestEnvironment {
 
     protected static final JdbcDatabaseContainer<PostgresDockerContainer> postgresContainer = new PostgresDockerContainer();
-    protected static final JdbcDatabaseContainer<MySQLDockerContainer> mySqlcontainer = new MySQLDockerContainer();
+    // protected static final JdbcDatabaseContainer<MySQLDockerContainer>
+    // mySqlcontainer = new MySQLDockerContainer();
     protected static final Server LOCALHOST_SUPER = Servers.getLocalhostSuper();
     protected static final Server LOCALHOST = Servers.getLocalhost();
 
     @BeforeAll
     public static void beforeAll() throws Exception {
         postgresContainer.start();
-        mySqlcontainer.start();
+        // mySqlcontainer.start();
         initialze();
     }
 
@@ -42,7 +43,7 @@ public class TestEnvironment {
     public static void afterAll() throws Exception {
         LOCALHOST.close();
         LOCALHOST_SUPER.close();
-        mySqlcontainer.stop();
+        // mySqlcontainer.stop();
         postgresContainer.stop();
     }
 
@@ -56,8 +57,8 @@ public class TestEnvironment {
     }
 
     public static void executeSql(final Connection connection, final String fileName) throws Exception {
-        String str = Files.readString(
-                Paths.get(TestEnvironment.class.getClassLoader().getResource("sql/" + fileName).toURI()));
+        final String str = Files.readString(
+                Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
         connection.prepareStatement(str).executeUpdate();
     }
 }
