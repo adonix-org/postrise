@@ -18,7 +18,7 @@ package org.adonix.postrise;
 
 import java.sql.Connection;
 
-import org.adonix.postrise.servers.localhost.LocalhostJson;
+import org.adonix.postrise.servers.localhost.LocalhostConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class PostriseTest extends TestEnvironment {
     @DisplayName("JSON")
     @Test
     public void run3() throws Exception {
-        final JsonConfigurationFile provider = new LocalhostJson();
+        final JsonConfigurationFile provider = new LocalhostConfiguration();
         LOGGER.info(provider.getConfiguration().toString(4));
     }
 }

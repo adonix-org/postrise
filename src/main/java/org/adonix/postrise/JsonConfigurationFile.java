@@ -18,7 +18,6 @@ package org.adonix.postrise;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
@@ -28,8 +27,10 @@ public abstract class JsonConfigurationFile {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final JSONObject configuration;
+    protected abstract Path getJsonFile();
 
+    protected final JSONObject configuration;
+    
     public JsonConfigurationFile() {
         try {
             configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile())));
@@ -42,6 +43,4 @@ public abstract class JsonConfigurationFile {
     public final JSONObject getConfiguration() {
         return configuration;
     }
-
-    protected abstract Path getJsonFile();
 }

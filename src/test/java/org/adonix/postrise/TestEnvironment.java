@@ -19,7 +19,7 @@ package org.adonix.postrise;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import org.adonix.postrise.servers.Servers;
+import org.adonix.postrise.servers.TestServers;
 import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.junit.jupiter.api.AfterAll;
@@ -29,8 +29,8 @@ public class TestEnvironment {
     protected static final JdbcDatabaseContainer<PostgresDockerContainer> postgresContainer = new PostgresDockerContainer();
     // protected static final JdbcDatabaseContainer<MySQLDockerContainer>
     // mySqlcontainer = new MySQLDockerContainer();
-    protected static final Server LOCALHOST_SUPER = Servers.getLocalhostSuper();
-    protected static final Server LOCALHOST = Servers.getLocalhost();
+    protected static final Server LOCALHOST_SUPER = TestServers.getLocalhostSuper();
+    protected static final Server LOCALHOST = TestServers.getLocalhost();
 
     @BeforeAll
     public static void beforeAll() throws Exception {
