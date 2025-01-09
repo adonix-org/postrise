@@ -84,7 +84,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
             return connection;
 
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             // Security check failed.
             connection.close();
             throw e;
@@ -117,7 +117,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             getSecurityProvider().onLogin(connection, dataSource.getUsername());
             return dataSource;
 
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             dataSource.close();
             throw new CreateDataSourceException(e);
         }
@@ -130,7 +130,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 LOGGER.info("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl());
                 try {
                     provider.close();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     LOGGER.error("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl(), e);
                 }
             }
