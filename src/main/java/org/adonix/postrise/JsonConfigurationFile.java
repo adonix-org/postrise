@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public abstract class JsonConfigurationFile implements DataSourceListener {
+public abstract class JsonConfigurationFile {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -34,7 +34,7 @@ public abstract class JsonConfigurationFile implements DataSourceListener {
         try {
             configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile())));
         } catch (final Exception e) {
-            LOGGER.error(getJsonFile(), e);
+            LOGGER.error(getJsonFile().toAbsolutePath(), e);
             throw new JsonConfigurationException(e);
         }
     }
