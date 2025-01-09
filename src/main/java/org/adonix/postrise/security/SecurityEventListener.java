@@ -23,8 +23,7 @@ import java.util.EventListener;
 public interface SecurityEventListener extends EventListener {
 
     /**
-     * This event occurs when a user attempts to log in to the database
-     * server.
+     * This security event occurs when a data source is created.
      * 
      * @param connection use this to validate the login user.
      * @param user       the login user to be validated.
@@ -33,7 +32,7 @@ public interface SecurityEventListener extends EventListener {
     void onLogin(Connection connection, String user) throws SQLException;
 
     /**
-     * This event occurs when a connection is requested from the server.
+     * This security event occurs when a connection is requested.
      * 
      * @param connection use this to validate the given role.
      * @param role       the role to be validated.
