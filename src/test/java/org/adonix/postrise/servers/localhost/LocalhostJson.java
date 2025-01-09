@@ -4,19 +4,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.adonix.postrise.ConnectionSettings;
-import org.adonix.postrise.JsonConfigurationProvider;
+import org.adonix.postrise.JsonConfigurationFile;
 
-public class LocalhostJson extends JsonConfigurationProvider {
+public class LocalhostJson extends JsonConfigurationFile {
 
-    private static final Path jsonFile = Paths.get("config", "postrise.json");
+    private static final Path JSON_CONFIG_FILE = Paths.get("config", "postrise.json");
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-
     }
 
     @Override
     protected Path getJsonFile() {
-        return jsonFile;
+        return JSON_CONFIG_FILE;
     }
 }

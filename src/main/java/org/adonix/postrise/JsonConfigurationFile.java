@@ -24,17 +24,17 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public abstract class JsonConfigurationProvider implements DataSourceListener {
+public abstract class JsonConfigurationFile implements DataSourceListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
     private final JSONObject configuration;
 
-    public JsonConfigurationProvider() {
+    public JsonConfigurationFile() {
         try {
             configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile())));
-        } catch (Exception e) {
-            LOGGER.error(e);
+        } catch (final Exception e) {
+            LOGGER.error(getJsonFile(), e);
             throw new JsonConfigurationException(e);
         }
     }
