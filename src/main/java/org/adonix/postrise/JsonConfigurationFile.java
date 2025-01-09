@@ -30,10 +30,10 @@ public abstract class JsonConfigurationFile {
     protected abstract Path getJsonFile();
 
     protected final JSONObject configuration;
-    
+
     public JsonConfigurationFile() {
         try {
-            configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile())));
+            configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile().toAbsolutePath())));
         } catch (final Exception e) {
             LOGGER.error(getJsonFile().toAbsolutePath(), e);
             throw new JsonConfigurationException(e);

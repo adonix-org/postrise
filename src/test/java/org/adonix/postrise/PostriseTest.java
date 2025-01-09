@@ -49,7 +49,7 @@ public class PostriseTest extends TestEnvironment {
     @DisplayName("JSON")
     @Test
     public void run3() throws Exception {
-        final JsonConfigurationFile provider = new LocalhostConfiguration();
-        LOGGER.info(provider.getConfiguration().toString(4));
+        final JsonConfigurationFile file = new LocalhostConfiguration();
+        LOGGER.info(file.getConfiguration().toString(4));
     }
 }
