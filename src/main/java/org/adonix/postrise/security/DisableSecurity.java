@@ -17,20 +17,46 @@
 package org.adonix.postrise.security;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
+/**
+ * A no-op implementation of {@link SecurityEventListener} that disables all
+ * security checks for user login and role validation.
+ * 
+ * <p>
+ * This class is useful in scenarios where security checks are unnecessary, such
+ * as when performing super-user operations like creating databases, indexes,
+ * tables, or roles.
+ * </p>
+ */
 final class DisableSecurity implements SecurityEventListener {
 
+    /**
+     * Constructs a new {@code DisableSecurity} instance.
+     */
     public DisableSecurity() {
+        // No initialization required for this implementation.
     }
 
+    /**
+     * Disables the user login security check. This implementation does nothing.
+     *
+     * @param connection the database connection (ignored).
+     * @param user       the username of the user attempting to log in (ignored).
+     */
     @Override
     public void onLogin(final Connection connection, final String user) {
-        // Disable user login security check.
+        // No action taken; user login security checks are disabled.
     }
 
+    /**
+     * Disables the role validation security check. This implementation does
+     * nothing.
+     *
+     * @param connection the database connection (ignored).
+     * @param role       the role to be validated (ignored).
+     */
     @Override
-    public void onConnection(Connection connection, String role) throws SQLException {
-        // Disable role security check.
+    public void onConnection(final Connection connection, final String role) {
+        // No action taken; role security checks are disabled.
     }
 }
