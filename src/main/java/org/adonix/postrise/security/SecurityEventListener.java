@@ -20,10 +20,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.EventListener;
 
+/**
+ * An interface for handling security related events. Implementations of this
+ * interface can perform custom logic for validating users and roles during
+ * login and connection requests.
+ */
 public interface SecurityEventListener extends EventListener {
 
     /**
-     * This security event occurs when a data source is created.
+     * This security event fires when a new data source is created.
      * 
      * @param connection use this to validate the login user.
      * @param user       the login user to be validated.
@@ -32,7 +37,7 @@ public interface SecurityEventListener extends EventListener {
     void onLogin(Connection connection, String user) throws SQLException;
 
     /**
-     * This security event occurs when a connection is requested.
+     * This security event fires every time a connection is requested.
      * 
      * @param connection use this to validate the given role.
      * @param role       the role to be validated.
