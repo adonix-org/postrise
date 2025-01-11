@@ -30,7 +30,7 @@ import java.sql.SQLException;
  * PostgreSQL system catalog.
  * </p>
  */
-public class PostgresDefaultSecurity implements SecurityEventListener {
+class PostgresDefaultSecurity implements SecurityEventListener {
 
     /**
      * SQL query to verify whether a user is a login user and not a superuser.
