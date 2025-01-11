@@ -31,10 +31,8 @@ import javax.sql.DataSource;
  * {@link DataSourceListener#onConfigure(ConnectionSettings)} method.
  */
 public interface ConnectionSettings extends ConnectionPoolSettings {
-
     /**
-     * When a new data source is created, this method will return the name of the
-     * database that will be the target of the connection.
+     * Get the name of the database for this data source.
      * 
      * @return the database for this data source.
      */
@@ -49,17 +47,18 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     void setJdbcUrl(String url);
 
     /**
-     * Implementations must return a valid JDBC Url with the given hostname and
-     * port.
+     * Set the JDBC Url using the provided host and port.
+     * <p>
+     * Implementations will typically require a database name which can be accessed
+     * via the {@link #getDatabase()} method.
      * 
-     * @param hostname the database server hostname.
-     * @param port     the database server port.
-     * @return a valid JDBC Url for this data source.
+     * @param hostname - the database server hostname.
+     * @param port     - the database server port.
      */
     void setJdbcUrl(final String hostname, final Integer port);
 
     /**
-     * This method will return the current JDBC Url.
+     * Get the current JDBC Url.
      * 
      * @return the JDBC Url for this data source.
      */
