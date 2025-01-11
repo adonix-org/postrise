@@ -43,7 +43,7 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     /**
      * Set the JDBC Url for this connection.
      * 
-     * @param url a valid JDBC Url most often in the fomat
+     * @param url - a valid JDBC Url most often in the fomat
      *            jdbc:db://hostname:port/database
      */
     void setJdbcUrl(String url);
@@ -51,8 +51,13 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     /**
      * Set the JDBC Url for this connection.
      * 
-     * @param url a valid JDBC Url most often in the fomat
-     *            jdbc:db://hostname:port/database
+     * <p>
+     * Uses the provided {@link Server} to generate a valid JDBC Url commonly in the
+     * format jdbc:db://hostname:port/database
+     * </p>
+     * 
+     * @param server - a {@link Server} providing the hostname and port for the
+     *               JDBC Url.
      */
     void setJdbcUrl(Server server);
 
