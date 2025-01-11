@@ -30,12 +30,12 @@ class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public String getJdbcUrl(String host) {
+    public String getJdbcUrl(final String host) {
         return getJdbcUrl(host, POSTGRES_DEFAULT_PORT);
     }
 
     @Override
-    public String getJdbcUrl(String host, Integer port) {
+    public String getJdbcUrl(final String host, final Integer port) {
         return POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabase();
     }
 }
