@@ -63,8 +63,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        // Initialize JDBC Url to the default server settings.
-        settings.setJdbcUrl(this);
     }
 
     @Override
@@ -95,6 +93,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider dataSource = getDataSource(database);
+
+        // Initialize JDBC Url to the Server host and port.
+        dataSource.setJdbcUrl(this);
 
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
