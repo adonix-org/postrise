@@ -32,17 +32,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
-
-    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
-
-    private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
-
     protected abstract ConnectionProvider getDataSource(final String database);
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
     protected abstract SecurityEventListener getSecurityProvider();
+
+    private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
+
+    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
+
+    private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
 
     public PostriseServer() {
         addListener(this);
