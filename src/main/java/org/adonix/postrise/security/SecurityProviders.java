@@ -17,8 +17,14 @@
 package org.adonix.postrise.security;
 
 public abstract class SecurityProviders {
-
+    /**
+     * Postgres Security Providers
+     */
+    public static final SecurityEventListener POSTGRES_DEFAULT_SECURITY = new PostgresDefaultSecurity();
     // TODO: Create strict developer security to check roles during development.
-    public static final SecurityEventListener DEFAULT_SECURITY = new DefaultSecurity();
+
+    /**
+     * Disable All Security Checks
+     */
     public static final SecurityEventListener DISABLE_SECURITY = new DisableSecurity();
 }
