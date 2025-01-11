@@ -19,7 +19,7 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-interface ConnectionProvider extends ConnectionSettings {
+public interface ConnectionProvider extends ConnectionSettings {
 
     /**
      * All implementations should provide a valid and configured {@link Connection}.
