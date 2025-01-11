@@ -59,7 +59,9 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * @param server - a {@link Server} providing the hostname and port for the
      *               JDBC Url.
      */
-    void setJdbcUrl(Server server);
+    default void setJdbcUrl(Server server) {
+        setJdbcUrl(getJdbcUrl(server));
+    }
 
     /**
      * This method will return the current JDBC Url.
@@ -69,14 +71,16 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     String getJdbcUrl();
 
     /**
-     * Implementations must return a valid JDBC Url with the given {@link Server}.
+     * The default implementation returns a valid JDBC Url with the given {@link Server}.
      * 
      * @param server the server providing a host and port to create a connection to
      *               the database.
      * @return a valid JDBC Url for this data source.
      * @see Server
      */
-    String getJdbcUrl(final Server server);
+    default String getJdbcUrl(final Server server) {
+        return getJdbcUrl(server.getHostName(), server.getPort());
+    }
 
     /**
      * Implementations must return a valid JDBC Url with the given hostname.
