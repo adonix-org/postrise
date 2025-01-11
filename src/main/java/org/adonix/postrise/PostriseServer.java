@@ -84,33 +84,32 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             return connection;
 
         } catch (final SQLException e) {
-            // Security check failed.
             connection.close();
             throw e;
         }
     }
 
+    /**
+     * 
+     * @param database - the name of the database used when creating the data source.
+     * @return a valid {@link ConnectionProvider} implementation.
+     */
     private ConnectionProvider create(final String database) {
 
         final ConnectionProvider dataSource = getDataSource(database);
 
-        // Initialize JDBC Url to the Server host and port.
+        // Set the DEFAULT JDBC Url for this server.
         dataSource.setJdbcUrl(getHostName(), getPort());
 
         for (final DataSourceListener listener : dataSourceListeners) {
-            LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
-                    listener.getClass().getSimpleName(), database);
             listener.onConfigure(dataSource);
         }
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
-            LOGGER.debug("Database listener onConfigure() '{}'", database);
             listener.onConfigure(dataSource);
         }
-
-        LOGGER.debug("Creating data source: {}", dataSource.getJdbcUrl());
 
         // Create the first connection to validate settings and
         // initialize the connection pool.
