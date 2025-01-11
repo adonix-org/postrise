@@ -24,12 +24,7 @@ class PostgresDataSource extends PostriseDataSource {
 
     protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
-    public PostgresDataSource(final Server server, final String database) {
-        this(database);
-        setJdbcUrl(getJdbcUrl(server));
-    }
-
-    private PostgresDataSource(final String database) {
+    public PostgresDataSource(final String database) {
         super(database);
         addDataSourceProperty("tcpKeepAlive", "true");
     }

@@ -23,9 +23,9 @@ import java.sql.Connection;
  * security checks for user login and role validation.
  * 
  * <p>
- * This class is useful in scenarios where security checks are unnecessary, such
- * as when performing super-user operations like creating databases, indexes,
- * tables, or roles.
+ * This class is for scenarios where security checks are unnecessary, such
+ * as when performing super-user DDL operations like creating databases,
+ * indexes, tables, or roles.
  * </p>
  */
 final class DisableSecurity implements SecurityEventListener {
@@ -41,7 +41,7 @@ final class DisableSecurity implements SecurityEventListener {
      * Disables the user login security check. This implementation does nothing.
      *
      * @param connection the database connection (ignored).
-     * @param user       the username of the user attempting to log in (ignored).
+     * @param user       the user attempting to log in (ignored).
      */
     @Override
     public void onLogin(final Connection connection, final String user) {

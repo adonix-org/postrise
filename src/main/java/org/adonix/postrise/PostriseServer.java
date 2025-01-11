@@ -63,7 +63,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        // NO-OP - Override in subclass if required.
+        // Initialize JDBC Url to the default server settings.
+        settings.setJdbcUrl(this);
     }
 
     @Override

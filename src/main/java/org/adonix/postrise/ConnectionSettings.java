@@ -49,6 +49,14 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     void setJdbcUrl(String url);
 
     /**
+     * Set the JDBC Url for this connection.
+     * 
+     * @param url a valid JDBC Url most often in the fomat
+     *            jdbc:db://hostname:port/database
+     */
+    void setJdbcUrl(Server server);
+
+    /**
      * This method will return the current JDBC Url.
      * 
      * @return the JDBC Url for this data source.

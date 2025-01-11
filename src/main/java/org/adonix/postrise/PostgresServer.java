@@ -42,7 +42,7 @@ public class PostgresServer extends PostriseServer {
 
     @Override
     protected ConnectionProvider getDataSource(final String database) {
-        return new PostgresDataSource(this, database);
+        return new PostgresDataSource(database);
     }
 
     @Override

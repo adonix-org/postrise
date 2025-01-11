@@ -2,9 +2,11 @@ package org.adonix.postrise.security;
 
 import java.sql.SQLException;
 
-public class SecurityException extends SQLException {
+class SecurityException extends SQLException {
 
-    public SecurityException(String message) {
-        super(message);
+    private static final String EXCEPTION_PREFIX = "SECURITY: ";
+
+    public SecurityException(final String message) {
+        super(EXCEPTION_PREFIX + message.trim());
     }
 }

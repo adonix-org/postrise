@@ -16,7 +16,7 @@
 
 package org.adonix.postrise;
 
-abstract class Guard {
+public abstract class Guard {
 
     protected static final String NULL_OBJECT_ERROR = "Unexpected null Object for ";
     protected static final String NULL_STRING_ERROR = "Unexpected null String for ";
