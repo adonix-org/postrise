@@ -49,48 +49,6 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     void setJdbcUrl(String url);
 
     /**
-     * Set the JDBC Url for this connection.
-     * 
-     * <p>
-     * Uses the provided {@link Server} to generate a valid JDBC Url commonly in the
-     * format jdbc:db://hostname:port/database
-     * </p>
-     * 
-     * @param server - a {@link Server} providing the hostname and port for the
-     *               JDBC Url.
-     */
-    default void setJdbcUrl(Server server) {
-        setJdbcUrl(getJdbcUrl(server));
-    }
-
-    /**
-     * This method will return the current JDBC Url.
-     * 
-     * @return the JDBC Url for this data source.
-     */
-    String getJdbcUrl();
-
-    /**
-     * The default implementation returns a valid JDBC Url with the given {@link Server}.
-     * 
-     * @param server the server providing a host and port to create a connection to
-     *               the database.
-     * @return a valid JDBC Url for this data source.
-     * @see Server
-     */
-    default String getJdbcUrl(final Server server) {
-        return getJdbcUrl(server.getHostName(), server.getPort());
-    }
-
-    /**
-     * Implementations must return a valid JDBC Url with the given hostname.
-     * 
-     * @param hostname the hostname to the database.
-     * @return a valid JDBC Url for this data source.
-     */
-    String getJdbcUrl(final String hostname);
-
-    /**
      * Implementations must return a valid JDBC Url with the given hostname and
      * port.
      * 
@@ -98,7 +56,14 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * @param port     the database server port.
      * @return a valid JDBC Url for this data source.
      */
-    String getJdbcUrl(final String hostname, final Integer port);
+    void setJdbcUrl(final String hostname, final Integer port);
+
+    /**
+     * This method will return the current JDBC Url.
+     * 
+     * @return the JDBC Url for this data source.
+     */
+    String getJdbcUrl();
 
     void setDriverClassName(String driverClassName);
 

@@ -95,7 +95,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         final ConnectionProvider dataSource = getDataSource(database);
 
         // Initialize JDBC Url to the Server host and port.
-        dataSource.setJdbcUrl(this);
+        dataSource.setJdbcUrl(getHostName(), getPort());
 
         for (final DataSourceListener listener : dataSourceListeners) {
             LOGGER.debug("Data source listener {}.onConfigure() for database '{}'",
