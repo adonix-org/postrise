@@ -101,13 +101,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param database - the name of the database used when creating the data
      *                 source.
-     * @return a valid {@link ConnectionProvider} implementation.
+     * @return a valid and configured {@link ConnectionProvider} implementation.
      */
     private final ConnectionProvider create(final String database) {
 
         final ConnectionProvider dataSource = createConnectionProvider(database);
 
-        // Set the DEFAULT JDBC Url for this server.
+        // Set the default JDBC Url for this server.
         dataSource.setJdbcUrl(getHostName(), getPort());
 
         for (final DataSourceListener listener : dataSourceListeners) {
