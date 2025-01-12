@@ -32,6 +32,14 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Subclasses to create and return a new instance of a
+     * {@link ConnectionProvider} implementation.
+     * 
+     * @param database - the database for the new {@link ConnectionProvider}.
+     * @return a {@link ConnectionProvider} implementation.
+     * @see PostriseDataSource
+     */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
