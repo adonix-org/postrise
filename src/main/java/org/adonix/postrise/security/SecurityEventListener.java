@@ -28,19 +28,19 @@ import java.util.EventListener;
 public interface SecurityEventListener extends EventListener {
 
     /**
-     * This security event fires when a new data source is created.
+     * This security event fires each time a new data source is created.
      * 
-     * @param connection use this to validate the login user.
-     * @param user       the login user to be validated.
+     * @param connection - use this {@link Connection} to validate the login user.
+     * @param user       - the login user to be validated.
      * @throws SQLException if a SQL error occurs validating the login user.
      */
     void onLogin(Connection connection, String user) throws SQLException;
 
     /**
-     * This security event fires every time a connection is requested.
+     * This security event fires each time a connection is requested.
      * 
-     * @param connection use this to validate the given role.
-     * @param role       the role to be validated.
+     * @param connection - use this {@link Connection} to validate the given role.
+     * @param role       - the role to be validated.
      * @throws SQLException if a SQL error occurs validating the role for this
      *                      connection.
      */

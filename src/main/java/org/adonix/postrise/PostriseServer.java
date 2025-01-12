@@ -33,7 +33,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Subclasses to create and return a new instance of a
+     * Subclasses will create and return a new instance of a
      * {@link ConnectionProvider} implementation.
      * 
      * @param database - the database for the new {@link ConnectionProvider}.
@@ -42,9 +42,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
-    protected abstract void setRole(final Connection connection, final String role) throws SQLException;
-
     protected abstract SecurityEventListener getSecurityProvider();
+
+    protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
@@ -103,7 +103,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      *                 source.
      * @return a valid {@link ConnectionProvider} implementation.
      */
-    private ConnectionProvider create(final String database) {
+    private final ConnectionProvider create(final String database) {
 
         final ConnectionProvider dataSource = createConnectionProvider(database);
 
