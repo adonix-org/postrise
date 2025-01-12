@@ -32,7 +32,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected abstract ConnectionProvider getConnectionProvider(final String database);
+    protected abstract ConnectionProvider createConnectionProvider(final String database);
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 
@@ -97,7 +97,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private ConnectionProvider create(final String database) {
 
-        final ConnectionProvider dataSource = getConnectionProvider(database);
+        final ConnectionProvider dataSource = createConnectionProvider(database);
 
         // Set the DEFAULT JDBC Url for this server.
         dataSource.setJdbcUrl(getHostName(), getPort());
