@@ -114,4 +114,6 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * @param value        the value to be used by the DataSource/Driver
      */
     void addDataSourceProperty(String propertyName, Object value);
+
+    Properties getDataSourceProperties();
 }

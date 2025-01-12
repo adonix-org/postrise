@@ -16,9 +16,10 @@
 
 package org.adonix.postrise;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.Properties;
 
 abstract class PostriseDataSource implements ConnectionProvider {
 
@@ -43,7 +44,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public void setJdbcUrl(final String url) {
         delegate.setJdbcUrl(url);
     }
-    
+
     @Override
     public String getJdbcUrl() {
         return delegate.getJdbcUrl();
@@ -172,6 +173,11 @@ abstract class PostriseDataSource implements ConnectionProvider {
     @Override
     public void addDataSourceProperty(String propertyName, Object value) {
         delegate.addDataSourceProperty(propertyName, value);
+    }
+
+    @Override
+    public Properties getDataSourceProperties() {
+        return delegate.getDataSourceProperties();
     }
 
     @Override
