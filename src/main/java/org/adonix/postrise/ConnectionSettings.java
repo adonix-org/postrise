@@ -32,9 +32,9 @@ import javax.sql.DataSource;
  */
 public interface ConnectionSettings extends ConnectionPoolSettings {
     /**
-     * Get the name of the database for this data source.
+     * Get the name of the database for the configuration.
      * 
-     * @return the database for this data source.
+     * @return the database name.
      */
     String getDatabase();
 
