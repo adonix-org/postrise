@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import org.adonix.postrise.security.SecurityEvent;
+import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,7 +42,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
-    protected abstract SecurityEvent getSecurityProvider();
+    protected abstract SecurityEventListener getSecurityProvider();
 
     protected abstract void setRole(final Connection connection, final String role) throws SQLException;
 

@@ -22,7 +22,7 @@ import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SE
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.adonix.postrise.security.SecurityEvent;
+import org.adonix.postrise.security.SecurityEventListener;
 
 public class PostgresServer extends PostriseServer {
 
@@ -51,7 +51,7 @@ public class PostgresServer extends PostriseServer {
     }
 
     @Override
-    protected SecurityEvent getSecurityProvider() {
+    protected SecurityEventListener getSecurityProvider() {
         return POSTGRES_DEFAULT_SECURITY;
     }
 }

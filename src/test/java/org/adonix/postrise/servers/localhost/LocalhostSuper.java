@@ -20,7 +20,7 @@ import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
 
 import org.adonix.postrise.PostgresServer;
 import org.adonix.postrise.SuperUserAccess;
-import org.adonix.postrise.security.SecurityEvent;
+import org.adonix.postrise.security.SecurityEventListener;
 
 public class LocalhostSuper extends PostgresServer {
 
@@ -29,7 +29,7 @@ public class LocalhostSuper extends PostgresServer {
     }
 
     @Override
-    protected SecurityEvent getSecurityProvider() {
+    protected SecurityEventListener getSecurityProvider() {
         return DISABLE_SECURITY;
     }
 }
