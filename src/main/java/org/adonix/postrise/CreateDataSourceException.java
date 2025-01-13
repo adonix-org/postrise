@@ -23,4 +23,8 @@ public class CreateDataSourceException extends RuntimeException {
     protected CreateDataSourceException(final Throwable t) {
         super(ERROR_MESSAGE, t);
     }
+
+    protected CreateDataSourceException(final String message, final Throwable t) {
+        super(message, t);
+    }
 }

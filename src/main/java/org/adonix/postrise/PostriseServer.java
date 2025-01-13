@@ -129,7 +129,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         } catch (final SQLException e) {
             dataSource.close();
-            throw new CreateDataSourceException(e);
+            throw new CreateDataSourceException(dataSource.getJdbcUrl(), e);
         }
     }
 
