@@ -47,6 +47,6 @@ public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerC
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(withDatabaseName(settings.getDatabase()).getJdbcUrl());
+        settings.setJdbcUrl(withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
     }
 }

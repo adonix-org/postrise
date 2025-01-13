@@ -20,7 +20,7 @@ public class RestrictedUserAccess extends TestEnvironment implements Configurati
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(postgresContainer.withDatabaseName(settings.getDatabase()).getJdbcUrl());
+        settings.setJdbcUrl(postgresContainer.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
         settings.setUsername("login_user");
         settings.setPassword("helloworld");
     }

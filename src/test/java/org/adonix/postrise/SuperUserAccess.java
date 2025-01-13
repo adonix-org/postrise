@@ -20,7 +20,7 @@ public class SuperUserAccess extends TestEnvironment implements ConfigurationLis
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(postgresContainer.withDatabaseName(settings.getDatabase()).getJdbcUrl());
+        settings.setJdbcUrl(postgresContainer.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
         settings.setUsername(postgresContainer.getUsername());
         settings.setPassword(postgresContainer.getPassword());
     }

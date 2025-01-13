@@ -36,7 +36,7 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * 
      * @return the database name.
      */
-    String getDatabase();
+    String getDatabaseName();
 
     /**
      * Set the JDBC Url for this connection.
@@ -50,7 +50,7 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * Set the JDBC Url using the provided host and port.
      * <p>
      * Implementations will typically require a database name which can be accessed
-     * via the {@link #getDatabase()} method.
+     * via the {@link #getDatabaseName()} method.
      * 
      * @param hostname - the database server hostname.
      * @param port     - the database server port.

@@ -31,6 +31,6 @@ class PostgresDataSource extends PostriseDataSource {
 
     @Override
     public void setJdbcUrl(final String host, final Integer port) {
-        setJdbcUrl(POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabase());
+        setJdbcUrl(POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabaseName());
     }
 }

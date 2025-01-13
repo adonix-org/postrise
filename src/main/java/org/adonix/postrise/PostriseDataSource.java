@@ -24,15 +24,15 @@ import java.util.Properties;
 abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate = new HikariDataSource();
-    private final String database;
+    private final String databaseName;
 
     public PostriseDataSource(final String database) {
-        this.database = database;
+        this.databaseName = database;
     }
 
     @Override
-    public String getDatabase() {
-        return database;
+    public String getDatabaseName() {
+        return databaseName;
     }
 
     @Override
