@@ -31,7 +31,14 @@ public class PostgresRoleDAO {
                 if (!rs.next()) {
                     throw new SecurityException("role '" + rolename + "' does not exist");
                 }
-                return new PostgresRole(rs);
+                return new PostgresRole()
+                        .setRoleName(rs.getString(1))
+                        .setSuperUser(rs.getBoolean(2))
+                        .setLoginUser(rs.getBoolean(3))
+                        .setInherit(rs.getBoolean(4))
+                        .setCreateRole(rs.getBoolean(5))
+                        .setCreateDbRole(rs.getBoolean(6))
+                        .setReplicationRole(rs.getBoolean(7));
             }
         }
     }

@@ -1,26 +1,51 @@
 package org.adonix.postrise.security;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class PostgresRole {
 
-    private final String roleName;
-    private final Boolean isSuperUser;
-    private final Boolean isLoginUser;
-    private final Boolean isInherit;
-    private final Boolean isCreateRole;
-    private final Boolean isCreateDbRole;
-    private final Boolean isReplicationRole;
+    private String roleName;
+    private Boolean isSuperUser;
+    private Boolean isLoginUser;
+    private Boolean isInherit;
+    private Boolean isCreateRole;
+    private Boolean isCreateDbRole;
+    private Boolean isReplicationRole;
 
-    protected PostgresRole(final ResultSet resultSet) throws SQLException {
-        roleName = resultSet.getString(1);
-        isSuperUser = resultSet.getBoolean(2);
-        isLoginUser = resultSet.getBoolean(3);
-        isInherit = resultSet.getBoolean(4);
-        isCreateRole = resultSet.getBoolean(5);
-        isCreateDbRole = resultSet.getBoolean(6);
-        isReplicationRole = resultSet.getBoolean(7);
+    protected PostgresRole() {
+    }
+
+    protected PostgresRole setRoleName(final String roleName) {
+        this.roleName = roleName;
+        return this;
+    }
+
+    protected PostgresRole setSuperUser(final Boolean isSuperUser) {
+        this.isSuperUser = isSuperUser;
+        return this;
+    }
+
+    protected PostgresRole setLoginUser(final Boolean isLoginUser) {
+        this.isLoginUser = isLoginUser;
+        return this;
+    }
+
+    protected PostgresRole setInherit(final Boolean isInherit) {
+        this.isInherit = isInherit;
+        return this;
+    }
+
+    protected PostgresRole setCreateRole(final Boolean isCreateRole) {
+        this.isCreateRole = isCreateRole;
+        return this;
+    }
+
+    protected PostgresRole setCreateDbRole(final Boolean isCreateDbRole) {
+        this.isCreateDbRole = isCreateDbRole;
+        return this;
+    }
+
+    protected PostgresRole setReplicationRole(final Boolean isReplicationRole) {
+        this.isReplicationRole = isReplicationRole;
+        return this;
     }
 
     public String getRoleName() {
