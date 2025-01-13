@@ -52,8 +52,8 @@ class PostgresDefaultSecurity implements SecurityEventListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws SecurityException if the user is invalid, not a login user, or is a
-     *                           superuser
+     * @throws SecurityException if the user does not exist, is not a login user, or
+     *                           is a super user.
      */
     @Override
     public void onLogin(final Connection connection, final String user) throws SQLException {

@@ -11,6 +11,12 @@ final class PostgresStrictSecurity extends PostgresDefaultSecurity {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws SecurityException if the role does not exist, is a login role, or is
+     *                           a super user.
+     */
     @Override
     public void onConnection(Connection connection, String role) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
