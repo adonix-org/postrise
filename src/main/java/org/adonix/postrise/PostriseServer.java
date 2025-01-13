@@ -51,7 +51,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     private final Set<ConfigurationListener> configurationListeners = Collections
             .synchronizedSet(new LinkedHashSet<>());
 
-    private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
+    private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
 
     public PostriseServer() {
         addListener(this);
@@ -65,7 +65,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
-        if (dataBaseListeners.put(getKey(listener), listener) != null) {
+        if (databaseListeners.put(getKey(listener), listener) != null) {
             LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
         }
     }
@@ -115,8 +115,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
             listener.onConfigure(connectionProvider);
         }
 
-        final String key = getKey(database);
-        final DatabaseListener listener = dataBaseListeners.get(key);
+        final DatabaseListener listener = databaseListeners.get(getKey(database));
         if (listener != null) {
             listener.onConfigure(connectionProvider);
         }
