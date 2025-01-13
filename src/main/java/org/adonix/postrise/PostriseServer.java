@@ -48,7 +48,8 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<ConfigurationListener> configurationListeners = Collections.synchronizedSet(new LinkedHashSet<>());
+    private final Set<ConfigurationListener> configurationListeners = Collections
+            .synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
 
@@ -120,8 +121,8 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
             listener.onConfigure(connectionProvider);
         }
 
-        // Create the first connection to validate settings and
-        // initialize the connection pool.
+        // Create the first connection to validate settings, initialize the connection
+        // pool, and validate security for login user.
         try (final Connection connection = connectionProvider.getConnection()) {
 
             getSecurityProvider().onLogin(connection, connectionProvider.getUsername());
