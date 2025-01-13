@@ -13,66 +13,66 @@ final class PostgresRole {
     protected PostgresRole() {
     }
 
-    protected PostgresRole setRoleName(final String roleName) {
+    PostgresRole setRoleName(final String roleName) {
         this.roleName = roleName;
         return this;
     }
 
-    protected PostgresRole setSuperUser(final Boolean isSuperUser) {
+    PostgresRole setSuperUser(final Boolean isSuperUser) {
         this.isSuperUser = isSuperUser;
         return this;
     }
 
-    protected PostgresRole setLoginRole(final Boolean isLoginUser) {
+    PostgresRole setLoginRole(final Boolean isLoginUser) {
         this.isLoginRole = isLoginUser;
         return this;
     }
 
-    protected PostgresRole setInherit(final Boolean isInherit) {
+    PostgresRole setInherit(final Boolean isInherit) {
         this.isInheritRole = isInherit;
         return this;
     }
 
-    protected PostgresRole setCreateRole(final Boolean isCreateRole) {
+    PostgresRole setCreateRole(final Boolean isCreateRole) {
         this.isCreateRole = isCreateRole;
         return this;
     }
 
-    protected PostgresRole setCreateDbRole(final Boolean isCreateDbRole) {
+    PostgresRole setCreateDbRole(final Boolean isCreateDbRole) {
         this.isCreateDbRole = isCreateDbRole;
         return this;
     }
 
-    protected PostgresRole setReplicationRole(final Boolean isReplicationRole) {
+    PostgresRole setReplicationRole(final Boolean isReplicationRole) {
         this.isReplicationRole = isReplicationRole;
         return this;
     }
 
-    public String getRoleName() {
+    String getRoleName() {
         return roleName;
     }
 
-    public Boolean isSuperUser() {
+    Boolean isSuperUser() {
         return isSuperUser;
     }
 
-    public Boolean isLoginRole() {
+    Boolean isLoginRole() {
         return isLoginRole;
     }
 
-    public Boolean isInheritRole() {
+    Boolean isInheritRole() {
         return isInheritRole;
     }
 
-    public Boolean isCreateRole() {
+    Boolean isCreateRole() {
         return isCreateRole;
     }
 
-    public Boolean isCreateDbRole() {
+    Boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
-    public Boolean isReplicationRole() {
+    Boolean isReplicationRole() {
         return isReplicationRole;
     }
 }

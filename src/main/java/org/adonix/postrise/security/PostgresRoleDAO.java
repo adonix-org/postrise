@@ -23,13 +23,13 @@ public class PostgresRoleDAO {
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
-    protected static final PostgresRole getRole(final Connection connection, final String rolename)
+    protected static final PostgresRole getRole(final Connection connection, final String roleName)
             throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
-            stmt.setString(1, rolename);
+            stmt.setString(1, roleName);
             try (final ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
-                    throw new SecurityException("role '" + rolename + "' does not exist");
+                    throw new SecurityException("role '" + roleName + "' does not exist");
                 }
                 return new PostgresRole()
                         .setRoleName(rs.getString(1))
