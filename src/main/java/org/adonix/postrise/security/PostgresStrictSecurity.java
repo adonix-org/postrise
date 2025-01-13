@@ -10,13 +10,16 @@ final class PostgresStrictSecurity extends PostgresDefaultSecurity {
     }
 
     /**
+     * This role used for requesting the {@link Connection} should not have LOGIN or
+     * SUPER user priviliges.
+     * <p>
      * {@inheritDoc}
      * 
-     * @throws SecurityException if the role does not exist, is a login role, or is
-     *                           a super user.
+     * @throws SecurityException if the role is a LOGIN role, or is a SUPER user.
+     * 
      */
     @Override
-    public void onConnection(Connection connection, String roleName) throws SQLException {
+    public void onConnection(final Connection connection, final String roleName) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
         if (role.isSuperUser()) {
             throw new SecurityException("user '" + role.getRoleName() + "' is a super user");
