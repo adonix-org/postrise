@@ -33,9 +33,10 @@ import java.sql.SQLException;
 class PostgresDefaultSecurity implements SecurityEventListener {
 
     /**
-     * SQL query to verify whether a user is a login user and not a superuser.
+     * PostgreSQL specific query to SELECT privileges for a role from the pg_roles
+     * TABLE.
      */
-    protected static final String SQL_CHECK_LOGIN_USER = String.join(" ",
+    protected static final String SQL_SELECT_ROLE_PRIVILEGES = String.join(" ",
             "SELECT",
             "pg_roles.rolsuper AS is_super_user,",
             "pg_roles.rolcanlogin AS is_login_user",
@@ -45,22 +46,18 @@ class PostgresDefaultSecurity implements SecurityEventListener {
     /**
      * Constructs a new {@code DefaultSecurity} instance.
      */
-    public PostgresDefaultSecurity() {
+    protected PostgresDefaultSecurity() {
     }
 
     /**
-     * Validates the login credentials of a user. Ensures the user exists,
-     * has login privileges, and is not a superuser.
-     *
-     * @param connection the database connection to use for the validation
-     * @param user       the username to validate
-     * @throws SQLException      if a database error occurs
+     * {@inheritDoc}
+     * 
      * @throws SecurityException if the user is invalid, not a login user, or is a
      *                           superuser
      */
     @Override
     public void onLogin(final Connection connection, final String user) throws SQLException {
-        try (final PreparedStatement stmt = connection.prepareStatement(SQL_CHECK_LOGIN_USER)) {
+        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
             stmt.setString(1, user);
             try (final ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
@@ -76,17 +73,6 @@ class PostgresDefaultSecurity implements SecurityEventListener {
         }
     }
 
-    /**
-     * Validates the connection for a given role.
-     * <p>
-     * This method is currently a placeholder and may include additional
-     * security checks in the future.
-     * </p>
-     *
-     * @param connection the database connection to validate
-     * @param role       the role to validate
-     * @throws SQLException if a database error occurs
-     */
     @Override
     public void onConnection(final Connection connection, final String role) throws SQLException {
         // TODO: maybe check if role is secure.
