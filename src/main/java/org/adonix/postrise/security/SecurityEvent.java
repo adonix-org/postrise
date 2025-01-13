@@ -21,14 +21,17 @@ import java.sql.SQLException;
 import java.util.EventListener;
 
 /**
- * An interface for handling security related events. Implementations of this
+ * An interface for handling security related events.
+ * <p>
+ * Implementations of this
  * interface can perform custom logic for validating users and roles during
  * login and connection requests.
  */
-public interface SecurityEventListener extends EventListener {
+public interface SecurityEvent extends EventListener {
 
     /**
-     * This security event fires each time a new data source is created.
+     * This security event fires each time a new
+     * {@link org.adonix.postrise.ConnectionProvider ConnectionProvider} is created.
      * 
      * @param connection - use this {@link Connection} to validate the login user.
      * @param user       - the login user to be validated.
@@ -37,7 +40,8 @@ public interface SecurityEventListener extends EventListener {
     void onLogin(Connection connection, String user) throws SQLException;
 
     /**
-     * This security event fires each time a connection is requested.
+     * This security event fires each time a {@link Connection} is requested from
+     * a {@link org.adonix.postrise.ConnectionProvider ConnectionProvider}.
      * 
      * @param connection - use this {@link Connection} to validate the given role.
      * @param role       - the role to be validated.
