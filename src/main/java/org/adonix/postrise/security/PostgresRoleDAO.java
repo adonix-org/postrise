@@ -8,6 +8,24 @@ import java.sql.SQLException;
 public class PostgresRoleDAO {
 
     /**
+     * PostgreSQL specific query to SET the role for the {@link Connection}
+     */
+    private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
+
+    /**
+     * 
+     * @param connection
+     * @param roleName
+     * @throws SQLException
+     */
+    public static final void setRole(final Connection connection, final String roleName) throws SQLException {
+        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
+            stmt.setString(1, roleName);
+            stmt.execute();
+        }
+    }
+
+    /**
      * PostgreSQL specific query to SELECT privileges for a role from the
      * pg_roles TABLE.
      */

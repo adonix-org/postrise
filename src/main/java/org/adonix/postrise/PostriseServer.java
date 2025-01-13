@@ -44,7 +44,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
     protected abstract SecurityEventListener getSecurityProvider();
 
-    protected abstract void setRole(final Connection connection, final String role) throws SQLException;
+    protected abstract void setRole(final Connection connection, final String roleName) throws SQLException;
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
@@ -75,20 +75,20 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     @Override
-    public final Connection getConnection(final String database, final String role) throws SQLException {
+    public final Connection getConnection(final String database, final String roleName) throws SQLException {
 
         Guard.check("database", database);
-        Guard.check("role", role);
+        Guard.check("roleName", roleName);
 
         final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(database), _ -> create(database));
 
         final Connection connection = provider.getConnection();
         try {
             // Security check on the role.
-            getSecurityProvider().onConnection(connection, role);
+            getSecurityProvider().onConnection(connection, roleName);
 
             // Security check passed, set role on the connection.
-            setRole(connection, role);
+            setRole(connection, roleName);
 
             return connection;
 

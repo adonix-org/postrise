@@ -22,6 +22,7 @@ import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SE
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.SecurityEventListener;
 
 public class PostgresServer extends PostriseServer {
@@ -46,8 +47,8 @@ public class PostgresServer extends PostriseServer {
     }
 
     @Override
-    protected void setRole(final Connection connection, final String role) throws SQLException {
-        PostgresRoleDAO.setRole(connection, role);
+    protected void setRole(final Connection connection, final String roleName) throws SQLException {
+        PostgresRoleDAO.setRole(connection, roleName);
     }
 
     @Override

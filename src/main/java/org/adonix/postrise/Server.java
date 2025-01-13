@@ -25,5 +25,5 @@ public interface Server extends AutoCloseable {
 
     Integer getPort();
 
-    Connection getConnection(String database, String role) throws SQLException;
+    Connection getConnection(String database, String roleName) throws SQLException;
 }
