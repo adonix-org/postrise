@@ -28,7 +28,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements DataSourceListener, Server {
+public abstract class PostriseServer implements ConfigurationListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -48,7 +48,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
+    private final Set<ConfigurationListener> configurationListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> dataBaseListeners = new ConcurrentHashMap<>();
 
@@ -56,9 +56,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         addListener(this);
     }
 
-    public final void addListener(final DataSourceListener listener) {
+    public final void addListener(final ConfigurationListener listener) {
         Guard.check("listener", listener);
-        dataSourceListeners.add(listener);
+        configurationListeners.add(listener);
     }
 
     public final void addListener(final DatabaseListener listener) {
@@ -105,31 +105,31 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private final ConnectionProvider create(final String database) {
 
-        final ConnectionProvider dataSource = createConnectionProvider(database);
+        final ConnectionProvider connectionProvider = createConnectionProvider(database);
 
-        // Set the default JDBC Url for this server.
-        dataSource.setJdbcUrl(getHostName(), getPort());
+        // Set the default JDBC Url for this provider.
+        connectionProvider.setJdbcUrl(getHostName(), getPort());
 
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.onConfigure(dataSource);
+        for (final ConfigurationListener listener : configurationListeners) {
+            listener.onConfigure(connectionProvider);
         }
 
         final String key = getKey(database);
         final DatabaseListener listener = dataBaseListeners.get(key);
         if (listener != null) {
-            listener.onConfigure(dataSource);
+            listener.onConfigure(connectionProvider);
         }
 
         // Create the first connection to validate settings and
         // initialize the connection pool.
-        try (final Connection connection = dataSource.getConnection()) {
+        try (final Connection connection = connectionProvider.getConnection()) {
 
-            getSecurityProvider().onLogin(connection, dataSource.getUsername());
-            return dataSource;
+            getSecurityProvider().onLogin(connection, connectionProvider.getUsername());
+            return connectionProvider;
 
         } catch (final SQLException e) {
-            dataSource.close();
-            throw new CreateDataSourceException(dataSource.getJdbcUrl(), e);
+            connectionProvider.close();
+            throw new CreateDataSourceException(connectionProvider.getJdbcUrl(), e);
         }
     }
 

@@ -24,11 +24,11 @@ import javax.sql.DataSource;
  * database.
  * 
  * Apply specific {@link ConnectionSettings} for the data source by
- * implementing the {@link DataSourceListener} interface.
+ * implementing the {@link ConfigurationListener} interface.
  * <p>
  * Most implementations will call {@link #setUsername(String)} and
  * {@link #setPassword(String)} from the
- * {@link DataSourceListener#onConfigure(ConnectionSettings)} method.
+ * {@link ConfigurationListener#onConfigure(ConnectionSettings)} method.
  */
 public interface ConnectionSettings extends ConnectionPoolSettings {
     /**

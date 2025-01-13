@@ -16,7 +16,7 @@
 
 package org.adonix.postrise;
 
-public class SuperUserAccess extends TestEnvironment implements DataSourceListener {
+public class SuperUserAccess extends TestEnvironment implements ConfigurationListener {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {

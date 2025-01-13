@@ -16,7 +16,7 @@
 
 package org.adonix.postrise;
 
-public interface DatabaseListener extends DataSourceListener {
+public interface DatabaseListener extends ConfigurationListener {
 
     String getDatabaseName();
 }

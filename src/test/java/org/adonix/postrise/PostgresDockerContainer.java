@@ -20,7 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerContainer> implements DataSourceListener {
+public class PostgresDockerContainer extends PostgreSQLContainer<PostgresDockerContainer>
+        implements ConfigurationListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
