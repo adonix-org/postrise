@@ -34,7 +34,7 @@ public interface SecurityEventListener extends EventListener {
      * {@link org.adonix.postrise.ConnectionProvider ConnectionProvider} is created.
      * 
      * @param connection - use this {@link Connection} to validate the login role.
-     * @param roleName   - the login role to be validated while creating the
+     * @param roleName   - the login role to be validated when creating the
      *                   {@link org.adonix.postrise.ConnectionProvider
      *                   ConnectionProvider}.
      * @throws SQLException if a SQL error occurs validating the login role.
@@ -45,7 +45,7 @@ public interface SecurityEventListener extends EventListener {
      * This security event fires each time a {@link Connection} is requested from
      * a {@link org.adonix.postrise.ConnectionProvider ConnectionProvider}.
      * 
-     * @param connection - use this {@link Connection} to validate the given role.
+     * @param connection - the {@link Connection} to validate the given role.
      * @param roleName   - the role to be validated for this {@link Connection}
      *                   request.
      * @throws SQLException if a SQL error occurs validating the role for this
