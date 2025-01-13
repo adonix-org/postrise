@@ -47,7 +47,7 @@ class PostgresDefaultSecurity implements SecurityEventListener {
         if (role.isSuperUser()) {
             throw new SecurityException("role '" + role.getRoleName() + "' is a super user");
         }
-        if (!role.isLoginUser()) {
+        if (!role.isLoginRole()) {
             throw new SecurityException("role '" + role.getRoleName() + "' is not a login user");
         }
     }

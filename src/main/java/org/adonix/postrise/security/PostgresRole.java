@@ -31,11 +31,11 @@ public class PostgresRole {
         return isSuperUser;
     }
 
-    public Boolean isLoginUser() {
+    public Boolean isLoginRole() {
         return isLoginUser;
     }
 
-    public Boolean isInherit() {
+    public Boolean isInheritRole() {
         return isInherit;
     }
 
