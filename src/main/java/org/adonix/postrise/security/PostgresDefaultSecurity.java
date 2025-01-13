@@ -17,8 +17,6 @@
 package org.adonix.postrise.security;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -33,17 +31,6 @@ import java.sql.SQLException;
 class PostgresDefaultSecurity implements SecurityEventListener {
 
     /**
-     * PostgreSQL specific query to SELECT privileges for a role from the
-     * pg_roles TABLE.
-     */
-    protected static final String SQL_SELECT_ROLE_PRIVILEGES = String.join(" ",
-            "SELECT",
-            "pg_roles.rolsuper AS is_super_user,",
-            "pg_roles.rolcanlogin AS is_login_user",
-            "FROM pg_roles",
-            "WHERE pg_roles.rolname = ? LIMIT 1");
-
-    /**
      * Constructs a new {@code DefaultSecurity} instance.
      */
     protected PostgresDefaultSecurity() {
@@ -52,29 +39,21 @@ class PostgresDefaultSecurity implements SecurityEventListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws SecurityException if the user does not exist, is not a login user, or
-     *                           is a super user.
+     * @throws SecurityException is not a login user, or is a super user.
      */
     @Override
-    public void onLogin(final Connection connection, final String user) throws SQLException {
-        try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
-            stmt.setString(1, user);
-            try (final ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    throw new SecurityException("user '" + user + "' does not exist");
-                }
-                if (!rs.getBoolean("is_login_user")) {
-                    throw new SecurityException("user '" + user + "' is not a login user");
-                }
-                if (rs.getBoolean("is_super_user")) {
-                    throw new SecurityException("user '" + user + "' is a super user");
-                }
-            }
+    public void onLogin(final Connection connection, final String roleName) throws SQLException {
+        final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
+        if (role.isSuperUser()) {
+            throw new SecurityException("role '" + role.getRoleName() + "' is a super user");
+        }
+        if (!role.isLoginUser()) {
+            throw new SecurityException("role '" + role.getRoleName() + "' is not a login user");
         }
     }
 
     @Override
-    public void onConnection(final Connection connection, final String role) throws SQLException {
+    public void onConnection(final Connection connection, final String roleName) throws SQLException {
         // TODO: maybe check if role is secure.
     }
 }
