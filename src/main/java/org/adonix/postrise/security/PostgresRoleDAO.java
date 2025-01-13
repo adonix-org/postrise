@@ -34,7 +34,7 @@ public class PostgresRoleDAO {
                 return new PostgresRole()
                         .setRoleName(rs.getString(1))
                         .setSuperUser(rs.getBoolean(2))
-                        .setLoginUser(rs.getBoolean(3))
+                        .setLoginRole(rs.getBoolean(3))
                         .setInherit(rs.getBoolean(4))
                         .setCreateRole(rs.getBoolean(5))
                         .setCreateDbRole(rs.getBoolean(6))

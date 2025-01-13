@@ -1,11 +1,11 @@
 package org.adonix.postrise.security;
 
-public class PostgresRole {
+final class PostgresRole {
 
     private String roleName;
     private Boolean isSuperUser;
-    private Boolean isLoginUser;
-    private Boolean isInherit;
+    private Boolean isLoginRole;
+    private Boolean isInheritRole;
     private Boolean isCreateRole;
     private Boolean isCreateDbRole;
     private Boolean isReplicationRole;
@@ -23,13 +23,13 @@ public class PostgresRole {
         return this;
     }
 
-    protected PostgresRole setLoginUser(final Boolean isLoginUser) {
-        this.isLoginUser = isLoginUser;
+    protected PostgresRole setLoginRole(final Boolean isLoginUser) {
+        this.isLoginRole = isLoginUser;
         return this;
     }
 
     protected PostgresRole setInherit(final Boolean isInherit) {
-        this.isInherit = isInherit;
+        this.isInheritRole = isInherit;
         return this;
     }
 
@@ -57,11 +57,11 @@ public class PostgresRole {
     }
 
     public Boolean isLoginRole() {
-        return isLoginUser;
+        return isLoginRole;
     }
 
     public Boolean isInheritRole() {
-        return isInherit;
+        return isInheritRole;
     }
 
     public Boolean isCreateRole() {
