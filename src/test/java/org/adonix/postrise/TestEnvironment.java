@@ -27,7 +27,7 @@ public class TestEnvironment {
         try (final Connection connection = ALPHA.getConnection("test", "test")) {
             executeSql(connection, "initialize.sql");
         }
-        try (final Connection connection = ALPHA.getConnection("adonix", "test")) {
+        try (final Connection connection = ALPHA.getConnection("beta", "test")) {
             executeSql(connection, "adonix.sql");
         }
     }

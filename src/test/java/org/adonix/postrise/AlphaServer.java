@@ -8,11 +8,11 @@ public class AlphaServer extends PostgresContainer {
 
     private static final Server instance = new AlphaServer();
 
-    public static final Server getInstance() {
-        return instance;
+    private AlphaServer() {
     }
 
-    private AlphaServer() {
+    public static final Server getInstance() {
+        return instance;
     }
 
     @Override

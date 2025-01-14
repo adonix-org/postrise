@@ -14,8 +14,8 @@
  * limitations under the License.
  */
  
-DROP DATABASE IF EXISTS adonix;
-CREATE DATABASE adonix
+DROP DATABASE IF EXISTS beta;
+CREATE DATABASE beta
     WITH
     OWNER = test
     ENCODING = 'UTF8'
@@ -23,7 +23,7 @@ CREATE DATABASE adonix
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
-CREATE ROLE login_user WITH
+CREATE ROLE beta_login WITH
     LOGIN
     NOSUPERUSER
     NOINHERIT
@@ -33,4 +33,4 @@ CREATE ROLE login_user WITH
     NOBYPASSRLS
     ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
-GRANT test TO login_user;
+GRANT test TO beta_login;

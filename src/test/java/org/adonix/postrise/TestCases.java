@@ -15,7 +15,7 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = BETA.getConnection("adonix", "test")) {
+        try (final Connection connection = BETA.getConnection("beta", "test")) {
             connection.setAutoCommit(true);
         }
     }
