@@ -9,14 +9,14 @@ public class TestCases extends TestEnvironment {
     @Test
     void run1() throws SQLException {
         try (final Connection connection = ALPHA.getConnection("test", "test")) {
-            connection.close();
+            connection.setAutoCommit(true);
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = BETA.getConnection("test", "test")) {
-            connection.close();
+        try (final Connection connection = BETA.getConnection("adonix", "test")) {
+            connection.setAutoCommit(true);
         }
     }
 }

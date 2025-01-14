@@ -1,6 +1,12 @@
 package org.adonix.postrise;
 
-public class BetaServer extends PostgresContainerServer {
+class BetaServer extends PostgresContainerServer {
+
+    private static final Server instance = new BetaServer();
+
+    public static final Server getInstance() {
+        return instance;
+    }
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {

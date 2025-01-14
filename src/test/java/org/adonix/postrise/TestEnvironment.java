@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class TestEnvironment {
 
-    static final Server ALPHA = new AlphaServer();
-    static final Server BETA = new BetaServer();
+    static final Server ALPHA = AlphaServer.getInstance();
+    static final Server BETA = BetaServer.getInstance();
 
     @BeforeAll
     static final void beforeAll() throws Exception {
