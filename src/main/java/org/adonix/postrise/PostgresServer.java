@@ -42,17 +42,17 @@ public class PostgresServer extends PostriseServer {
     }
 
     @Override
-    protected ConnectionProvider createConnectionProvider(final String database) {
+    protected SecurityEventListener getSecurityProvider() {
+        return POSTGRES_DEFAULT_SECURITY;
+    }
+
+    @Override
+    protected final ConnectionProvider createConnectionProvider(final String database) {
         return new PostgresDataSource(database);
     }
 
     @Override
-    protected void setRole(final Connection connection, final String roleName) throws SQLException {
+    protected final void setRole(final Connection connection, final String roleName) throws SQLException {
         PostgresRoleDAO.setRole(connection, roleName);
-    }
-
-    @Override
-    protected SecurityEventListener getSecurityProvider() {
-        return POSTGRES_DEFAULT_SECURITY;
     }
 }
