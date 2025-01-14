@@ -16,7 +16,7 @@
 
 package org.adonix.postrise;
 
-public class RestrictedUserAccess extends TestEnvironment implements ConfigurationListener {
+public class RestrictedUserAccess extends DockerConfiguration implements ConfigurationListener {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {

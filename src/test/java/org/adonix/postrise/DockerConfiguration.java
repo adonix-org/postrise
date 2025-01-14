@@ -24,11 +24,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.junit.jupiter.api.AfterAll;
 
-public class TestEnvironment {
+public class DockerConfiguration {
 
     protected static final JdbcDatabaseContainer<PostgresDockerContainer> postgresContainer = new PostgresDockerContainer();
-    // protected static final JdbcDatabaseContainer<MySQLDockerContainer>
-    // mySqlcontainer = new MySQLDockerContainer();
     protected static final Server LOCALHOST_SUPER = TestServers.getLocalhostSuper();
     protected static final Server LOCALHOST = TestServers.getLocalhost();
 
@@ -58,7 +56,7 @@ public class TestEnvironment {
 
     public static void executeSql(final Connection connection, final String fileName) throws Exception {
         final String sql = Files.readString(
-                Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
+                Paths.get(DockerConfiguration.class.getClassLoader().getResource(fileName).toURI()));
         connection.prepareStatement(sql).executeUpdate();
     }
 }

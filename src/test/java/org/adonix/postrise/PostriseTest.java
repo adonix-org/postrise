@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
-public class PostriseTest extends TestEnvironment {
+public class PostriseTest extends DockerConfiguration {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
