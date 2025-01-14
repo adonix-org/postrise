@@ -13,14 +13,14 @@ public class TestEnvironment {
 
     @BeforeAll
     static final void beforeAll() throws Exception {
-        PostgresContainerServer.start();
+        PostgresContainer.start();
         initialze();
     }
 
     @AfterAll
     static final void afterAll() throws Exception {
         ALPHA.close();
-        PostgresContainerServer.stop();
+        PostgresContainer.stop();
     }
 
     static void initialze() throws Exception {

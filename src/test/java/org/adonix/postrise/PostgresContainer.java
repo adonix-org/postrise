@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-abstract class PostgresContainerServer extends PostgresServer {
+abstract class PostgresContainer extends PostgresServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
