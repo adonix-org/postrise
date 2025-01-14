@@ -23,9 +23,8 @@ import java.util.EventListener;
 /**
  * An interface for handling security related events.
  * <p>
- * Implementations of this
- * interface can perform custom logic for validating users and roles during
- * login and connection requests.
+ * Implementations of this interface can perform custom logic for validating
+ * roles during login and connection requests.
  */
 public interface SecurityEventListener extends EventListener {
 
