@@ -161,16 +161,6 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public void setConnectionTestQuery(final String sql) {
-        delegate.setConnectionTestQuery(sql);
-    }
-
-    @Override
-    public String getConnectionTestQuery() {
-        return delegate.getConnectionTestQuery();
-    }
-
-    @Override
     public void addDataSourceProperty(String propertyName, Object value) {
         delegate.addDataSourceProperty(propertyName, value);
     }

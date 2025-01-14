@@ -82,22 +82,6 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
     boolean isAutoCommit();
 
     /**
-     * Set the SQL query to be executed to test the validity of connections. Using
-     * the JDBC4 <code>Connection.isValid()</code> method to test connection
-     * validity can be more efficient on some databases and is recommended.
-     *
-     * @param sql a SQL query string
-     */
-    void setConnectionTestQuery(String sql);
-
-    /**
-     * Get the SQL query to be executed to test the validity of connections.
-     *
-     * @return the SQL query string, or null
-     */
-    String getConnectionTestQuery();
-
-    /**
      * Add a property (name/value pair) that will be used to configure the
      * {@link DataSource}/{@link java.sql.Driver}.
      * <p>
