@@ -27,8 +27,9 @@ import javax.sql.DataSource;
  * implementing the {@link ConfigurationListener} interface.
  * <p>
  * Most implementations will call {@link #setUsername(String)} and
- * {@link #setPassword(String)} from the
- * {@link ConfigurationListener#onConfigure(ConnectionSettings)} method.
+ * {@link #setPassword(String)} in the
+ * {@link ConfigurationListener#onConfigure(ConnectionSettings)
+ * onConfigure(ConnectionSettings)} method.
  */
 public interface ConnectionSettings extends ConnectionPoolSettings {
     /**
@@ -55,7 +56,7 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      * @param hostname - the database server hostname.
      * @param port     - the database server port.
      */
-    void setJdbcUrl(final String hostname, final Integer port);
+    void setJdbcUrl(String hostname, Integer port);
 
     /**
      * Get the current JDBC Url.

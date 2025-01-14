@@ -57,8 +57,8 @@ public class TestEnvironment {
     }
 
     public static void executeSql(final Connection connection, final String fileName) throws Exception {
-        final String str = Files.readString(
+        final String sql = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
-        connection.prepareStatement(str).executeUpdate();
+        connection.prepareStatement(sql).executeUpdate();
     }
 }
