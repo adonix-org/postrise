@@ -25,10 +25,10 @@ public class TestEnvironment {
     }
 
     static void initialze() throws Exception {
-        try (final Connection connection = ALPHA.getConnection("postgres", "admin")) {
+        try (final Connection connection = ALPHA.getConnection("postrise", "postrise")) {
             executeSql(connection, "initialize.sql");
         }
-        try (final Connection connection = ALPHA.getConnection("beta_app", "admin")) {
+        try (final Connection connection = ALPHA.getConnection("beta_app", "postrise")) {
             executeSql(connection, "adonix.sql");
         }
     }

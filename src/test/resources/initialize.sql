@@ -22,6 +22,7 @@ CREATE DATABASE beta_app
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
+DROP ROLE IF EXISTS beta_login;
 CREATE ROLE beta_login WITH
     LOGIN
     NOSUPERUSER

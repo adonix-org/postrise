@@ -8,7 +8,7 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = ALPHA.getConnection("postgres", "admin")) {
+        try (final Connection connection = ALPHA.getConnection("postrise", "postrise")) {
             connection.getMetaData();
         }
     }
