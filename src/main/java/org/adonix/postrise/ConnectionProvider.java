@@ -20,9 +20,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Implementations of this interface encapsulate the details of connection
- * configuration. The connections are configured according to the settings
- * defined in {@link ConnectionSettings}.
+ * Implementations of this interface will configure a JDBC {@link Connection}
+ * with {@link ConnectionSettings}.
  */
 public interface ConnectionProvider extends ConnectionSettings {
 
