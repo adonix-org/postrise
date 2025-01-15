@@ -13,6 +13,12 @@ abstract class PostgresContainer extends PostgresServer {
 
     protected static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
+    protected PostgresContainer() {
+        container
+                .withUsername("super_user")
+                .withPassword("postrise");
+    }
+
     public static final void start() {
         container.start();
         LOGGER.info("{} container started.", container.getDockerImageName());

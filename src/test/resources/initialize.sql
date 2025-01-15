@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
- 
 DROP DATABASE IF EXISTS beta;
 CREATE DATABASE beta
     WITH
-    OWNER = test
+    OWNER = super_user
     ENCODING = 'UTF8'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1
@@ -34,5 +33,5 @@ CREATE ROLE beta_login WITH
     NOBYPASSRLS
     ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
-GRANT test TO beta_login;
+GRANT super_user TO beta_login;
 
