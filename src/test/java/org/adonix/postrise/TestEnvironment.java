@@ -6,7 +6,7 @@ import java.sql.Connection;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public class TestEnvironment {
+abstract class TestEnvironment {
 
     static final Server ALPHA = AlphaServer.getInstance();
     static final Server BETA = BetaServer.getInstance();
