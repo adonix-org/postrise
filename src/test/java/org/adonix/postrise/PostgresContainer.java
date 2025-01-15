@@ -28,6 +28,5 @@ abstract class PostgresContainer extends PostgresServer {
         settings.setJdbcUrl(container.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
-        settings.setAutoCommit(true);
     }
 }
