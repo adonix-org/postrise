@@ -19,11 +19,4 @@ public class AlphaServer extends PostgresContainer {
     protected SecurityEventListener getSecurityProvider() {
         return DISABLE_SECURITY;
     }
-
-    @Override
-    public void onConfigure(final ConnectionSettings settings) {
-        super.onConfigure(settings);
-        settings.setUsername(container.getUsername());
-        settings.setPassword(container.getPassword());
-    }
 }
