@@ -51,16 +51,6 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public void setDriverClassName(final String driverClassName) {
-        delegate.setDriverClassName(driverClassName);
-    }
-
-    @Override
-    public String getDriverClassName() {
-        return delegate.getDriverClassName();
-    }
-
-    @Override
     public void setUsername(final String username) {
         delegate.setUsername(username);
     }
