@@ -52,8 +52,14 @@ class PostgresDefaultSecurity implements SecurityEventListener {
         }
     }
 
+    /**
+     * <code>PostgresDefaultSecurity</code> does not currently check the provided
+     * role on every connection request for performance.
+     * <p>
+     * During development, {@link PostgresStrictSecurity} can be used to check roles.
+     */
     @Override
     public void onConnection(final Connection connection, final String roleName) throws SQLException {
-        // TODO: maybe check if role is secure.
+        //
     }
 }

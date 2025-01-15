@@ -32,8 +32,10 @@ final class DisableSecurity implements SecurityEventListener {
 
     /**
      * Constructs a new {@code DisableSecurity} instance.
+     * <p>
+     * Constructor is package-private.
      */
-    public DisableSecurity() {
+    protected DisableSecurity() {
         // No initialization required for this implementation.
     }
 
