@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
  
 DROP DATABASE IF EXISTS beta;
 CREATE DATABASE beta
@@ -34,3 +35,4 @@ CREATE ROLE beta_login WITH
     ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
 GRANT test TO beta_login;
+
