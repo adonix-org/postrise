@@ -7,6 +7,9 @@ class BetaServer extends PostgresContainer {
     private BetaServer() {
     }
 
+    /**
+     * @return the singleton{@link BetaServer}.
+     */
     public static final Server getInstance() {
         return instance;
     }
