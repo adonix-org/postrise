@@ -15,8 +15,8 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = BETA.getConnection("postgres", "beta_application")) {
-            connection.getAutoCommit();
+        try (final Connection connection = BETA.getConnection("beta_app", "beta_application")) {
+            connection.getMetaData();
         }
     }
 }
