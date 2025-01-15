@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-class BetaServer extends PostgresContainer {
+class BetaServer extends PostgresTestServer {
 
     private static final Server instance = new BetaServer();
 

@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-abstract class PostgresContainer extends PostgresServer {
+abstract class PostgresTestServer extends PostgresServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -26,7 +26,7 @@ abstract class PostgresContainer extends PostgresServer {
                 .withPassword(DB_PASS);
     }
 
-    protected PostgresContainer() {
+    protected PostgresTestServer() {
     }
 
     public static final void start() {
@@ -40,7 +40,7 @@ abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    public void onConfigure(final ConnectionSettings settings) {
+    public synchronized void onConfigure(final ConnectionSettings settings) {
         settings.setJdbcUrl(container.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());

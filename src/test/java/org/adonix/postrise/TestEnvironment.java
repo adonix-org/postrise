@@ -13,7 +13,7 @@ abstract class TestEnvironment {
 
     @BeforeAll
     static final void beforeAll() throws Exception {
-        PostgresContainer.start();
+        PostgresTestServer.start();
         initialze();
     }
 
@@ -21,7 +21,7 @@ abstract class TestEnvironment {
     static final void afterAll() throws Exception {
         ALPHA.close();
         BETA.close();
-        PostgresContainer.stop();
+        PostgresTestServer.stop();
     }
 
     static void initialze() throws Exception {
