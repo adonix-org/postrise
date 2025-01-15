@@ -20,6 +20,7 @@ public class TestEnvironment {
     @AfterAll
     static final void afterAll() throws Exception {
         ALPHA.close();
+        BETA.close();
         PostgresContainer.stop();
     }
 
