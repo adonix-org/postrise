@@ -19,11 +19,14 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Implementations of this interface encapsulate the details of connection
+ * configuration. The connections are configured according to the settings
+ * defined in {@link ConnectionSettings}.
+ */
 public interface ConnectionProvider extends ConnectionSettings {
 
     /**
-     * All implementations should provide a valid and configured {@link Connection}.
-     * 
      * @return A {@link Connection} to the data source.
      * @throws SQLException if a database error occurs.
      */

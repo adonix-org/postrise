@@ -18,9 +18,6 @@ package org.adonix.postrise;
 
 interface ConnectionPoolSettings {
 
-    // TODO: Compare these methods to other connection pool implementations for
-    // common methods to make this more generic.
-
     void setMaxPoolSize(int size);
 
     int getMaxPoolSize();
