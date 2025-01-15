@@ -15,7 +15,8 @@ abstract class PostgresContainer extends PostgresServer {
 
     protected PostgresContainer() {
         container
-                .withUsername("super_user")
+                .withDatabaseName("postgres")
+                .withUsername("admin")
                 .withPassword("postrise");
     }
 
@@ -31,7 +32,7 @@ abstract class PostgresContainer extends PostgresServer {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(container.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
+        settings.setJdbcUrl(container.getJdbcUrl());
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
     }

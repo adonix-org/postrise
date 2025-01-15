@@ -8,14 +8,14 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = ALPHA.getConnection("test", "super_user")) {
+        try (final Connection connection = ALPHA.getConnection("postgres", "admin")) {
             connection.getMetaData();
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = BETA.getConnection("beta", "super_user")) {
+        try (final Connection connection = BETA.getConnection("postgres", "beta_application")) {
             connection.getAutoCommit();
         }
     }
