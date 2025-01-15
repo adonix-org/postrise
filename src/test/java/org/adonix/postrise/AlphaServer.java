@@ -11,6 +11,9 @@ public class AlphaServer extends PostgresContainer {
     private AlphaServer() {
     }
 
+    /**
+     * @return the single instance of the {@link AlphaServer}.
+     */
     public static final Server getInstance() {
         return instance;
     }
