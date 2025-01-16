@@ -9,7 +9,7 @@ abstract class PostgresTestServer extends PostgresServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final String POSTGRES_IMAGE_NAME = "postgres:latest";
+    private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 
     protected static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
