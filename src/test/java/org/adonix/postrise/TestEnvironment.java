@@ -20,11 +20,15 @@ abstract class TestEnvironment {
             getEntry(DeltaServer::getInstance));
 
     private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
-        return entry(getKey(supplier.get().getClass()), supplier);
+        return entry(getKey(supplier), supplier);
     }
 
     private static final String getKey(final Class<? extends Server> clazz) {
         return clazz.getSimpleName();
+    }
+
+    private static final String getKey(final Supplier<Server> supplier) {
+        return getKey(supplier.get().getClass());
     }
 
     protected static final Server getServer(final Class<? extends Server> clazz) {
