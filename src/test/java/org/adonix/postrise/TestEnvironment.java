@@ -6,27 +6,29 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    public enum Servers {
-        ALPHA,
-        BETA,
-        GAMMA,
-        DELTA
+    private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
+        return entry(getKey(supplier.get().getClass()), supplier);
     }
 
-    private static Map<Servers, Supplier<Server>> SERVERS = Map.ofEntries(
-            entry(Servers.ALPHA, AlphaServer::getInstance),
-            entry(Servers.BETA, BetaServer::getInstance),
-            entry(Servers.GAMMA, GammaServer::getInstance),
-            entry(Servers.DELTA, DeltaServer::getInstance));
+    private static final String getKey(final Class<? extends Server> clazz) {
+        return clazz.getSimpleName();
+    }
 
-    static final Server getServer(final Servers server) {
-        return SERVERS.get(server).get();
+    private static Map<String, Supplier<Server>> SERVERS = Map.ofEntries(
+            getEntry(AlphaServer::getInstance),
+            getEntry(BetaServer::getInstance),
+            getEntry(GammaServer::getInstance),
+            getEntry(DeltaServer::getInstance));
+
+    protected static final Server getServer(final Class<? extends Server> clazz) {
+        return SERVERS.get(getKey(clazz)).get();
     }
 
     @BeforeAll
@@ -44,10 +46,10 @@ abstract class TestEnvironment {
     }
 
     static void initialze() throws Exception {
-        try (final Connection connection = getServer(Servers.ALPHA).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServer(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "beta.sql");
         }
-        try (final Connection connection = getServer(Servers.ALPHA).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServer(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "delta.sql");
         }
     }

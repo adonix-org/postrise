@@ -16,14 +16,14 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = getServer(Servers.ALPHA).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServer(AlphaServer.class).getConnection("postrise", "postrise")) {
             connection.getMetaData();
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = getServer(Servers.DELTA).getConnection("database_delta",
+        try (final Connection connection = getServer(DeltaServer.class).getConnection("database_delta",
                 "delta_application")) {
             connection.getMetaData();
         }
@@ -33,7 +33,7 @@ public class TestCases extends TestEnvironment {
     @Test
     void run3() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            getServer(Servers.GAMMA).getConnection("database_beta", "postrise");
+            getServer(GammaServer.class).getConnection("database_beta", "postrise");
         });
 
         Throwable cause = t.getCause();
@@ -50,7 +50,7 @@ public class TestCases extends TestEnvironment {
     @Test
     void run4() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            getServer(Servers.ALPHA).getConnection("not_a_database", "postrise");
+            getServer(AlphaServer.class).getConnection("not_a_database", "postrise");
         });
 
         Throwable cause = t.getCause();
