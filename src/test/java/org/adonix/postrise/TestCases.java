@@ -42,6 +42,10 @@ public class TestCases extends TestEnvironment {
         assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
     }
 
+    /**
+     * This test validates that {@link PSQLException} errors are propagated when
+     * they occur.
+     */
     @DisplayName("Postgres Exception Propagation")
     @Test
     void run4() {
