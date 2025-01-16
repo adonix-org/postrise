@@ -13,14 +13,6 @@ import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
-        return entry(getKey(supplier.get().getClass()), supplier);
-    }
-
-    private static final String getKey(final Class<? extends Server> clazz) {
-        return clazz.getSimpleName();
-    }
-
     private static Map<String, Supplier<Server>> SERVERS = Map.ofEntries(
             getEntry(AlphaServer::getInstance),
             getEntry(BetaServer::getInstance),
@@ -29,6 +21,14 @@ abstract class TestEnvironment {
 
     protected static final Server getServer(final Class<? extends Server> clazz) {
         return SERVERS.get(getKey(clazz)).get();
+    }
+
+    private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
+        return entry(getKey(supplier.get().getClass()), supplier);
+    }
+
+    private static final String getKey(final Class<? extends Server> clazz) {
+        return clazz.getSimpleName();
     }
 
     @BeforeAll
