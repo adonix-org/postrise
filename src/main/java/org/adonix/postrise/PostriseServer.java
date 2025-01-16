@@ -100,8 +100,8 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
     /**
      * 
-     * @param database - the name of the database used when creating the data
-     *                 source.
+     * @param database - the name of the database for creating the
+     *                 {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
      */
     private final ConnectionProvider create(final String database) {
