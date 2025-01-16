@@ -14,10 +14,10 @@ import org.junit.jupiter.api.BeforeAll;
 abstract class TestEnvironment {
 
     private static Map<String, Supplier<Server>> SERVERS = Map.ofEntries(
-            getEntry(AlphaServer::getInstance),
-            getEntry(BetaServer::getInstance),
-            getEntry(GammaServer::getInstance),
-            getEntry(DeltaServer::getInstance));
+            getEntry(AlphaServer::new),
+            getEntry(BetaServer::new),
+            getEntry(GammaServer::new),
+            getEntry(DeltaServer::new));
 
     private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
         return entry(getKey(supplier), supplier);

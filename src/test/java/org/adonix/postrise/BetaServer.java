@@ -2,18 +2,6 @@ package org.adonix.postrise;
 
 class BetaServer extends PostgresTestServer {
 
-    private static final Server instance = new BetaServer();
-
-    private BetaServer() {
-    }
-
-    /**
-     * @return the singleton {@link BetaServer}.
-     */
-    static final Server getInstance() {
-        return instance;
-    }
-
     @Override
     public void onConfigure(final ConnectionSettings settings) {
         settings.setUsername("beta_login");

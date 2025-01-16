@@ -4,19 +4,7 @@ import static org.adonix.postrise.security.SecurityProviders.POSTGRES_STRICT_SEC
 
 import org.adonix.postrise.security.SecurityEventListener;
 
-public class DeltaServer extends PostgresTestServer {
-
-    private static final Server instance = new DeltaServer();
-
-    private DeltaServer() {
-    }
-
-    /**
-     * @return the singleton {@link GammaServer}.
-     */
-    static final Server getInstance() {
-        return instance;
-    }
+class DeltaServer extends PostgresTestServer {
 
     @Override
     protected SecurityEventListener getSecurityProvider() {

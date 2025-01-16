@@ -6,18 +6,6 @@ import org.adonix.postrise.security.SecurityEventListener;
 
 class AlphaServer extends PostgresTestServer {
 
-    private static final Server instance = new AlphaServer();
-
-    private AlphaServer() {
-    }
-
-    /**
-     * @return the singleton {@link AlphaServer}.
-     */
-    final static Server getInstance() {
-        return instance;
-    }
-
     @Override
     protected SecurityEventListener getSecurityProvider() {
         return DISABLE_SECURITY;
