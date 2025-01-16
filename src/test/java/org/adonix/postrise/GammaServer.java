@@ -10,7 +10,7 @@ public class GammaServer extends PostgresTestServer {
     /**
      * @return the singleton {@link GammaServer}.
      */
-    public static final Server getInstance() {
+    static final Server getInstance() {
         return instance;
     }
 }

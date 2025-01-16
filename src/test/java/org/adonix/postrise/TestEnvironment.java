@@ -3,15 +3,25 @@ package org.adonix.postrise;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    static final Server ALPHA = AlphaServer.getInstance();
-    static final Server BETA = BetaServer.getInstance();
-    static final Server GAMMA = GammaServer.getInstance();
-    static final Server DELTA = DeltaServer.getInstance();
+    private static List<Supplier<Server>> servers = new LinkedList<>();
+
+    static final Server ALPHA = getServer(AlphaServer::getInstance);
+    static final Server BETA = getServer(BetaServer::getInstance);
+    static final Server GAMMA = getServer(GammaServer::getInstance);
+    static final Server DELTA = getServer(DeltaServer::getInstance);
+
+    static Server getServer(Supplier<Server> supplier) {
+        servers.add(supplier);
+        return supplier.get();
+    }
 
     @BeforeAll
     static final void beforeAll() throws Exception {
@@ -21,10 +31,9 @@ abstract class TestEnvironment {
 
     @AfterAll
     static final void afterAll() throws Exception {
-        ALPHA.close();
-        BETA.close();
-        GAMMA.close();
-        DELTA.close();
+        for (final Supplier<Server> server : servers) {
+            server.get().close();
+        }
         PostgresTestServer.stop();
     }
 

@@ -27,16 +27,6 @@ abstract class PostgresTestServer extends PostgresServer {
     protected PostgresTestServer() {
     }
 
-    public static final void start() {
-        container.start();
-        LOGGER.info("{} container started.", container.getDockerImageName());
-    }
-
-    public static final void stop() {
-        container.stop();
-        LOGGER.info("{} container stopped.", container.getDockerImageName());
-    }
-
     @Override
     public String getHostName() {
         return container.getHost();
@@ -51,5 +41,15 @@ abstract class PostgresTestServer extends PostgresServer {
     public void onConfigure(final ConnectionSettings settings) {
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
+    }
+
+    public static final void start() {
+        container.start();
+        LOGGER.info("{} container started.", container.getDockerImageName());
+    }
+
+    public static final void stop() {
+        container.stop();
+        LOGGER.info("{} container stopped.", container.getDockerImageName());
     }
 }

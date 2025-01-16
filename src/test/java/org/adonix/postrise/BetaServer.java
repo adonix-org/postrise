@@ -10,7 +10,7 @@ class BetaServer extends PostgresTestServer {
     /**
      * @return the singleton {@link BetaServer}.
      */
-    public static final Server getInstance() {
+    static final Server getInstance() {
         return instance;
     }
 
