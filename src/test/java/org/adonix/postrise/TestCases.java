@@ -46,12 +46,12 @@ public class TestCases extends TestEnvironment {
     @Test
     void run4() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            GAMMA.getConnection("no_database", "postrise");
+            ALPHA.getConnection("not_a_database", "postrise");
         });
 
         Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: database \"no_database\" does not exist", cause.getMessage());
+        assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
     }
 }
