@@ -12,7 +12,7 @@ public class AlphaServer extends PostgresTestServer {
     }
 
     /**
-     * @return the singleton{@link AlphaServer}.
+     * @return the singleton {@link AlphaServer}.
      */
     public static final Server getInstance() {
         return instance;

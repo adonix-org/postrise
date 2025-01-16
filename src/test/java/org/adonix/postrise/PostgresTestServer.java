@@ -11,7 +11,7 @@ abstract class PostgresTestServer extends PostgresServer {
 
     private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 
-    protected static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
+    private static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
     private static final String DB_NAME = "postrise";
 
@@ -40,8 +40,17 @@ abstract class PostgresTestServer extends PostgresServer {
     }
 
     @Override
-    public synchronized void onConfigure(final ConnectionSettings settings) {
-        settings.setJdbcUrl(container.withDatabaseName(settings.getDatabaseName()).getJdbcUrl());
+    public String getHostName() {
+        return container.getHost();
+    }
+
+    @Override
+    public Integer getPort() {
+        return container.getMappedPort(PostgreSQLContainer.POSTGRESQL_PORT);
+    }
+
+    @Override
+    public void onConfigure(final ConnectionSettings settings) {
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
     }

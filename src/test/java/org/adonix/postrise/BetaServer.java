@@ -8,7 +8,7 @@ class BetaServer extends PostgresTestServer {
     }
 
     /**
-     * @return the singleton{@link BetaServer}.
+     * @return the singleton {@link BetaServer}.
      */
     public static final Server getInstance() {
         return instance;
@@ -16,7 +16,6 @@ class BetaServer extends PostgresTestServer {
 
     @Override
     public void onConfigure(final ConnectionSettings settings) {
-        super.onConfigure(settings);
         settings.setUsername("beta_login");
         settings.setPassword("helloworld");
     }
