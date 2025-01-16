@@ -1,7 +1,5 @@
 package org.adonix.postrise;
 
-import static org.adonix.postrise.TestEnvironment.Servers.ALPHA;
-import static org.adonix.postrise.TestEnvironment.Servers.DELTA;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,14 +16,14 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = getServer(ALPHA).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServer(Servers.ALPHA).getConnection("postrise", "postrise")) {
             connection.getMetaData();
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = getServer(DELTA).getConnection("database_delta",
+        try (final Connection connection = getServer(Servers.DELTA).getConnection("database_delta",
                 "delta_application")) {
             connection.getMetaData();
         }
