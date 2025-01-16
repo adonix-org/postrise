@@ -10,6 +10,8 @@ abstract class TestEnvironment {
 
     static final Server ALPHA = AlphaServer.getInstance();
     static final Server BETA = BetaServer.getInstance();
+    static final Server GAMMA = GammaServer.getInstance();
+    static final Server DELTA = DeltaServer.getInstance();
 
     @BeforeAll
     static final void beforeAll() throws Exception {
@@ -21,6 +23,8 @@ abstract class TestEnvironment {
     static final void afterAll() throws Exception {
         ALPHA.close();
         BETA.close();
+        GAMMA.close();
+        DELTA.close();
         PostgresTestServer.stop();
     }
 
