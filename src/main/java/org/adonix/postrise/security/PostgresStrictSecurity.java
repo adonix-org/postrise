@@ -25,7 +25,7 @@ final class PostgresStrictSecurity extends PostgresDefaultSecurity {
         if (role.isSuperUser()) {
             throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
         }
-        if (!role.isLoginRole()) {
+        if (role.isLoginRole()) {
             throw new RoleSecurityException("role '" + role.getRoleName() + "' is a login user");
         }
     }

@@ -24,7 +24,7 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = BETA.getConnection("beta_app", "beta_application")) {
+        try (final Connection connection = DELTA.getConnection("database_delta", "delta_application")) {
             connection.getMetaData();
         }
     }
@@ -33,7 +33,7 @@ public class TestCases extends TestEnvironment {
     @Test
     void run3() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            GAMMA.getConnection("beta_app", "postrise");
+            GAMMA.getConnection("database_beta", "postrise");
         });
 
         Throwable cause = t.getCause();

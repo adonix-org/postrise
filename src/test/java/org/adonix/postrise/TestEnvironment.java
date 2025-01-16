@@ -30,10 +30,10 @@ abstract class TestEnvironment {
 
     static void initialze() throws Exception {
         try (final Connection connection = ALPHA.getConnection("postrise", "postrise")) {
-            executeSql(connection, "initialize.sql");
+            executeSql(connection, "beta.sql");
         }
-        try (final Connection connection = ALPHA.getConnection("beta_app", "postrise")) {
-            executeSql(connection, "adonix.sql");
+        try (final Connection connection = ALPHA.getConnection("postrise", "postrise")) {
+            executeSql(connection, "delta.sql");
         }
     }
 
