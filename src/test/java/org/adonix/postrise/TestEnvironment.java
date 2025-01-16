@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static Map<String, Supplier<Server>> SERVERS = Map.ofEntries(
+    private static Map<String, Supplier<Server>> SINGLETONS = Map.ofEntries(
             getEntry(AlphaServer::new),
             getEntry(BetaServer::new),
             getEntry(GammaServer::new),
@@ -32,7 +32,7 @@ abstract class TestEnvironment {
     }
 
     protected static final Server getServer(final Class<? extends Server> clazz) {
-        return SERVERS.get(getKey(clazz)).get();
+        return SINGLETONS.get(getKey(clazz)).get();
     }
 
     @BeforeAll
@@ -43,7 +43,7 @@ abstract class TestEnvironment {
 
     @AfterAll
     static final void afterAll() throws Exception {
-        for (final Supplier<Server> server : SERVERS.values()) {
+        for (final Supplier<Server> server : SINGLETONS.values()) {
             server.get().close();
         }
         PostgresTestServer.stop();
