@@ -1,5 +1,7 @@
 package org.adonix.postrise;
 
+import static org.adonix.postrise.TestEnvironment.Servers.ALPHA;
+import static org.adonix.postrise.TestEnvironment.Servers.DELTA;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,14 +18,15 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = ALPHA.getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServer(ALPHA).getConnection("postrise", "postrise")) {
             connection.getMetaData();
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = DELTA.getConnection("database_delta", "delta_application")) {
+        try (final Connection connection = getServer(DELTA).getConnection("database_delta",
+                "delta_application")) {
             connection.getMetaData();
         }
     }
@@ -32,7 +35,7 @@ public class TestCases extends TestEnvironment {
     @Test
     void run3() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            GAMMA.getConnection("database_beta", "postrise");
+            getServer(Servers.GAMMA).getConnection("database_beta", "postrise");
         });
 
         Throwable cause = t.getCause();
@@ -45,7 +48,7 @@ public class TestCases extends TestEnvironment {
     @Test
     void run4() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            ALPHA.getConnection("not_a_database", "postrise");
+            getServer(Servers.ALPHA).getConnection("not_a_database", "postrise");
         });
 
         Throwable cause = t.getCause();
