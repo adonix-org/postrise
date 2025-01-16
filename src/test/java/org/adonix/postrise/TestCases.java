@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.adonix.postrise.security.RoleSecurityException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
@@ -36,7 +38,7 @@ public class TestCases extends TestEnvironment {
 
         Throwable cause = t.getCause();
         assertNotNull(cause);
-        assertTrue(cause instanceof SQLException);
+        assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
     }
 

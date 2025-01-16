@@ -39,16 +39,16 @@ class PostgresDefaultSecurity implements SecurityEventListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws SecurityException is not a login user, or is a super user.
+     * @throws RoleSecurityException is not a login user, or is a super user.
      */
     @Override
     public void onLogin(final Connection connection, final String roleName) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
         if (role.isSuperUser()) {
-            throw new SecurityException("role '" + role.getRoleName() + "' is a super user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
         }
         if (!role.isLoginRole()) {
-            throw new SecurityException("role '" + role.getRoleName() + "' is not a login user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is not a login user");
         }
     }
 
@@ -56,7 +56,8 @@ class PostgresDefaultSecurity implements SecurityEventListener {
      * <code>PostgresDefaultSecurity</code> does not currently check the provided
      * role on every connection request for performance.
      * <p>
-     * During development, {@link PostgresStrictSecurity} can be used to check roles.
+     * During development, {@link PostgresStrictSecurity} can be used to check
+     * roles.
      */
     @Override
     public void onConnection(final Connection connection, final String roleName) throws SQLException {

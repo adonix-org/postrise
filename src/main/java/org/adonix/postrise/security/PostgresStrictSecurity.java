@@ -15,17 +15,18 @@ final class PostgresStrictSecurity extends PostgresDefaultSecurity {
      * <p>
      * {@inheritDoc}
      * 
-     * @throws SecurityException if the role is a LOGIN role, or is a SUPER user.
+     * @throws RoleSecurityException if the role is a LOGIN role, or is a SUPER
+     *                               user.
      * 
      */
     @Override
     public void onConnection(final Connection connection, final String roleName) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
         if (role.isSuperUser()) {
-            throw new SecurityException("user '" + role.getRoleName() + "' is a super user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
         }
         if (!role.isLoginRole()) {
-            throw new SecurityException("user '" + role.getRoleName() + "' is a login user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a login user");
         }
     }
 }
