@@ -14,9 +14,7 @@ abstract class PostgresTestServer extends PostgresServer {
     private static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
     private static final String DB_NAME = "postrise";
-
     private static final String DB_USER = "postrise";
-
     private static final String DB_PASS = "postrise";
 
     static {
