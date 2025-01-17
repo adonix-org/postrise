@@ -37,11 +37,11 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof GammaServer);
 
-        Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("database_beta", "postrise");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection("database_beta", "postrise").close();
         });
 
-        Throwable cause = t.getCause();
+        final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
@@ -58,11 +58,11 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("not_a_database", "postrise");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection("not_a_database", "postrise").close();
         });
 
-        Throwable cause = t.getCause();
+        final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
