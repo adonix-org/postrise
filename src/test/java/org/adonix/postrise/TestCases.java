@@ -55,8 +55,10 @@ public class TestCases extends TestEnvironment {
     @Test
     void run4() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            getServerInstance(AlphaServer.class)
-                    .getConnection("not_a_database", "postrise");
+            try (final Connection connection = getServerInstance(AlphaServer.class)
+                    .getConnection("not_a_database", "postrise")) {
+                assertNull(connection);
+            }
         });
 
         Throwable cause = t.getCause();
