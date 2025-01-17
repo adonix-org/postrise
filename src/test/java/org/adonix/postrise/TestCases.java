@@ -13,13 +13,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class TestCases extends TestEnvironment {
+class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
         try (final Connection connection = getServerInstance(AlphaServer.class)
                 .getConnection("postrise", "postrise")) {
-            connection.getMetaData();
+            assertNotNull(connection);
         }
     }
 
@@ -27,7 +27,7 @@ public class TestCases extends TestEnvironment {
     void run2() throws SQLException {
         try (final Connection connection = getServerInstance(DeltaServer.class)
                 .getConnection("database_delta", "delta_application")) {
-            connection.getMetaData();
+            assertNotNull(connection);
         }
     }
 

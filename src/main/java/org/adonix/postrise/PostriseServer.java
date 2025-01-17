@@ -53,7 +53,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
 
-    public PostriseServer() {
+    protected PostriseServer() {
         addListener(this);
     }
 

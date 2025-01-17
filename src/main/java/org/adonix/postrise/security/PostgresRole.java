@@ -3,44 +3,44 @@ package org.adonix.postrise.security;
 final class PostgresRole {
 
     private String roleName;
-    private Boolean isSuperUser;
-    private Boolean isLoginRole;
-    private Boolean isInheritRole;
-    private Boolean isCreateRole;
-    private Boolean isCreateDbRole;
-    private Boolean isReplicationRole;
+    private boolean isSuperUser;
+    private boolean isLoginRole;
+    private boolean isInheritRole;
+    private boolean isCreateRole;
+    private boolean isCreateDbRole;
+    private boolean isReplicationRole;
 
     PostgresRole setRoleName(final String roleName) {
         this.roleName = roleName;
         return this;
     }
 
-    PostgresRole setSuperUser(final Boolean isSuperUser) {
+    PostgresRole setSuperUser(final boolean isSuperUser) {
         this.isSuperUser = isSuperUser;
         return this;
     }
 
-    PostgresRole setLoginRole(final Boolean isLoginUser) {
+    PostgresRole setLoginRole(final boolean isLoginUser) {
         this.isLoginRole = isLoginUser;
         return this;
     }
 
-    PostgresRole setInherit(final Boolean isInherit) {
+    PostgresRole setInherit(final boolean isInherit) {
         this.isInheritRole = isInherit;
         return this;
     }
 
-    PostgresRole setCreateRole(final Boolean isCreateRole) {
+    PostgresRole setCreateRole(final boolean isCreateRole) {
         this.isCreateRole = isCreateRole;
         return this;
     }
 
-    PostgresRole setCreateDbRole(final Boolean isCreateDbRole) {
+    PostgresRole setCreateDbRole(final boolean isCreateDbRole) {
         this.isCreateDbRole = isCreateDbRole;
         return this;
     }
 
-    PostgresRole setReplicationRole(final Boolean isReplicationRole) {
+    PostgresRole setReplicationRole(final boolean isReplicationRole) {
         this.isReplicationRole = isReplicationRole;
         return this;
     }
@@ -49,27 +49,27 @@ final class PostgresRole {
         return roleName;
     }
 
-    Boolean isSuperUser() {
+    boolean isSuperUser() {
         return isSuperUser;
     }
 
-    Boolean isLoginRole() {
+    boolean isLoginRole() {
         return isLoginRole;
     }
 
-    Boolean isInheritRole() {
+    boolean isInheritRole() {
         return isInheritRole;
     }
 
-    Boolean isCreateRole() {
+    boolean isCreateRole() {
         return isCreateRole;
     }
 
-    Boolean isCreateDbRole() {
+    boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
-    Boolean isReplicationRole() {
+    boolean isReplicationRole() {
         return isReplicationRole;
     }
 }

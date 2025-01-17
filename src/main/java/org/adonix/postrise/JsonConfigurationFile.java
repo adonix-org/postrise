@@ -31,7 +31,7 @@ public abstract class JsonConfigurationFile {
 
     protected final JSONObject configuration;
 
-    public JsonConfigurationFile() {
+    protected JsonConfigurationFile() {
         try {
             configuration = new JSONObject(new JSONTokener(Files.readString(getJsonFile().toAbsolutePath())));
         } catch (final Exception e) {

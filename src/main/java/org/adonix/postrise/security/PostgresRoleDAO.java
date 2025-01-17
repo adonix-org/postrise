@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PostgresRoleDAO {
+public abstract class PostgresRoleDAO {
+
+    private PostgresRoleDAO() {
+    }
 
     /**
      * PostgreSQL specific query to SET the role for the {@link Connection}
