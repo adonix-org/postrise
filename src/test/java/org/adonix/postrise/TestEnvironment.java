@@ -23,7 +23,7 @@ abstract class TestEnvironment {
     }
 
     private static final String getKey(final Class<? extends Server> clazz) {
-        return clazz.getCanonicalName();
+        return clazz.getName();
     }
 
     protected static final Server getInstance(final Class<? extends Server> clazz) {
