@@ -2,7 +2,6 @@ package org.adonix.postrise;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,11 +33,9 @@ class TestCases extends TestEnvironment {
     @DisplayName("Super User Security Exception")
     @Test
     void run3() {
+        final Server server = getServerInstance(GammaServer.class);
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            try (final Connection connection = getServerInstance(GammaServer.class)
-                    .getConnection("database_beta", "postrise")) {
-                assertNull(connection);
-            }
+            server.getConnection("database_beta", "postrise");
         });
 
         Throwable cause = t.getCause();
@@ -54,11 +51,9 @@ class TestCases extends TestEnvironment {
     @DisplayName("Postgres Exception Propagation")
     @Test
     void run4() {
+        final Server server = getServerInstance(AlphaServer.class);
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            try (final Connection connection = getServerInstance(AlphaServer.class)
-                    .getConnection("not_a_database", "postrise")) {
-                assertNull(connection);
-            }
+            server.getConnection("not_a_database", "postrise");
         });
 
         Throwable cause = t.getCause();
