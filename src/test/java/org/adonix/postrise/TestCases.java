@@ -34,6 +34,9 @@ class TestCases extends TestEnvironment {
     @Test
     void run3() {
         final Server server = getServerInstance(GammaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof GammaServer);
+
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection("database_beta", "postrise");
         });
@@ -52,6 +55,9 @@ class TestCases extends TestEnvironment {
     @Test
     void run4() {
         final Server server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection("not_a_database", "postrise");
         });
