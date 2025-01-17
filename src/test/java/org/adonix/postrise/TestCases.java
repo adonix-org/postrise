@@ -1,8 +1,9 @@
 package org.adonix.postrise;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
@@ -16,15 +17,16 @@ public class TestCases extends TestEnvironment {
 
     @Test
     void run1() throws SQLException {
-        try (final Connection connection = Server(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServerInstance(AlphaServer.class)
+                .getConnection("postrise", "postrise")) {
             connection.getMetaData();
         }
     }
 
     @Test
     void run2() throws SQLException {
-        try (final Connection connection = Server(DeltaServer.class).getConnection("database_delta",
-                "delta_application")) {
+        try (final Connection connection = getServerInstance(DeltaServer.class)
+                .getConnection("database_delta", "delta_application")) {
             connection.getMetaData();
         }
     }
@@ -33,7 +35,10 @@ public class TestCases extends TestEnvironment {
     @Test
     void run3() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            Server(GammaServer.class).getConnection("database_beta", "postrise");
+            try (final Connection connection = getServerInstance(GammaServer.class)
+                    .getConnection("database_beta", "postrise")) {
+                assertNull(connection);
+            }
         });
 
         Throwable cause = t.getCause();
@@ -50,7 +55,8 @@ public class TestCases extends TestEnvironment {
     @Test
     void run4() {
         Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            Server(AlphaServer.class).getConnection("not_a_database", "postrise");
+            getServerInstance(AlphaServer.class)
+                    .getConnection("not_a_database", "postrise");
         });
 
         Throwable cause = t.getCause();
