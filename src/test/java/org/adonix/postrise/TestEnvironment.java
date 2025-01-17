@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static Map<String, Server> SINGLETONS = Map.ofEntries(
+    private static Map<String, Server> INSTANCES = Map.ofEntries(
             getEntry(new AlphaServer()),
             getEntry(new BetaServer()),
             getEntry(new GammaServer()),
@@ -26,8 +26,8 @@ abstract class TestEnvironment {
         return clazz.getCanonicalName();
     }
 
-    protected static final Server getServer(final Class<? extends Server> clazz) {
-        return SINGLETONS.get(getKey(clazz));
+    protected static final Server getInstance(final Class<? extends Server> clazz) {
+        return INSTANCES.get(getKey(clazz));
     }
 
     @BeforeAll
@@ -38,17 +38,17 @@ abstract class TestEnvironment {
 
     @AfterAll
     static final void afterAll() throws Exception {
-        for (final Server server : SINGLETONS.values()) {
+        for (final Server server : INSTANCES.values()) {
             server.close();
         }
         PostgresTestServer.stop();
     }
 
     static void initialze() throws Exception {
-        try (final Connection connection = getServer(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "beta.sql");
         }
-        try (final Connection connection = getServer(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "delta.sql");
         }
     }
