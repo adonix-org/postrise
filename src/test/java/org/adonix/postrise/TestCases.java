@@ -38,7 +38,7 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof GammaServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("database_beta", "postrise").close();
+            server.getConnection("database_beta", "postrise");
         });
 
         final Throwable cause = t.getCause();
@@ -59,7 +59,7 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof AlphaServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("not_a_database", "postrise").close();
+            server.getConnection("not_a_database", "postrise");
         });
 
         final Throwable cause = t.getCause();
