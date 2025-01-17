@@ -25,6 +25,7 @@ abstract class PostgresTestServer extends PostgresServer {
     }
 
     protected PostgresTestServer() {
+        LOGGER.info("Calling constructor for {}", this.getClass().getSimpleName());
     }
 
     @Override

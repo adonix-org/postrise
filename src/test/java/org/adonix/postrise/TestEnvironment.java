@@ -7,32 +7,27 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Supplier;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static Map<String, Supplier<Server>> SINGLETONS = Map.ofEntries(
-            getEntry(AlphaServer::new),
-            getEntry(BetaServer::new),
-            getEntry(GammaServer::new),
-            getEntry(DeltaServer::new));
+    private static Map<String, Server> SINGLETONS = Map.ofEntries(
+            getEntry(new AlphaServer()),
+            getEntry(new BetaServer()),
+            getEntry(new GammaServer()),
+            getEntry(new DeltaServer()));
 
-    private static final Entry<String, Supplier<Server>> getEntry(final Supplier<Server> supplier) {
-        return entry(getKey(supplier), supplier);
+    private static final Entry<String, Server> getEntry(final Server server) {
+        return entry(getKey(server.getClass()), server);
     }
 
     private static final String getKey(final Class<? extends Server> clazz) {
-        return clazz.getSimpleName();
-    }
-
-    private static final String getKey(final Supplier<Server> supplier) {
-        return getKey(supplier.get().getClass());
+        return clazz.getCanonicalName();
     }
 
     protected static final Server getServer(final Class<? extends Server> clazz) {
-        return SINGLETONS.get(getKey(clazz)).get();
+        return SINGLETONS.get(getKey(clazz));
     }
 
     @BeforeAll
@@ -43,8 +38,8 @@ abstract class TestEnvironment {
 
     @AfterAll
     static final void afterAll() throws Exception {
-        for (final Supplier<Server> server : SINGLETONS.values()) {
-            server.get().close();
+        for (final Server server : SINGLETONS.values()) {
+            server.close();
         }
         PostgresTestServer.stop();
     }
