@@ -26,7 +26,7 @@ abstract class TestEnvironment {
         return clazz.getName();
     }
 
-    protected static final Server getInstance(final Class<? extends Server> clazz) {
+    protected static final Server Server(final Class<? extends Server> clazz) {
         return INSTANCES.get(getKey(clazz));
     }
 
@@ -45,10 +45,10 @@ abstract class TestEnvironment {
     }
 
     static void initialze() throws Exception {
-        try (final Connection connection = getInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = Server(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "beta.sql");
         }
-        try (final Connection connection = getInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = Server(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "delta.sql");
         }
     }

@@ -37,7 +37,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
      * {@link ConnectionProvider} implementation.
      * 
      * @param database - the database for the new {@link ConnectionProvider}.
-     * @return a {@link ConnectionProvider} implementation.
+     * @return a new {@link ConnectionProvider}.
      * @see PostriseDataSource
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
