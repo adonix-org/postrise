@@ -20,7 +20,7 @@ import java.util.EventListener;
 
 /**
  * Implemenations will receive the {@link #onCreate(ConnectionContext)}
- * event to configure {@link ConnectionContext} when a new data source is
+ * event to configure {@link ConnectionSettings} when a new data source is
  * created.
  * 
  * @see PostriseServer#addListener(ConfigurationListener)
@@ -28,8 +28,8 @@ import java.util.EventListener;
 public interface ConfigurationListener extends EventListener {
 
     /**
-     * @param context - the {@link ConnectionContext} used when creating a new
+     * @param context - the {@link ConnectionSettings} used when creating a new
      *                {@link ConnectionProvider}.
      */
-    void onCreate(ConnectionContext context);
+    void onCreate(ConnectionSettings settings);
 }

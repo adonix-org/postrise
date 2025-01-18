@@ -81,7 +81,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     @Override
-    public void onCreate(final ConnectionContext context) {
+    public void onCreate(final ConnectionSettings settings) {
     }
 
     @Override
