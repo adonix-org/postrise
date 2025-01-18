@@ -21,7 +21,7 @@ import java.sql.SQLException;
 
 /**
  * Implementations of this interface will configure a JDBC {@link Connection}
- * with {@link ConnectionContext}.
+ * using a provided {@link ConnectionContext}.
  */
 interface ConnectionProvider extends ConnectionContext {
 
@@ -31,5 +31,9 @@ interface ConnectionProvider extends ConnectionContext {
      */
     Connection getConnection() throws SQLException;
 
+    /**
+     * Close this {@link ConnectionProvider} after no more {@link Connection}
+     * instances will be requested from any clients.
+     */
     void close();
 }
