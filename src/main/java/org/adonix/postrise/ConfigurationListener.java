@@ -28,8 +28,8 @@ import java.util.EventListener;
 public interface ConfigurationListener extends EventListener {
 
     /**
-     * @param settings - the {@link ConnectionSettings} used when creating a new
+     * @param creator - the {@link ConnectionSettings} used when creating a new
      *                 {@link ConnectionProvider} instance.
      */
-    void onCreate(ConnectionSettings settings);
+    void onCreate(ConnectionCreator creator);
 }

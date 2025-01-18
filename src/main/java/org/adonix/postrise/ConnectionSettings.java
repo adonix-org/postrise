@@ -31,7 +31,7 @@ import javax.sql.DataSource;
  * {@link ConfigurationListener#onCreate(ConnectionSettings)
  * onConfigure(ConnectionSettings)} method.
  */
-public interface ConnectionSettings extends ConnectionPoolSettings, ConnectionDatabase {
+interface ConnectionSettings {
     /**
      * Set the JDBC Url for this connection.
      * 

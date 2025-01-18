@@ -39,9 +39,9 @@ abstract class PostgresTestServer extends PostgresServer {
     }
 
     @Override
-    public void onCreate(final ConnectionSettings settings) {
-        settings.setLoginRole(container.getUsername());
-        settings.setLoginPassword(container.getPassword());
+    public void onCreate(final ConnectionCreator creator) {
+        creator.setLoginRole(container.getUsername());
+        creator.setLoginPassword(container.getPassword());
     }
 
     public static final void start() {
