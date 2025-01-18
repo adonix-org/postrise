@@ -51,23 +51,18 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public void setUsername(final String username) {
+    public void setLoginRole(final String username) {
         delegate.setUsername(username);
     }
 
     @Override
-    public String getUsername() {
+    public String getLoginRole() {
         return delegate.getUsername();
     }
 
     @Override
-    public void setPassword(final String password) {
+    public void setLoginPassword(final String password) {
         delegate.setPassword(password);
-    }
-
-    @Override
-    public String getPassword() {
-        return delegate.getPassword();
     }
 
     @Override

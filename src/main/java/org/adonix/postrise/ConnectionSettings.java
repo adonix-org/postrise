@@ -26,12 +26,12 @@ import javax.sql.DataSource;
  * Apply specific {@link ConnectionSettings} for the data source by
  * implementing the {@link ConfigurationListener} interface.
  * <p>
- * Most implementations will call {@link #setUsername(String)} and
- * {@link #setPassword(String)} in the
+ * Most implementations will call {@link #setLoginRole(String)} and
+ * {@link #setLoginPassword(String)} in the
  * {@link ConfigurationListener#onConfigure(ConnectionSettings)
  * onConfigure(ConnectionSettings)} method.
  */
-public interface ConnectionSettings extends ConnectionPoolSettings {
+public interface ConnectionSettings extends ConnectionPoolStatus {
     /**
      * Get the name of the database for the configuration.
      * 
@@ -65,13 +65,11 @@ public interface ConnectionSettings extends ConnectionPoolSettings {
      */
     String getJdbcUrl();
 
-    void setUsername(String username);
+    void setLoginRole(String role);
 
-    String getUsername();
+    String getLoginRole();
 
-    void setPassword(String password);
-
-    String getPassword();
+    void setLoginPassword(String password);
 
     void setAutoCommit(boolean isAutoCommit);
 

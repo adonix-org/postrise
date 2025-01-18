@@ -124,7 +124,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         // pool, and validate security for login user.
         try (final Connection connection = connectionProvider.getConnection()) {
 
-            getSecurityProvider().onLogin(connection, connectionProvider.getUsername());
+            getSecurityProvider().onLogin(connection, connectionProvider.getLoginRole());
             return connectionProvider;
 
         } catch (final SQLException e) {
@@ -137,12 +137,12 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     public final synchronized void close() {
         try {
             for (final ConnectionProvider provider : databasePools.values()) {
-                LOGGER.info("Closing {}@{} for {}", provider.getUsername(), provider.getJdbcUrl(),
+                LOGGER.info("Closing {}@{} for {}", provider.getLoginRole(), provider.getJdbcUrl(),
                         this.getClass().getSimpleName());
                 try {
                     provider.close();
                 } catch (final Exception e) {
-                    LOGGER.error("Closing {}@{}", provider.getUsername(), provider.getJdbcUrl(), e);
+                    LOGGER.error("Closing {}@{}", provider.getLoginRole(), provider.getJdbcUrl(), e);
                 }
             }
         } finally {

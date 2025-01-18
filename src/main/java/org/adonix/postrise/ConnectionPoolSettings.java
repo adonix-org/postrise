@@ -46,11 +46,5 @@ interface ConnectionPoolSettings {
 
     long getMaxLifetime();
 
-    int getActiveConnections();
-
-    int getIdleConnections();
-
-    int getTotalConnections();
-
     void close();
 }
