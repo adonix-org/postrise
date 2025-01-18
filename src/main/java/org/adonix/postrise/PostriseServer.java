@@ -144,7 +144,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     @Override
-    public final synchronized void close() {
+    public synchronized void close() {
         try {
             for (final ConnectionProvider provider : databasePools.values()) {
                 LOGGER.info("Closing {}@{} for {}", provider.getLoginRole(), provider.getJdbcUrl(),
