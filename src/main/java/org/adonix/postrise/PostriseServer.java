@@ -70,6 +70,11 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         }
     }
 
+    public final ConnectionPoolStatus getStatus(final String database) {
+        Guard.check("database", database);
+        return databasePools.get(getKey(database));
+    }
+
     @Override
     public void onConfigure(final ConnectionSettings settings) {
     }
