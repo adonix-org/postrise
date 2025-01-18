@@ -152,12 +152,12 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     public void beforeClose(final ConnectionProvider provider) {
-        LOGGER.info("Closing {}@{} for {}...", provider.getLoginRole(), provider.getJdbcUrl(),
+        LOGGER.debug("Closing {}@{} for {}...", provider.getLoginRole(), provider.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 
     public void afterClose(final ConnectionProvider provider) {
-        LOGGER.info("{}@{} for {} Closed", provider.getLoginRole(), provider.getJdbcUrl(),
+        LOGGER.debug("{}@{} for {} Closed", provider.getLoginRole(), provider.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 

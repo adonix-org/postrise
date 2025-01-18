@@ -20,7 +20,7 @@ class AlphaServer extends PostgresTestServer {
         super.beforeClose();
         for (final String database : getDatabases()) {
             getConnectionSettings(database).ifPresent((settings) -> {
-                LOGGER.info(
+                LOGGER.debug(
                         "Database: {}\t Max Pool Size: {}\tTotal Connections: {}\tIdle Connections: {}\tActiveConnections: {}",
                         settings.getDatabaseName(),
                         settings.getMaxPoolSize(),
@@ -33,7 +33,7 @@ class AlphaServer extends PostgresTestServer {
 
     @Override
     public void afterClose() {
-        LOGGER.info("Databases Size: {}", getDatabases().size());
+        LOGGER.debug("Databases Size: {}", getDatabases().size());
         super.afterClose();
     }
 }

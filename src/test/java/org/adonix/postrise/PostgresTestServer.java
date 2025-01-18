@@ -25,7 +25,7 @@ abstract class PostgresTestServer extends PostgresServer {
     }
 
     protected PostgresTestServer() {
-        LOGGER.info("Calling constructor for {}", this.getClass().getSimpleName());
+        LOGGER.debug("Calling constructor for {}", this.getClass().getSimpleName());
     }
 
     @Override
@@ -46,11 +46,11 @@ abstract class PostgresTestServer extends PostgresServer {
 
     public static final void start() {
         container.start();
-        LOGGER.info("{} container started.", container.getDockerImageName());
+        LOGGER.debug("{} container started.", container.getDockerImageName());
     }
 
     public static final void stop() {
         container.stop();
-        LOGGER.info("{} container stopped.", container.getDockerImageName());
+        LOGGER.debug("{} container stopped.", container.getDockerImageName());
     }
 }
