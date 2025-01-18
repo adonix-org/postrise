@@ -19,8 +19,8 @@ package org.adonix.postrise;
 import java.util.EventListener;
 
 /**
- * Implemenations will receive the {@link #onConfigure(ConnectionSettings)}
- * event to configure {@link ConnectionSettings} when a new data source is
+ * Implemenations will receive the {@link #onConfigure(ConnectionContext)}
+ * event to configure {@link ConnectionContext} when a new data source is
  * created.
  * 
  * @see PostriseServer#addListener(ConfigurationListener)
@@ -28,8 +28,8 @@ import java.util.EventListener;
 public interface ConfigurationListener extends EventListener {
 
     /**
-     * @param settings - the {@link ConnectionSettings} used when creating a new
-     *                 {@link ConnectionProvider}.
+     * @param context - the {@link ConnectionContext} used when creating a new
+     *                {@link ConnectionProvider}.
      */
-    void onConfigure(ConnectionSettings settings);
+    void onConfigure(ConnectionContext context);
 }

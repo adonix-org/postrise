@@ -19,14 +19,14 @@ class AlphaServer extends PostgresTestServer {
     public void beforeClose() {
         super.beforeClose();
         for (final String database : getDatabases()) {
-            getConnectionSettings(database).ifPresent((settings) -> {
+            getConnectionContext(database).ifPresent((context) -> {
                 LOGGER.debug(
                         "Database: {}\t Max Pool Size: {}\tTotal Connections: {}\tIdle Connections: {}\tActiveConnections: {}",
-                        settings.getDatabaseName(),
-                        settings.getMaxPoolSize(),
-                        settings.getTotalConnections(),
-                        settings.getIdleConnections(),
-                        settings.getActiveConnections());
+                        context.getDatabaseName(),
+                        context.getMaxPoolSize(),
+                        context.getTotalConnections(),
+                        context.getIdleConnections(),
+                        context.getActiveConnections());
             });
         }
     }

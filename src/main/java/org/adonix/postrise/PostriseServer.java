@@ -75,13 +75,13 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         return databasePools.keySet();
     }
 
-    public final Optional<ConnectionSettings> getConnectionSettings(final String database) {
+    public final Optional<ConnectionContext> getConnectionContext(final String database) {
         Guard.check("database", database);
         return Optional.ofNullable(databasePools.get(getKey(database)));
     }
 
     @Override
-    public void onConfigure(final ConnectionSettings settings) {
+    public void onConfigure(final ConnectionContext context) {
     }
 
     @Override
@@ -151,13 +151,13 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         LOGGER.debug("Server {} Closed", this.getClass().getSimpleName());
     }
 
-    public void beforeClose(final ConnectionSettings settings) {
-        LOGGER.debug("Closing {}@{} for {}...", settings.getLoginRole(), settings.getJdbcUrl(),
+    public void beforeClose(final ConnectionContext context) {
+        LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 
-    public void afterClose(final ConnectionSettings settings) {
-        LOGGER.debug("{}@{} for {} Closed", settings.getLoginRole(), settings.getJdbcUrl(),
+    public void afterClose(final ConnectionContext context) {
+        LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 

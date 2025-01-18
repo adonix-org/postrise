@@ -21,9 +21,9 @@ import java.sql.SQLException;
 
 /**
  * Implementations of this interface will configure a JDBC {@link Connection}
- * with {@link ConnectionSettings}.
+ * with {@link ConnectionContext}.
  */
-interface ConnectionProvider extends ConnectionSettings {
+interface ConnectionProvider extends ConnectionContext {
 
     /**
      * @return A {@link Connection} to the data source.

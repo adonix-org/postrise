@@ -23,15 +23,15 @@ import javax.sql.DataSource;
  * This interface provides configuration parameters for a connection to the
  * database.
  * 
- * Apply specific {@link ConnectionSettings} for the data source by
+ * Apply specific {@link ConnectionContext} for the data source by
  * implementing the {@link ConfigurationListener} interface.
  * <p>
  * Most implementations will call {@link #setLoginRole(String)} and
  * {@link #setLoginPassword(String)} in the
- * {@link ConfigurationListener#onConfigure(ConnectionSettings)
+ * {@link ConfigurationListener#onConfigure(ConnectionContext)
  * onConfigure(ConnectionSettings)} method.
  */
-public interface ConnectionSettings extends ConnectionDatabase, ConnectionPoolSettings, ConnectionPoolStatus {
+public interface ConnectionContext extends ConnectionDatabase, ConnectionPoolSettings, ConnectionPoolStatus {
     /**
      * Set the JDBC Url for this connection.
      * 
