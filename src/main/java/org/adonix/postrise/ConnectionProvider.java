@@ -33,7 +33,7 @@ interface ConnectionProvider extends ConnectionContext {
 
     /**
      * Close this {@link ConnectionProvider} after no more {@link Connection}
-     * instances will be requested from any clients.
+     * instances will be requested from clients.
      */
     void close();
 }
