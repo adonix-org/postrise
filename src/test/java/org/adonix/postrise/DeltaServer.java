@@ -12,7 +12,7 @@ class DeltaServer extends PostgresTestServer {
     }
 
     @Override
-    public void onConfigure(final ConnectionContext context) {
+    public void onCreate(final ConnectionContext context) {
         context.setLoginRole("delta_login");
         context.setLoginPassword("helloworld");
     }

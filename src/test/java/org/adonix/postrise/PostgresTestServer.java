@@ -39,7 +39,7 @@ abstract class PostgresTestServer extends PostgresServer {
     }
 
     @Override
-    public void onConfigure(final ConnectionContext context) {
+    public void onCreate(final ConnectionContext context) {
         context.setLoginRole(container.getUsername());
         context.setLoginPassword(container.getPassword());
     }

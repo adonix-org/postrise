@@ -81,7 +81,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     @Override
-    public void onConfigure(final ConnectionContext context) {
+    public void onCreate(final ConnectionContext context) {
     }
 
     @Override
@@ -122,12 +122,12 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         connectionProvider.setJdbcUrl(getHostName(), getPort());
 
         for (final ConfigurationListener listener : configurationListeners) {
-            listener.onConfigure(connectionProvider);
+            listener.onCreate(connectionProvider);
         }
 
         final DatabaseListener listener = databaseListeners.get(getKey(database));
         if (listener != null) {
-            listener.onConfigure(connectionProvider);
+            listener.onCreate(connectionProvider);
         }
 
         // Create the first connection to validate settings, initialize the connection

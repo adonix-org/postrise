@@ -28,7 +28,7 @@ import javax.sql.DataSource;
  * <p>
  * Most implementations will call {@link #setLoginRole(String)} and
  * {@link #setLoginPassword(String)} in the
- * {@link ConfigurationListener#onConfigure(ConnectionContext)
+ * {@link ConfigurationListener#onCreate(ConnectionContext)
  * onConfigure(ConnectionSettings)} method.
  */
 public interface ConnectionContext extends ConnectionDatabase, ConnectionPoolSettings, ConnectionPoolStatus {
