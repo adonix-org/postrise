@@ -144,9 +144,21 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
     }
 
     public void beforeClose() {
+        LOGGER.debug("Closing Server {}", this.getClass().getSimpleName());
     }
 
     public void afterClose() {
+        LOGGER.debug("Server {} Closed", this.getClass().getSimpleName());
+    }
+
+    public void beforeClose(final ConnectionProvider provider) {
+        LOGGER.info("Closing {}@{} for {}...", provider.getLoginRole(), provider.getJdbcUrl(),
+                this.getClass().getSimpleName());
+    }
+
+    public void afterClose(final ConnectionProvider provider) {
+        LOGGER.info("{}@{} for {} Closed", provider.getLoginRole(), provider.getJdbcUrl(),
+                this.getClass().getSimpleName());
     }
 
     @Override
@@ -154,12 +166,13 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         try {
             beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
-                LOGGER.info("Closing {}@{} for {}", provider.getLoginRole(), provider.getJdbcUrl(),
-                        this.getClass().getSimpleName());
+                beforeClose(provider);
                 try {
                     provider.close();
                 } catch (final Exception e) {
                     LOGGER.error("Closing {}@{}", provider.getLoginRole(), provider.getJdbcUrl(), e);
+                } finally {
+                    afterClose(provider);
                 }
             }
         } finally {
