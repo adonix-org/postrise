@@ -75,7 +75,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         return databasePools.keySet();
     }
 
-    public final Optional<ConnectionPoolStatus> getStatus(final String database) {
+    public final Optional<ConnectionSettings> getConnectionSettings(final String database) {
         Guard.check("database", database);
         return Optional.ofNullable(databasePools.get(getKey(database)));
     }
@@ -143,9 +143,16 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         }
     }
 
+    public void beforeClose() {
+    }
+
+    public void afterClose() {
+    }
+
     @Override
-    public synchronized void close() {
+    public final synchronized void close() {
         try {
+            beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
                 LOGGER.info("Closing {}@{} for {}", provider.getLoginRole(), provider.getJdbcUrl(),
                         this.getClass().getSimpleName());
@@ -157,6 +164,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
             }
         } finally {
             databasePools.clear();
+            afterClose();
         }
     }
 
