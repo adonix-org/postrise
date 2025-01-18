@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-public interface ConnectionPoolStatus extends ConnectionPoolSettings {
+public interface ConnectionPoolStatus {
 
     int getActiveConnections();
 

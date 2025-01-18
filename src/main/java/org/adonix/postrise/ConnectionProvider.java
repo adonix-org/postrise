@@ -23,11 +23,13 @@ import java.sql.SQLException;
  * Implementations of this interface will configure a JDBC {@link Connection}
  * with {@link ConnectionSettings}.
  */
-public interface ConnectionProvider extends ConnectionSettings {
+interface ConnectionProvider extends ConnectionSettings {
 
     /**
      * @return A {@link Connection} to the data source.
      * @throws SQLException if a database error occurs.
      */
     Connection getConnection() throws SQLException;
+
+    void close();
 }

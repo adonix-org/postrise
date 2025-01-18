@@ -31,14 +31,7 @@ import javax.sql.DataSource;
  * {@link ConfigurationListener#onConfigure(ConnectionSettings)
  * onConfigure(ConnectionSettings)} method.
  */
-public interface ConnectionSettings extends ConnectionPoolStatus {
-    /**
-     * Get the name of the database for the configuration.
-     * 
-     * @return the database name.
-     */
-    String getDatabaseName();
-
+public interface ConnectionSettings extends ConnectionDatabase, ConnectionPoolSettings, ConnectionPoolStatus {
     /**
      * Set the JDBC Url for this connection.
      * 

@@ -118,7 +118,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
         final ConnectionProvider connectionProvider = createConnectionProvider(database);
 
-        // Set the default JDBC Url for this provider.
+        // Set the JDBC Url for this provider.
         connectionProvider.setJdbcUrl(getHostName(), getPort());
 
         for (final ConfigurationListener listener : configurationListeners) {
@@ -151,13 +151,13 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         LOGGER.debug("Server {} Closed", this.getClass().getSimpleName());
     }
 
-    public void beforeClose(final ConnectionProvider provider) {
-        LOGGER.debug("Closing {}@{} for {}...", provider.getLoginRole(), provider.getJdbcUrl(),
+    public void beforeClose(final ConnectionSettings settings) {
+        LOGGER.debug("Closing {}@{} for {}...", settings.getLoginRole(), settings.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 
-    public void afterClose(final ConnectionProvider provider) {
-        LOGGER.debug("{}@{} for {} Closed", provider.getLoginRole(), provider.getJdbcUrl(),
+    public void afterClose(final ConnectionSettings settings) {
+        LOGGER.debug("{}@{} for {} Closed", settings.getLoginRole(), settings.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 

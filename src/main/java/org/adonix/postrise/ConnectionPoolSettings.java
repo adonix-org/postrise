@@ -45,6 +45,4 @@ interface ConnectionPoolSettings {
     void setMaxLifetime(long maxLifetimeMs);
 
     long getMaxLifetime();
-
-    void close();
 }
