@@ -29,7 +29,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements ConfigurationListener, Server {
+public abstract class PostriseServer implements CreationListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -49,7 +49,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<ConfigurationListener> configurationListeners = Collections
+    private final Set<CreationListener> configurationListeners = Collections
             .synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
@@ -58,7 +58,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         addListener(this);
     }
 
-    public final void addListener(final ConfigurationListener listener) {
+    public final void addListener(final CreationListener listener) {
         Guard.check("listener", listener);
         configurationListeners.add(listener);
     }
@@ -121,7 +121,7 @@ public abstract class PostriseServer implements ConfigurationListener, Server {
         // Set the JDBC Url for this provider.
         connectionProvider.setJdbcUrl(getHostName(), getPort());
 
-        for (final ConfigurationListener listener : configurationListeners) {
+        for (final CreationListener listener : configurationListeners) {
             listener.onCreate(connectionProvider);
         }
 

@@ -25,11 +25,11 @@ import java.util.EventListener;
  * 
  * @see PostriseServer#addListener(ConfigurationListener)
  */
-public interface ConfigurationListener extends EventListener {
+public interface CreationListener extends EventListener {
 
     /**
      * @param creator - the {@link ConnectionSettings} used when creating a new
-     *                 {@link ConnectionProvider} instance.
+     *                {@link ConnectionProvider} instance.
      */
     void onCreate(ConnectionCreator creator);
 }
