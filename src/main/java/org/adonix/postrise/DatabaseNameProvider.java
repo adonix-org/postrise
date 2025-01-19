@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-interface ConnectionDatabase {
+interface DatabaseNameProvider {
     /**
      * Get the name of the database for the configuration.
      * 

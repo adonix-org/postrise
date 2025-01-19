@@ -75,13 +75,13 @@ public abstract class PostriseServer implements CreationListener, Server {
         return databasePools.keySet();
     }
 
-    public final Optional<ConnectionContext> getConnectionContext(final String database) {
+    public final Optional<DataSourceContext> getConnectionContext(final String database) {
         Guard.check("database", database);
         return Optional.ofNullable(databasePools.get(getKey(database)));
     }
 
     @Override
-    public void onCreate(final ConnectionConfiguration config) {
+    public void onCreate(final DataSourceSettings settings) {
     }
 
     @Override
@@ -151,12 +151,12 @@ public abstract class PostriseServer implements CreationListener, Server {
         LOGGER.debug("Server {} Closed", this.getClass().getSimpleName());
     }
 
-    public void beforeClose(final ConnectionContext context) {
+    public void beforeClose(final DataSourceContext context) {
         LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }
 
-    public void afterClose(final ConnectionContext context) {
+    public void afterClose(final DataSourceContext context) {
         LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(),
                 this.getClass().getSimpleName());
     }

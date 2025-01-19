@@ -3,8 +3,8 @@ package org.adonix.postrise;
 class BetaServer extends PostgresTestServer {
 
     @Override
-    public void onCreate(final ConnectionConfiguration config) {
-        config.setLoginRole("beta_login");
-        config.setLoginPassword("helloworld");
+    public void onCreate(final DataSourceSettings settings) {
+        settings.setLoginRole("beta_login");
+        settings.setLoginPassword("helloworld");
     }
 }
