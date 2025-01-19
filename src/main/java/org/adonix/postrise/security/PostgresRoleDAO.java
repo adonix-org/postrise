@@ -44,7 +44,7 @@ public abstract class PostgresRoleDAO {
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
-    protected static final PostgresRole getRole(final Connection connection, final String roleName)
+    public static final PostgresRole getRole(final Connection connection, final String roleName)
             throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
             stmt.setString(1, roleName);

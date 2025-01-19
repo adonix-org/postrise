@@ -1,6 +1,6 @@
 package org.adonix.postrise.security;
 
-final class PostgresRole {
+public final class PostgresRole {
 
     private String roleName;
     private boolean isSuperUser;
@@ -45,31 +45,31 @@ final class PostgresRole {
         return this;
     }
 
-    String getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
 
-    boolean isSuperUser() {
+    public boolean isSuperUser() {
         return isSuperUser;
     }
 
-    boolean isLoginRole() {
+    public boolean isLoginRole() {
         return isLoginRole;
     }
 
-    boolean isInheritRole() {
+    public boolean isInheritRole() {
         return isInheritRole;
     }
 
-    boolean isCreateRole() {
+    public boolean isCreateRole() {
         return isCreateRole;
     }
 
-    boolean isCreateDbRole() {
+    public boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
-    boolean isReplicationRole() {
+    public boolean isReplicationRole() {
         return isReplicationRole;
     }
 }

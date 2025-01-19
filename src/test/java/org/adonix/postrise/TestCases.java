@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.adonix.postrise.security.PostgresRole;
+import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,5 +69,19 @@ class TestCases extends TestEnvironment {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
+    }
+
+    @DisplayName("Postgres Role Query")
+    @Test
+    void run5() throws SQLException {
+        final Server server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        try (final Connection connection = server.getConnection("postrise", "postrise")) {
+            PostgresRole role = PostgresRoleDAO.getRole(connection, "postrise");
+            assertTrue(role.isSuperUser());
+
+        }
     }
 }
