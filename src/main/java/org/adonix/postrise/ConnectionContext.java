@@ -1,4 +1,4 @@
 package org.adonix.postrise;
 
-public interface ConnectionContext extends ConnectionCreator, ConnectionPoolStatus {
+public interface ConnectionContext extends ConnectionConfiguration, ConnectionPoolStatus {
 }

@@ -81,7 +81,7 @@ public abstract class PostriseServer implements CreationListener, Server {
     }
 
     @Override
-    public void onCreate(final ConnectionCreator creator) {
+    public void onCreate(final ConnectionConfiguration config) {
     }
 
     @Override
