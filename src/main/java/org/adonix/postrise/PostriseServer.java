@@ -71,11 +71,11 @@ public abstract class PostriseServer implements CreationListener, Server {
         }
     }
 
-    public final Set<String> getDatabases() {
+    protected final Set<String> getDatabases() {
         return databasePools.keySet();
     }
 
-    public final Optional<DataSourceContext> getDataSource(final String database) {
+    protected final Optional<DataSourceContext> getDataSource(final String database) {
 
         Guard.check("database", database);
         return Optional.ofNullable(databasePools.get(getKey(database)));
