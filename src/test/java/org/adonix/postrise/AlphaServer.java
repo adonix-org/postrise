@@ -16,6 +16,17 @@ class AlphaServer extends PostgresTestServer {
     }
 
     @Override
+    protected void afterCreate(DataSourceContext context) {
+        LOGGER.debug(
+                "afterCreate: {}\t Max Pool Size: {}\tTotal Connections: {}\tIdle Connections: {}\tActiveConnections: {}",
+                context.getDatabaseName(),
+                context.getMaxPoolSize(),
+                context.getTotalConnections(),
+                context.getIdleConnections(),
+                context.getActiveConnections());
+    }
+
+    @Override
     public void beforeClose() {
         super.beforeClose();
         for (final String database : getDatabases()) {
