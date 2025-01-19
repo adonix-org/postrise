@@ -44,6 +44,14 @@ public abstract class PostgresRoleDAO {
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
+    /**
+     * @param connection - an open {@link Connection } to a PostreSQL database.
+     * @param roleName   - the name of the ROLE to SELECT from the pg_roles TABLE.
+     * @return a populated {@link PostgresRole} from the current database.
+     * @throws SQLException
+     * @see <a href=
+     *      "https://www.postgresql.org/docs/current/view-pg-roles.html">pg_roles</a>
+     */
     public static final PostgresRole getRole(final Connection connection, final String roleName)
             throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SELECT_ROLE_PRIVILEGES)) {
