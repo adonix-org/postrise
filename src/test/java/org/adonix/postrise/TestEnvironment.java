@@ -33,7 +33,7 @@ abstract class TestEnvironment {
     @BeforeAll
     static final void beforeAll() throws Exception {
         PostgresTestServer.start();
-        initialze();
+        initialize();
     }
 
     @AfterAll
@@ -44,7 +44,7 @@ abstract class TestEnvironment {
         PostgresTestServer.stop();
     }
 
-    static void initialze() throws Exception {
+    static void initialize() throws Exception {
         try (final Connection connection = getServerInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
             executeSql(connection, "beta.sql");
         }

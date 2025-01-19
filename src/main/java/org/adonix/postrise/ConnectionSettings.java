@@ -35,7 +35,7 @@ interface ConnectionSettings extends DatabaseNameProvider {
     /**
      * Set the JDBC Url for this connection.
      * 
-     * @param url - a valid JDBC Url most often in the fomat
+     * @param url - a valid JDBC Url most often in the format
      *            jdbc:db://hostname:port/database
      */
     void setJdbcUrl(String url);
