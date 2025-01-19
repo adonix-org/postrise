@@ -20,11 +20,11 @@ public class CreateDataSourceException extends RuntimeException {
 
     private static final String ERROR_MESSAGE = "Unable to create data source";
 
-    protected CreateDataSourceException(final Throwable t) {
+    CreateDataSourceException(final Throwable t) {
         super(ERROR_MESSAGE, t);
     }
 
-    protected CreateDataSourceException(final String message, final Throwable t) {
+    CreateDataSourceException(final String message, final Throwable t) {
         super(message, t);
     }
 }
