@@ -27,7 +27,7 @@ class AlphaServer extends PostgresTestServer {
     }
 
     @Override
-    public void beforeClose() {
+    protected void beforeClose() {
         super.beforeClose();
         for (final String database : getDatabases()) {
             getDataSource(database).ifPresent((context) -> {
@@ -43,7 +43,7 @@ class AlphaServer extends PostgresTestServer {
     }
 
     @Override
-    public void afterClose() {
+    protected void afterClose() {
         LOGGER.debug("Databases Size: {}", getDatabases().size());
         super.afterClose();
     }
