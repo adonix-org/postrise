@@ -10,6 +10,9 @@ public final class PostgresRole {
     private boolean isCreateDbRole;
     private boolean isReplicationRole;
 
+    PostgresRole() {
+    }
+
     PostgresRole setRoleName(final String roleName) {
         this.roleName = roleName;
         return this;
