@@ -40,7 +40,8 @@ public abstract class PostgresRoleDAO {
             "pg_roles.rolinherit,",
             "pg_roles.rolcreaterole,",
             "pg_roles.rolcreatedb,",
-            "pg_roles.rolreplication",
+            "pg_roles.rolreplication,",
+            "pg_roles.rolconnlimit",
             "FROM pg_roles",
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
@@ -67,7 +68,8 @@ public abstract class PostgresRoleDAO {
                         .setInherit(rs.getBoolean(4))
                         .setCreateRole(rs.getBoolean(5))
                         .setCreateDbRole(rs.getBoolean(6))
-                        .setReplicationRole(rs.getBoolean(7));
+                        .setReplicationRole(rs.getBoolean(7))
+                        .setConnectionLimit(rs.getInt(8));
             }
         }
     }

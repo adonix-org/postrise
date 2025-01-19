@@ -9,6 +9,7 @@ public final class PostgresRole {
     private boolean isCreateRole;
     private boolean isCreateDbRole;
     private boolean isReplicationRole;
+    private int connectionLimit;
 
     PostgresRole() {
     }
@@ -48,6 +49,11 @@ public final class PostgresRole {
         return this;
     }
 
+    PostgresRole setConnectionLimit(final int connectionLimit) {
+        this.connectionLimit = connectionLimit;
+        return this;
+    }
+
     public String getRoleName() {
         return roleName;
     }
@@ -74,5 +80,9 @@ public final class PostgresRole {
 
     public boolean isReplicationRole() {
         return isReplicationRole;
+    }
+
+    public int getConnectionLimit() {
+        return connectionLimit;
     }
 }
