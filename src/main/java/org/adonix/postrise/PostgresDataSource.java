@@ -34,12 +34,12 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public void setJdbcUrl(final String host, final Integer port) {
+    public final void setJdbcUrl(final String host, final Integer port) {
         setJdbcUrl(POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabaseName());
     }
 
     @Override
-    SecurityListener getDefaultSecurity() {
+    public SecurityListener getDefaultSecurity() {
         return POSTGRES_DEFAULT_SECURITY;
     }
 }
