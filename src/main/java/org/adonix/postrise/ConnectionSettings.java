@@ -23,13 +23,13 @@ import javax.sql.DataSource;
  * This interface provides configuration parameters for a connection to the
  * database.
  * 
- * Apply specific {@link ConnectionSettings} for the data source by
- * implementing the {@link DataSourceEvents} interface.
+ * Apply specific {@link DataSourceSettings} for the data source by
+ * implementing the {@link DataSourceEvent} interface.
  * <p>
  * Most implementations will call {@link #setLoginRole(String)} and
  * {@link #setLoginPassword(String)} in the
- * {@link DataSourceEvents#onCreate(DataSourceSettings)
- * onConfigure(DataSourceSettings)} method.
+ * {@link DataSourceEvent#onCreate(DataSourceSettings)
+ * onCreate(DataSourceSettings)} method.
  */
 interface ConnectionSettings extends DatabaseNameProvider {
     /**
