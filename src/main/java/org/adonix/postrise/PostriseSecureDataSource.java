@@ -6,7 +6,7 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
 
     private SecurityListener security = getDefaultSecurity();
 
-    public PostriseSecureDataSource(final String database) {
+    PostriseSecureDataSource(final String database) {
         super(database);
     }
 
