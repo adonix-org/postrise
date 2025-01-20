@@ -25,6 +25,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import org.adonix.postrise.security.SecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +44,8 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
+    protected abstract SecurityProvider getSecurityProvider();
+
     protected abstract void setRole(final Connection connection, final String roleName) throws SQLException;
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
@@ -53,6 +57,16 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
 
     protected PostriseServer() {
         addListener(this);
+    }
+
+    @Override
+    public void onConnection(Connection connection, String roleName) throws SQLException {
+        getSecurityProvider().onConnection(connection, roleName);
+    }
+
+    @Override
+    public void onLogin(Connection connection, String roleName) throws SQLException {
+        getSecurityProvider().onLogin(connection, roleName);
     }
 
     public final void addListener(final DataSourceEvent listener) {
@@ -126,7 +140,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         }
 
         // Create the first connection to validate settings, initialize the connection
-        // pool, and validate security for login user.
+        // pool, and send to the onLogin to this class and subclasses.
         try (final Connection connection = connectionProvider.getConnection()) {
             onLogin(connection, connectionProvider.getLoginRole());
             afterCreate(connectionProvider);
