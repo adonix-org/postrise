@@ -21,7 +21,7 @@ import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SE
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.security.SecurityListener;
+import org.adonix.postrise.security.SecurityProvider;
 
 public class PostgresDataSource extends PostriseSecureDataSource {
 
@@ -42,12 +42,13 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public SecurityListener getDefaultSecurity() {
+    public SecurityProvider getDefaultSecurity() {
         return POSTGRES_DEFAULT_SECURITY;
     }
 
     @Override
-    public final void setRole(Connection connection, String... roles) throws SQLException {
+    public final void setRole(final Connection connection, final String... roles) throws SQLException {
+        // TODO: Check role array length.
         PostgresRoleDAO.setRole(connection, roles[0]);
     }
 }
