@@ -1,8 +1,13 @@
 package org.adonix.postrise;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.adonix.postrise.security.SecurityListener;
 
 abstract class PostriseSecureDataSource extends PostriseDataSource {
+
+    abstract SecurityListener getDefaultSecurity();
 
     private SecurityListener security = getDefaultSecurity();
 
@@ -10,7 +15,15 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
         super(database);
     }
 
-    abstract SecurityListener getDefaultSecurity();
+    @Override
+    public void onConnection(Connection connection, String roleName) throws SQLException {
+        security.onConnection(connection, roleName);
+    }
+
+    @Override
+    public void onLogin(Connection connection, String roleName) throws SQLException {
+        security.onLogin(connection, roleName);
+    }
 
     @Override
     public SecurityListener getSecurity() {

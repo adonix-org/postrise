@@ -19,11 +19,13 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.adonix.postrise.security.SecurityListener;
+
 /**
  * Implementations of this interface will configure a JDBC {@link Connection}
  * using a provided {@link DataSourceContext}.
  */
-interface ConnectionProvider extends AutoCloseable, ConnectionRole, DataSourceContext {
+interface ConnectionProvider extends AutoCloseable, ConnectionRole, DataSourceContext, SecurityListener {
 
     /**
      * @return A {@link Connection} to the data source.

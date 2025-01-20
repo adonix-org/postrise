@@ -91,7 +91,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         final Connection connection = provider.getConnection();
         try {
 
-            provider.getSecurity().onConnection(connection, roleName);
+            provider.onConnection(connection, roleName);
             provider.setRole(connection, roleName);
             return connection;
 
@@ -127,7 +127,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         // pool, and send to the onLogin to this class and subclasses.
         try (final Connection connection = provider.getConnection()) {
 
-            provider.getSecurity().onLogin(connection, provider.getLoginRole());
+            provider.onLogin(connection, provider.getLoginRole());
             afterCreate(provider);
             return provider;
 
