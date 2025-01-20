@@ -2,18 +2,25 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
 
-import org.adonix.postrise.security.SecurityProvider;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 class AlphaServer extends PostgresTestServer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    @Override
+    public void onConnection(Connection connection, String roleName) throws SQLException {
+        DISABLE_SECURITY.onConnection(connection, roleName);
+    }
 
     @Override
-    protected SecurityProvider getSecurityProvider() {
-        return DISABLE_SECURITY;
+    public void onLogin(Connection connection, String roleName) throws SQLException {
+        DISABLE_SECURITY.onLogin(connection, roleName);
     }
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void afterCreate(final DataSourceContext context) {

@@ -2,13 +2,19 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.SecurityProviders.POSTGRES_STRICT_SECURITY;
 
-import org.adonix.postrise.security.SecurityProvider;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 class DeltaServer extends PostgresTestServer {
 
     @Override
-    protected SecurityProvider getSecurityProvider() {
-        return POSTGRES_STRICT_SECURITY;
+    public void onConnection(Connection connection, String roleName) throws SQLException {
+        POSTGRES_STRICT_SECURITY.onConnection(connection, roleName);
+    }
+
+    @Override
+    public void onLogin(Connection connection, String roleName) throws SQLException {
+        POSTGRES_STRICT_SECURITY.onLogin(connection, roleName);
     }
 
     @Override
