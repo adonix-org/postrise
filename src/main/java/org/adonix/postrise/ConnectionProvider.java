@@ -23,7 +23,7 @@ import java.sql.SQLException;
  * Implementations of this interface will configure a JDBC {@link Connection}
  * using a provided {@link DataSourceContext}.
  */
-interface ConnectionProvider extends DataSourceContext, AutoCloseable {
+interface ConnectionProvider extends ConnectionRole, DataSourceContext, AutoCloseable {
 
     /**
      * @return A {@link Connection} to the data source.
