@@ -5,5 +5,5 @@ import java.sql.SQLException;
 
 interface ConnectionRole {
     
-    void setRole(Connection connection, String... roles) throws SQLException;
+    void setRole(Connection connection, String role, String... roles) throws SQLException;
 }
