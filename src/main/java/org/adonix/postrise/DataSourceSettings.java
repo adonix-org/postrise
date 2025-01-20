@@ -1,4 +1,6 @@
 package org.adonix.postrise;
 
-public interface DataSourceSettings extends ConnectionPoolSettings, ConnectionSettings {
+import org.adonix.postrise.security.SecurityProvider;
+
+public interface DataSourceSettings extends ConnectionPoolSettings, ConnectionSettings, SecurityProvider {
 }

@@ -16,8 +16,6 @@
 
 package org.adonix.postrise;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.EventListener;
 
 /**
@@ -40,8 +38,4 @@ public interface DataSourceEvent extends EventListener {
     void beforeClose(DataSourceContext context);
 
     void afterClose(DataSourceContext context);
-
-    void onLogin(Connection connection, String roleName) throws SQLException;
-
-    void onConnection(Connection connection, String roleName) throws SQLException;
 }

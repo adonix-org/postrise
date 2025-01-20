@@ -16,7 +16,11 @@
 
 package org.adonix.postrise;
 
-class PostgresDataSource extends PostriseDataSource {
+import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SECURITY;
+
+import org.adonix.postrise.security.SecurityListener;
+
+class PostgresDataSource extends PostriseSecureDataSource {
 
     public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
 
@@ -32,5 +36,10 @@ class PostgresDataSource extends PostriseDataSource {
     @Override
     public void setJdbcUrl(final String host, final Integer port) {
         setJdbcUrl(POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabaseName());
+    }
+
+    @Override
+    SecurityListener getDefaultSecurity() {
+        return POSTGRES_DEFAULT_SECURITY;
     }
 }

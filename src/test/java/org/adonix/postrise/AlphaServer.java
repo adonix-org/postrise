@@ -2,13 +2,18 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
 
-import org.adonix.postrise.security.SecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 class AlphaServer extends PostgresTestServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
+
+    @Override
+    public void beforeCreate(DataSourceSettings settings) {
+        super.beforeCreate(settings);
+        settings.setSecurity(DISABLE_SECURITY);
+    }
 
     @Override
     public void afterCreate(final DataSourceContext context) {
@@ -41,10 +46,5 @@ class AlphaServer extends PostgresTestServer {
     protected void afterClose() {
         LOGGER.debug("Databases Size: {}", getDatabases().size());
         super.afterClose();
-    }
-
-    @Override
-    protected SecurityProvider getSecurityProvider() {
-        return DISABLE_SECURITY;
     }
 }

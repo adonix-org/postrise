@@ -25,8 +25,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.adonix.postrise.security.SecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,8 +42,6 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
-    protected abstract SecurityProvider getSecurityProvider();
-
     protected abstract void setRole(final Connection connection, final String roleName) throws SQLException;
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
@@ -57,16 +53,6 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
 
     PostriseServer() {
         addListener(this);
-    }
-
-    @Override
-    public void onConnection(final Connection connection, String roleName) throws SQLException {
-        getSecurityProvider().onConnection(connection, roleName);
-    }
-
-    @Override
-    public void onLogin(final Connection connection, String roleName) throws SQLException {
-        getSecurityProvider().onLogin(connection, roleName);
     }
 
     public final void addListener(final DataSourceEvent listener) {
@@ -107,7 +93,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         final Connection connection = provider.getConnection();
         try {
 
-            onConnection(connection, roleName);
+            provider.getSecurity().onConnection(connection, roleName);
             setRole(connection, roleName);
             return connection;
 
@@ -125,30 +111,30 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
      */
     private final ConnectionProvider create(final String database) {
 
-        final ConnectionProvider connectionProvider = createConnectionProvider(database);
+        final ConnectionProvider provider = createConnectionProvider(database);
 
         // Set the JDBC Url for this provider.
-        connectionProvider.setJdbcUrl(getHostName(), getPort());
+        provider.setJdbcUrl(getHostName(), getPort());
 
         for (final DataSourceEvent listener : dataSourceListeners) {
-            listener.beforeCreate(connectionProvider);
+            listener.beforeCreate(provider);
         }
 
         final DatabaseEvent listener = databaseListeners.get(getKey(database));
         if (listener != null) {
-            listener.beforeCreate(connectionProvider);
+            listener.beforeCreate(provider);
         }
 
         // Create the first connection to validate settings, initialize the connection
         // pool, and send to the onLogin to this class and subclasses.
-        try (final Connection connection = connectionProvider.getConnection()) {
-            onLogin(connection, connectionProvider.getLoginRole());
-            afterCreate(connectionProvider);
-            return connectionProvider;
+        try (final Connection connection = provider.getConnection()) {
+            provider.getSecurity().onLogin(connection, provider.getLoginRole());
+            afterCreate(provider);
+            return provider;
 
         } catch (final SQLException e) {
-            connectionProvider.close();
-            throw new CreateDataSourceException(connectionProvider.getJdbcUrl(), e);
+            provider.close();
+            throw new CreateDataSourceException(provider.getJdbcUrl(), e);
         }
     }
 

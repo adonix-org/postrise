@@ -18,12 +18,10 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_HOSTNAME;
 import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_PORT;
-import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SECURITY;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.security.SecurityProvider;
 
 public class PostgresServer extends PostriseServer {
 
@@ -49,10 +47,5 @@ public class PostgresServer extends PostriseServer {
     @Override
     protected final void setRole(final Connection connection, final String roleName) throws SQLException {
         PostgresRoleDAO.setRole(connection, roleName);
-    }
-
-    @Override
-    protected SecurityProvider getSecurityProvider() {
-        return POSTGRES_DEFAULT_SECURITY;
     }
 }

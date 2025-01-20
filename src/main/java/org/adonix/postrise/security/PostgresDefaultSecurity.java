@@ -23,12 +23,12 @@ import java.sql.SQLException;
  * The {@code DefaultSecurity} class provides default security checks
  * for user logins and connections in a database environment.
  * <p>
- * It implements the {@link SecurityProvider} interface, performing
+ * It implements the {@link SecurityListener} interface, performing
  * specific validation for users and roles using SQL queries on the
  * PostgreSQL system catalog.
  * </p>
  */
-class PostgresDefaultSecurity implements SecurityProvider {
+class PostgresDefaultSecurity implements SecurityListener {
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.
