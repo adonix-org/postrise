@@ -42,8 +42,6 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
      */
     protected abstract ConnectionProvider createConnectionProvider(final String database);
 
-    protected abstract void setRole(final Connection connection, final String roleName) throws SQLException;
-
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
     private final Set<DataSourceEvent> dataSourceListeners = Collections
@@ -94,7 +92,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         try {
 
             provider.getSecurity().onConnection(connection, roleName);
-            setRole(connection, roleName);
+            provider.setRole(connection, roleName);
             return connection;
 
         } catch (final SQLException e) {

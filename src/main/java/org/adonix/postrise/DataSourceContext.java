@@ -1,4 +1,4 @@
 package org.adonix.postrise;
 
-public interface DataSourceContext extends DataSourceSettings, ConnectionPoolStatus {
+public interface DataSourceContext extends ConnectionPoolStatus, ConnectionRole, DataSourceSettings {
 }
