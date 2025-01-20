@@ -28,8 +28,14 @@ import java.util.EventListener;
 public interface DataSourceEvent extends EventListener {
 
     /**
-     * @param settings - the {@link DataSourceSettings} used when creating a new
+     * @param settings - the {@link DataSourceSettings} applied when creating a new
      *                 {@link ConnectionProvider} instance.
      */
     void onCreate(DataSourceSettings settings);
+
+    void afterCreate(DataSourceContext context);
+
+    void beforeClose(DataSourceContext context);
+
+    void afterClose(DataSourceContext context);
 }

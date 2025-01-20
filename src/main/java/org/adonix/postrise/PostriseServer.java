@@ -145,26 +145,28 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         }
     }
 
-    protected void afterCreate(final DataSourceContext context) {
-        LOGGER.debug("{} data source created: {}", this.getClass().getSimpleName(), context.getJdbcUrl());
+    private String getClassName() {
+        return this.getClass().getSimpleName();
+    }
+
+    public void afterCreate(final DataSourceContext context) {
+        LOGGER.debug("{} data source created: {}", getClassName(), context.getJdbcUrl());
     }
 
     protected void beforeClose() {
-        LOGGER.debug("Closing Server {}", this.getClass().getSimpleName());
+        LOGGER.debug("Closing Server {}", getClassName());
     }
 
     protected void afterClose() {
-        LOGGER.debug("Server {} Closed", this.getClass().getSimpleName());
+        LOGGER.debug("Server {} Closed", getClassName());
     }
 
-    protected void beforeClose(final DataSourceContext context) {
-        LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(),
-                this.getClass().getSimpleName());
+    public void beforeClose(final DataSourceContext context) {
+        LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }
 
-    protected void afterClose(final DataSourceContext context) {
-        LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(),
-                this.getClass().getSimpleName());
+    public void afterClose(final DataSourceContext context) {
+        LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }
 
     @Override
