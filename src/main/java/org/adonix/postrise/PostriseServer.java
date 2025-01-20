@@ -128,6 +128,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         // Create the first connection to validate settings, initialize the connection
         // pool, and send to the onLogin to this class and subclasses.
         try (final Connection connection = provider.getConnection()) {
+
             provider.getSecurity().onLogin(connection, provider.getLoginRole());
             afterCreate(provider);
             return provider;
@@ -147,11 +148,11 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
     }
 
     protected void beforeClose() {
-        LOGGER.debug("Closing Server {}", getClassName());
+        LOGGER.debug("{}.beforeClose()", getClassName());
     }
 
     protected void afterClose() {
-        LOGGER.debug("Server {} Closed", getClassName());
+        LOGGER.debug("{}.afterClose()", getClassName());
     }
 
     public void beforeClose(final DataSourceContext context) {
