@@ -84,4 +84,21 @@ class TestCases extends TestEnvironment {
             assertEquals(role.getConnectionLimit(), -1);
         }
     }
+
+    @DisplayName("Postrise Database Security")
+    @Test
+    void run6() throws SQLException {
+        final Server server = getServerInstance(GammaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof GammaServer);
+
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection("postrise", "non_existent_role");
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof RoleSecurityException);
+        assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
+    }
 }

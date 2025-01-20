@@ -33,9 +33,12 @@ public interface DataSourceEvent extends EventListener {
      */
     void beforeCreate(DataSourceSettings settings);
 
-    void afterCreate(DataSourceContext context);
+    default void afterCreate(DataSourceContext context) {
+    }
 
-    void beforeClose(DataSourceContext context);
+    default void beforeClose(DataSourceContext context) {
+    }
 
-    void afterClose(DataSourceContext context);
+    default void afterClose(DataSourceContext context) {
+    }
 }
