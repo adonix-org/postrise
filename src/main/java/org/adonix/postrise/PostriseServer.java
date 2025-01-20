@@ -55,17 +55,17 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
 
     private final Map<String, DatabaseEvent> databaseListeners = new ConcurrentHashMap<>();
 
-    protected PostriseServer() {
+    PostriseServer() {
         addListener(this);
     }
 
     @Override
-    public void onConnection(Connection connection, String roleName) throws SQLException {
+    public void onConnection(final Connection connection, String roleName) throws SQLException {
         getSecurityProvider().onConnection(connection, roleName);
     }
 
     @Override
-    public void onLogin(Connection connection, String roleName) throws SQLException {
+    public void onLogin(final Connection connection, String roleName) throws SQLException {
         getSecurityProvider().onLogin(connection, roleName);
     }
 
