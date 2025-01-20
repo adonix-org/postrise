@@ -46,7 +46,7 @@ public abstract class PostgresRoleDAO {
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
     /**
-     * @param connection - an open {@link Connection } to a PostreSQL database.
+     * @param connection - an open {@link Connection } to a PostgreSQL database.
      * @param roleName   - the name of the ROLE to SELECT from the pg_roles TABLE.
      * @return a populated {@link PostgresRole} from the current database.
      * @throws SQLException

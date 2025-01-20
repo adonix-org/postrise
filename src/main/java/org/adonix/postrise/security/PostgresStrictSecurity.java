@@ -11,7 +11,7 @@ final class PostgresStrictSecurity extends PostgresDefaultSecurity {
 
     /**
      * This role used for requesting the {@link Connection} should not have LOGIN or
-     * SUPER user priviliges.
+     * SUPER user privileges.
      * <p>
      * {@inheritDoc}
      * 

@@ -81,7 +81,7 @@ class TestCases extends TestEnvironment {
         try (final Connection connection = server.getConnection("postrise", "postrise")) {
             PostgresRole role = PostgresRoleDAO.getRole(connection, "postrise");
             assertTrue(role.isSuperUser());
-
+            assertEquals(role.getConnectionLimit(), -1);
         }
     }
 }
