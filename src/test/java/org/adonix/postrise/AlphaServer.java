@@ -2,7 +2,7 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
 
-import org.adonix.postrise.security.SecurityEventListener;
+import org.adonix.postrise.security.SecurityProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +11,7 @@ class AlphaServer extends PostgresTestServer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    protected SecurityEventListener getSecurityProvider() {
+    protected SecurityProvider getSecurityProvider() {
         return DISABLE_SECURITY;
     }
 

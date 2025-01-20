@@ -19,7 +19,7 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 
 /**
- * A no-op implementation of {@link SecurityEventListener} that disables all
+ * A no-op implementation of {@link SecurityProvider} that disables all
  * security checks for user login and role validation.
  * 
  * <p>
@@ -28,14 +28,14 @@ import java.sql.Connection;
  * indexes, tables, or roles.
  * </p>
  */
-final class DisableSecurity implements SecurityEventListener {
+final class DisableSecurity implements SecurityProvider {
 
     /**
      * Constructs a new {@code DisableSecurity} instance.
      * <p>
      * Constructor is package-private.
      */
-    protected DisableSecurity() {
+    DisableSecurity() {
         // No initialization required for this implementation.
     }
 

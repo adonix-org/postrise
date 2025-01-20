@@ -2,12 +2,12 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.SecurityProviders.POSTGRES_STRICT_SECURITY;
 
-import org.adonix.postrise.security.SecurityEventListener;
+import org.adonix.postrise.security.SecurityProvider;
 
 class DeltaServer extends PostgresTestServer {
 
     @Override
-    protected SecurityEventListener getSecurityProvider() {
+    protected SecurityProvider getSecurityProvider() {
         return POSTGRES_STRICT_SECURITY;
     }
 

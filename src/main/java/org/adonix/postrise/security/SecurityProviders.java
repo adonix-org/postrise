@@ -24,11 +24,11 @@ public abstract class SecurityProviders {
     /**
      * PostgreSQL specific security providers.
      */
-    public static final SecurityEventListener POSTGRES_DEFAULT_SECURITY = new PostgresDefaultSecurity();
-    public static final SecurityEventListener POSTGRES_STRICT_SECURITY = new PostgresStrictSecurity();
+    public static final SecurityProvider POSTGRES_DEFAULT_SECURITY = new PostgresDefaultSecurity();
+    public static final SecurityProvider POSTGRES_STRICT_SECURITY = new PostgresStrictSecurity();
 
     /**
      * No-op security provider.
      */
-    public static final SecurityEventListener DISABLE_SECURITY = new DisableSecurity();
+    public static final SecurityProvider DISABLE_SECURITY = new DisableSecurity();
 }
