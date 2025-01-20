@@ -16,7 +16,20 @@
 
 package org.adonix.postrise;
 
-public interface DatabaseListener extends CreationListener {
+import java.util.EventListener;
 
-    String getDatabaseName();
+/**
+ * Implementations will receive the {@link #onCreate(ConnectionContext)}
+ * event to configure {@link DataSourceSettings} when a new data source is
+ * created.
+ * 
+ * @see PostriseServer#addListener(CreateListener)
+ */
+public interface DataSourceEvents extends EventListener {
+
+    /**
+     * @param settings - the {@link DataSourceSettings} used when creating a new
+     *                 {@link ConnectionProvider} instance.
+     */
+    void onCreate(DataSourceSettings settings);
 }

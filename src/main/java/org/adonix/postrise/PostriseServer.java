@@ -29,7 +29,7 @@ import org.adonix.postrise.security.SecurityEventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements CreationListener, Server {
+public abstract class PostriseServer implements DataSourceEvents, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -49,21 +49,21 @@ public abstract class PostriseServer implements CreationListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<CreationListener> configurationListeners = Collections
+    private final Set<DataSourceEvents> dataSourceListeners = Collections
             .synchronizedSet(new LinkedHashSet<>());
 
-    private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
+    private final Map<String, DatabaseEvent> databaseListeners = new ConcurrentHashMap<>();
 
     protected PostriseServer() {
         addListener(this);
     }
 
-    public final void addListener(final CreationListener listener) {
+    public final void addListener(final DataSourceEvents listener) {
         Guard.check("listener", listener);
-        configurationListeners.add(listener);
+        dataSourceListeners.add(listener);
     }
 
-    public final void addListener(final DatabaseListener listener) {
+    public final void addListener(final DatabaseEvent listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         if (databaseListeners.put(getKey(listener), listener) != null) {
@@ -122,11 +122,11 @@ public abstract class PostriseServer implements CreationListener, Server {
         // Set the JDBC Url for this provider.
         connectionProvider.setJdbcUrl(getHostName(), getPort());
 
-        for (final CreationListener listener : configurationListeners) {
+        for (final DataSourceEvents listener : dataSourceListeners) {
             listener.onCreate(connectionProvider);
         }
 
-        final DatabaseListener listener = databaseListeners.get(getKey(database));
+        final DatabaseEvent listener = databaseListeners.get(getKey(database));
         if (listener != null) {
             listener.onCreate(connectionProvider);
         }
@@ -191,7 +191,7 @@ public abstract class PostriseServer implements CreationListener, Server {
         return database.trim();
     }
 
-    private static final String getKey(final DatabaseListener listener) {
+    private static final String getKey(final DatabaseEvent listener) {
         return getKey(listener.getDatabaseName());
     }
 
