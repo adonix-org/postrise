@@ -28,8 +28,8 @@ import javax.sql.DataSource;
  * <p>
  * Most implementations will call {@link #setLoginRole(String)} and
  * {@link #setLoginPassword(String)} in the
- * {@link DataSourceEvent#onCreate(DataSourceSettings)
- * onCreate(DataSourceSettings)} method.
+ * {@link DataSourceEvent#beforeCreate(DataSourceSettings)
+ * beforeCreate(DataSourceSettings)} method.
  */
 interface ConnectionSettings extends DatabaseNameProvider {
     /**

@@ -82,7 +82,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
     }
 
     @Override
-    public void onCreate(final DataSourceSettings settings) {
+    public void beforeCreate(final DataSourceSettings settings) {
     }
 
     @Override
@@ -123,12 +123,12 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         connectionProvider.setJdbcUrl(getHostName(), getPort());
 
         for (final DataSourceEvent listener : dataSourceListeners) {
-            listener.onCreate(connectionProvider);
+            listener.beforeCreate(connectionProvider);
         }
 
         final DatabaseEvent listener = databaseListeners.get(getKey(database));
         if (listener != null) {
-            listener.onCreate(connectionProvider);
+            listener.beforeCreate(connectionProvider);
         }
 
         // Create the first connection to validate settings, initialize the connection

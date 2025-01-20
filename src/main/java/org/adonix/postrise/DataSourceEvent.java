@@ -19,7 +19,7 @@ package org.adonix.postrise;
 import java.util.EventListener;
 
 /**
- * Implementations will receive the {@link #onCreate(DataSourceSettings)}
+ * Implementations will receive the {@link #beforeCreate(DataSourceSettings)}
  * event to configure {@link DataSourceSettings} when a new data source is
  * created.
  * 
@@ -31,7 +31,7 @@ public interface DataSourceEvent extends EventListener {
      * @param settings - the {@link DataSourceSettings} applied when creating a new
      *                 {@link ConnectionProvider} instance.
      */
-    void onCreate(DataSourceSettings settings);
+    void beforeCreate(DataSourceSettings settings);
 
     void afterCreate(DataSourceContext context);
 
