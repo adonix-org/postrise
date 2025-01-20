@@ -20,7 +20,7 @@ import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SE
 
 import org.adonix.postrise.security.SecurityListener;
 
-class PostgresDataSource extends PostriseSecureDataSource {
+public class PostgresDataSource extends PostriseSecureDataSource {
 
     public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
 
@@ -28,7 +28,7 @@ class PostgresDataSource extends PostriseSecureDataSource {
 
     protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
-    PostgresDataSource(final String database) {
+    protected PostgresDataSource(final String database) {
         super(database);
         addDataSourceProperty("tcpKeepAlive", "true");
     }
