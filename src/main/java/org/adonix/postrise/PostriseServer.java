@@ -77,10 +77,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public void beforeCreate(final DataSourceSettings settings) {
-    }
-
-    @Override
     public final Connection getConnection(final String database, final String roleName) throws SQLException {
 
         Guard.check("database", database);
