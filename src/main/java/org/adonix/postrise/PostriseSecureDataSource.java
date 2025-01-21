@@ -7,7 +7,7 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
 
     abstract DataSourceListener getDefaultRoleSecurity();
 
-    private DataSourceListener roleSecurity = getDefaultRoleSecurity();
+    private volatile DataSourceListener roleSecurity = getDefaultRoleSecurity();
 
     PostriseSecureDataSource(final String database) {
         super(database);
