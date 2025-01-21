@@ -2,12 +2,11 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.util.EventListener;
 import org.adonix.postrise.DataSourceContext;
-import org.adonix.postrise.DataSourceListener;
 import org.adonix.postrise.DataSourceSettings;
 
-public interface RoleSecurityListener extends DataSourceListener {
+public interface RoleSecurityListener extends EventListener {
 
     void onLogin(DataSourceSettings settings, Connection connection) throws SQLException;
 
