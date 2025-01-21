@@ -7,9 +7,9 @@ import org.adonix.postrise.security.RoleSecurityListener;
 
 abstract class PostriseSecureDataSource extends PostriseDataSource {
 
-    abstract RoleSecurityListener getDefaultSecurity();
+    abstract RoleSecurityListener getDefaultRoleSecurity();
 
-    private RoleSecurityListener security = getDefaultSecurity();
+    private RoleSecurityListener roleSecurity = getDefaultRoleSecurity();
 
     PostriseSecureDataSource(final String database) {
         super(database);
@@ -17,21 +17,21 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
 
     @Override
     public void onConnection(final Connection connection, final String roleName) throws SQLException {
-        security.onConnection(connection, roleName);
+        roleSecurity.onConnection(connection, roleName);
     }
 
     @Override
     public void onLogin(final Connection connection, final String roleName) throws SQLException {
-        security.onLogin(connection, roleName);
+        roleSecurity.onLogin(connection, roleName);
     }
 
     @Override
-    public RoleSecurityListener getSecurity() {
-        return security;
+    public RoleSecurityListener getRoleSecurity() {
+        return roleSecurity;
     }
 
     @Override
-    public void setSecurity(final RoleSecurityListener security) {
-        this.security = security;
+    public void setRoleSecurity(final RoleSecurityListener security) {
+        this.roleSecurity = security;
     }
 }

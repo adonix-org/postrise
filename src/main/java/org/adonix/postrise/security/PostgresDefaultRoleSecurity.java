@@ -28,12 +28,12 @@ import java.sql.SQLException;
  * PostgreSQL system catalog.
  * </p>
  */
-class PostgresRoleDefaultSecurity implements RoleSecurityListener {
+class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.
      */
-    PostgresRoleDefaultSecurity() {
+    PostgresDefaultRoleSecurity() {
     }
 
     /**
@@ -56,7 +56,7 @@ class PostgresRoleDefaultSecurity implements RoleSecurityListener {
      * <code>PostgresDefaultSecurity</code> does not currently check the provided
      * role on every connection request for performance.
      * <p>
-     * During development, {@link PostgresRoleStrictSecurity} can be used to check
+     * During development, {@link PostgresStrictRoleSecurity} can be used to check
      * roles.
      */
     @Override

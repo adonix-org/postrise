@@ -11,6 +11,6 @@ public class PostriseDatabase implements DatabaseListener {
 
     @Override
     public void beforeCreate(DataSourceSettings settings) {
-        settings.setSecurity(RoleSecurityProviders.POSTGRES_STRICT_SECURITY);
+        settings.setRoleSecurity(RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY);
     }
 }

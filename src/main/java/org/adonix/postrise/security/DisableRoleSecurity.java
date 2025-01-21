@@ -28,7 +28,7 @@ import java.sql.Connection;
  * indexes, tables, or roles.
  * </p>
  */
-final class DisableRoleSecurity implements RoleSecurityListener {
+class DisableRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new {@code DisableSecurity} instance.

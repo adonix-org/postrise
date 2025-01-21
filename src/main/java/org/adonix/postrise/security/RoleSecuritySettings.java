@@ -2,7 +2,7 @@ package org.adonix.postrise.security;
 
 public interface RoleSecuritySettings {
 
-    RoleSecurityListener getSecurity();
+    RoleSecurityListener getRoleSecurity();
 
-    void setSecurity(RoleSecurityListener listener);
+    void setRoleSecurity(RoleSecurityListener listener);
 }

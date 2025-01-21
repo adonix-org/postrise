@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,7 @@ class AlphaServer extends PostgresTestServer {
     @Override
     public void beforeCreate(DataSourceSettings settings) {
         super.beforeCreate(settings);
-        settings.setSecurity(DISABLE_SECURITY);
+        settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
     }
 
     @Override

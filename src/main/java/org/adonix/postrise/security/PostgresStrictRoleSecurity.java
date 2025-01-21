@@ -3,9 +3,9 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-final class PostgresRoleStrictSecurity extends PostgresRoleDefaultSecurity {
+class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
 
-    PostgresRoleStrictSecurity() {
+    PostgresStrictRoleSecurity() {
         super();
     }
 
