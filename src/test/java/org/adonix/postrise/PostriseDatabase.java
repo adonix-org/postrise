@@ -2,7 +2,7 @@ package org.adonix.postrise;
 
 import org.adonix.postrise.security.RoleSecurityProviders;
 
-public class PostriseDatabase implements DatabaseEvent {
+public class PostriseDatabase implements DatabaseListener {
 
     @Override
     public String getDatabaseName() {

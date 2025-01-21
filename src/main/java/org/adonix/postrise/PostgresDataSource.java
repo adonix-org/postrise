@@ -21,7 +21,7 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAUL
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.security.RoleSecurityEvent;
+import org.adonix.postrise.security.RoleSecurityListener;
 
 public class PostgresDataSource extends PostriseSecureDataSource {
 
@@ -42,7 +42,7 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public RoleSecurityEvent getDefaultSecurity() {
+    public RoleSecurityListener getDefaultSecurity() {
         return POSTGRES_DEFAULT_SECURITY;
     }
 

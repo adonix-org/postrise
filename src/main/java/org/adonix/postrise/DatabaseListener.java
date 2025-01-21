@@ -16,5 +16,5 @@
 
 package org.adonix.postrise;
 
-public interface DatabaseEvent extends DatabaseNameProvider, DataSourceEvent {
+public interface DatabaseListener extends DatabaseNameProvider, DataSourceListener {
 }

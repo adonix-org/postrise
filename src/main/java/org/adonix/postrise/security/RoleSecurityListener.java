@@ -26,7 +26,7 @@ import java.util.EventListener;
  * Implementations of this interface can perform custom logic for validating
  * roles during login and connection requests.
  */
-public interface RoleSecurityEvent extends EventListener {
+public interface RoleSecurityListener extends EventListener {
 
     /**
      * This security event fires each time a new

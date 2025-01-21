@@ -24,11 +24,11 @@ public abstract class RoleSecurityProviders {
     /**
      * PostgreSQL specific security providers.
      */
-    public static final RoleSecurityEvent POSTGRES_DEFAULT_SECURITY = new PostgresDefaultRoleSecurity();
-    public static final RoleSecurityEvent POSTGRES_STRICT_SECURITY = new PostgresStrictRoleSecurity();
+    public static final RoleSecurityListener POSTGRES_DEFAULT_SECURITY = new PostgresDefaultRoleSecurity();
+    public static final RoleSecurityListener POSTGRES_STRICT_SECURITY = new PostgresStrictRoleSecurity();
 
     /**
      * No-op security provider.
      */
-    public static final RoleSecurityEvent DISABLE_SECURITY = new DisableSecurity();
+    public static final RoleSecurityListener DISABLE_SECURITY = new DisableSecurity();
 }

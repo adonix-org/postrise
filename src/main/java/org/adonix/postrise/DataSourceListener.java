@@ -25,7 +25,7 @@ import java.util.EventListener;
  * 
  * @see PostriseServer#addListener(DataSourceEvent)
  */
-public interface DataSourceEvent extends EventListener {
+public interface DataSourceListener extends EventListener {
 
     /**
      * @param settings - the {@link DataSourceSettings} applied when creating a new

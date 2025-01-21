@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements DataSourceEvent, Server {
+public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -44,21 +44,21 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<DataSourceEvent> dataSourceListeners = Collections
+    private final Set<DataSourceListener> dataSourceListeners = Collections
             .synchronizedSet(new LinkedHashSet<>());
 
-    private final Map<String, DatabaseEvent> databaseListeners = new ConcurrentHashMap<>();
+    private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
 
     PostriseServer() {
         addListener(this);
     }
 
-    public final void addListener(final DataSourceEvent listener) {
+    public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         dataSourceListeners.add(listener);
     }
 
-    public final void addListener(final DatabaseEvent listener) {
+    public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         if (databaseListeners.put(getKey(listener), listener) != null) {
@@ -114,11 +114,11 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         // Set the JDBC Url for this provider.
         provider.setJdbcUrl(getHostName(), getPort());
 
-        for (final DataSourceEvent listener : dataSourceListeners) {
+        for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(provider);
         }
 
-        final DatabaseEvent listener = databaseListeners.get(getKey(database));
+        final DatabaseListener listener = databaseListeners.get(getKey(database));
         if (listener != null) {
             listener.beforeCreate(provider);
         }
@@ -185,7 +185,7 @@ public abstract class PostriseServer implements DataSourceEvent, Server {
         return database.trim();
     }
 
-    private static final String getKey(final DatabaseEvent listener) {
+    private static final String getKey(final DatabaseListener listener) {
         return getKey(listener.getDatabaseName());
     }
 
