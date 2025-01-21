@@ -47,7 +47,7 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public final void setRole(final Connection connection, final String role, final String... roles) throws SQLException {
+    public final void setRole(final Connection connection, final String role) throws SQLException {
         PostgresRoleDAO.setRole(connection, role);
     }
 }
