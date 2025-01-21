@@ -30,5 +30,5 @@ public abstract class RoleSecurityProviders {
     /**
      * No-op security listeners.
      */
-    public static final RoleSecurityListener DISABLE_SECURITY = new DisableSecurity();
+    public static final RoleSecurityListener DISABLE_SECURITY = new DisableRoleSecurity();
 }
