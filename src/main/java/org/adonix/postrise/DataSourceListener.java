@@ -23,7 +23,7 @@ import java.util.EventListener;
  * event to configure {@link DataSourceSettings} when a new data source is
  * created.
  * 
- * @see PostriseServer#addListener(DataSourceEvent)
+ * @see PostriseServer#addListener(DataSourceListener)
  */
 public interface DataSourceListener extends EventListener {
 
