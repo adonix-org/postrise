@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.adonix.postrise.DataSourceContext;
-import org.adonix.postrise.DataSourceListener;
 import org.adonix.postrise.DataSourceSettings;
 
 /**
@@ -32,7 +31,7 @@ import org.adonix.postrise.DataSourceSettings;
  * PostgreSQL system catalog.
  * </p>
  */
-class PostgresDefaultRoleSecurity implements DataSourceListener {
+class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.

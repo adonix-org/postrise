@@ -16,8 +16,6 @@
 
 package org.adonix.postrise;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.EventListener;
 
 /**
@@ -28,12 +26,6 @@ import java.util.EventListener;
  * @see PostriseServer#addListener(DataSourceListener)
  */
 public interface DataSourceListener extends EventListener {
-
-    default void onLogin(DataSourceSettings settings, Connection connection) throws SQLException {
-    }
-
-    default void onConnection(DataSourceContext context, Connection connection, String roleName) throws SQLException {
-    }
 
     /**
      * @param settings - the {@link DataSourceSettings} applied when creating a new

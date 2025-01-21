@@ -16,7 +16,11 @@
 
 package org.adonix.postrise.security;
 
-import org.adonix.postrise.DataSourceListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.adonix.postrise.DataSourceContext;
+import org.adonix.postrise.DataSourceSettings;
 
 /**
  * A no-op implementation of {@link RoleSecurityListener} that disables all
@@ -28,7 +32,7 @@ import org.adonix.postrise.DataSourceListener;
  * indexes, tables, or roles.
  * </p>
  */
-class DisableRoleSecurity implements DataSourceListener {
+class DisableRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new {@code DisableSecurity} instance.
@@ -37,5 +41,13 @@ class DisableRoleSecurity implements DataSourceListener {
      */
     DisableRoleSecurity() {
         // No initialization required for this implementation.
+    }
+
+    @Override
+    public void onLogin(DataSourceSettings settings, Connection connection) throws SQLException {
+    }
+
+    @Override
+    public void onConnection(DataSourceContext context, Connection connection, String roleName) throws SQLException {
     }
 }
