@@ -77,12 +77,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final Connection getConnection(final String database, final String roleName) throws SQLException {
+    public final Connection getConnection(final String databaseName, final String roleName) throws SQLException {
 
-        Guard.check("database", database);
+        Guard.check("databaseName", databaseName);
         Guard.check("roleName", roleName);
 
-        final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(database), _ -> create(database));
+        final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(databaseName),
+                _ -> create(databaseName));
 
         final Connection connection = provider.getConnection();
         try {
@@ -99,13 +100,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     /**
      * 
-     * @param database - the name of the database for creating the
-     *                 {@link ConnectionProvider}.
+     * @param databaseName - the name of the database for creating the
+     *                     {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
      */
-    private final ConnectionProvider create(final String database) {
+    private final ConnectionProvider create(final String databaseName) {
 
-        final ConnectionProvider provider = createConnectionProvider(database);
+        final ConnectionProvider provider = createConnectionProvider(databaseName);
 
         // Set the JDBC Url for this provider.
         provider.setJdbcUrl(getHostName(), getPort());
@@ -114,7 +115,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             listener.beforeCreate(provider);
         }
 
-        final DatabaseListener listener = databaseListeners.get(getKey(database));
+        final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
         if (listener != null) {
             listener.beforeCreate(provider);
         }
