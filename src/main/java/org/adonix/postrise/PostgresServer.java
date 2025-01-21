@@ -16,10 +16,10 @@
 
 package org.adonix.postrise;
 
-import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_HOSTNAME;
-import static org.adonix.postrise.PostgresDataSource.POSTGRES_DEFAULT_PORT;
-
 public class PostgresServer extends PostriseServer {
+
+    public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
+    public static final Integer POSTGRES_DEFAULT_PORT = 5432;
 
     public PostgresServer() {
         super();

@@ -25,14 +25,10 @@ import org.adonix.postrise.security.RoleSecurityListener;
 
 public class PostgresDataSource extends PostriseSecureDataSource {
 
-    public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
-
-    public static final Integer POSTGRES_DEFAULT_PORT = 5432;
-
     protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
-    protected PostgresDataSource(final String database) {
-        super(database);
+    protected PostgresDataSource(final String databaseName) {
+        super(databaseName);
         addDataSourceProperty("tcpKeepAlive", "true");
     }
 

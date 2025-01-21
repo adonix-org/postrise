@@ -26,8 +26,8 @@ abstract class PostriseDataSource implements ConnectionProvider {
     private final HikariDataSource delegate = new HikariDataSource();
     private final String databaseName;
 
-    PostriseDataSource(final String database) {
-        this.databaseName = database;
+    PostriseDataSource(final String databaseName) {
+        this.databaseName = databaseName;
     }
 
     @Override
