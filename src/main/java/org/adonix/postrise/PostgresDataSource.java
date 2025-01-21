@@ -16,12 +16,12 @@
 
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.SecurityProviders.POSTGRES_DEFAULT_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_SECURITY;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.security.SecurityProvider;
+import org.adonix.postrise.security.RoleSecurityEvent;
 
 public class PostgresDataSource extends PostriseSecureDataSource {
 
@@ -42,12 +42,12 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public SecurityProvider getDefaultSecurity() {
+    public RoleSecurityEvent getDefaultSecurity() {
         return POSTGRES_DEFAULT_SECURITY;
     }
 
     @Override
-    public final void setRole(final Connection connection, final String role) throws SQLException {
-        PostgresRoleDAO.setRole(connection, role);
+    public final void setRole(final Connection connection, final String roleName) throws SQLException {
+        PostgresRoleDAO.setRole(connection, roleName);
     }
 }

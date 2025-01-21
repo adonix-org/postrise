@@ -16,19 +16,19 @@
 
 package org.adonix.postrise.security;
 
-public abstract class SecurityProviders {
+public abstract class RoleSecurityProviders {
 
-    private SecurityProviders() {
+    private RoleSecurityProviders() {
     }
 
     /**
      * PostgreSQL specific security providers.
      */
-    public static final SecurityProvider POSTGRES_DEFAULT_SECURITY = new PostgresDefaultSecurity();
-    public static final SecurityProvider POSTGRES_STRICT_SECURITY = new PostgresStrictSecurity();
+    public static final RoleSecurityEvent POSTGRES_DEFAULT_SECURITY = new PostgresDefaultRoleSecurity();
+    public static final RoleSecurityEvent POSTGRES_STRICT_SECURITY = new PostgresStrictRoleSecurity();
 
     /**
      * No-op security provider.
      */
-    public static final SecurityProvider DISABLE_SECURITY = new DisableSecurity();
+    public static final RoleSecurityEvent DISABLE_SECURITY = new DisableSecurity();
 }

@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.SecurityProviders.POSTGRES_STRICT_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_SECURITY;
 
 class DeltaServer extends PostgresTestServer {
 

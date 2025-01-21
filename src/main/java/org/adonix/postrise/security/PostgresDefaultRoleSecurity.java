@@ -23,17 +23,17 @@ import java.sql.SQLException;
  * The {@code DefaultSecurity} class provides default security checks
  * for user logins and connections in a database environment.
  * <p>
- * It implements the {@link SecurityProvider} interface, performing
+ * It implements the {@link RoleSecurityEvent} interface, performing
  * specific validation for users and roles using SQL queries on the
  * PostgreSQL system catalog.
  * </p>
  */
-class PostgresDefaultSecurity implements SecurityProvider {
+class PostgresDefaultRoleSecurity implements RoleSecurityEvent {
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.
      */
-    protected PostgresDefaultSecurity() {
+    protected PostgresDefaultRoleSecurity() {
     }
 
     /**
@@ -56,7 +56,7 @@ class PostgresDefaultSecurity implements SecurityProvider {
      * <code>PostgresDefaultSecurity</code> does not currently check the provided
      * role on every connection request for performance.
      * <p>
-     * During development, {@link PostgresStrictSecurity} can be used to check
+     * During development, {@link PostgresStrictRoleSecurity} can be used to check
      * roles.
      */
     @Override

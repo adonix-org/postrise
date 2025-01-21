@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.SecurityProviders.DISABLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_SECURITY;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

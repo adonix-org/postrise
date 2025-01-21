@@ -1,6 +1,6 @@
 package org.adonix.postrise;
 
-import org.adonix.postrise.security.SecurityProviders;
+import org.adonix.postrise.security.RoleSecurityProviders;
 
 public class PostriseDatabase implements DatabaseEvent {
 
@@ -11,6 +11,6 @@ public class PostriseDatabase implements DatabaseEvent {
 
     @Override
     public void beforeCreate(DataSourceSettings settings) {
-        settings.setSecurity(SecurityProviders.POSTGRES_STRICT_SECURITY);
+        settings.setSecurity(RoleSecurityProviders.POSTGRES_STRICT_SECURITY);
     }
 }
