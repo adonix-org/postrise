@@ -16,7 +16,7 @@
 
 package org.adonix.postrise.security;
 
-import java.sql.Connection;
+import org.adonix.postrise.DataSourceListener;
 
 /**
  * A no-op implementation of {@link RoleSecurityListener} that disables all
@@ -28,7 +28,7 @@ import java.sql.Connection;
  * indexes, tables, or roles.
  * </p>
  */
-class DisableRoleSecurity implements RoleSecurityListener {
+class DisableRoleSecurity implements DataSourceListener {
 
     /**
      * Constructs a new {@code DisableSecurity} instance.
@@ -37,28 +37,5 @@ class DisableRoleSecurity implements RoleSecurityListener {
      */
     DisableRoleSecurity() {
         // No initialization required for this implementation.
-    }
-
-    /**
-     * Disables the user login security check. This implementation does nothing.
-     *
-     * @param connection the database connection (ignored).
-     * @param user       the user attempting to log in (ignored).
-     */
-    @Override
-    public void onLogin(final Connection connection, final String user) {
-        // No action taken; user login security checks are disabled.
-    }
-
-    /**
-     * Disables the role validation security check. This implementation does
-     * nothing.
-     *
-     * @param connection the database connection (ignored).
-     * @param role       the role to be validated (ignored).
-     */
-    @Override
-    public void onConnection(final Connection connection, final String role) {
-        // No action taken; role security checks are disabled.
     }
 }

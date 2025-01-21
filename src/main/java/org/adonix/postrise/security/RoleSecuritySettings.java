@@ -1,8 +1,10 @@
 package org.adonix.postrise.security;
 
+import org.adonix.postrise.DataSourceListener;
+
 public interface RoleSecuritySettings {
 
-    RoleSecurityListener getRoleSecurity();
+    DataSourceListener getRoleSecurity();
 
-    void setRoleSecurity(RoleSecurityListener listener);
+    void setRoleSecurity(DataSourceListener listener);
 }

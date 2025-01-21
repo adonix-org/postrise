@@ -19,6 +19,10 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.adonix.postrise.DataSourceContext;
+import org.adonix.postrise.DataSourceListener;
+import org.adonix.postrise.DataSourceSettings;
+
 /**
  * The {@code DefaultSecurity} class provides default security checks
  * for user logins and connections in a database environment.
@@ -28,7 +32,7 @@ import java.sql.SQLException;
  * PostgreSQL system catalog.
  * </p>
  */
-class PostgresDefaultRoleSecurity implements RoleSecurityListener {
+class PostgresDefaultRoleSecurity implements DataSourceListener {
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.
@@ -42,8 +46,8 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
      * @throws RoleSecurityException is not a login user, or is a super user.
      */
     @Override
-    public void onLogin(final Connection connection, final String roleName) throws SQLException {
-        final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
+    public void onLogin(final DataSourceSettings settings, final Connection connection) throws SQLException {
+        final PostgresRole role = PostgresRoleDAO.getRole(connection, settings.getLoginRole());
         if (role.isSuperUser()) {
             throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
         }
@@ -52,15 +56,11 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
         }
     }
 
-    /**
-     * <code>PostgresDefaultSecurity</code> does not currently check the provided
-     * role on every connection request for performance.
-     * <p>
-     * During development, {@link PostgresStrictRoleSecurity} can be used to check
-     * roles.
-     */
     @Override
-    public void onConnection(final Connection connection, final String roleName) throws SQLException {
-        //
+    public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
+            throws SQLException {
+        if (context.getLoginRole().equals(roleName)) {
+            throw new RoleSecurityException("role '" + roleName + "' matches the LOGIN role");
+        }
     }
 }

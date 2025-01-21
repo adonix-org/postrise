@@ -88,7 +88,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         final Connection connection = provider.getConnection();
         try {
 
-            provider.onConnection(connection, roleName);
+            provider.onConnection(provider, connection, roleName);
             provider.setRole(connection, roleName);
             return connection;
 
@@ -124,7 +124,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         // pool, and send to the onLogin to this class and subclasses.
         try (final Connection connection = provider.getConnection()) {
 
-            provider.onLogin(connection, provider.getLoginRole());
+            provider.onLogin(provider, connection);
             afterCreate(provider);
             return provider;
 

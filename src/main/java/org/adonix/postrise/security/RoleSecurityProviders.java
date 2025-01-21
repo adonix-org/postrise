@@ -16,6 +16,8 @@
 
 package org.adonix.postrise.security;
 
+import org.adonix.postrise.DataSourceListener;
+
 public abstract class RoleSecurityProviders {
 
     private RoleSecurityProviders() {
@@ -24,11 +26,11 @@ public abstract class RoleSecurityProviders {
     /**
      * PostgreSQL specific security listeners.
      */
-    public static final RoleSecurityListener POSTGRES_DEFAULT_ROLE_SECURITY = new PostgresDefaultRoleSecurity();
-    public static final RoleSecurityListener POSTGRES_STRICT_ROLE_SECURITY = new PostgresStrictRoleSecurity();
+    public static final DataSourceListener POSTGRES_DEFAULT_ROLE_SECURITY = new PostgresDefaultRoleSecurity();
+    public static final DataSourceListener POSTGRES_STRICT_ROLE_SECURITY = new PostgresStrictRoleSecurity();
 
     /**
      * No-op security listeners.
      */
-    public static final RoleSecurityListener DISABLE_ROLE_SECURITY = new DisableRoleSecurity();
+    public static final DataSourceListener DISABLE_ROLE_SECURITY = new DisableRoleSecurity();
 }
