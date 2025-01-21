@@ -35,19 +35,19 @@ import org.adonix.postrise.DataSourceSettings;
 class DisableRoleSecurity implements RoleSecurityListener {
 
     /**
-     * Constructs a new {@code DisableSecurity} instance.
+     * Constructs a new {@code DisableRoleSecurity} instance.
      * <p>
-     * Constructor is package-private.
+     * Constructor is <code>package-private</code>.
      */
     DisableRoleSecurity() {
-        // No initialization required for this implementation.
     }
 
     @Override
-    public void onLogin(DataSourceSettings settings, Connection connection) throws SQLException {
+    public void onLogin(final DataSourceSettings settings, final Connection connection) throws SQLException {
     }
 
     @Override
-    public void onConnection(DataSourceContext context, Connection connection, String roleName) throws SQLException {
+    public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
+            throws SQLException {
     }
 }
