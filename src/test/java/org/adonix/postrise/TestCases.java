@@ -47,7 +47,7 @@ class TestCases extends TestEnvironment {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("ROLE SECURITY: role 'postrise' is a super user", cause.getMessage());
+        assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
     }
 
     /**
@@ -99,6 +99,6 @@ class TestCases extends TestEnvironment {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("ROLE SECURITY: role 'postrise' is a super user", cause.getMessage());
+        assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
     }
 }
