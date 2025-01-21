@@ -4,9 +4,11 @@ import java.sql.SQLException;
 
 public class RoleSecurityException extends SQLException {
 
-    private static final String MESSAGE_PREFIX = "SECURITY: ";
+    private static final String SQL_STATE_INVALID_ROLE = "28000";
+
+    private static final String MESSAGE_PREFIX = "ROLE SECURITY: ";
 
     protected RoleSecurityException(final String message) {
-        super(MESSAGE_PREFIX + message.trim());
+        super(MESSAGE_PREFIX + message.trim(), SQL_STATE_INVALID_ROLE);
     }
 }
