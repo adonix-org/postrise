@@ -17,8 +17,9 @@ class AlphaServer extends PostgresTestServer {
 
     @Override
     public void afterCreate(final DataSourceContext context) {
+        super.afterCreate(context);
         LOGGER.debug(
-                "afterCreate: {}\t Max Pool Size: {}\tTotal Connections: {}\tIdle Connections: {}\tActiveConnections: {}",
+                "[{}.afterCreate()] Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                 context.getDatabaseName(),
                 context.getMaxPoolSize(),
                 context.getTotalConnections(),
@@ -32,7 +33,7 @@ class AlphaServer extends PostgresTestServer {
         for (final String database : getDatabases()) {
             getDataSource(database).ifPresent((context) -> {
                 LOGGER.debug(
-                        "Database: {}\t Max Pool Size: {}\tTotal Connections: {}\tIdle Connections: {}\tActiveConnections: {}",
+                        "Database: {} Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                         context.getDatabaseName(),
                         context.getMaxPoolSize(),
                         context.getTotalConnections(),
