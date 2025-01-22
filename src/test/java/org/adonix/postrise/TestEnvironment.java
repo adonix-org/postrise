@@ -47,12 +47,12 @@ abstract class TestEnvironment {
     static void initialize() throws Exception {
         try (final Connection connection = getServerInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
             connection.setAutoCommit(true);
-            executeSql(connection, "beta.sql");
-            executeSql(connection, "delta.sql");
+            executeSqlFile(connection, "beta.sql");
+            executeSqlFile(connection, "delta.sql");
         }
     }
 
-    static void executeSql(final Connection connection, final String fileName) throws Exception {
+    static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
         final String sql = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
         connection.prepareStatement(sql).executeUpdate();
