@@ -54,6 +54,7 @@ abstract class TestEnvironment {
     }
 
     static void executeSql(final Connection connection, final String fileName) throws Exception {
+        connection.setAutoCommit(true);
         final String sql = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
         connection.prepareStatement(sql).executeUpdate();
