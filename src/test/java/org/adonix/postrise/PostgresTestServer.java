@@ -44,6 +44,12 @@ abstract class PostgresTestServer extends PostgresServer {
         settings.setLoginPassword(container.getPassword());
     }
 
+    @Override
+    public void afterCreate(final DataSourceContext context) {
+        super.afterCreate(context);
+        LOGGER.debug(context.getDataSourceProperties());
+    }
+
     public static final void start() {
         container.start();
         LOGGER.debug("{} container started.", container.getDockerImageName());
