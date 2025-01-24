@@ -12,8 +12,19 @@
 
     <organization>
         <name>adonix.org</name>
-        <url>https://github.com/adonix-org/Postrise</url>
+        <url>https://github.com/adonix-org</url>
     </organization>
+
+    <scm>
+        <connection>scm:git:https://github.com/adonix-org/Postrise.git</connection>
+        <developerConnection>scm:git:https://github.com/adonix-org/Postrise.git</developerConnection>
+        <url>https://github.com/adonix-org/Postrise</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/adonix-org/Postrise/issues</url>
+    </issueManagement>
 
     <licenses>
         <license>
