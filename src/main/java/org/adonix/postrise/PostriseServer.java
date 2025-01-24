@@ -138,6 +138,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return this.getClass().getSimpleName();
     }
 
+    @Override
     public void afterCreate(final DataSourceContext context) {
         LOGGER.debug("{} data source created: {}", getClassName(), context.getJdbcUrl());
     }
@@ -150,10 +151,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.debug("{}.afterClose()", getClassName());
     }
 
+    @Override
     public void beforeClose(final DataSourceContext context) {
         LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }
 
+    @Override
     public void afterClose(final DataSourceContext context) {
         LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }

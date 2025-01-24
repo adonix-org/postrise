@@ -9,7 +9,7 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
 
     abstract RoleSecurityListener getDefaultRoleSecurity();
 
-    private volatile RoleSecurityListener roleSecurity = getDefaultRoleSecurity();
+    private RoleSecurityListener roleSecurity = getDefaultRoleSecurity();
 
     PostriseSecureDataSource(final String database) {
         super(database);
@@ -26,12 +26,12 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
     }
 
     @Override
-    public RoleSecurityListener getRoleSecurity() {
+    public synchronized RoleSecurityListener getRoleSecurity() {
         return roleSecurity;
     }
 
     @Override
-    public void setRoleSecurity(final RoleSecurityListener security) {
+    public synchronized void setRoleSecurity(final RoleSecurityListener security) {
         this.roleSecurity = security;
     }
 }

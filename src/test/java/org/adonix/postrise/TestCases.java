@@ -87,7 +87,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Postrise Database Security")
     @Test
-    void run6() throws SQLException {
+    void run6() {
         final Server server = getServerInstance(GammaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof GammaServer);
