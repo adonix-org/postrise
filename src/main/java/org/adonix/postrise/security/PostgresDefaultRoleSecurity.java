@@ -48,10 +48,10 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     public void onLogin(final DataSourceSettings settings, final Connection connection) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, settings.getLoginRole());
         if (role.isSuperUser()) {
-            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
+            throw new RoleSecurityException(role.getRoleName() + " is a super user");
         }
         if (!role.isLoginRole()) {
-            throw new RoleSecurityException("role '" + role.getRoleName() + "' is not a login user");
+            throw new RoleSecurityException(role.getRoleName() + " is not a login user");
         }
     }
 
@@ -59,7 +59,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
             throws SQLException {
         if (context.getLoginRole().equals(roleName)) {
-            throw new RoleSecurityException("role '" + roleName + "' matches the LOGIN role");
+            throw new RoleSecurityException(roleName + " is the LOGIN role");
         }
     }
 }

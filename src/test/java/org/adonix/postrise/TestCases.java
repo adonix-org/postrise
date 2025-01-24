@@ -47,7 +47,7 @@ class TestCases extends TestEnvironment {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
+        assertEquals("SECURITY: postrise is a super user", cause.getMessage());
     }
 
     /**
@@ -99,7 +99,7 @@ class TestCases extends TestEnvironment {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: role 'postrise' is a super user", cause.getMessage());
+        assertEquals("SECURITY: postrise is a super user", cause.getMessage());
     }
 
     @DisplayName("Connection Role Matches Login Role Exception")
@@ -112,6 +112,6 @@ class TestCases extends TestEnvironment {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection("database_beta", "beta_login");
         });
-        assertEquals("SECURITY: role 'beta_login' matches the LOGIN role", t.getMessage());
+        assertEquals("SECURITY: beta_login is the LOGIN role", t.getMessage());
     }
 }
