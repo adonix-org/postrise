@@ -12,13 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static Map<String, Server> instances = Map.ofEntries(
+    private static Map<String, PostriseServer> instances = Map.ofEntries(
             getEntry(new AlphaServer()),
             getEntry(new BetaServer()),
             getEntry(new GammaServer()),
             getEntry(new DeltaServer()));
 
-    private static final Entry<String, Server> getEntry(final Server server) {
+    private static final Entry<String, PostriseServer> getEntry(final PostriseServer server) {
         return entry(getKey(server.getClass()), server);
     }
 
@@ -26,7 +26,7 @@ abstract class TestEnvironment {
         return clazz.getName();
     }
 
-    static final Server getServerInstance(final Class<? extends Server> clazz) {
+    static final PostriseServer getServerInstance(final Class<? extends PostriseServer> clazz) {
         return instances.get(getKey(clazz));
     }
 
