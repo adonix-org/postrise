@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
