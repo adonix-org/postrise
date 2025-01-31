@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
@@ -113,5 +114,17 @@ class TestCases extends TestEnvironment {
             server.getConnection("database_beta", "beta_login");
         });
         assertEquals("SECURITY: beta_login is the LOGIN role", t.getMessage());
+    }
+
+    @DisplayName("PostgreSQL TCP Keep Alive")
+    @Test
+    void run8() {
+        final PostriseServer server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        final Optional<DataSourceContext> dataSource = server.getDataSource("postrise");
+        assertTrue(dataSource.isPresent());
+        assertTrue(Boolean.parseBoolean(dataSource.get().getDataSourceProperties().getProperty("tcpKeepAlive")));
     }
 }
