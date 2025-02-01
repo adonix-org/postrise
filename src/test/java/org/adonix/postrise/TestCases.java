@@ -18,7 +18,7 @@ import org.postgresql.util.PSQLException;
 class TestCases extends TestEnvironment {
 
     @Test
-    void run1() throws SQLException {
+    void t01() throws SQLException {
         try (final Connection connection = getServerInstance(AlphaServer.class)
                 .getConnection("postrise", "postrise")) {
             assertNotNull(connection);
@@ -26,7 +26,7 @@ class TestCases extends TestEnvironment {
     }
 
     @Test
-    void run2() throws SQLException {
+    void t02() throws SQLException {
         try (final Connection connection = getServerInstance(DeltaServer.class)
                 .getConnection("database_delta", "delta_application")) {
             assertNotNull(connection);
@@ -35,7 +35,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Super User Security Exception")
     @Test
-    void run3() {
+    void t03() {
         final Server server = getServerInstance(GammaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof GammaServer);
@@ -56,7 +56,7 @@ class TestCases extends TestEnvironment {
      */
     @DisplayName("Postgres Exception Propagation")
     @Test
-    void run4() {
+    void t04() {
         final Server server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
@@ -73,7 +73,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Postgres Role Query")
     @Test
-    void run5() throws SQLException {
+    void t05() throws SQLException {
         final Server server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
@@ -87,7 +87,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Postrise Database Security")
     @Test
-    void run6() {
+    void t06() {
         final Server server = getServerInstance(GammaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof GammaServer);
@@ -104,7 +104,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Connection Role Matches Login Role Exception")
     @Test
-    void run7() {
+    void t07() {
         final Server server = getServerInstance(BetaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof BetaServer);
@@ -115,15 +115,18 @@ class TestCases extends TestEnvironment {
         assertEquals("SECURITY: beta_login is the LOGIN role", t.getMessage());
     }
 
-    @DisplayName("PostgreSQL TCP Keep Alive")
+    @DisplayName("Postgres TCP Keep Alive")
     @Test
-    void run8() {
+    void t08() {
         final PostriseServer server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
         final Optional<DataSourceContext> dataSource = server.getDataSource("postrise");
         assertTrue(dataSource.isPresent());
-        assertTrue(Boolean.parseBoolean(dataSource.get().getDataSourceProperties().getProperty("tcpKeepAlive")));
+
+        final String tcpKeepAlive = dataSource.get().getDataSourceProperties().getProperty("tcpKeepAlive");
+        assertNotNull(tcpKeepAlive);
+        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 }
