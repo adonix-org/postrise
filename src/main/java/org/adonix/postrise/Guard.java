@@ -39,4 +39,10 @@ public abstract class Guard {
             throw new IllegalArgumentException(BLANK_STRING_ERROR + parameterName);
         }
     }
+
+    public static final void check(final Server server, final boolean isClosed) {
+        if (isClosed) {
+            throw new IllegalStateException("Server " + server.toString() + " is closed");
+        }
+    }
 }

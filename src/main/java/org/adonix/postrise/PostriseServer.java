@@ -31,6 +31,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private volatile boolean isClosed = false;
+
     /**
      * Subclasses will create and return a new instance of a
      * {@link ConnectionProvider} implementation.
@@ -71,6 +73,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     public final DataSourceContext getDataSource(final String databaseName) {
         Guard.check("databaseName", databaseName);
+        Guard.check(this, isClosed);
         return getConnectionProvider(databaseName);
     }
 
@@ -85,6 +88,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         Guard.check("databaseName", databaseName);
         Guard.check("roleName", roleName);
+        Guard.check(this, isClosed);
 
         final ConnectionProvider provider = getConnectionProvider(databaseName);
 
@@ -166,6 +170,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public final synchronized void close() {
+        if (isClosed) {
+            return;
+        }
         try {
             beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
@@ -180,6 +187,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             }
         } finally {
             databasePools.clear();
+            this.isClosed = true;
             afterClose();
         }
     }
