@@ -32,7 +32,7 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("Super User Security Exception")
+    @DisplayName("SUPERUSER Security Exception")
     @Test
     void t03() {
         final Server server = getServerInstance(GammaServer.class);
@@ -130,7 +130,7 @@ class TestCases extends TestEnvironment {
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
-    @DisplayName("Null Database SUPERUSER")
+    @DisplayName("NULL Database SUPERUSER")
     @Test
     void t09() throws SQLException {
         final PostriseServer server = getServerInstance(AlphaServer.class);
@@ -148,7 +148,7 @@ class TestCases extends TestEnvironment {
         assertEquals("Unexpected null String for databaseName", t.getMessage());
     }
 
-    @DisplayName("Null Role SUPERUSER")
+    @DisplayName("NULL Role SUPERUSER")
     @Test
     void t10() throws SQLException {
         final PostriseServer server = getServerInstance(AlphaServer.class);
@@ -166,7 +166,7 @@ class TestCases extends TestEnvironment {
         assertEquals("Unexpected null String for roleName", t.getMessage());
     }
 
-    @DisplayName("Empty Database String SUPERUSER")
+    @DisplayName("EMPTY Database String SUPERUSER")
     @Test
     void t11() throws SQLException {
         final PostriseServer server = getServerInstance(AlphaServer.class);
@@ -184,7 +184,7 @@ class TestCases extends TestEnvironment {
         assertEquals("Unexpected empty String for databaseName", t.getMessage());
     }
 
-    @DisplayName("Empty Role String SUPERUSER")
+    @DisplayName("EMPTY Role String SUPERUSER")
     @Test
     void t12() throws SQLException {
         final PostriseServer server = getServerInstance(AlphaServer.class);
