@@ -1,10 +1,12 @@
 package org.adonix.postrise;
 
+import java.util.Optional;
+
 interface ConnectionPoolStatus {
 
-    int getActiveConnections();
+    Optional<Integer> getActiveConnections();
 
-    int getIdleConnections();
+    Optional<Integer> getIdleConnections();
 
-    int getTotalConnections();
+    Optional<Integer> getTotalConnections();
 }
