@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Optional;
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
@@ -123,14 +122,10 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
-            assertNotNull(connection);
-        }
+        final DataSourceContext dataSource = server.getDataSource("postrise");
+        assertNotNull(dataSource);
 
-        final Optional<DataSourceContext> dataSource = server.getDataSource("postrise");
-        assertTrue(dataSource.isPresent());
-
-        final String tcpKeepAlive = dataSource.get().getDataSourceProperties().getProperty("tcpKeepAlive");
+        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
@@ -196,10 +191,6 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
-            assertNotNull(connection);
-        }
-
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection("postrise", " ");
         });
@@ -214,14 +205,10 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof DeltaServer);
 
-        try (final Connection connection = server.getConnection("database_delta", "delta_application")) {
-            assertNotNull(connection);
-        }
+        final DataSourceContext dataSource = server.getDataSource("database_delta");
+        assertNotNull(dataSource);
 
-        final Optional<DataSourceContext> dataSource = server.getDataSource("database_delta");
-        assertTrue(dataSource.isPresent());
-
-        final String tcpKeepAlive = dataSource.get().getDataSourceProperties().getProperty("tcpKeepAlive");
+        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }

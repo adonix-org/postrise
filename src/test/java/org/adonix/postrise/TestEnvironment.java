@@ -22,7 +22,7 @@ abstract class TestEnvironment {
         return entry(getKey(server.getClass()), server);
     }
 
-    private static final String getKey(final Class<? extends Server> clazz) {
+    private static final String getKey(final Class<? extends PostriseServer> clazz) {
         return clazz.getName();
     }
 

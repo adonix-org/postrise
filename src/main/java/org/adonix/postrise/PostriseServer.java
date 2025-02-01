@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -70,10 +69,15 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return databasePools.keySet();
     }
 
-    protected final Optional<DataSourceContext> getDataSource(final String database) {
+    public final DataSourceContext getDataSource(final String databaseName) {
+        Guard.check("databaseName", databaseName);
+        return getConnectionProvider(databaseName);
+    }
 
-        Guard.check("database", database);
-        return Optional.ofNullable(databasePools.get(getKey(database)));
+    private final ConnectionProvider getConnectionProvider(final String databaseName) {
+        final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(databaseName),
+                _ -> create(databaseName));
+        return provider;
     }
 
     @Override
@@ -82,8 +86,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("databaseName", databaseName);
         Guard.check("roleName", roleName);
 
-        final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(databaseName),
-                _ -> create(databaseName));
+        final ConnectionProvider provider = getConnectionProvider(databaseName);
 
         final Connection connection = provider.getConnection();
         try {
