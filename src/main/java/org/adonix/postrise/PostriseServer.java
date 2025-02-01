@@ -117,27 +117,48 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         // Set the JDBC Url for this provider.
         provider.setJdbcUrl(getHostName(), getPort());
+        {
+            for (final DataSourceListener listener : dataSourceListeners) {
+                listener.beforeCreate(provider);
+            }
 
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.beforeCreate(provider);
-        }
-
-        final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
-        if (listener != null) {
-            listener.beforeCreate(provider);
+            final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
+            if (listener != null) {
+                listener.beforeCreate(provider);
+            }
         }
 
         // Create the first connection to validate settings, initialize the connection
-        // pool, and send to the onLogin to this class and subclasses.
+        // pool, and send events all listeners including this class.
         try (final Connection connection = provider.getConnection()) {
 
             provider.onLogin(provider, connection);
-            afterCreate(provider);
+
+            for (final DataSourceListener listener : dataSourceListeners) {
+                listener.afterCreate(provider);
+            }
+
+            final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
+            if (listener != null) {
+                listener.afterCreate(provider);
+            }
             return provider;
 
-        } catch (final SQLException e) {
+        } catch (final SQLException ex) {
+
             provider.close();
-            throw new CreateDataSourceException(provider.getJdbcUrl(), e);
+
+            final RuntimeException e = new CreateDataSourceException(provider.getJdbcUrl(), ex);
+            for (final DataSourceListener listener : dataSourceListeners) {
+                listener.onException(provider, e);
+            }
+            {
+                final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+                if (listener != null) {
+                    listener.onException(provider, e);
+                }
+            }
+            throw e;
         }
     }
 
@@ -150,14 +171,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.debug("{} data source created: {}", getClassName(), context.getJdbcUrl());
     }
 
-    protected void beforeClose() {
-        LOGGER.debug("{}.beforeClose()", getClassName());
-    }
-
-    protected void afterClose() {
-        LOGGER.debug("{}.afterClose()", getClassName());
-    }
-
     @Override
     public void beforeClose(final DataSourceContext context) {
         LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(), getClassName());
@@ -168,26 +181,58 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }
 
+    protected void beforeClose() {
+        LOGGER.debug("{}.beforeClose()", getClassName());
+    }
+
+    protected void afterClose() {
+        LOGGER.debug("{}.afterClose()", getClassName());
+    }
+
     @Override
     public final synchronized void close() {
         if (isClosed) {
             return;
         }
         try {
+
             beforeClose();
+
             for (final ConnectionProvider provider : databasePools.values()) {
-                beforeClose(provider);
+
+                for (final DataSourceListener listener : dataSourceListeners) {
+                    listener.beforeClose(provider);
+                }
+                {
+                    final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+                    if (listener != null) {
+                        listener.beforeClose(provider);
+                    }
+                }
                 try {
                     provider.close();
+
+                    for (final DataSourceListener listener : dataSourceListeners) {
+                        listener.afterClose(provider);
+                    }
+                    final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+                    if (listener != null) {
+                        listener.afterClose(provider);
+                    }
                 } catch (final Exception e) {
-                    LOGGER.error("Closing {}@{}", provider.getLoginRole(), provider.getJdbcUrl(), e);
-                } finally {
-                    afterClose(provider);
+                    for (final DataSourceListener listener : dataSourceListeners) {
+                        listener.onException(provider, e);
+                    }
+                    final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+                    if (listener != null) {
+                        listener.onException(provider, e);
+                    }
                 }
             }
         } finally {
-            databasePools.clear();
             this.isClosed = true;
+            databaseListeners.clear();
+            databasePools.clear();
             afterClose();
         }
     }

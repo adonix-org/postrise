@@ -42,4 +42,7 @@ public interface DataSourceListener extends EventListener {
 
     default void afterClose(DataSourceContext context) {
     }
+
+    default void onException(DataSourceContext context, Throwable t) {
+    }
 }
