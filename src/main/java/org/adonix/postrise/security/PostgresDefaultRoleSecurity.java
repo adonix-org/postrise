@@ -59,7 +59,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
             throws SQLException {
         if (context.getLoginRole().equals(roleName)) {
-            throw new RoleSecurityException(roleName + " is the LOGIN role");
+            throw new RoleSecurityException(roleName + " is a LOGIN role");
         }
     }
 }

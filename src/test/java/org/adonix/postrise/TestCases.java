@@ -112,7 +112,7 @@ class TestCases extends TestEnvironment {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection("database_beta", "beta_login");
         });
-        assertEquals("SECURITY: beta_login is the LOGIN role", t.getMessage());
+        assertEquals("SECURITY: beta_login is a LOGIN role", t.getMessage());
     }
 
     @DisplayName("Postgres TCP Keep Alive SUPERUSER")

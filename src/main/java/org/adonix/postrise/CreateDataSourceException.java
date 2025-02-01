@@ -18,13 +18,7 @@ package org.adonix.postrise;
 
 public class CreateDataSourceException extends RuntimeException {
 
-    private static final String ERROR_MESSAGE = "Unable to create data source";
-
     CreateDataSourceException(final Throwable t) {
-        super(ERROR_MESSAGE, t);
-    }
-
-    CreateDataSourceException(final String message, final Throwable t) {
-        super(message, t);
+        super(t);
     }
 }
