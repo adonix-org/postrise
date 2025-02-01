@@ -25,10 +25,10 @@ class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
             throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
         if (role.isSuperUser()) {
-            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a super user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a SUPER user");
         }
         if (role.isLoginRole()) {
-            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a login user");
+            throw new RoleSecurityException("role '" + role.getRoleName() + "' is a LOGIN user");
         }
     }
 }

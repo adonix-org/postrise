@@ -91,7 +91,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check(this, isClosed);
 
         final ConnectionProvider provider = getConnectionProvider(databaseName);
-
         final Connection connection = provider.getConnection();
         try {
 
@@ -118,40 +117,21 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         // Set the JDBC Url for this provider.
         provider.setJdbcUrl(getHostName(), getPort());
-        {
-            for (final DataSourceListener listener : dataSourceListeners) {
-                listener.beforeCreate(provider);
-            }
-
-            final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
-            if (listener != null) {
-                listener.beforeCreate(provider);
-            }
-        }
+        doBeforeCreate(provider);
 
         // Create the first connection to validate settings, initialize the connection
-        // pool, and send events all listeners including this class.
+        // pool, and send events to all listeners including this class.
         try (final Connection connection = provider.getConnection()) {
 
             provider.onLogin(provider, connection);
-
-            for (final DataSourceListener listener : dataSourceListeners) {
-                listener.afterCreate(provider);
-            }
-
-            final DatabaseListener listener = databaseListeners.get(getKey(databaseName));
-            if (listener != null) {
-                listener.afterCreate(provider);
-            }
+            doAfterCreate(provider);
             return provider;
 
-        } catch (final SQLException sqe) {
-
+        } catch (final SQLException e) {
             provider.close();
-
-            final RuntimeException e = new CreateDataSourceException(sqe);
-            doException(provider, e);
-            throw e;
+            final RuntimeException rex = new CreateDataSourceException(e);
+            doException(provider, rex);
+            throw rex;
         }
     }
 
@@ -175,7 +155,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public void onException(final DataSourceContext context, final Throwable t) {
+    public void onException(final DataSourceContext settings, final Throwable t) {
         LOGGER.error("{} - {}", getClassName(), t.getMessage());
     }
 
@@ -193,32 +173,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             return;
         }
         try {
-
             beforeClose();
-
             for (final ConnectionProvider provider : databasePools.values()) {
-
-                for (final DataSourceListener listener : dataSourceListeners) {
-                    listener.beforeClose(provider);
-                }
-                {
-                    final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
-                    if (listener != null) {
-                        listener.beforeClose(provider);
-                    }
-                }
+                doBeforeClose(provider);
                 try {
                     provider.close();
-
-                    for (final DataSourceListener listener : dataSourceListeners) {
-                        listener.afterClose(provider);
-                    }
-
-                    final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
-                    if (listener != null) {
-                        listener.afterClose(provider);
-                    }
-                    
+                    doAfterClose(provider);
                 } catch (final Exception e) {
                     doException(provider, e);
                 }
@@ -231,13 +191,59 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void doException(final DataSourceContext provider, final Throwable t) {
+    private final void doException(final DataSourceContext context, final Throwable t) {
         for (final DataSourceListener listener : dataSourceListeners) {
-            listener.onException(provider, t);
+            listener.onException(context, t);
         }
-        final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            listener.onException(provider, t);
+            listener.onException(context, t);
+        }
+    }
+
+    private final void doBeforeCreate(final DataSourceContext context) {
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.beforeCreate(context);
+        }
+
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        if (listener != null) {
+            listener.beforeCreate(context);
+        }
+    }
+
+    private final void doAfterCreate(final DataSourceContext context) {
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.afterCreate(context);
+        }
+
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        if (listener != null) {
+            listener.afterCreate(context);
+            ;
+        }
+    }
+
+    private final void doBeforeClose(final DataSourceContext context) {
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.beforeClose(context);
+        }
+
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        if (listener != null) {
+            listener.beforeClose(context);
+        }
+    }
+
+    private final void doAfterClose(final DataSourceContext context) {
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.afterClose(context);
+        }
+
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        if (listener != null) {
+            listener.afterClose(context);
+            ;
         }
     }
 
