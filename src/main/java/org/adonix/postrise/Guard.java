@@ -20,7 +20,7 @@ public abstract class Guard {
 
     protected static final String NULL_OBJECT_ERROR = "Unexpected null Object for ";
     protected static final String NULL_STRING_ERROR = "Unexpected null String for ";
-    protected static final String BLANK_STRING_ERROR = "Unexpected blank String for ";
+    protected static final String BLANK_STRING_ERROR = "Unexpected empty String for ";
 
     private Guard() {
     }

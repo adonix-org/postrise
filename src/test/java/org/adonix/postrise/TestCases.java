@@ -129,4 +129,60 @@ class TestCases extends TestEnvironment {
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
+
+    @DisplayName("Null Database")
+    @Test
+    void t09() {
+        final PostriseServer server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(null, null);
+        });
+
+        assertEquals("Unexpected null String for databaseName", t.getMessage());
+    }
+
+    @DisplayName("Null Role")
+    @Test
+    void t10() {
+        final PostriseServer server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection("postrise", null);
+        });
+
+        assertEquals("Unexpected null String for roleName", t.getMessage());
+    }
+
+    @DisplayName("Empty Database String")
+    @Test
+    void t11() {
+        final PostriseServer server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(" ", "postrise");
+        });
+
+        assertEquals("Unexpected empty String for databaseName", t.getMessage());
+    }
+
+    @DisplayName("Empty Role String")
+    @Test
+    void t12() {
+        final PostriseServer server = getServerInstance(AlphaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof AlphaServer);
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection("postrise", " ");
+        });
+
+        assertEquals("Unexpected empty String for roleName", t.getMessage());
+    }
 }
