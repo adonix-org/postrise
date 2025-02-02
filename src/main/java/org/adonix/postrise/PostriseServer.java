@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +33,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private ReentrantReadWriteLock closeLock = new ReentrantReadWriteLock();
-    private volatile boolean isClosing = false;
     private volatile boolean isClosed = false;
+    private volatile boolean isClosing = false;
 
     /**
      * Subclasses will create and return a new instance of a
@@ -62,8 +61,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("listener", listener);
         closeLock.readLock().lock();
         try {
-            Guard.check(this, isClosing);
-            Guard.check(this, isClosed);
+            Guard.check(this, isClosing, isClosed);
             dataSourceListeners.add(listener);
         } finally {
             closeLock.readLock().unlock();
@@ -75,8 +73,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         closeLock.readLock().lock();
         try {
-            Guard.check(this, isClosing);
-            Guard.check(this, isClosed);
+            Guard.check(this, isClosing, isClosed);
             if (databaseListeners.put(getKey(listener), listener) != null) {
                 LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
             }
@@ -120,8 +117,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         closeLock.readLock().lock();
         try {
-            Guard.check(this, isClosing);
-            Guard.check(this, isClosed);
+            Guard.check(this, isClosing, isClosed);
 
             final ConnectionProvider provider = getConnectionProvider(databaseName);
             final Connection connection = provider.getConnection();
@@ -202,13 +198,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final synchronized void close() {
+    public final void close() {
         if (isClosing || isClosed) {
             return;
         }
-
         closeLock.writeLock().lock();
-        this.isClosing = true;
+        isClosing = true;
         try {
             beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
@@ -225,7 +220,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             databaseListeners.clear();
             databasePools.clear();
             afterClose();
-            this.isClosed = true;
+            isClosed = true;
             closeLock.writeLock().unlock();
         }
     }
