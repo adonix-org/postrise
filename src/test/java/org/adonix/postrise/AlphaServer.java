@@ -22,9 +22,9 @@ class AlphaServer extends PostgresTestServer {
                 "[{}.afterCreate()] Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                 context.getDatabaseName(),
                 context.getMaxPoolSize(),
-                context.getTotalConnections(),
-                context.getIdleConnections(),
-                context.getActiveConnections());
+                context.getTotalConnections().get(),
+                context.getIdleConnections().get(),
+                context.getActiveConnections().get());
     }
 
     @Override
