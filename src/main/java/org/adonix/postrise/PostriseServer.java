@@ -51,8 +51,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<DataSourceListener> dataSourceListeners = Collections
-            .synchronizedSet(new LinkedHashSet<>());
+    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
 
