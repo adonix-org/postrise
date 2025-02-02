@@ -99,8 +99,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             return connection;
 
         } catch (final SQLException e) {
-            doException(provider, e);
             connection.close();
+            onError(provider, e);
             throw e;
         }
     }
@@ -129,9 +129,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         } catch (final SQLException e) {
             provider.close();
-            final RuntimeException rex = new CreateDataSourceException(e);
-            doException(provider, rex);
-            throw rex;
+            onError(provider, e);
+            throw new CreateDataSourceException(e);
         }
     }
 
@@ -154,17 +153,16 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(), getClassName());
     }
 
-    @Override
-    public void onException(final DataSourceContext settings, final Throwable t) {
-        LOGGER.error("{} - {}", getClassName(), t.getMessage());
-    }
-
     protected void beforeClose() {
         LOGGER.debug("{}.beforeClose()", getClassName());
     }
 
     protected void afterClose() {
         LOGGER.debug("{}.afterClose()", getClassName());
+    }
+
+    protected void onError(final ConnectionProvider provider, final Throwable t) {
+        LOGGER.error("{} {} {}", getClassName(), provider.getJdbcUrl(), t.getMessage());
     }
 
     @Override
@@ -178,9 +176,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 doBeforeClose(provider);
                 try {
                     provider.close();
-                    doAfterClose(provider);
                 } catch (final Exception e) {
-                    doException(provider, e);
+                    onError(provider, e);
+                } finally {
+                    doAfterClose(provider);
                 }
             }
         } finally {
@@ -188,16 +187,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             databaseListeners.clear();
             databasePools.clear();
             afterClose();
-        }
-    }
-
-    private final void doException(final DataSourceContext context, final Throwable t) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.onException(context, t);
-        }
-        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
-        if (listener != null) {
-            listener.onException(context, t);
         }
     }
 
