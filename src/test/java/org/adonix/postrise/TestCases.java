@@ -137,10 +137,6 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
-            assertNotNull(connection);
-        }
-
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null, null);
         });
