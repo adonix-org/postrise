@@ -132,7 +132,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("NULL Database SUPERUSER")
     @Test
-    void t09() throws SQLException {
+    void t09() {
         final PostriseServer server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
