@@ -107,9 +107,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     private final ConnectionProvider getConnectionProvider(final String databaseName) {
-        final ConnectionProvider provider = databasePools.computeIfAbsent(getKey(databaseName),
+        return databasePools.computeIfAbsent(getKey(databaseName),
                 _ -> create(databaseName));
-        return provider;
     }
 
     @Override
@@ -246,7 +245,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
             listener.afterCreate(context);
-            ;
         }
     }
 

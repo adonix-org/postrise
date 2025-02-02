@@ -117,7 +117,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Postgres TCP Keep Alive SUPERUSER")
     @Test
-    void t08() throws SQLException {
+    void t08() {
         final PostriseServer server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
@@ -186,7 +186,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("EMPTY Role String SUPERUSER")
     @Test
-    void t12() throws SQLException {
+    void t12() {
         final PostriseServer server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
@@ -200,7 +200,7 @@ class TestCases extends TestEnvironment {
 
     @DisplayName("Postgres TCP Keep Alive Not SUPERUSER")
     @Test
-    void t13() throws SQLException {
+    void t13() {
         final PostriseServer server = getServerInstance(DeltaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof DeltaServer);

@@ -39,7 +39,6 @@ class AlphaServer extends PostgresTestServer {
                     context.getTotalConnections().get(),
                     context.getIdleConnections().get(),
                     context.getActiveConnections().get());
-            ;
         }
     }
 
