@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -153,14 +152,14 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         // Set the JDBC Url for this provider.
         provider.setJdbcUrl(getHostName(), getPort());
-        doBeforeCreate(provider);
+        onBeforeCreate(provider);
 
         // Create the first connection to validate settings, initialize the connection
         // pool, and send events to all listeners including this class.
         try (final Connection connection = provider.getConnection()) {
 
             provider.onLogin(provider, connection);
-            doAfterCreate(provider);
+            onAfterCreate(provider);
             return provider;
 
         } catch (final SQLException e) {
@@ -210,13 +209,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         try {
             beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
-                doBeforeClose(provider);
+                onBeforeClose(provider);
                 try {
                     provider.close();
                 } catch (final Exception e) {
                     onError(provider, e);
                 } finally {
-                    doAfterClose(provider);
+                    onAfterClose(provider);
                 }
             }
         } finally {
@@ -228,7 +227,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void doBeforeCreate(final DataSourceContext context) {
+    private final void onBeforeCreate(final DataSourceContext context) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(context);
         }
@@ -239,7 +238,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void doAfterCreate(final DataSourceContext context) {
+    private final void onAfterCreate(final DataSourceContext context) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.afterCreate(context);
         }
@@ -251,7 +250,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void doBeforeClose(final DataSourceContext context) {
+    private final void onBeforeClose(final DataSourceContext context) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeClose(context);
         }
@@ -262,7 +261,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void doAfterClose(final DataSourceContext context) {
+    private final void onAfterClose(final DataSourceContext context) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.afterClose(context);
         }
