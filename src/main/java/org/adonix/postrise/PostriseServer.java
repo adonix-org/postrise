@@ -25,6 +25,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +36,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private ReentrantReadWriteLock closeLock = new ReentrantReadWriteLock();
+    private ReadLock read = closeLock.readLock();
+    private WriteLock write = closeLock.writeLock();
     private volatile boolean isClosed = false;
     private volatile boolean isClosing = false;
 
@@ -59,47 +64,47 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
-        closeLock.readLock().lock();
+        read.lock();
         try {
             Guard.check(this, isClosing, isClosed);
             dataSourceListeners.add(listener);
         } finally {
-            closeLock.readLock().unlock();
+            read.unlock();
         }
     }
 
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
-        closeLock.readLock().lock();
+        read.lock();
         try {
             Guard.check(this, isClosing, isClosed);
             if (databaseListeners.put(getKey(listener), listener) != null) {
                 LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
             }
         } finally {
-            closeLock.readLock().unlock();
+            read.unlock();
         }
     }
 
     protected final Set<String> getDatabaseNames() {
-        closeLock.readLock().lock();
+        read.lock();
         try {
             Guard.check(this, isClosed);
             return databasePools.keySet();
         } finally {
-            closeLock.readLock().unlock();
+            read.unlock();
         }
     }
 
     public final DataSourceContext getDataSource(final String databaseName) {
         Guard.check("databaseName", databaseName);
-        closeLock.readLock().lock();
+        read.lock();
         try {
             Guard.check(this, isClosed);
             return getConnectionProvider(databaseName);
         } finally {
-            closeLock.readLock().unlock();
+            read.unlock();
         }
     }
 
@@ -115,7 +120,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("databaseName", databaseName);
         Guard.check("roleName", roleName);
 
-        closeLock.readLock().lock();
+        read.lock();
         try {
             Guard.check(this, isClosing, isClosed);
 
@@ -133,7 +138,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 throw e;
             }
         } finally {
-            closeLock.readLock().unlock();
+            read.unlock();
         }
     }
 
@@ -145,24 +150,30 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private final ConnectionProvider create(final String databaseName) {
 
-        final ConnectionProvider provider = createConnectionProvider(databaseName);
+        read.lock();
+        try {
+            Guard.check(this, isClosing, isClosed);
+            final ConnectionProvider provider = createConnectionProvider(databaseName);
 
-        // Set the JDBC Url for this provider.
-        provider.setJdbcUrl(getHostName(), getPort());
-        doBeforeCreate(provider);
+            // Set the JDBC Url for this provider.
+            provider.setJdbcUrl(getHostName(), getPort());
+            doBeforeCreate(provider);
 
-        // Create the first connection to validate settings, initialize the connection
-        // pool, and send events to all listeners including this class.
-        try (final Connection connection = provider.getConnection()) {
+            // Create the first connection to validate settings, initialize the connection
+            // pool, and send events to all listeners including this class.
+            try (final Connection connection = provider.getConnection()) {
 
-            provider.onLogin(provider, connection);
-            doAfterCreate(provider);
-            return provider;
+                provider.onLogin(provider, connection);
+                doAfterCreate(provider);
+                return provider;
 
-        } catch (final SQLException e) {
-            provider.close();
-            onError(provider, e);
-            throw new CreateDataSourceException(e);
+            } catch (final SQLException e) {
+                provider.close();
+                onError(provider, e);
+                throw new CreateDataSourceException(e);
+            }
+        } finally {
+            read.unlock();
         }
     }
 
@@ -202,7 +213,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         if (isClosing || isClosed) {
             return;
         }
-        closeLock.writeLock().lock();
+        write.lock();
         isClosing = true;
         try {
             beforeClose();
@@ -221,7 +232,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             databasePools.clear();
             afterClose();
             isClosed = true;
-            closeLock.writeLock().unlock();
+            write.unlock();
         }
     }
 
