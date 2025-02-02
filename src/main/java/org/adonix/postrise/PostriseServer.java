@@ -232,7 +232,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
             listener.afterClose(context);
-            ;
         }
     }
 
