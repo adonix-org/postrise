@@ -77,7 +77,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         try {
             Guard.check(this, isClosed);
             if (databaseListeners.put(getKey(listener), listener) != null) {
-                LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
+                LOGGER.warn("Overwriting existing configuration for database {}", listener.getDatabaseName());
             }
         } finally {
             read.unlock();
