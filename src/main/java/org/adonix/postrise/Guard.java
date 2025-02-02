@@ -45,11 +45,4 @@ public abstract class Guard {
             throw new IllegalStateException("Server " + server.toString() + " is closed");
         }
     }
-
-    public static final void check(final Server server, final boolean isClosing, final boolean isClosed) {
-        if (isClosing) {
-            throw new IllegalStateException("Server " + server.toString() + " is closing");
-        }
-        check(server, isClosed);
-    }
 }

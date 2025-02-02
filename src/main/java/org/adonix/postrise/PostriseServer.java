@@ -39,7 +39,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private ReadLock read = closeLock.readLock();
     private WriteLock write = closeLock.writeLock();
     private volatile boolean isClosed = false;
-    private volatile boolean isClosing = false;
 
     /**
      * Subclasses will create and return a new instance of a
@@ -66,7 +65,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("listener", listener);
         read.lock();
         try {
-            Guard.check(this, isClosing, isClosed);
+            Guard.check(this, isClosed);
             dataSourceListeners.add(listener);
         } finally {
             read.unlock();
@@ -78,7 +77,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
         read.lock();
         try {
-            Guard.check(this, isClosing, isClosed);
+            Guard.check(this, isClosed);
             if (databaseListeners.put(getKey(listener), listener) != null) {
                 LOGGER.warn("Overwriting existing configuration for database '{}'", listener.getDatabaseName());
             }
@@ -122,7 +121,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         read.lock();
         try {
-            Guard.check(this, isClosing, isClosed);
+            Guard.check(this, isClosed);
 
             final ConnectionProvider provider = getConnectionProvider(databaseName);
             final Connection connection = provider.getConnection();
@@ -150,30 +149,24 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private final ConnectionProvider create(final String databaseName) {
 
-        read.lock();
-        try {
-            Guard.check(this, isClosing, isClosed);
-            final ConnectionProvider provider = createConnectionProvider(databaseName);
+        final ConnectionProvider provider = createConnectionProvider(databaseName);
 
-            // Set the JDBC Url for this provider.
-            provider.setJdbcUrl(getHostName(), getPort());
-            doBeforeCreate(provider);
+        // Set the JDBC Url for this provider.
+        provider.setJdbcUrl(getHostName(), getPort());
+        doBeforeCreate(provider);
 
-            // Create the first connection to validate settings, initialize the connection
-            // pool, and send events to all listeners including this class.
-            try (final Connection connection = provider.getConnection()) {
+        // Create the first connection to validate settings, initialize the connection
+        // pool, and send events to all listeners including this class.
+        try (final Connection connection = provider.getConnection()) {
 
-                provider.onLogin(provider, connection);
-                doAfterCreate(provider);
-                return provider;
+            provider.onLogin(provider, connection);
+            doAfterCreate(provider);
+            return provider;
 
-            } catch (final SQLException e) {
-                provider.close();
-                onError(provider, e);
-                throw new CreateDataSourceException(e);
-            }
-        } finally {
-            read.unlock();
+        } catch (final SQLException e) {
+            provider.close();
+            onError(provider, e);
+            throw new CreateDataSourceException(e);
         }
     }
 
@@ -209,12 +202,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final void close() {
-        if (isClosing || isClosed) {
+    public final synchronized void close() {
+        if (isClosed) {
             return;
         }
         write.lock();
-        isClosing = true;
         try {
             beforeClose();
             for (final ConnectionProvider provider : databasePools.values()) {
