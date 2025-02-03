@@ -27,6 +27,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+import java.util.function.Consumer;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -146,6 +148,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private final ConnectionProvider create(final String databaseName) {
 
+        // TODO: Do not allow a new data source to be created if the server is closing.
+
         final ConnectionProvider provider = createConnectionProvider(databaseName);
 
         // Set the JDBC Url for this provider.
@@ -199,74 +203,63 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final synchronized void close() {
-        if (isClosed) {
-            return;
-        }
+    public final void close() {
         write.lock();
         try {
-            beforeClose();
-            for (final ConnectionProvider provider : databasePools.values()) {
-                onBeforeClose(provider);
-                try {
-                    provider.close();
-                } catch (final Exception e) {
-                    onError(provider, e);
-                } finally {
-                    onAfterClose(provider);
-                }
+            if (isClosed) {
+                return;
             }
-        } finally {
+
+            safeExecute(this::beforeClose);
+            for (final ConnectionProvider provider : databasePools.values()) {
+                safeExecute(() -> onBeforeClose(provider));
+                safeExecute(provider::close);
+                safeExecute(() -> onAfterClose(provider));
+            }
+            safeExecute(this::afterClose);
+
+            isClosed = true;
             databaseListeners.clear();
             databasePools.clear();
-            afterClose();
-            isClosed = true;
+        } finally {
             write.unlock();
         }
     }
 
-    private final void onBeforeCreate(final DataSourceContext context) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.beforeCreate(context);
+    private void safeExecute(final Runnable action) {
+        try {
+            action.run();
+        } catch (final Exception e) {
+            // TODO: LOG or add exception to list.
+            e.printStackTrace();
+        }
+    }
+
+    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> action) {
+        for (DataSourceListener listener : dataSourceListeners) {
+            safeExecute(() -> action.accept(listener));
         }
 
-        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            listener.beforeCreate(context);
+            safeExecute(() -> action.accept(listener));
         }
+    }
+
+    private final void onBeforeCreate(final DataSourceContext context) {
+        doEvent(context, listener -> listener.beforeCreate(context));
     }
 
     private final void onAfterCreate(final DataSourceContext context) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.afterCreate(context);
-        }
-
-        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
-        if (listener != null) {
-            listener.afterCreate(context);
-        }
+        doEvent(context, listener -> listener.afterCreate(context));
     }
 
     private final void onBeforeClose(final DataSourceContext context) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.beforeClose(context);
-        }
-
-        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
-        if (listener != null) {
-            listener.beforeClose(context);
-        }
+        doEvent(context, listener -> listener.beforeClose(context));
     }
 
     private final void onAfterClose(final DataSourceContext context) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.afterClose(context);
-        }
-
-        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
-        if (listener != null) {
-            listener.afterClose(context);
-        }
+        doEvent(context, listener -> listener.afterClose(context));
     }
 
     private static final String getKey(final String database) {
