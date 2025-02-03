@@ -39,8 +39,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private ReentrantReadWriteLock closeLock = new ReentrantReadWriteLock();
-    private ReadLock read = closeLock.readLock();
-    private WriteLock write = closeLock.writeLock();
+    private ReadLock readClosed = closeLock.readLock();
+    private WriteLock writeClosed = closeLock.writeLock();
     private volatile boolean isClosed = false;
 
     /**
@@ -65,47 +65,47 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
-        read.lock();
+        readClosed.lock();
         try {
             Guard.check(this, isClosed);
             dataSourceListeners.add(listener);
         } finally {
-            read.unlock();
+            readClosed.unlock();
         }
     }
 
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
-        read.lock();
+        readClosed.lock();
         try {
             Guard.check(this, isClosed);
             if (databaseListeners.put(getKey(listener), listener) != null) {
                 LOGGER.warn("Overwriting existing configuration for database {}", listener.getDatabaseName());
             }
         } finally {
-            read.unlock();
+            readClosed.unlock();
         }
     }
 
     protected final Set<String> getDatabaseNames() {
-        read.lock();
+        readClosed.lock();
         try {
             Guard.check(this, isClosed);
             return databasePools.keySet();
         } finally {
-            read.unlock();
+            readClosed.unlock();
         }
     }
 
     public final DataSourceContext getDataSource(final String databaseName) {
         Guard.check("databaseName", databaseName);
-        read.lock();
+        readClosed.lock();
         try {
             Guard.check(this, isClosed);
             return getConnectionProvider(databaseName);
         } finally {
-            read.unlock();
+            readClosed.unlock();
         }
     }
 
@@ -120,7 +120,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("databaseName", databaseName);
         Guard.check("roleName", roleName);
 
-        read.lock();
+        readClosed.lock();
         try {
             Guard.check(this, isClosed);
 
@@ -138,7 +138,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 throw e;
             }
         } finally {
-            read.unlock();
+            readClosed.unlock();
         }
     }
 
@@ -212,7 +212,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public final void close() {
-        write.lock();
+        writeClosed.lock();
         try {
             if (isClosed) {
                 return;
@@ -236,7 +236,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             databaseListeners.clear();
             databasePools.clear();
         } finally {
-            write.unlock();
+            writeClosed.unlock();
         }
     }
 
