@@ -17,7 +17,8 @@ abstract class PostriseSecureDataSource extends PostriseDataSource {
     }
 
     @Override
-    public void onConnection(DataSourceContext context, Connection connection, String roleName) throws SQLException {
+    public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
+            throws SQLException {
         roleSecurity.onConnection(context, connection, roleName);
     }
 
