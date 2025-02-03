@@ -198,6 +198,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             if (isClosed) {
                 return;
             }
+            isClosed = true;
 
             final List<Exception> exceptions = new LinkedList<>();
             safeExecute(this::beforeClose, exceptions);
@@ -213,7 +214,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             if (exceptions != null && exceptions.size() > 0) {
                 onExceptions(exceptions);
             }
-            isClosed = true;
         } finally {
             writeClosed.unlock();
         }
