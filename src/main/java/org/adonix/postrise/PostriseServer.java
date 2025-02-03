@@ -20,6 +20,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -132,7 +134,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
             } catch (final SQLException e) {
                 connection.close();
-                onError(provider, e);
+                onException(provider, e);
                 throw e;
             }
         } finally {
@@ -166,7 +168,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         } catch (final Exception e) {
             provider.close();
-            onError(provider, e);
+            onException(provider, e);
             throw new CreateDataSourceException(e);
         }
     }
@@ -198,8 +200,14 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.debug("{}.afterClose()", getClassName());
     }
 
-    protected void onError(final ConnectionProvider provider, final Throwable t) {
+    protected void onException(final ConnectionProvider provider, final Throwable t) {
         LOGGER.error("{} {} {}", getClassName(), provider.getJdbcUrl(), t.getMessage());
+    }
+
+    protected void onExceptions(final List<Exception> exceptions) {
+        for (final Exception e : exceptions) {
+            LOGGER.error("{} {}", getClassName(), e.getMessage());
+        }
     }
 
     @Override
@@ -210,13 +218,19 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 return;
             }
 
-            safeExecute(this::beforeClose);
+            final List<Exception> exceptions = new LinkedList<>();
+
+            safeExecute(this::beforeClose, exceptions);
             for (final ConnectionProvider provider : databasePools.values()) {
-                safeExecute(() -> onBeforeClose(provider));
-                safeExecute(provider::close);
-                safeExecute(() -> onAfterClose(provider));
+                safeExecute(() -> onBeforeClose(provider), exceptions);
+                safeExecute(provider::close, exceptions);
+                safeExecute(() -> onAfterClose(provider), exceptions);
             }
-            safeExecute(this::afterClose);
+            safeExecute(this::afterClose, exceptions);
+
+            if (exceptions.size() > 0) {
+                onExceptions(exceptions);
+            }
 
             isClosed = true;
             databaseListeners.clear();
@@ -226,12 +240,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private void safeExecute(final Runnable action) {
+    private void safeExecute(final Runnable action, final List<Exception> exceptions) {
         try {
             action.run();
         } catch (final Exception e) {
-            // TODO: LOG or add exception to list.
-            e.printStackTrace();
+            exceptions.add(e);
         }
     }
 
