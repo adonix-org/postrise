@@ -164,7 +164,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             onAfterCreate(provider);
             return provider;
 
-        } catch (final SQLException e) {
+        } catch (final Exception e) {
             provider.close();
             onError(provider, e);
             throw new CreateDataSourceException(e);
