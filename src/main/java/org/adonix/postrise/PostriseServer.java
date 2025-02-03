@@ -237,12 +237,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> action) {
         for (DataSourceListener listener : dataSourceListeners) {
-            safeExecute(() -> action.accept(listener));
+            action.accept(listener);
         }
 
         DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            safeExecute(() -> action.accept(listener));
+            action.accept(listener);
         }
     }
 
