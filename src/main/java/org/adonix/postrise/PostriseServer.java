@@ -36,13 +36,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
-    enum ServerState {
+    PostriseServer() {
+        addListener(this);
+    }
+
+    private enum ServerState {
         OPEN, CLOSING, CLOSED
     }
 
-    private ReadWriteLock stateLock = new ReentrantReadWriteLock();
-    private Lock readState = stateLock.readLock();
-    private Lock writeState = stateLock.writeLock();
+    private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
+    private final Lock readState = stateLock.readLock();
+    private final Lock writeState = stateLock.writeLock();
     private ServerState state = ServerState.OPEN;
 
     /**
@@ -60,10 +64,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
-
-    PostriseServer() {
-        addListener(this);
-    }
 
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
@@ -227,12 +227,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void beforeClose(final DataSourceContext context) {
-        LOGGER.info("{}: closing {}@{}...", this, context.getLoginRole(), context.getJdbcUrl());
+        LOGGER.info("{}: closing {}...", this, context);
     }
 
     @Override
     public void afterClose(final DataSourceContext context) {
-        LOGGER.info("{}: {}@{} closed", this, context.getLoginRole(), context.getJdbcUrl());
+        LOGGER.info("{}: {} closed", this, context);
     }
 
     protected void beforeClose() {
@@ -244,7 +244,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     protected void onException(final ConnectionProvider provider, final Exception e) {
-        LOGGER.error("{}: {} {}", this, provider.getJdbcUrl(), e);
+        LOGGER.error("{}: {} {}", this, provider, e);
     }
 
     protected void onException(final Exception e) {

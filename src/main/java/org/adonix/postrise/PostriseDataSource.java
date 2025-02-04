@@ -182,4 +182,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public void close() {
         delegate.close();
     }
+
+    @Override
+    public String toString() {
+        return getLoginRole() + "@" + getJdbcUrl();
+    }
 }
