@@ -44,10 +44,15 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private ReadLock readState = stateLock.readLock();
     private WriteLock writeState = stateLock.writeLock();
 
-    private volatile ServerState state = ServerState.OPEN;
+    private ServerState state = ServerState.OPEN;
 
     ServerState getState() {
-        return state;
+        readState.lock();
+        try {
+            return state;
+        } finally {
+            readState.unlock();
+        }
     }
 
     /**
