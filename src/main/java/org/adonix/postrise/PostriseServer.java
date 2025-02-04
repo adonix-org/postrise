@@ -64,16 +64,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         addListener(this);
     }
 
-    private <T> T isOpen(final Supplier<T> action) {
-        readClosed.lock();
-        try {
-            Guard.check(this, isClosed);
-            return action.get();
-        } finally {
-            readClosed.unlock();
-        }
-    }
-
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         isOpen(() -> dataSourceListeners.add(listener));
@@ -155,6 +145,65 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return this.getClass().getSimpleName();
     }
 
+    /**
+     * HELPERS
+     */
+    private void inOrder(final Runnable action, final List<Exception> exceptions) {
+        try {
+            action.run();
+        } catch (final Exception e) {
+            exceptions.add(e);
+        }
+    }
+
+    private <T> T isOpen(final Supplier<T> action) {
+        readClosed.lock();
+        try {
+            Guard.check(this, isClosed);
+            return action.get();
+        } finally {
+            readClosed.unlock();
+        }
+    }
+
+    private static final String getKey(final String database) {
+        return database.trim();
+    }
+
+    private static final String getKey(final DatabaseListener listener) {
+        return getKey(listener.getDatabaseName());
+    }
+
+    /**
+     * EVENTS
+     */
+
+     private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
+        for (DataSourceListener listener : dataSourceListeners) {
+            event.accept(listener);
+        }
+        DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        if (listener != null) {
+            event.accept(listener);
+        }
+    }
+
+    private final void onBeforeCreate(final DataSourceContext context) {
+        doEvent(context, listener -> listener.beforeCreate(context));
+    }
+
+    private final void onAfterCreate(final DataSourceContext context) {
+        doEvent(context, listener -> listener.afterCreate(context));
+    }
+
+    private final void onBeforeClose(final DataSourceContext context) {
+        doEvent(context, listener -> listener.beforeClose(context));
+    }
+
+    private final void onAfterClose(final DataSourceContext context) {
+        doEvent(context, listener -> listener.afterClose(context));
+    }
+
     @Override
     public void afterCreate(final DataSourceContext context) {
         LOGGER.debug("{} data source created: {}", getClassName(), context.getJdbcUrl());
@@ -188,6 +237,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
+    /**
+     * CLOSE
+     */
     @Override
     public final void close() {
         writeClosed.lock();
@@ -214,49 +266,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         } finally {
             writeClosed.unlock();
         }
-    }
-
-    private void inOrder(final Runnable action, final List<Exception> exceptions) {
-        try {
-            action.run();
-        } catch (final Exception e) {
-            exceptions.add(e);
-        }
-    }
-
-    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
-        for (DataSourceListener listener : dataSourceListeners) {
-            event.accept(listener);
-        }
-
-        DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
-        if (listener != null) {
-            event.accept(listener);
-        }
-    }
-
-    private final void onBeforeCreate(final DataSourceContext context) {
-        doEvent(context, listener -> listener.beforeCreate(context));
-    }
-
-    private final void onAfterCreate(final DataSourceContext context) {
-        doEvent(context, listener -> listener.afterCreate(context));
-    }
-
-    private final void onBeforeClose(final DataSourceContext context) {
-        doEvent(context, listener -> listener.beforeClose(context));
-    }
-
-    private final void onAfterClose(final DataSourceContext context) {
-        doEvent(context, listener -> listener.afterClose(context));
-    }
-
-    private static final String getKey(final String database) {
-        return database.trim();
-    }
-
-    private static final String getKey(final DatabaseListener listener) {
-        return getKey(listener.getDatabaseName());
     }
 
     @Override
