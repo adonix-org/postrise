@@ -118,36 +118,34 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
+    private final ConnectionProvider create(final String databaseName) {
+        return isOpen(() -> _create(databaseName));
+    }
+
     /**
      * 
      * @param databaseName - the name of the database for creating the
      *                     {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
      */
-    private final ConnectionProvider create(final String databaseName) {
-        readClosed.lock();
-        try {
-            Guard.check(this, isClosed);
+    private final ConnectionProvider _create(final String databaseName) {
 
-            final ConnectionProvider provider = createConnectionProvider(databaseName);
-            provider.setJdbcUrl(getHostName(), getPort());
-            onBeforeCreate(provider);
+        final ConnectionProvider provider = createConnectionProvider(databaseName);
+        provider.setJdbcUrl(getHostName(), getPort());
+        onBeforeCreate(provider);
 
-            // Create the first connection to validate settings, initialize the connection
-            // pool, and send events to all listeners including this class.
-            try (final Connection connection = provider.getConnection()) {
+        // Create the first connection to validate settings, initialize the connection
+        // pool, and send events to all listeners including this class.
+        try (final Connection connection = provider.getConnection()) {
 
-                provider.onLogin(provider, connection);
-                onAfterCreate(provider);
-                return provider;
+            provider.onLogin(provider, connection);
+            onAfterCreate(provider);
+            return provider;
 
-            } catch (final Exception e) {
-                provider.close();
-                onException(provider, e);
-                throw new CreateDataSourceException(e);
-            }
-        } finally {
-            readClosed.unlock();
+        } catch (final Exception e) {
+            provider.close();
+            onException(provider, e);
+            throw new CreateDataSourceException(e);
         }
     }
 
