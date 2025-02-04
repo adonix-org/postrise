@@ -151,11 +151,22 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     /**
      * HELPERS
      */
+
+    /**
+     * Calls the given action and any exception is caught to guarantee execution
+     * order.
+     * 
+     * @param action
+     */
     private void inOrder(final Runnable action) {
         try {
             action.run();
         } catch (final Exception e) {
-            onException(e);
+            try {
+                onException(e);
+            } catch (final Exception ex) {
+                LOGGER.error("{} {}", this, ex);
+            }
         }
     }
 
