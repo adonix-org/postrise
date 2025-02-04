@@ -182,7 +182,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.error("{} {} {}", getClassName(), provider.getJdbcUrl(), t.getMessage());
     }
 
-    protected void onExceptions(final List<Exception> exceptions) {
+    protected void onClosed(final List<Exception> exceptions) {
         for (final Exception e : exceptions) {
             LOGGER.error("{} {}", getClassName(), e.getMessage());
         }
@@ -208,8 +208,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             runSafe(databasePools::clear, exceptions);
             runSafe(this::afterClose, exceptions);
 
-            if (exceptions != null && exceptions.size() > 0) {
-                onExceptions(exceptions);
+            if (exceptions.size() > 0) {
+                onClosed(exceptions);
             }
         } finally {
             writeClosed.unlock();
