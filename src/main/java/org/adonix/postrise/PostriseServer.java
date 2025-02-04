@@ -90,6 +90,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     public final DataSourceContext getDataSource(final String databaseName) {
+        
+        Guard.check("databaseName", databaseName);
         return getConnectionProvider(databaseName);
     }
 
