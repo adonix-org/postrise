@@ -28,7 +28,7 @@ public abstract class RoleSecurityProviders {
     public static final RoleSecurityListener POSTGRES_STRICT_ROLE_SECURITY = new PostgresStrictRoleSecurity();
 
     /**
-     * No-op security listeners.
+     * No-op security listener.
      */
     public static final RoleSecurityListener DISABLE_ROLE_SECURITY = new DisableRoleSecurity();
 }
