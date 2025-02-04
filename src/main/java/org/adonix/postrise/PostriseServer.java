@@ -118,7 +118,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     private final ConnectionProvider create(final String databaseName) {
-        return isOpen(() -> _create(databaseName));
+        return isOpen(() -> doCreate(databaseName));
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      *                     {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
      */
-    private final ConnectionProvider _create(final String databaseName) {
+    private final ConnectionProvider doCreate(final String databaseName) {
 
         final ConnectionProvider provider = createConnectionProvider(databaseName);
         provider.setJdbcUrl(getHostName(), getPort());
