@@ -26,11 +26,12 @@ import java.util.function.Function;
 
 abstract class PostriseDataSource implements ConnectionProvider {
 
-    private final HikariDataSource delegate = new HikariDataSource();
+    private final HikariDataSource delegate;
     private final String databaseName;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
+        this.delegate = new HikariDataSource();
     }
 
     @Override
@@ -160,20 +161,20 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public final Optional<Integer> getActiveConnections() {
-        return getOptional(HikariPoolMXBean::getActiveConnections);
+        return getPoolStat(HikariPoolMXBean::getActiveConnections);
     }
 
     @Override
     public final Optional<Integer> getIdleConnections() {
-        return getOptional(HikariPoolMXBean::getIdleConnections);
+        return getPoolStat(HikariPoolMXBean::getIdleConnections);
     }
 
     @Override
     public final Optional<Integer> getTotalConnections() {
-        return getOptional(HikariPoolMXBean::getTotalConnections);
+        return getPoolStat(HikariPoolMXBean::getTotalConnections);
     }
 
-    private final Optional<Integer> getOptional(Function<HikariPoolMXBean, Integer> method) {
+    private final Optional<Integer> getPoolStat(Function<HikariPoolMXBean, Integer> method) {
         return Optional.ofNullable(delegate.getHikariPoolMXBean()).map(method);
     }
 
