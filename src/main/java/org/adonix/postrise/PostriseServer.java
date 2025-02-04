@@ -209,25 +209,25 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void afterCreate(final DataSourceContext context) {
-        LOGGER.debug("{} data source created: {}", this, context.getJdbcUrl());
+        LOGGER.info("{} data source created: {}", this, context.getJdbcUrl());
     }
 
     @Override
     public void beforeClose(final DataSourceContext context) {
-        LOGGER.debug("{}: closing {}@{}...", this, context.getLoginRole(), context.getJdbcUrl());
+        LOGGER.info("{}: closing {}@{}...", this, context.getLoginRole(), context.getJdbcUrl());
     }
 
     @Override
     public void afterClose(final DataSourceContext context) {
-        LOGGER.debug("{}: {}@{} closed", this, context.getLoginRole(), context.getJdbcUrl());
+        LOGGER.info("{}: {}@{} closed", this, context.getLoginRole(), context.getJdbcUrl());
     }
 
     protected void beforeClose() {
-        LOGGER.debug("{}.beforeClose()", this);
+        LOGGER.info("{}.beforeClose()", this);
     }
 
     protected void afterClose() {
-        LOGGER.debug("{}.afterClose()", this);
+        LOGGER.info("{}.afterClose()", this);
     }
 
     protected void onException(final ConnectionProvider provider, final Exception e) {

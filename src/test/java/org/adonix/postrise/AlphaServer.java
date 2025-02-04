@@ -45,8 +45,8 @@ class AlphaServer extends PostgresTestServer {
 
     @Override
     protected void afterClose() {
-        LOGGER.debug("Databases Size: {}", getDatabaseNames().size());
         super.afterClose();
+        LOGGER.debug("Databases Size: {}", getDatabaseNames().size());
         getDataSource("postrise");
     }
 }

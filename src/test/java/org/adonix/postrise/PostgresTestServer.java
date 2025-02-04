@@ -47,16 +47,16 @@ abstract class PostgresTestServer extends PostgresServer {
     @Override
     public void afterCreate(final DataSourceContext context) {
         super.afterCreate(context);
-        LOGGER.debug(context.getDataSourceProperties());
+        LOGGER.info(context.getDataSourceProperties());
     }
 
     public static final void start() {
         container.start();
-        LOGGER.debug("{} container started.", container.getDockerImageName());
+        LOGGER.info("{} container started.", container.getDockerImageName());
     }
 
     public static final void stop() {
         container.stop();
-        LOGGER.debug("{} container stopped.", container.getDockerImageName());
+        LOGGER.info("{} container stopped.", container.getDockerImageName());
     }
 }
