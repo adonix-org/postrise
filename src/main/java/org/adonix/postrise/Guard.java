@@ -40,9 +40,14 @@ public abstract class Guard {
         }
     }
 
-    public static final void check(final Server server, final boolean isClosed) {
-        if (isClosed) {
-            throw new IllegalStateException("Server " + server.toString() + " is closed");
+    public static final void check(final PostriseServer server) {
+        switch (server.getState()) {
+            case OPEN:
+                return;
+            case CLOSING:
+                throw new IllegalStateException(server + " is closing");
+            case CLOSED:
+                throw new IllegalStateException(server + " is closed");
         }
     }
 }

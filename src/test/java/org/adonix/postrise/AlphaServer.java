@@ -40,11 +40,13 @@ class AlphaServer extends PostgresTestServer {
                     context.getIdleConnections().get(),
                     context.getActiveConnections().get());
         }
+        getDataSource("postrise_again");
     }
 
     @Override
     protected void afterClose() {
         LOGGER.debug("Databases Size: {}", getDatabaseNames().size());
         super.afterClose();
+        getDataSource("postrise");
     }
 }

@@ -20,8 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,10 +37,21 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private ReentrantReadWriteLock closeLock = new ReentrantReadWriteLock();
-    private ReadLock readClosed = closeLock.readLock();
-    private WriteLock writeClosed = closeLock.writeLock();
-    private volatile boolean isClosed = false;
+    enum ServerState {
+        OPEN,
+        CLOSING,
+        CLOSED
+    }
+
+    private ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
+    private ReadLock readState = stateLock.readLock();
+    private WriteLock writeState = stateLock.writeLock();
+
+    private volatile ServerState state = ServerState.OPEN;
+
+    ServerState getState() {
+        return state;
+    }
 
     /**
      * Subclasses will create and return a new instance of a
@@ -141,28 +150,24 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private String getClassName() {
-        return this.getClass().getSimpleName();
-    }
-
     /**
      * HELPERS
      */
-    private void inOrder(final Runnable action, final List<Exception> exceptions) {
+    private void inOrder(final Runnable action) {
         try {
             action.run();
         } catch (final Exception e) {
-            exceptions.add(e);
+            onException(e);
         }
     }
 
     private <T> T isOpen(final Supplier<T> action) {
-        readClosed.lock();
+        readState.lock();
         try {
-            Guard.check(this, isClosed);
+            Guard.check(this);
             return action.get();
         } finally {
-            readClosed.unlock();
+            readState.unlock();
         }
     }
 
@@ -178,7 +183,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * EVENTS
      */
 
-     private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
+    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
         for (DataSourceListener listener : dataSourceListeners) {
             event.accept(listener);
         }
@@ -206,35 +211,33 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void afterCreate(final DataSourceContext context) {
-        LOGGER.debug("{} data source created: {}", getClassName(), context.getJdbcUrl());
+        LOGGER.debug("{} data source created: {}", this, context.getJdbcUrl());
     }
 
     @Override
     public void beforeClose(final DataSourceContext context) {
-        LOGGER.debug("Closing {}@{} for {}...", context.getLoginRole(), context.getJdbcUrl(), getClassName());
+        LOGGER.debug("{}: closing {}@{}...", this, context.getLoginRole(), context.getJdbcUrl());
     }
 
     @Override
     public void afterClose(final DataSourceContext context) {
-        LOGGER.debug("{}@{} for {} Closed", context.getLoginRole(), context.getJdbcUrl(), getClassName());
+        LOGGER.debug("{}: {}@{} closed", this, context.getLoginRole(), context.getJdbcUrl());
     }
 
     protected void beforeClose() {
-        LOGGER.debug("{}.beforeClose()", getClassName());
+        LOGGER.debug("{}.beforeClose()", this);
     }
 
     protected void afterClose() {
-        LOGGER.debug("{}.afterClose()", getClassName());
+        LOGGER.debug("{}.afterClose()", this);
     }
 
-    protected void onException(final ConnectionProvider provider, final Throwable t) {
-        LOGGER.error("{} {} {}", getClassName(), provider.getJdbcUrl(), t.getMessage());
+    protected void onException(final ConnectionProvider provider, final Exception e) {
+        LOGGER.error("{} {} {}", this, provider.getJdbcUrl(), e);
     }
 
-    protected void onClosed(final List<Exception> exceptions) {
-        for (final Exception e : exceptions) {
-            LOGGER.error("{} {}", getClassName(), e.getMessage());
-        }
+    protected void onException(final Exception e) {
+        LOGGER.error("{} {}", this, e);
     }
 
     /**
@@ -242,34 +245,32 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     @Override
     public final void close() {
-        writeClosed.lock();
+        writeState.lock();
         try {
-            if (isClosed) {
+            if (state == ServerState.CLOSED) {
                 return;
             }
-            isClosed = true;
+            state = ServerState.CLOSING;
 
-            final List<Exception> exceptions = new LinkedList<>();
-            inOrder(this::beforeClose, exceptions);
+            inOrder(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
-                inOrder(() -> onBeforeClose(provider), exceptions);
-                inOrder(provider::close, exceptions);
-                inOrder(() -> onAfterClose(provider), exceptions);
+                inOrder(() -> onBeforeClose(provider));
+                inOrder(provider::close);
+                inOrder(() -> onAfterClose(provider));
             }
-            inOrder(databaseListeners::clear, exceptions);
-            inOrder(databasePools::clear, exceptions);
-            inOrder(this::afterClose, exceptions);
+            inOrder(databaseListeners::clear);
+            inOrder(databasePools::clear);
 
-            if (exceptions.size() > 0) {
-                onClosed(exceptions);
-            }
+            state = ServerState.CLOSED;
+            inOrder(this::afterClose);
+
         } finally {
-            writeClosed.unlock();
+            writeState.unlock();
         }
     }
 
     @Override
     public String toString() {
-        return getHostName() + ":" + getPort();
+        return this.getClass().getSimpleName();
     }
 }
