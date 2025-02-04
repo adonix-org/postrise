@@ -30,6 +30,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,28 +64,24 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         addListener(this);
     }
 
-    public final void addListener(final DataSourceListener listener) {
-        Guard.check("listener", listener);
+    private <T> T isOpen(final Supplier<T> action) {
         readClosed.lock();
         try {
             Guard.check(this, isClosed);
-            dataSourceListeners.add(listener);
+            return action.get();
         } finally {
             readClosed.unlock();
         }
     }
 
+    public final void addListener(final DataSourceListener listener) {
+        isOpen(() -> dataSourceListeners.add(listener));
+    }
+
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
-        Guard.check("listener.getDatabaseName()", listener.getDatabaseName());
-        readClosed.lock();
-        try {
-            Guard.check(this, isClosed);
-            if (databaseListeners.put(getKey(listener), listener) != null) {
-                LOGGER.warn("Overwriting existing configuration for database {}", listener.getDatabaseName());
-            }
-        } finally {
-            readClosed.unlock();
+        if (isOpen(() -> databaseListeners.put(getKey(listener), listener) != null)) {
+            LOGGER.warn("Overwriting existing configuration for database {}", listener.getDatabaseName());
         }
     }
 
