@@ -17,10 +17,12 @@
 package org.adonix.postrise;
 
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.HikariPoolMXBean;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.function.Function;
 
 abstract class PostriseDataSource implements ConnectionProvider {
 
@@ -158,20 +160,21 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public final Optional<Integer> getActiveConnections() {
-        return Optional.ofNullable(delegate.getHikariPoolMXBean().getActiveConnections());
+        return getOptional(HikariPoolMXBean::getActiveConnections);
     }
 
     @Override
     public final Optional<Integer> getIdleConnections() {
-        return Optional.ofNullable(delegate.getHikariPoolMXBean().getIdleConnections());
+        return getOptional(HikariPoolMXBean::getIdleConnections);
     }
 
-    /**
-     * @return
-     */
     @Override
     public final Optional<Integer> getTotalConnections() {
-        return Optional.ofNullable(delegate.getHikariPoolMXBean().getTotalConnections());
+        return getOptional(HikariPoolMXBean::getTotalConnections);
+    }
+
+    private final Optional<Integer> getOptional(Function<HikariPoolMXBean, Integer> method) {
+        return Optional.ofNullable(delegate.getHikariPoolMXBean()).map(method);
     }
 
     @Override
