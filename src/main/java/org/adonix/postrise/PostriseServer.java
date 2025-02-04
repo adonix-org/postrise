@@ -38,9 +38,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private static final Logger LOGGER = LogManager.getLogger();
 
     enum ServerState {
-        OPEN,
-        CLOSING,
-        CLOSED
+        OPEN, CLOSING, CLOSED
     }
 
     private ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
