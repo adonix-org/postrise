@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class PostriseServer implements DataSourceListener, Server {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
     enum ServerState {
         OPEN, CLOSING, CLOSED

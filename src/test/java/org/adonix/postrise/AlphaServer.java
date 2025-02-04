@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 class AlphaServer extends PostgresTestServer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(AlphaServer.class);
 
     @Override
     public void beforeCreate(DataSourceSettings settings) {
