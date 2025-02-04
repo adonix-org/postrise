@@ -153,12 +153,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
 
     /**
-     * Calls the given action and any exception is caught to guarantee execution
+     * Runs the given action and any exception is caught to guarantee execution
      * order.
      * 
      * @param action
      */
-    private void inOrder(final Runnable action) {
+    private void runSafe(final Runnable action) {
         try {
             action.run();
         } catch (final Exception e) {
@@ -261,17 +261,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             }
             state = ServerState.CLOSING;
 
-            inOrder(this::beforeClose);
+            runSafe(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
-                inOrder(() -> onBeforeClose(provider));
-                inOrder(provider::close);
-                inOrder(() -> onAfterClose(provider));
+                runSafe(() -> onBeforeClose(provider));
+                runSafe(provider::close);
+                runSafe(() -> onAfterClose(provider));
             }
-            inOrder(databaseListeners::clear);
-            inOrder(databasePools::clear);
+            runSafe(databaseListeners::clear);
+            runSafe(databasePools::clear);
 
             state = ServerState.CLOSED;
-            inOrder(this::afterClose);
+            runSafe(this::afterClose);
 
         } finally {
             writeState.unlock();

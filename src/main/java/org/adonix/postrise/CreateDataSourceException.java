@@ -18,7 +18,7 @@ package org.adonix.postrise;
 
 public class CreateDataSourceException extends RuntimeException {
 
-    CreateDataSourceException(final Throwable t) {
-        super(t);
+    CreateDataSourceException(final Exception e) {
+        super(e);
     }
 }
