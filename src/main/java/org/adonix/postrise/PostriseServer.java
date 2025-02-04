@@ -198,15 +198,15 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             isClosed = true;
 
             final List<Exception> exceptions = new LinkedList<>();
-            runSafe(this::beforeClose, exceptions);
+            inOrder(this::beforeClose, exceptions);
             for (final ConnectionProvider provider : databasePools.values()) {
-                runSafe(() -> onBeforeClose(provider), exceptions);
-                runSafe(provider::close, exceptions);
-                runSafe(() -> onAfterClose(provider), exceptions);
+                inOrder(() -> onBeforeClose(provider), exceptions);
+                inOrder(provider::close, exceptions);
+                inOrder(() -> onAfterClose(provider), exceptions);
             }
-            runSafe(databaseListeners::clear, exceptions);
-            runSafe(databasePools::clear, exceptions);
-            runSafe(this::afterClose, exceptions);
+            inOrder(databaseListeners::clear, exceptions);
+            inOrder(databasePools::clear, exceptions);
+            inOrder(this::afterClose, exceptions);
 
             if (exceptions.size() > 0) {
                 onClosed(exceptions);
@@ -216,7 +216,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private void runSafe(final Runnable action, final List<Exception> exceptions) {
+    private void inOrder(final Runnable action, final List<Exception> exceptions) {
         try {
             action.run();
         } catch (final Exception e) {
