@@ -24,9 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
@@ -40,9 +40,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         OPEN, CLOSING, CLOSED
     }
 
-    private ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
-    private ReadLock readState = stateLock.readLock();
-    private WriteLock writeState = stateLock.writeLock();
+    private ReadWriteLock stateLock = new ReentrantReadWriteLock();
+    private Lock readState = stateLock.readLock();
+    private Lock writeState = stateLock.writeLock();
 
     private ServerState state = ServerState.OPEN;
 
