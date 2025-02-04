@@ -73,12 +73,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
-        isOpen(() -> dataSourceListeners.add(listener));
+        isOpenThen(() -> dataSourceListeners.add(listener));
     }
 
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
-        if (isOpen(() -> databaseListeners.put(getKey(listener), listener)) != null) {
+        if (isOpenThen(() -> databaseListeners.put(getKey(listener), listener)) != null) {
             LOGGER.warn("{}: Overwriting existing configuration for database {}", this, listener.getDatabaseName());
         }
     }
@@ -118,7 +118,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     private final ConnectionProvider create(final String databaseName) {
-        return isOpen(() -> doCreate(databaseName));
+        return isOpenThen(() -> doCreate(databaseName));
     }
 
     /**
@@ -165,12 +165,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             try {
                 onException(e);
             } catch (final Exception ex) {
-                LOGGER.error("{} {}", this, ex);
+                LOGGER.error("{}: {}", this, ex);
             }
         }
     }
 
-    private <T> T isOpen(final Supplier<T> action) {
+    private <T> T isOpenThen(final Supplier<T> action) {
         readState.lock();
         try {
             Guard.check(this);
@@ -220,7 +220,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void afterCreate(final DataSourceContext context) {
-        LOGGER.info("{} data source created: {}", this, context.getJdbcUrl());
+        LOGGER.info("{}: data source created: {}", this, context.getJdbcUrl());
     }
 
     @Override
@@ -242,11 +242,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     protected void onException(final ConnectionProvider provider, final Exception e) {
-        LOGGER.error("{} {} {}", this, provider.getJdbcUrl(), e);
+        LOGGER.error("{}: {} {}", this, provider.getJdbcUrl(), e);
     }
 
     protected void onException(final Exception e) {
-        LOGGER.error("{} {}", this, e);
+        LOGGER.error("{}: {}", this, e);
     }
 
     /**
