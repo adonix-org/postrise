@@ -75,6 +75,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     public final void addListener(final DataSourceListener listener) {
+        Guard.check("listener", listener);
         isOpen(() -> dataSourceListeners.add(listener));
     }
 
@@ -89,8 +90,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return databasePools.keySet();
     }
 
-    public final DataSourceContext getDataSource(final String databaseName) {
-        
+    protected final DataSourceContext getDataSource(final String databaseName) {
         Guard.check("databaseName", databaseName);
         return getConnectionProvider(databaseName);
     }
