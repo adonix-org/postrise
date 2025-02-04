@@ -39,15 +39,4 @@ public abstract class Guard {
             throw new IllegalArgumentException(BLANK_STRING_ERROR + parameterName);
         }
     }
-
-    public static final void check(final PostriseServer server) {
-        switch (server.getState()) {
-            case OPEN:
-                return;
-            case CLOSING:
-                throw new IllegalStateException(server + " is closing");
-            case CLOSED:
-                throw new IllegalStateException(server + " is closed");
-        }
-    }
 }

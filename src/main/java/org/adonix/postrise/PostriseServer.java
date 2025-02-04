@@ -43,17 +43,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private ReadWriteLock stateLock = new ReentrantReadWriteLock();
     private Lock readState = stateLock.readLock();
     private Lock writeState = stateLock.writeLock();
-
     private ServerState state = ServerState.OPEN;
-
-    ServerState getState() {
-        readState.lock();
-        try {
-            return state;
-        } finally {
-            readState.unlock();
-        }
-    }
 
     /**
      * Subclasses will create and return a new instance of a
@@ -162,7 +152,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param action
      */
-    private void runSafe(final Runnable action) {
+    protected void runSafe(final Runnable action) {
         try {
             action.run();
         } catch (final Exception e) {
@@ -177,8 +167,16 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     private <T> T isOpenThen(final Supplier<T> action) {
         readState.lock();
         try {
-            Guard.check(this);
-            return action.get();
+            switch (state) {
+                case OPEN:
+                    return action.get();
+                case CLOSING:
+                    throw new IllegalStateException(this + " is closing");
+                case CLOSED:
+                    throw new IllegalStateException(this + " is closed");
+                default:
+                    throw new IllegalStateException(this + " state unknown");
+            }
         } finally {
             readState.unlock();
         }

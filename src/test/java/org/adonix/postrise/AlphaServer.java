@@ -19,7 +19,7 @@ class AlphaServer extends PostgresTestServer {
     public void afterCreate(final DataSourceContext context) {
         super.afterCreate(context);
         LOGGER.debug(
-                "[{}.afterCreate()] Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
+                "{}.afterCreate() Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                 context.getDatabaseName(),
                 context.getMaxPoolSize(),
                 context.getTotalConnections().get(),
@@ -40,13 +40,13 @@ class AlphaServer extends PostgresTestServer {
                     context.getIdleConnections().get(),
                     context.getActiveConnections().get());
         }
-        getDataSource("postrise_again");
+        runSafe(() -> getDataSource("postrise_again"));
     }
 
     @Override
     protected void afterClose() {
-        super.afterClose();
         LOGGER.debug("Databases Size: {}", getDatabaseNames().size());
-        getDataSource("postrise");
+        runSafe(() -> getDataSource("postrise"));
+        super.afterClose();
     }
 }
