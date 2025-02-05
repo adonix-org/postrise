@@ -221,6 +221,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
+    public void beforeCreate(final DataSourceSettings settings) {
+        LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
+    }
+
+    @Override
     public void afterCreate(final DataSourceContext context) {
         LOGGER.info("{}: data source created: {}", this, context.getJdbcUrl());
     }
