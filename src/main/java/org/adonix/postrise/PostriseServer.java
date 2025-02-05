@@ -204,20 +204,20 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void onBeforeCreate(final DataSourceContext context) {
-        doEvent(context, listener -> listener.beforeCreate(context));
+    private final void onBeforeCreate(final ConnectionProvider provider) {
+        doEvent(provider, listener -> listener.beforeCreate(provider));
     }
 
-    private final void onAfterCreate(final DataSourceContext context) {
-        doEvent(context, listener -> listener.afterCreate(context));
+    private final void onAfterCreate(final ConnectionProvider provider) {
+        doEvent(provider, listener -> listener.afterCreate(provider));
     }
 
-    private final void onBeforeClose(final DataSourceContext context) {
-        doEvent(context, listener -> listener.beforeClose(context));
+    private final void onBeforeClose(final ConnectionProvider provider) {
+        doEvent(provider, listener -> listener.beforeClose(provider));
     }
 
-    private final void onAfterClose(final DataSourceContext context) {
-        doEvent(context, listener -> listener.afterClose(context));
+    private final void onAfterClose(final ConnectionProvider provider) {
+        doEvent(provider, listener -> listener.afterClose(provider));
     }
 
     @Override
@@ -243,8 +243,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.info("{}.afterClose()", this);
     }
 
-    protected void onException(final ConnectionProvider provider, final Exception e) {
-        LOGGER.error("{}: {} {}", this, provider, e);
+    protected void onException(final DataSourceContext context, final Exception e) {
+        LOGGER.error("{}: {} {}", this, context, e);
     }
 
     protected void onException(final Exception e) {
