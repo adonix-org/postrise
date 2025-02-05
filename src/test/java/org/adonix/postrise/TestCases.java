@@ -213,7 +213,7 @@ class TestCases extends TestEnvironment {
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
-    @DisplayName("PostriseDataSource Getters and Setters")
+    @DisplayName("PostriseDataSource Getters and Setters at Runtime")
     @Test
     void t14() {
         final PostriseServer server = getServerInstance(AlphaServer.class);
@@ -228,6 +228,8 @@ class TestCases extends TestEnvironment {
 
         dataSource.setMinIdle(1);
         assertEquals(1, dataSource.getMinIdle());
+
+        assertTrue(dataSource.isAutoCommit());
 
         // dataSource.setAutoCommit(true);
         // assertTrue(dataSource.isAutoCommit());
