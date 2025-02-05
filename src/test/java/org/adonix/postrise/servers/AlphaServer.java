@@ -1,11 +1,13 @@
-package org.adonix.postrise;
+package org.adonix.postrise.servers;
 
 import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
 
+import org.adonix.postrise.DataSourceContext;
+import org.adonix.postrise.DataSourceSettings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class AlphaServer extends PostgresTestServer {
+public class AlphaServer extends PostgresTestServer {
 
     private static final Logger LOGGER = LogManager.getLogger(AlphaServer.class);
 

@@ -1,11 +1,14 @@
-package org.adonix.postrise;
+package org.adonix.postrise.servers;
 
+import org.adonix.postrise.DataSourceContext;
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.PostgresServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-abstract class PostgresTestServer extends PostgresServer {
+public abstract class PostgresTestServer extends PostgresServer {
 
     private static final Logger LOGGER = LogManager.getLogger(PostgresTestServer.class);
 

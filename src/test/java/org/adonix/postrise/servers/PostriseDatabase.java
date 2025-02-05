@@ -1,5 +1,7 @@
-package org.adonix.postrise;
+package org.adonix.postrise.servers;
 
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.DatabaseListener;
 import org.adonix.postrise.security.RoleSecurityProviders;
 
 public class PostriseDatabase implements DatabaseListener {

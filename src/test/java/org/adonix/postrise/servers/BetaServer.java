@@ -1,6 +1,8 @@
-package org.adonix.postrise;
+package org.adonix.postrise.servers;
 
-class BetaServer extends PostgresTestServer {
+import org.adonix.postrise.DataSourceSettings;
+
+public class BetaServer extends PostgresTestServer {
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {

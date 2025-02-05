@@ -7,6 +7,11 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.adonix.postrise.servers.AlphaServer;
+import org.adonix.postrise.servers.BetaServer;
+import org.adonix.postrise.servers.DeltaServer;
+import org.adonix.postrise.servers.GammaServer;
+import org.adonix.postrise.servers.PostgresTestServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
