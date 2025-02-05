@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
- package org.adonix.postrise;
+package org.adonix.postrise;
 
- import java.util.Properties;
- 
- interface ConnectionSettingsRuntime extends DatabaseNameProvider {
-     /**
-      * Get the current JDBC Url.
-      * 
-      * @return the JDBC Url for this data source.
-      */
-     String getJdbcUrl();
- 
-     String getLoginRole();
- 
-     boolean isAutoCommit();
- 
-     Properties getDataSourceProperties();
- }
+import java.util.Properties;
+
+interface ConnectionSettingsReadable extends DatabaseNameProvider {
+    /**
+     * Get the current JDBC Url.
+     * 
+     * @return the JDBC Url for this data source.
+     */
+    String getJdbcUrl();
+
+    String getLoginRole();
+
+    boolean isAutoCommit();
+
+    Properties getDataSourceProperties();
+}
