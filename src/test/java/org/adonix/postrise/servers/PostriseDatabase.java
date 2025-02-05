@@ -4,7 +4,7 @@ import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.DatabaseListener;
 import org.adonix.postrise.security.RoleSecurityProviders;
 
-public class PostriseDatabase implements DatabaseListener {
+class PostriseDatabase implements DatabaseListener {
 
     @Override
     public String getDatabaseName() {
