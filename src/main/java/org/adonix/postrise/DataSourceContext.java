@@ -1,4 +1,7 @@
 package org.adonix.postrise;
 
-public interface DataSourceContext extends ConnectionPoolStatus, DataSourceSettings {
+import org.adonix.postrise.security.RoleSecuritySettings;
+
+public interface DataSourceContext
+        extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsRuntime, RoleSecuritySettings {
 }

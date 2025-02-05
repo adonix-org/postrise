@@ -31,7 +31,7 @@ import javax.sql.DataSource;
  * {@link DataSourceListener#beforeCreate(DataSourceSettings)
  * beforeCreate(DataSourceSettings)} method.
  */
-interface ConnectionSettings extends DatabaseNameProvider {
+interface ConnectionSettings extends ConnectionSettingsRuntime {
     /**
      * Set the JDBC Url for this connection.
      * 
@@ -51,22 +51,11 @@ interface ConnectionSettings extends DatabaseNameProvider {
      */
     void setJdbcUrl(String hostname, Integer port);
 
-    /**
-     * Get the current JDBC Url.
-     * 
-     * @return the JDBC Url for this data source.
-     */
-    String getJdbcUrl();
-
     void setLoginRole(String role);
-
-    String getLoginRole();
 
     void setLoginPassword(String password);
 
     void setAutoCommit(boolean isAutoCommit);
-
-    boolean isAutoCommit();
 
     /**
      * Add a property (name/value pair) that will be used to configure the
@@ -86,6 +75,4 @@ interface ConnectionSettings extends DatabaseNameProvider {
      * @param value        the value to be used by the DataSource/Driver
      */
     void addDataSourceProperty(String propertyName, Object value);
-
-    Properties getDataSourceProperties();
 }
