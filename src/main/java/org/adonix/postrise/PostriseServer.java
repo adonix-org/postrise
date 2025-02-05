@@ -128,7 +128,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         onBeforeCreate(provider);
 
         // Create the first connection to validate settings, initialize the connection
-        // pool, and send events to all listeners including this class.
+        // pool, and send events to all listeners including "this".
         try (final Connection connection = provider.getConnection()) {
 
             provider.onLogin(provider, connection);
