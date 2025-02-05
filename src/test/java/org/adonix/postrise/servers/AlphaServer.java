@@ -12,7 +12,7 @@ public class AlphaServer extends PostgresTestServer {
     private static final Logger LOGGER = LogManager.getLogger(AlphaServer.class);
 
     @Override
-    public void beforeCreate(DataSourceSettings settings) {
+    public void beforeCreate(final DataSourceSettings settings) {
         super.beforeCreate(settings);
         settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
     }
@@ -30,8 +30,16 @@ public class AlphaServer extends PostgresTestServer {
     }
 
     @Override
+    public void afterClose(final DataSourceContext context) {
+        
+        runSafe(() -> getConnection(context.getDatabaseName(), "postrise"));
+        super.afterClose(context);
+    }
+
+    @Override
     protected void beforeClose() {
         super.beforeClose();
+        this.close();
         for (final String database : getDatabaseNames()) {
             final DataSourceContext context = getDataSource(database);
             LOGGER.debug(

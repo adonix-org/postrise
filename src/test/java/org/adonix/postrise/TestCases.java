@@ -212,4 +212,21 @@ class TestCases extends TestEnvironment {
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
+
+    @DisplayName("PostriseDataSource Getters and Setters")
+    @Test
+    void t14() {
+        final PostriseServer server = getServerInstance(DeltaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof DeltaServer);
+
+        final DataSourceContext dataSource = server.getDataSource("database_delta");
+        assertNotNull(dataSource);
+
+        // dataSource.setAutoCommit(false);
+        // assertFalse(dataSource.isAutoCommit());
+
+        // dataSource.setAutoCommit(true);
+        // assertTrue(dataSource.isAutoCommit());
+    }
 }

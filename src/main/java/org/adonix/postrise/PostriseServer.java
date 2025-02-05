@@ -152,7 +152,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param action
      */
-    protected void runSafe(final Runnable action) {
+    protected void runSafe(final RunnableThrows action) {
         try {
             action.run();
         } catch (final Exception e) {
@@ -258,7 +258,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     public final void close() {
         writeState.lock();
         try {
-            if (state == ServerState.CLOSED) {
+            if (state != ServerState.OPEN) {
+                LOGGER.warn("{}: additional close request ignored", this);
                 return;
             }
             state = ServerState.CLOSING;
