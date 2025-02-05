@@ -28,7 +28,7 @@ import java.util.function.Function;
 abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate;
-    private HikariConfigMXBean config;
+    private final HikariConfigMXBean config;
     private final String databaseName;
 
     PostriseDataSource(final String databaseName) {
@@ -76,7 +76,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public final int getMaxPoolSize() {
         return config.getMaximumPoolSize();
     }
-    
+
     @Override
     public final void setMaxPoolSize(final int size) {
         config.setMaximumPoolSize(size);
@@ -96,7 +96,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public final long getIdleTimeout() {
         return config.getIdleTimeout();
     }
-    
+
     @Override
     public final void setIdleTimeout(final long idleTimeoutMs) {
         config.setIdleTimeout(idleTimeoutMs);
@@ -106,7 +106,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public final int getMinIdle() {
         return config.getMinimumIdle();
     }
-    
+
     @Override
     public final void setMinIdle(final int minIdle) {
         config.setMinimumIdle(minIdle);
@@ -126,7 +126,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     public final long getValidationTimeout() {
         return config.getValidationTimeout();
     }
-    
+
     @Override
     public final void setValidationTimeout(final long validationTimeoutMs) {
         config.setValidationTimeout(validationTimeoutMs);
