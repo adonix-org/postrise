@@ -1,5 +1,6 @@
 package org.adonix.postrise;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -223,8 +224,8 @@ class TestCases extends TestEnvironment {
         final DataSourceContext dataSource = server.getDataSource("database_delta");
         assertNotNull(dataSource);
 
-        // dataSource.setAutoCommit(false);
-        // assertFalse(dataSource.isAutoCommit());
+        dataSource.setAutoCommit(false);
+        assertFalse(dataSource.isAutoCommit());
 
         // dataSource.setAutoCommit(true);
         // assertTrue(dataSource.isAutoCommit());

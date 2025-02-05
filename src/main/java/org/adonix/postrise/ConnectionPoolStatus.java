@@ -9,4 +9,6 @@ interface ConnectionPoolStatus {
     Optional<Integer> getIdleConnections();
 
     Optional<Integer> getTotalConnections();
+
+    Optional<Integer> getThreadsAwaitingConnection();
 }
