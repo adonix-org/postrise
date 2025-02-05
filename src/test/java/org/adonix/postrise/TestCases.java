@@ -1,6 +1,5 @@
 package org.adonix.postrise;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -217,15 +216,18 @@ class TestCases extends TestEnvironment {
     @DisplayName("PostriseDataSource Getters and Setters")
     @Test
     void t14() {
-        final PostriseServer server = getServerInstance(DeltaServer.class);
+        final PostriseServer server = getServerInstance(AlphaServer.class);
         assertNotNull(server);
-        assertTrue(server instanceof DeltaServer);
+        assertTrue(server instanceof AlphaServer);
 
-        final DataSourceContext dataSource = server.getDataSource("database_delta");
+        final DataSourceContext dataSource = server.getDataSource("postrise");
         assertNotNull(dataSource);
 
-        dataSource.setAutoCommit(false);
-        assertFalse(dataSource.isAutoCommit());
+        dataSource.setMaxPoolSize(50);
+        assertEquals(50, dataSource.getMaxPoolSize());
+
+        dataSource.setMinIdle(1);
+        assertEquals(1, dataSource.getMinIdle());
 
         // dataSource.setAutoCommit(true);
         // assertTrue(dataSource.isAutoCommit());

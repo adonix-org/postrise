@@ -16,6 +16,7 @@
 
 package org.adonix.postrise;
 
+import com.zaxxer.hikari.HikariConfigMXBean;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import java.sql.Connection;
@@ -27,11 +28,13 @@ import java.util.function.Function;
 abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate;
+    private HikariConfigMXBean config;
     private final String databaseName;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
+        this.config = this.delegate;
     }
 
     @Override
@@ -45,18 +48,13 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public final void setJdbcUrl(final String url) {
-        delegate.setJdbcUrl(url);
-    }
-
-    @Override
     public final String getJdbcUrl() {
         return delegate.getJdbcUrl();
     }
 
     @Override
-    public final void setLoginRole(final String username) {
-        delegate.setUsername(username);
+    public final void setJdbcUrl(final String url) {
+        delegate.setJdbcUrl(url);
     }
 
     @Override
@@ -65,53 +63,53 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
+    public final void setLoginRole(final String username) {
+        delegate.setUsername(username);
+    }
+
+    @Override
     public final void setLoginPassword(final String password) {
         delegate.setPassword(password);
     }
 
     @Override
-    public final void setMaxPoolSize(final int size) {
-        delegate.setMaximumPoolSize(size);
-    }
-
-    @Override
     public final int getMaxPoolSize() {
-        return delegate.getMaximumPoolSize();
+        return config.getMaximumPoolSize();
     }
-
+    
     @Override
-    public final void setConnectionTimeout(final long connectionTimeoutMs) {
-        delegate.setConnectionTimeout(connectionTimeoutMs);
+    public final void setMaxPoolSize(final int size) {
+        config.setMaximumPoolSize(size);
     }
 
     @Override
     public final long getConnectionTimeout() {
-        return delegate.getConnectionTimeout();
+        return config.getConnectionTimeout();
     }
 
     @Override
-    public final void setIdleTimeout(final long idleTimeoutMs) {
-        delegate.setIdleTimeout(idleTimeoutMs);
+    public final void setConnectionTimeout(final long connectionTimeoutMs) {
+        config.setConnectionTimeout(connectionTimeoutMs);
     }
 
     @Override
     public final long getIdleTimeout() {
-        return delegate.getIdleTimeout();
+        return config.getIdleTimeout();
     }
-
+    
     @Override
-    public final void setMinIdle(final int minIdle) {
-        delegate.setMinimumIdle(minIdle);
+    public final void setIdleTimeout(final long idleTimeoutMs) {
+        config.setIdleTimeout(idleTimeoutMs);
     }
 
     @Override
     public final int getMinIdle() {
-        return delegate.getMinimumIdle();
+        return config.getMinimumIdle();
     }
-
+    
     @Override
-    public final void setAutoCommit(final boolean isAutoCommit) {
-        delegate.setAutoCommit(isAutoCommit);
+    public final void setMinIdle(final int minIdle) {
+        config.setMinimumIdle(minIdle);
     }
 
     @Override
@@ -120,33 +118,38 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public final void setValidationTimeout(final long validationTimeoutMs) {
-        delegate.setValidationTimeout(validationTimeoutMs);
+    public final void setAutoCommit(final boolean isAutoCommit) {
+        delegate.setAutoCommit(isAutoCommit);
     }
 
     @Override
     public final long getValidationTimeout() {
-        return delegate.getValidationTimeout();
+        return config.getValidationTimeout();
     }
-
+    
     @Override
-    public final void setLeakDetectionThreshold(final long leakDetectionThresholdMs) {
-        delegate.setLeakDetectionThreshold(leakDetectionThresholdMs);
+    public final void setValidationTimeout(final long validationTimeoutMs) {
+        config.setValidationTimeout(validationTimeoutMs);
     }
 
     @Override
     public final long getLeakDetectionThreshold() {
-        return delegate.getLeakDetectionThreshold();
+        return config.getLeakDetectionThreshold();
     }
 
     @Override
-    public final void setMaxLifetime(final long maxLifetimeMs) {
-        delegate.setMaxLifetime(maxLifetimeMs);
+    public final void setLeakDetectionThreshold(final long leakDetectionThresholdMs) {
+        config.setLeakDetectionThreshold(leakDetectionThresholdMs);
     }
 
     @Override
     public final long getMaxLifetime() {
-        return delegate.getMaxLifetime();
+        return config.getMaxLifetime();
+    }
+
+    @Override
+    public final void setMaxLifetime(final long maxLifetimeMs) {
+        config.setMaxLifetime(maxLifetimeMs);
     }
 
     @Override
