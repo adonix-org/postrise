@@ -264,7 +264,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         writeState.lock();
         try {
             if (state != ServerState.OPEN) {
-                LOGGER.warn("{}: additional close request ignored", this);
+                LOGGER.warn("{}: extra close request ignored", this);
                 return;
             }
             state = ServerState.CLOSING;
