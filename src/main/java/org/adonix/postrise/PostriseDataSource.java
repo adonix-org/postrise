@@ -16,7 +16,6 @@
 
 package org.adonix.postrise;
 
-import com.zaxxer.hikari.HikariConfigMXBean;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import java.sql.Connection;
@@ -28,13 +27,11 @@ import java.util.function.Function;
 abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate;
-    private final HikariConfigMXBean config;
     private final String databaseName;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
-        this.config = this.delegate;
     }
 
     @Override
@@ -58,12 +55,12 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public final String getLoginRole() {
+    public final String getUsername() {
         return delegate.getUsername();
     }
 
     @Override
-    public final void setLoginRole(final String username) {
+    public final void setUsername(final String username) {
         delegate.setUsername(username);
     }
 
@@ -74,42 +71,42 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public final int getMaxPoolSize() {
-        return config.getMaximumPoolSize();
+        return delegate.getMaximumPoolSize();
     }
 
     @Override
     public final void setMaxPoolSize(final int size) {
-        config.setMaximumPoolSize(size);
+        delegate.setMaximumPoolSize(size);
     }
 
     @Override
     public final long getConnectionTimeout() {
-        return config.getConnectionTimeout();
+        return delegate.getConnectionTimeout();
     }
 
     @Override
     public final void setConnectionTimeout(final long connectionTimeoutMs) {
-        config.setConnectionTimeout(connectionTimeoutMs);
+        delegate.setConnectionTimeout(connectionTimeoutMs);
     }
 
     @Override
     public final long getIdleTimeout() {
-        return config.getIdleTimeout();
+        return delegate.getIdleTimeout();
     }
 
     @Override
     public final void setIdleTimeout(final long idleTimeoutMs) {
-        config.setIdleTimeout(idleTimeoutMs);
+        delegate.setIdleTimeout(idleTimeoutMs);
     }
 
     @Override
     public final int getMinIdle() {
-        return config.getMinimumIdle();
+        return delegate.getMinimumIdle();
     }
 
     @Override
     public final void setMinIdle(final int minIdle) {
-        config.setMinimumIdle(minIdle);
+        delegate.setMinimumIdle(minIdle);
     }
 
     @Override
@@ -124,32 +121,32 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public final long getValidationTimeout() {
-        return config.getValidationTimeout();
+        return delegate.getValidationTimeout();
     }
 
     @Override
     public final void setValidationTimeout(final long validationTimeoutMs) {
-        config.setValidationTimeout(validationTimeoutMs);
+        delegate.setValidationTimeout(validationTimeoutMs);
     }
 
     @Override
     public final long getLeakDetectionThreshold() {
-        return config.getLeakDetectionThreshold();
+        return delegate.getLeakDetectionThreshold();
     }
 
     @Override
     public final void setLeakDetectionThreshold(final long leakDetectionThresholdMs) {
-        config.setLeakDetectionThreshold(leakDetectionThresholdMs);
+        delegate.setLeakDetectionThreshold(leakDetectionThresholdMs);
     }
 
     @Override
     public final long getMaxLifetime() {
-        return config.getMaxLifetime();
+        return delegate.getMaxLifetime();
     }
 
     @Override
     public final void setMaxLifetime(final long maxLifetimeMs) {
-        config.setMaxLifetime(maxLifetimeMs);
+        delegate.setMaxLifetime(maxLifetimeMs);
     }
 
     @Override
@@ -193,6 +190,6 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public String toString() {
-        return getLoginRole() + "@" + getJdbcUrl();
+        return getUsername() + "@" + getJdbcUrl();
     }
 }

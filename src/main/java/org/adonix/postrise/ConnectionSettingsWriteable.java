@@ -26,7 +26,7 @@ import javax.sql.DataSource;
  * Apply specific {@link DataSourceSettings} for the data source by
  * implementing the {@link DataSourceListener} interface.
  * <p>
- * Most implementations will call {@link #setLoginRole(String)} and
+ * Most implementations will call {@link #setUsername(String)} and
  * {@link #setLoginPassword(String)} in the
  * {@link DataSourceListener#beforeCreate(DataSourceSettings)
  * beforeCreate(DataSourceSettings)} method.
@@ -51,7 +51,7 @@ interface ConnectionSettingsWriteable extends ConnectionSettingsReadable {
      */
     void setJdbcUrl(String hostname, Integer port);
 
-    void setLoginRole(String role);
+    void setUsername(String role);
 
     void setLoginPassword(String password);
 

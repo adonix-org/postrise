@@ -26,7 +26,7 @@ interface ConnectionSettingsReadable extends DatabaseNameProvider {
      */
     String getJdbcUrl();
 
-    String getLoginRole();
+    String getUsername();
 
     boolean isAutoCommit();
 
