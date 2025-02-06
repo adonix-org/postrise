@@ -18,6 +18,7 @@ package org.adonix.postrise;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Set;
 
 public interface Server extends AutoCloseable {
 
@@ -25,5 +26,10 @@ public interface Server extends AutoCloseable {
 
     Integer getPort();
 
-    Connection getConnection(String database) throws SQLException;
+    Connection getConnection(String databaseName) throws SQLException;
+
+    DataSourceContext getDataSource(String databaseName);
+
+    Set<String> getDatabaseNames();
+
 }

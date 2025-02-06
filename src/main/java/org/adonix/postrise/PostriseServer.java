@@ -77,11 +77,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    protected final Set<String> getDatabaseNames() {
+    @Override
+    public final Set<String> getDatabaseNames() {
         return databasePools.keySet();
     }
 
-    protected final DataSourceContext getDataSource(final String databaseName) {
+    @Override
+    public final DataSourceContext getDataSource(final String databaseName) {
         return getConnectionProvider(databaseName);
     }
 
