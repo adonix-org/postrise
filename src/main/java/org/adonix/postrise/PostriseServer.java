@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -81,9 +82,20 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return databasePools.keySet();
     }
 
-    protected final DataSourceContext getDataSource(final String databaseName) {
+    protected final DataSourceContext getDataSource(final String databaseName, final boolean create) {
         Guard.check("databaseName", databaseName);
-        return getConnectionProvider(databaseName);
+        if (create) {
+            return getConnectionProvider(databaseName);
+        }
+        final DataSourceContext context = databasePools.get(databaseName);
+        if (context != null) {
+            return context;
+        }
+        throw new NoSuchElementException("No data source found for database " + databaseName);
+    }
+
+    protected final DataSourceContext getDataSource(final String databaseName) {
+        return getDataSource(databaseName, true);
     }
 
     private final ConnectionProvider getConnectionProvider(final String databaseName) {
