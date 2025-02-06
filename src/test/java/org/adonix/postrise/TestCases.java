@@ -220,9 +220,6 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        final DataSourceContext ds = server.getDataSource("postrise", false);
-        assertNotNull(ds);
-
         final DataSourceContext dataSource = server.getDataSource("postrise");
         assertNotNull(dataSource);
 
