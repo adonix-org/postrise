@@ -6,21 +6,20 @@ import java.sql.ResultSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PostriseThread extends Thread {
+public class PostriseFireThread extends Thread {
 
-    private static final Logger LOGGER = LogManager.getLogger(PostriseThread.class);
+    private static final Logger LOGGER = LogManager.getLogger(PostriseFireThread.class);
 
     private static final String SQL_STRING = "SELECT 1";
 
     @Override
     public void run() {
-        try (final Connection connection = PostriseFireServer.getConnection("fire");
+        try (final Connection connection = PostriseFireServer.getInstance().getConnection("postrise", "catch_fire");
                 final PreparedStatement statement = connection.prepareStatement(SQL_STRING);
                 final ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
                 LOGGER.info("{} rs.getString() - {}", threadId(), rs.getString(1));
             }
-
         } catch (final Exception e) {
             LOGGER.error(e);
         }

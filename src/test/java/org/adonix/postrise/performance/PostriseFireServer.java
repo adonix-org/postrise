@@ -1,7 +1,7 @@
 package org.adonix.postrise.performance;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
+
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.servers.PostgresDocker;
 
@@ -16,13 +16,9 @@ class PostriseFireServer extends PostgresDocker {
         return instance;
     }
 
-    static Connection getConnection(final String role) throws SQLException {
-        return instance.getConnection("postrise", role);
-    }
-
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         super.beforeCreate(settings);
-        settings.setLoginRole("postrise");
+        settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
     }
 }
