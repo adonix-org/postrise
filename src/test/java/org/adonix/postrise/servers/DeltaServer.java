@@ -4,7 +4,7 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT
 
 import org.adonix.postrise.DataSourceSettings;
 
-public class DeltaServer extends PostgresTestServer {
+public class DeltaServer extends PostgresDocker {
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {

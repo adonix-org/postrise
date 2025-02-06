@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-public abstract class PostgresTestServer extends PostgresServer {
+public abstract class PostgresDocker extends PostgresServer {
 
-    private static final Logger LOGGER = LogManager.getLogger(PostgresTestServer.class);
+    private static final Logger LOGGER = LogManager.getLogger(PostgresDocker.class);
 
     private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 
@@ -27,7 +27,7 @@ public abstract class PostgresTestServer extends PostgresServer {
                 .withPassword(DB_PASS);
     }
 
-    protected PostgresTestServer() {
+    protected PostgresDocker() {
         LOGGER.debug("Calling constructor for {}", this);
     }
 

@@ -7,7 +7,7 @@ import org.adonix.postrise.DataSourceSettings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AlphaServer extends PostgresTestServer {
+public class AlphaServer extends PostgresDocker {
 
     private static final Logger LOGGER = LogManager.getLogger(AlphaServer.class);
 
@@ -31,7 +31,7 @@ public class AlphaServer extends PostgresTestServer {
 
     @Override
     public void afterClose(final DataSourceContext context) {
-        
+
         runSafe(() -> getConnection(context.getDatabaseName(), "postrise"));
         super.afterClose(context);
     }

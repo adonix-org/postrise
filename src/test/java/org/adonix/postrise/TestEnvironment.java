@@ -11,7 +11,7 @@ import org.adonix.postrise.servers.AlphaServer;
 import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.GammaServer;
-import org.adonix.postrise.servers.PostgresTestServer;
+import org.adonix.postrise.servers.PostgresDocker;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -37,7 +37,7 @@ abstract class TestEnvironment {
 
     @BeforeAll
     static final void beforeAll() throws Exception {
-        PostgresTestServer.start();
+        PostgresDocker.start();
         initialize();
     }
 
@@ -46,7 +46,7 @@ abstract class TestEnvironment {
         for (final Server server : instances.values()) {
             server.close();
         }
-        PostgresTestServer.stop();
+        PostgresDocker.stop();
     }
 
     static void initialize() throws Exception {
