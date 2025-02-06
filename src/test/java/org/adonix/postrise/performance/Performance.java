@@ -6,29 +6,30 @@ import java.sql.Connection;
 import org.adonix.postrise.Server;
 import org.adonix.postrise.servers.PostgresDocker;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AutoClose;
+// import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class Performance {
 
-    @AutoClose
+    // @AutoClose
     final static Server server = PostriseFireServer.getInstance();
 
     @Test
     public void run() throws Exception {
-        try (final Connection connection = server.getConnection("postrise", "fire")) {
+        try (final Connection connection = server.getConnection("postrise", "postrise")) {
             assertNotNull(connection);
         }
     }
 
     @BeforeAll
-    static void beforeAll() {
+    public static void beforeAll() {
         PostgresDocker.start();
     }
 
     @AfterAll
-    static void afterAll() {
+    public static void afterAll() throws Exception {
+        server.close();
         PostgresDocker.stop();
     }
 }
