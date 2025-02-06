@@ -18,8 +18,6 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import org.adonix.postrise.DataSourceContext;
 import org.adonix.postrise.DataSourceSettings;
 
 /**
@@ -52,14 +50,6 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
         }
         if (!role.isLoginRole()) {
             throw new RoleSecurityException(role.getRoleName() + " is not a LOGIN user");
-        }
-    }
-
-    @Override
-    public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
-            throws SQLException {
-        if (context.getLoginRole().equals(roleName)) {
-            throw new RoleSecurityException(roleName + " is a LOGIN role");
         }
     }
 }

@@ -18,8 +18,6 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import org.adonix.postrise.DataSourceContext;
 import org.adonix.postrise.DataSourceSettings;
 
 /**
@@ -44,12 +42,6 @@ class DisableRoleSecurity implements RoleSecurityListener {
 
     @Override
     public void onLogin(final DataSourceSettings settings, final Connection connection) throws SQLException {
-        // Security is disabled for this event.
-    }
-
-    @Override
-    public void onConnection(final DataSourceContext context, final Connection connection, final String roleName)
-            throws SQLException {
         // Security is disabled for this event.
     }
 }

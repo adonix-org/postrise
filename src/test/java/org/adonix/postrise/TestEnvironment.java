@@ -50,7 +50,7 @@ abstract class TestEnvironment {
     }
 
     static void initialize() throws Exception {
-        try (final Connection connection = getServerInstance(AlphaServer.class).getConnection("postrise", "postrise")) {
+        try (final Connection connection = getServerInstance(AlphaServer.class).getConnection("postrise")) {
             connection.setAutoCommit(true);
             executeSqlFile(connection, "beta.sql");
             executeSqlFile(connection, "delta.sql");

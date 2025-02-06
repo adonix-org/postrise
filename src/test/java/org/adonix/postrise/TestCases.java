@@ -11,7 +11,6 @@ import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.AlphaServer;
-import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ class TestCases extends TestEnvironment {
     @Test
     void t01() throws SQLException {
         try (final Connection connection = getServerInstance(AlphaServer.class)
-                .getConnection("postrise", "postrise")) {
+                .getConnection("postrise")) {
             assertNotNull(connection);
         }
     }
@@ -31,7 +30,7 @@ class TestCases extends TestEnvironment {
     @Test
     void t02() throws SQLException {
         try (final Connection connection = getServerInstance(DeltaServer.class)
-                .getConnection("database_delta", "delta_application")) {
+                .getConnection("database_delta")) {
             assertNotNull(connection);
         }
     }
@@ -44,7 +43,7 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof GammaServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("database_beta", "postrise");
+            server.getConnection("database_beta");
         });
 
         final Throwable cause = t.getCause();
@@ -65,7 +64,7 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof AlphaServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("not_a_database", "postrise");
+            server.getConnection("not_a_database");
         });
 
         final Throwable cause = t.getCause();
@@ -81,7 +80,7 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
+        try (final Connection connection = server.getConnection("postrise")) {
             PostgresRole role = PostgresRoleDAO.getRole(connection, "postrise");
             assertTrue(role.isSuperUser());
             assertTrue(role.isLoginRole());
@@ -97,26 +96,13 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof GammaServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("postrise", "non_existent_role");
+            server.getConnection("postrise");
         });
 
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: postrise is a SUPER user", cause.getMessage());
-    }
-
-    @DisplayName("Connection Role Matches Login Role Exception")
-    @Test
-    void t07() {
-        final Server server = getServerInstance(BetaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof BetaServer);
-
-        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection("database_beta", "beta_login");
-        });
-        assertEquals("SECURITY: beta_login is a LOGIN role", t.getMessage());
     }
 
     @DisplayName("Postgres TCP Keep Alive SUPERUSER")
@@ -142,28 +128,10 @@ class TestCases extends TestEnvironment {
         assertTrue(server instanceof AlphaServer);
 
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(null, null);
+            server.getConnection(null);
         });
 
         assertEquals("Unexpected null String for databaseName", t.getMessage());
-    }
-
-    @DisplayName("NULL Role SUPERUSER")
-    @Test
-    void t10() throws SQLException {
-        final PostriseServer server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
-            assertNotNull(connection);
-        }
-
-        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection("postrise", null);
-        });
-
-        assertEquals("Unexpected null String for roleName", t.getMessage());
     }
 
     @DisplayName("EMPTY Database String SUPERUSER")
@@ -173,29 +141,15 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof AlphaServer);
 
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
+        try (final Connection connection = server.getConnection("postrise")) {
             assertNotNull(connection);
         }
 
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(" ", "postrise");
+            server.getConnection(" ");
         });
 
         assertEquals("Unexpected empty String for databaseName", t.getMessage());
-    }
-
-    @DisplayName("EMPTY Role String SUPERUSER")
-    @Test
-    void t12() {
-        final PostriseServer server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection("postrise", " ");
-        });
-
-        assertEquals("Unexpected empty String for roleName", t.getMessage());
     }
 
     @DisplayName("Postgres TCP Keep Alive Not SUPERUSER")

@@ -17,7 +17,7 @@ public class Performance {
 
     @Test
     public void run() throws Exception {
-        try (final Connection connection = server.getConnection("postrise", "postrise")) {
+        try (final Connection connection = server.getConnection("postrise")) {
             assertNotNull(connection);
         }
     }

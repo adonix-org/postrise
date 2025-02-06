@@ -17,7 +17,7 @@ public class PostriseFireThread extends Thread {
 
     @Override
     public void run() {
-        try (final Connection connection = server.getConnection("postrise", "catch_fire");
+        try (final Connection connection = server.getConnection("postrise");
                 final PreparedStatement statement = connection.prepareStatement(SQL_STRING);
                 final ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {

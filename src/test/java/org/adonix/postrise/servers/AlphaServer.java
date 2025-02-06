@@ -32,7 +32,7 @@ public class AlphaServer extends PostgresDocker {
     @Override
     public void afterClose(final DataSourceContext context) {
 
-        runSafe(() -> getConnection(context.getDatabaseName(), "postrise"));
+        runSafe(() -> getConnection(context.getDatabaseName()));
         super.afterClose(context);
     }
 
