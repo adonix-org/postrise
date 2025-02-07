@@ -18,7 +18,7 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.DataSourceContext;
 
 /**
  * The {@code DefaultSecurity} class provides default security checks
@@ -43,7 +43,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
      * @throws RoleSecurityException is not a login user, or is a super user.
      */
     @Override
-    public void onLogin(final DataSourceSettings settings, final Connection connection) throws SQLException {
+    public void onLogin(final DataSourceContext settings, final Connection connection) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, settings.getUsername());
         if (role.isSuperUser()) {
             throw new RoleSecurityException(role.getRoleName() + " is a SUPER user");
