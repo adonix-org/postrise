@@ -47,8 +47,8 @@ public class PostgresDataSource extends PostriseDataSource {
         Guard.check("roleName", roleName);
         final Connection connection = this.getConnection();
         try {
+            getRoleSecurity().onSetRole(this, connection, roleName);
             PostgresRoleDAO.setRole(connection, roleName);
-            this.getRoleSecurity().onSetRole(this, connection, roleName);
             return connection;
         } catch (final Exception e) {
             connection.close();
