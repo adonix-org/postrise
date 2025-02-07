@@ -25,8 +25,8 @@ package org.adonix.postrise;
 interface ConnectionProvider extends AutoCloseable, DataSourceContext, DataSourceSettings {
 
     /**
-     * Close this {@link ConnectionProvider} after no more {@link Connection}
-     * requests. Handled by the {@link Server}.
+     * Closes this {@link ConnectionProvider}. Closing all data sources is handled
+     * by the {@link Server} implementation.
      */
     void close();
 }
