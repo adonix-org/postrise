@@ -117,7 +117,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         // pool, and send events to all listeners including "this".
         try (final Connection connection = provider.getConnection()) {
 
-            provider.onLogin(provider, connection);
+            provider.getRoleSecurity().onLogin(provider, connection);
             onAfterCreate(provider);
             return provider;
 

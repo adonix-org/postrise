@@ -16,22 +16,17 @@
 
 package org.adonix.postrise;
 
-import java.sql.Connection;
-
-import org.adonix.postrise.security.RoleSecurityListener;
-
 /**
  * Implementations of this interface will return a JDBC {@link Connection}
  * using {@link DataSourceSettings} provided in the
  * {@link DataSourceListener#beforeCreate(DataSourceSettings) beforeCreate()}
  * event.
  */
-interface ConnectionProvider
-        extends AutoCloseable, DataSourceContext, DataSourceSettings, RoleSecurityListener {
+interface ConnectionProvider extends AutoCloseable, DataSourceContext, DataSourceSettings {
 
     /**
      * Close this {@link ConnectionProvider} after no more {@link Connection}
-     * requests.
+     * requests. Handled by the {@link Server}.
      */
     void close();
 }
