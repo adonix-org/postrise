@@ -20,7 +20,6 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAUL
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityListener;
 

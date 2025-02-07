@@ -17,7 +17,7 @@ public interface DataSourceContext
     /**
      * Set the role to the roleName on the {@link Connection}.
      * 
-     * @param roleName - The ROLE name to be used for the connection.
+     * @param roleName - The ROLE to be set for the connection.
      * @return A {@link Connection} to the data source.
      * @throws SQLException if a database error occurs.
      */
