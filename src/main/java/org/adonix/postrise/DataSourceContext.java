@@ -13,4 +13,13 @@ public interface DataSourceContext
      * @throws SQLException if a database error occurs.
      */
     Connection getConnection() throws SQLException;
+
+    /**
+     * Set the role to the roleName on the {@link Connection}.
+     * 
+     * @param roleName - The ROLE name to be used for the connection.
+     * @return A {@link Connection} to the data source.
+     * @throws SQLException if a database error occurs.
+     */
+    Connection getConnection(String roleName) throws SQLException;
 }

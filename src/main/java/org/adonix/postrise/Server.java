@@ -28,6 +28,8 @@ public interface Server extends AutoCloseable {
 
     Connection getConnection(String databaseName) throws SQLException;
 
+    Connection getConnection(String databaseName, String roleName) throws SQLException;
+
     DataSourceContext getDataSource(String databaseName);
 
     Set<String> getDatabaseNames();

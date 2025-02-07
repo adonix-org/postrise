@@ -83,7 +83,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final DataSourceContext getDataSource(final String databaseName) {
+    public DataSourceContext getDataSource(final String databaseName) {
         Guard.check("databaseName", databaseName);
         return getConnectionProvider(databaseName);
     }
@@ -91,6 +91,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     @Override
     public final Connection getConnection(final String databaseName) throws SQLException {
         return getDataSource(databaseName).getConnection();
+    }
+
+    @Override
+    public final Connection getConnection(final String databaseName, final String roleName) throws SQLException {
+        return getDataSource(databaseName).getConnection(roleName);
     }
 
     private final ConnectionProvider getConnectionProvider(final String databaseName) {

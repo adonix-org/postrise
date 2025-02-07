@@ -9,4 +9,6 @@ public interface RoleSecurityListener extends EventListener {
 
     void onLogin(DataSourceContext context, Connection connection) throws SQLException;
 
+    default void onSetRole(DataSourceContext context, Connection connection, String roleName) throws SQLException {
+    }
 }

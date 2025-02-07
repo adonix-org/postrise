@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
@@ -184,8 +186,26 @@ class TestCases extends TestEnvironment {
         assertEquals(1, dataSource.getMinIdle());
 
         assertTrue(dataSource.isAutoCommit());
+    }
 
-        // dataSource.setAutoCommit(true);
-        // assertTrue(dataSource.isAutoCommit());
+    @DisplayName("Get a Connection with a Specified ROLE")
+    @Test
+    void t15() throws SQLException {
+        final PostriseServer server = getServerInstance(DeltaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof DeltaServer);
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection("postrise", null);
+        });
+        assertEquals(t.getMessage(), "Unexpected null String for roleName");
+
+        try (final Connection connection = server.getConnection("postrise", "delta_application");
+                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals("delta_login", rs.getString(1));
+            assertEquals("delta_application", rs.getString(2));
+        }
     }
 }
