@@ -188,7 +188,7 @@ class TestCases extends TestEnvironment {
         assertTrue(dataSource.isAutoCommit());
     }
 
-    @DisplayName("Get a Connection with a Specified ROLE")
+    @DisplayName("Check for NULL when Setting the Role")
     @Test
     void t15() throws SQLException {
         final PostriseServer server = getServerInstance(DeltaServer.class);
@@ -199,8 +199,33 @@ class TestCases extends TestEnvironment {
             server.getConnection("postrise", null);
         });
         assertEquals(t.getMessage(), "Unexpected null String for roleName");
+    }
+
+    @DisplayName("Get a Connection from a Serer with a Specified ROLE")
+    @Test
+    void t16() throws SQLException {
+        final PostriseServer server = getServerInstance(DeltaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof DeltaServer);
 
         try (final Connection connection = server.getConnection("postrise", "delta_application");
+                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals("delta_login", rs.getString(1));
+            assertEquals("delta_application", rs.getString(2));
+        }
+    }
+
+    @DisplayName("Get a Connection from a DataSourceContext with a Specified ROLE")
+    @Test
+    void t17() throws SQLException {
+        final PostriseServer server = getServerInstance(DeltaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof DeltaServer);
+
+        final DataSourceContext dataSource = server.getDataSource("postrise");
+        try (final Connection connection = dataSource.getConnection("delta_application");
                 PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
                 ResultSet rs = stmt.executeQuery()) {
             assertTrue(rs.next());
