@@ -27,7 +27,7 @@ import org.adonix.postrise.security.RoleSecurityListener;
  * event.
  */
 interface ConnectionProvider
-        extends AutoCloseable, ConnectionRoleActions, DataSourceContext, DataSourceSettings, RoleSecurityListener {
+        extends AutoCloseable, DataSourceContext, DataSourceSettings, RoleSecurityListener {
 
     /**
      * Close this {@link ConnectionProvider} after no more {@link Connection}

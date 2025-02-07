@@ -84,18 +84,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public final DataSourceContext getDataSource(final String databaseName) {
+        Guard.check("databaseName", databaseName);
         return getConnectionProvider(databaseName);
-    }
-
-    private final ConnectionProvider getConnectionProvider(final String databaseName) {
-        return databasePools.computeIfAbsent(getKey(databaseName), _ -> create(databaseName));
     }
 
     @Override
     public final Connection getConnection(final String databaseName) throws SQLException {
+        return getDataSource(databaseName).getConnection();
+    }
 
-        Guard.check("databaseName", databaseName);
-        return getConnectionProvider(databaseName).getConnection();
+    private final ConnectionProvider getConnectionProvider(final String databaseName) {
+        return databasePools.computeIfAbsent(getKey(databaseName), _ -> create(databaseName));
     }
 
     private final ConnectionProvider create(final String databaseName) {
