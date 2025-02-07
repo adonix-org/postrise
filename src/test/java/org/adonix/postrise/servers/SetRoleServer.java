@@ -11,7 +11,7 @@ public class SetRoleServer extends PostgresDocker {
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         settings.setUsername("beta_login");
-        settings.setLoginPassword("helloworld");
+        settings.setPassword("helloworld");
     }
 
     public Connection getConnection(final String databaseName, final String roleName) throws SQLException {

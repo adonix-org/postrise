@@ -27,7 +27,7 @@ import javax.sql.DataSource;
  * implementing the {@link DataSourceListener} interface.
  * <p>
  * Most implementations will call {@link #setUsername(String)} and
- * {@link #setLoginPassword(String)} in the
+ * {@link #setPassword(String)} in the
  * {@link DataSourceListener#beforeCreate(DataSourceSettings)
  * beforeCreate(DataSourceSettings)} method.
  */
@@ -53,7 +53,7 @@ interface ConnectionSettingsWriteable extends ConnectionSettingsReadable {
 
     void setUsername(String role);
 
-    void setLoginPassword(String password);
+    void setPassword(String password);
 
     void setAutoCommit(boolean isAutoCommit);
 
