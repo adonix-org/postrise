@@ -41,7 +41,7 @@ class DisableRoleSecurity implements RoleSecurityListener {
     }
 
     @Override
-    public void onLogin(final DataSourceContext settings, final Connection connection) throws SQLException {
+    public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {
         // Security is disabled for this event.
     }
 }
