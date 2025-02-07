@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public abstract class PostgresRoleDAO {
 
@@ -15,8 +16,10 @@ public abstract class PostgresRoleDAO {
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
+    private static final String SQL_RESET_ROLE = "RESET ROLE";
+
     /**
-     * Be aware: if roleName in NULL, the result is the same as executing
+     * Be aware: if roleName is NULL, the result is the same as executing
      * <code>RESET ROLE</code>.
      * 
      * @param connection
@@ -27,6 +30,12 @@ public abstract class PostgresRoleDAO {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
             stmt.setString(1, roleName);
             stmt.execute();
+        }
+    }
+
+    public static final void resetRole(final Connection connection) throws SQLException {
+        try (final Statement stmt = connection.createStatement()) {
+            stmt.execute(SQL_RESET_ROLE);
         }
     }
 

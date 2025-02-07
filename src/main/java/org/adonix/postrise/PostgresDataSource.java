@@ -45,7 +45,7 @@ public class PostgresDataSource extends PostriseDataSource {
     @Override
     public Connection getConnection(String roleName) throws SQLException {
         Guard.check("roleName", roleName);
-        final Connection connection = this.getConnection();
+        final Connection connection = getConnection();
         try {
             getRoleSecurity().onSetRole(this, connection, roleName);
             PostgresRoleDAO.setRole(connection, roleName);
@@ -54,5 +54,11 @@ public class PostgresDataSource extends PostriseDataSource {
             connection.close();
             throw e;
         }
+    }
+
+    @Override
+    protected Connection reestRole(final Connection connection) throws SQLException {
+        PostgresRoleDAO.resetRole(connection);
+        return connection;
     }
 }
