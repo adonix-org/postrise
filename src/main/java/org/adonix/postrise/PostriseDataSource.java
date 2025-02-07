@@ -24,14 +24,30 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
 
+import org.adonix.postrise.security.RoleSecurityListener;
+
 abstract class PostriseDataSource implements ConnectionProvider {
 
     private final HikariDataSource delegate;
     private final String databaseName;
+    private RoleSecurityListener roleSecurity;
+
+    protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
+        this.roleSecurity = getDefaultRoleSecurity();
+    }
+
+    @Override
+    public RoleSecurityListener getRoleSecurity() {
+        return roleSecurity;
+    }
+
+    @Override
+    public void setRoleSecurity(final RoleSecurityListener security) {
+        this.roleSecurity = security;
     }
 
     @Override

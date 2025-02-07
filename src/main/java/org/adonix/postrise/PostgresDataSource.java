@@ -20,7 +20,7 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAUL
 
 import org.adonix.postrise.security.RoleSecurityListener;
 
-public class PostgresDataSource extends PostriseSecureDataSource {
+public class PostgresDataSource extends PostriseDataSource {
 
     protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
@@ -35,7 +35,7 @@ public class PostgresDataSource extends PostriseSecureDataSource {
     }
 
     @Override
-    public RoleSecurityListener getDefaultRoleSecurity() {
+    protected RoleSecurityListener getDefaultRoleSecurity() {
         return POSTGRES_DEFAULT_ROLE_SECURITY;
     }
 }
