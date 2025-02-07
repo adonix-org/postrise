@@ -3,6 +3,7 @@ package org.adonix.postrise.servers;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.PostgresDataSource;
 import org.adonix.postrise.security.PostgresRoleDAO;
 
 public class SetRoleServer extends PostgresDocker {
@@ -18,5 +19,10 @@ public class SetRoleServer extends PostgresDocker {
         // TODO; Check role...
         PostgresRoleDAO.setRole(connection, roleName);
         return connection;
+    }
+
+    @Override
+    protected PostgresDataSource createConnectionProvider(String databaseName) {
+        return new SetRoleDataSource(databaseName);
     }
 }

@@ -41,12 +41,12 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public RoleSecurityListener getRoleSecurity() {
+    public final RoleSecurityListener getRoleSecurity() {
         return roleSecurity;
     }
 
     @Override
-    public void setRoleSecurity(final RoleSecurityListener security) {
+    public final void setRoleSecurity(final RoleSecurityListener security) {
         this.roleSecurity = security;
     }
 
