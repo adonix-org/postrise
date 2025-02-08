@@ -91,23 +91,6 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("Postrise Database Security")
-    @Test
-    void t06() {
-        final Server server = getServerInstance(GammaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof GammaServer);
-
-        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("postrise");
-        });
-
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: postrise is a SUPER user", cause.getMessage());
-    }
-
     @DisplayName("Postgres TCP Keep Alive SUPERUSER")
     @Test
     void t08() {
@@ -221,7 +204,7 @@ class TestCases extends TestEnvironment {
     @DisplayName("Get a Connection from a DataSourceContext with a Specified ROLE")
     @Test
     void t17() throws SQLException {
-        final PostriseServer server = getServerInstance(DeltaServer.class);
+        final Server server = getServerInstance(DeltaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof DeltaServer);
 
@@ -238,7 +221,7 @@ class TestCases extends TestEnvironment {
     @DisplayName("LOGIN with NOLOGIN role")
     @Test
     void t18() throws SQLException {
-        final PostriseServer server = getServerInstance(BetaServer.class);
+        final Server server = getServerInstance(BetaServer.class);
         assertNotNull(server);
         assertTrue(server instanceof BetaServer);
 
@@ -250,5 +233,28 @@ class TestCases extends TestEnvironment {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: role \"beta_application\" is not permitted to log in", cause.getMessage());
+    }
+
+    @DisplayName("Max Pool Size = 1 and Check Connection Role")
+    @Test
+    void t19() throws SQLException {
+        final Server server = getServerInstance(GammaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof GammaServer);
+
+        final DataSourceContext context = server.getDataSource("postrise");
+        assertEquals(context.getMaxPoolSize(), 1);
+
+        try (final Connection connection = context.getConnection("beta_application")) {
+            assertNotNull(connection);
+        }
+
+        try (final Connection connection = context.getConnection();
+                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals("postrise", rs.getString(1));
+            assertEquals("postrise", rs.getString(2));
+        }
     }
 }
