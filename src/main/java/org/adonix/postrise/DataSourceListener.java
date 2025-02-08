@@ -31,8 +31,7 @@ public interface DataSourceListener extends EventListener {
      * @param settings - the {@link DataSourceSettings} applied when creating a new
      *                 {@link ConnectionProvider} instance.
      */
-    default void beforeCreate(DataSourceSettings settings) {
-    }
+    void beforeCreate(DataSourceSettings settings);
 
     default void afterCreate(DataSourceContext context) {
     }
