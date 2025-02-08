@@ -56,7 +56,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * @return a new {@link ConnectionProvider}.
      * @see PostriseDataSource
      */
-    protected abstract ConnectionProvider createConnectionProvider(final String database);
+    protected abstract ConnectionProvider createConnectionProvider(final String databaseName);
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
@@ -184,11 +184,16 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * EVENTS
      */
 
+    @FunctionalInterface
+    private interface ConsumerThrows<T> {
+        void accept(T t) throws Exception;
+    }
+
     private void doEvent(final DataSourceContext context, final ConsumerThrows<DataSourceListener> event) {
-        for (DataSourceListener listener : dataSourceListeners) {
+        for (final DataSourceListener listener : dataSourceListeners) {
             runSafe(() -> event.accept(listener));
         }
-        DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
+        final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
             runSafe(() -> event.accept(listener));
         }
