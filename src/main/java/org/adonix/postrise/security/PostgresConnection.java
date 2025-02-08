@@ -8,10 +8,9 @@ public class PostgresConnection {
     /**
      * @param connection
      * @throws SQLException
+     * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
      */
     public static final void reset(final Connection connection) throws SQLException {
-        // TODO: Check if there are other attributes of the connection from the pool to
-        // be reset.
         PostgresRoleDAO.resetRole(connection);
     }
 }

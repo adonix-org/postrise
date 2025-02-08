@@ -249,6 +249,7 @@ class TestCases extends TestEnvironment {
         // Set the single connection in the pool to the beta_application role.
         try (final Connection connection = context.getConnection("beta_application")) {
             assertNotNull(connection);
+            connection.setAutoCommit(false);
         }
 
         // Get the single connection and verify the current_user has reverted to
@@ -259,6 +260,7 @@ class TestCases extends TestEnvironment {
             assertTrue(rs.next());
             assertEquals("postrise", rs.getString(1));
             assertEquals("postrise", rs.getString(2));
+            assertEquals(connection.getAutoCommit(), true);
         }
     }
 }
