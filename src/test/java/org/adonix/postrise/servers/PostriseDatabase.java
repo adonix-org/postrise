@@ -11,6 +11,6 @@ class PostriseDatabase implements DatabaseListener {
     }
 
     @Override
-    public void beforeCreate(DataSourceSettings settings) {
+    public void beforeCreate(final DataSourceSettings settings) {
     }
 }
