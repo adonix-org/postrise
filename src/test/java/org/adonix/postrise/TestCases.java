@@ -235,7 +235,7 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("LOGIN with NOT LOGIN role")
+    @DisplayName("LOGIN with NOLOGIN role")
     @Test
     void t18() throws SQLException {
         final PostriseServer server = getServerInstance(BetaServer.class);
