@@ -242,13 +242,17 @@ class TestCases extends TestEnvironment {
         assertNotNull(server);
         assertTrue(server instanceof GammaServer);
 
+        // Set the max pool size to 1. Only one connection in the pool.
         final DataSourceContext context = server.getDataSource("postrise");
         assertEquals(context.getMaxPoolSize(), 1);
 
+        // Set the single connection in the pool to the beta_application role.
         try (final Connection connection = context.getConnection("beta_application")) {
             assertNotNull(connection);
         }
 
+        // Get the single connection and verify the current_user has reverted to
+        // the postrise role.
         try (final Connection connection = context.getConnection();
                 PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
                 ResultSet rs = stmt.executeQuery()) {
