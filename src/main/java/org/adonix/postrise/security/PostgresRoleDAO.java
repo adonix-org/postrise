@@ -11,12 +11,11 @@ public abstract class PostgresRoleDAO {
     private PostgresRoleDAO() {
     }
 
+    private static final String SQL_RESET_ROLE = "RESET ROLE";
     /**
      * PostgreSQL specific query to SET the role for the {@link Connection}
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
-
-    private static final String SQL_RESET_ROLE = "RESET ROLE";
 
     /**
      * Be aware: if roleName is NULL, the result is the same as executing

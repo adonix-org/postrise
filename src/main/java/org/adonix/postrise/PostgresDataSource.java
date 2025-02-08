@@ -20,6 +20,7 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAUL
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.adonix.postrise.security.PostgresConnection;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityListener;
 
@@ -57,7 +58,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    protected void reestRole(final Connection connection) throws SQLException {
-        PostgresRoleDAO.resetRole(connection);
+    protected void resetConnection(final Connection connection) throws SQLException {
+        PostgresConnection.reset(connection);
     }
 }

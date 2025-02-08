@@ -43,7 +43,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
      * @throws SQLException If an error occurs resetting the <code>ROLE</code>.
      * @see #getConnection()
      */
-    protected abstract void reestRole(final Connection connection) throws SQLException;
+    protected abstract void resetConnection(final Connection connection) throws SQLException;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
@@ -69,7 +69,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     @Override
     public Connection getConnection() throws SQLException {
         final Connection connection = delegate.getConnection();
-        reestRole(connection);
+        resetConnection(connection);
         return connection;
     }
 
