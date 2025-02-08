@@ -35,14 +35,15 @@ abstract class PostriseDataSource implements ConnectionProvider {
     protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
     /**
-     * Connections returned to the pool maintain existing ROLE which could be a
-     * security issue. Always reset the ROLE when getting a {@link Connection}.
+     * Connections returned to the pool maintain existing <code>ROLE</code> which
+     * could cause unexpected permission errors when the connection is re-used.
+     * Always reset the <code>ROLE</code> when getting a {@link Connection}.
      * 
      * @param connection
-     * @return
-     * @throws SQLException
+     * @throws SQLException If an error occurs resetting the <code>ROLE</code>.
+     * @see #getConnection()
      */
-    protected abstract Connection reestRole(final Connection connection) throws SQLException;
+    protected abstract void reestRole(final Connection connection) throws SQLException;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
@@ -67,7 +68,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return reestRole(delegate.getConnection());
+        final Connection connection = delegate.getConnection();
+        reestRole(connection);
+        return connection;
     }
 
     @Override

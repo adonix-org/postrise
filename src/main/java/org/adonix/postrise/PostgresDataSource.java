@@ -57,8 +57,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    protected Connection reestRole(final Connection connection) throws SQLException {
+    protected void reestRole(final Connection connection) throws SQLException {
         PostgresRoleDAO.resetRole(connection);
-        return connection;
     }
 }
