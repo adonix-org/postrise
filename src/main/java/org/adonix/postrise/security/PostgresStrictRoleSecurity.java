@@ -5,7 +5,10 @@ import java.sql.SQLException;
 
 import org.adonix.postrise.DataSourceContext;
 
-public class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
+final class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
+
+    PostgresStrictRoleSecurity() {
+    }
 
     @Override
     public void onSetRole(DataSourceContext context, Connection connection, String roleName) throws SQLException {

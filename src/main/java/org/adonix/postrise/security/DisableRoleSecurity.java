@@ -30,7 +30,7 @@ import org.adonix.postrise.DataSourceContext;
  * indexes, tables, or roles.
  * </p>
  */
-class DisableRoleSecurity implements RoleSecurityListener {
+final class DisableRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new {@code DisableRoleSecurity} instance.

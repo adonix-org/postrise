@@ -3,7 +3,10 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class PostgresConnection {
+public abstract class PostgresConnection {
+
+    private PostgresConnection() {
+    }
 
     /**
      * @param connection
