@@ -13,6 +13,7 @@ import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.AlphaServer;
+import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.junit.jupiter.api.DisplayName;
@@ -232,5 +233,22 @@ class TestCases extends TestEnvironment {
             assertEquals("delta_login", rs.getString(1));
             assertEquals("delta_application", rs.getString(2));
         }
+    }
+
+    @DisplayName("LOGIN with NOT LOGIN role")
+    @Test
+    void t18() throws SQLException {
+        final PostriseServer server = getServerInstance(BetaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof BetaServer);
+
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getDataSource("database_beta");
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof PSQLException);
+        assertEquals("FATAL: role \"beta_application\" is not permitted to log in", cause.getMessage());
     }
 }

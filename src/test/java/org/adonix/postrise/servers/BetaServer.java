@@ -6,7 +6,7 @@ public class BetaServer extends PostgresDocker {
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
-        settings.setUsername("beta_login");
+        settings.setUsername("beta_application");
         settings.setPassword("helloworld");
     }
 }
