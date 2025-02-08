@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -185,13 +184,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * EVENTS
      */
 
-    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
+    private void doEvent(final DataSourceContext context, final ConsumerThrows<DataSourceListener> event) {
         for (DataSourceListener listener : dataSourceListeners) {
-            event.accept(listener);
+            runSafe(() -> event.accept(listener));
         }
         DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            event.accept(listener);
+            runSafe(() -> event.accept(listener));
         }
     }
 
@@ -262,9 +261,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
             runSafe(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
-                runSafe(() -> onBeforeClose(provider));
+                onBeforeClose(provider);
                 runSafe(provider::close);
-                runSafe(() -> onAfterClose(provider));
+                onAfterClose(provider);
             }
             runSafe(databaseListeners::clear);
             runSafe(databasePools::clear);
