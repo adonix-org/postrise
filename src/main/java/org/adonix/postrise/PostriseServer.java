@@ -135,6 +135,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     /**
      * HELPERS
      */
+    @FunctionalInterface
+    protected interface RunnableThrows {
+        void run() throws Exception;
+    }
 
     /**
      * Runs the given action and any exception is caught to guarantee execution

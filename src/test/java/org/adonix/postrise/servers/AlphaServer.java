@@ -32,6 +32,8 @@ public class AlphaServer extends PostgresDocker {
     @Override
     public void afterClose(final DataSourceContext context) {
 
+        // This should generate an exception in the log because the data source is now
+        // closed.
         runSafe(() -> getConnection(context.getDatabaseName()));
         super.afterClose(context);
     }
