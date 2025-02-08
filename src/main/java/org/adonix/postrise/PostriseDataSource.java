@@ -206,7 +206,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
         return getPoolStatus(HikariPoolMXBean::getThreadsAwaitingConnection);
     }
 
-    private final Optional<Integer> getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
+    private Optional<Integer> getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
         return Optional.ofNullable(delegate.getHikariPoolMXBean()).map(method);
     }
 

@@ -97,11 +97,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return getDataSource(databaseName).getConnection(roleName);
     }
 
-    private final ConnectionProvider getConnectionProvider(final String databaseName) {
+    private ConnectionProvider getConnectionProvider(final String databaseName) {
         return databasePools.computeIfAbsent(getKey(databaseName), _ -> create(databaseName));
     }
 
-    private final ConnectionProvider create(final String databaseName) {
+    private ConnectionProvider create(final String databaseName) {
         return isOpenThen(() -> doCreate(databaseName));
     }
 
@@ -111,7 +111,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      *                     {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
      */
-    private final ConnectionProvider doCreate(final String databaseName) {
+    private ConnectionProvider doCreate(final String databaseName) {
 
         final ConnectionProvider provider = createConnectionProvider(databaseName);
         provider.setJdbcUrl(getHostName(), getPort());
@@ -203,19 +203,19 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private final void onBeforeCreate(final ConnectionProvider provider) {
+    private void onBeforeCreate(final ConnectionProvider provider) {
         doEvent(provider, listener -> listener.beforeCreate(provider));
     }
 
-    private final void onAfterCreate(final ConnectionProvider provider) {
+    private void onAfterCreate(final ConnectionProvider provider) {
         doEvent(provider, listener -> listener.afterCreate(provider));
     }
 
-    private final void onBeforeClose(final ConnectionProvider provider) {
+    private void onBeforeClose(final ConnectionProvider provider) {
         doEvent(provider, listener -> listener.beforeClose(provider));
     }
 
-    private final void onAfterClose(final ConnectionProvider provider) {
+    private void onAfterClose(final ConnectionProvider provider) {
         doEvent(provider, listener -> listener.afterClose(provider));
     }
 
