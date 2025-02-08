@@ -249,11 +249,13 @@ class TestCases extends TestEnvironment {
         // Set the single connection in the pool to the beta_application role.
         try (final Connection connection = context.getConnection("beta_application")) {
             assertNotNull(connection);
+
+            // Set the single connection auto commit to false to verify reset.
             connection.setAutoCommit(false);
         }
 
         // Get the single connection and verify the current_user has reverted to
-        // the postrise role.
+        // the postrise role and auto commit reverted to true.
         try (final Connection connection = context.getConnection();
                 PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
                 ResultSet rs = stmt.executeQuery()) {
