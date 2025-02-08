@@ -43,7 +43,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public Connection getConnection(String roleName) throws SQLException {
+    public Connection getConnection(final String roleName) throws SQLException {
         Guard.check("roleName", roleName);
         final Connection connection = getConnection();
         try {
