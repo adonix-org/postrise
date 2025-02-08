@@ -10,8 +10,8 @@ public class PostgresConnection {
      * @throws SQLException
      */
     public static final void reset(final Connection connection) throws SQLException {
-        // TODO: Check if there are other attributes of the connection from the pool to be
-        // reset.
+        // TODO: Check if there are other attributes of the connection from the pool to
+        // be reset.
         PostgresRoleDAO.resetRole(connection);
     }
 }

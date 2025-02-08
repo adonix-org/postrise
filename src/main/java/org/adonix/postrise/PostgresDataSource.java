@@ -58,7 +58,8 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    protected void resetConnection(final Connection connection) throws SQLException {
+    protected Connection resetConnection(final Connection connection) throws SQLException {
         PostgresConnection.reset(connection);
+        return connection;
     }
 }
