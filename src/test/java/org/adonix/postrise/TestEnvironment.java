@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.adonix.postrise.servers.AlphaServer;
 import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
+import org.adonix.postrise.servers.EpsilonServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.adonix.postrise.servers.PostgresDocker;
 import org.junit.jupiter.api.AfterAll;
@@ -21,7 +22,8 @@ abstract class TestEnvironment {
             getEntry(new AlphaServer()),
             getEntry(new BetaServer()),
             getEntry(new GammaServer()),
-            getEntry(new DeltaServer()));
+            getEntry(new DeltaServer()),
+            getEntry(new EpsilonServer()));
 
     private static final Entry<String, PostriseServer> getEntry(final PostriseServer server) {
         return entry(getKey(server.getClass()), server);

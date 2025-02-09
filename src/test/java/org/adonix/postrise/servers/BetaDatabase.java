@@ -1,20 +1,19 @@
 package org.adonix.postrise.servers;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
-
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.DatabaseListener;
 
-class PostriseDatabase implements DatabaseListener {
+public class BetaDatabase implements DatabaseListener {
 
     @Override
     public String getDatabaseName() {
-        return "postrise";
+        return "database_beta";
     }
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
-        settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
-        settings.setMaxPoolSize(1);
+        settings.setMinIdle(20);
+        settings.setUsername("beta_login");
+        settings.setPassword("helloworld");
     }
 }

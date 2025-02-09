@@ -15,6 +15,7 @@ import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.AlphaServer;
 import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
+import org.adonix.postrise.servers.EpsilonServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,9 +42,9 @@ class TestCases extends TestEnvironment {
     @DisplayName("SUPERUSER Security Exception")
     @Test
     void t03() {
-        final Server server = getServerInstance(GammaServer.class);
+        final Server server = getServerInstance(EpsilonServer.class);
         assertNotNull(server);
-        assertTrue(server instanceof GammaServer);
+        assertTrue(server instanceof EpsilonServer);
 
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection("database_beta");
@@ -264,5 +265,19 @@ class TestCases extends TestEnvironment {
             assertEquals("postrise", rs.getString(2));
             assertEquals(connection.getAutoCommit(), true);
         }
+    }
+
+    @DisplayName("Connection Limit = 1 for beta_login User")
+    @Test
+    void t20() throws SQLException, InterruptedException {
+        final Server server = getServerInstance(GammaServer.class);
+        assertNotNull(server);
+        assertTrue(server instanceof GammaServer);
+
+        final DataSourceContext context = server.getDataSource("database_beta");
+        assertEquals(context.getMaxPoolSize(), 10);
+        assertEquals(context.getMinIdle(), 10);
+
+        assertEquals(context.getTotalConnections(), 1);
     }
 }
