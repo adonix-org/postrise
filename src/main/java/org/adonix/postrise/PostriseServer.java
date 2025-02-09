@@ -132,9 +132,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    /**
-     * HELPERS
-     */
+    // --------------------------------------------------------------------------
+    // HELPERS
+    // --------------------------------------------------------------------------
+
     @FunctionalInterface
     protected interface ActionThrows {
         void run() throws Exception;
@@ -185,9 +186,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return getKey(listener.getDatabaseName());
     }
 
-    /**
-     * EVENTS
-     */
+    // --------------------------------------------------------------------------
+    // EVENTS
+    // --------------------------------------------------------------------------
 
     /**
      * Sends an event to a {@link DataSourceListener}.
@@ -259,9 +260,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.error("{}: {}", this, e);
     }
 
-    /**
-     * CLOSE
-     */
+    // --------------------------------------------------------------------------
+    // CLOSE
+    // --------------------------------------------------------------------------
+
     @Override
     public final void close() {
         writeState.lock();
