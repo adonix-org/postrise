@@ -3,10 +3,8 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.adonix.postrise.security.RoleSecuritySettings;
-
 public interface DataSourceContext
-        extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsReadable, RoleSecuritySettings {
+        extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsReadable {
 
     /**
      * @return A {@link Connection} to the data source.
