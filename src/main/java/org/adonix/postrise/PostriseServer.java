@@ -82,12 +82,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public final DataSourceContext getDataSource(final String databaseName) {
-        Guard.check("databaseName", databaseName);
-        return getConnectionProvider(databaseName);
-    }
-
-    @Override
     public final Connection getConnection(final String databaseName) throws SQLException {
         return getDataSource(databaseName).getConnection();
     }
@@ -95,6 +89,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     @Override
     public final Connection getConnection(final String databaseName, final String roleName) throws SQLException {
         return getDataSource(databaseName).getConnection(roleName);
+    }
+
+    @Override
+    public final DataSourceContext getDataSource(final String databaseName) {
+        Guard.check("databaseName", databaseName);
+        return getConnectionProvider(databaseName);
     }
 
     private ConnectionProvider getConnectionProvider(final String databaseName) {
@@ -115,6 +115,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         final ConnectionProvider provider = createDataSource(databaseName);
         provider.setJdbcUrl(getHostName(), getPort());
+
+        // All listeners will configure the data source in this event.
         onBeforeCreate(provider);
 
         // Create the first connection to validate settings, initialize the connection
