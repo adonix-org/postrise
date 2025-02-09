@@ -24,7 +24,7 @@ import org.adonix.postrise.security.PostgresConnection;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityListener;
 
-public final class PostgresDataSource extends PostriseDataSource {
+final class PostgresDataSource extends PostriseDataSource {
 
     private static final String JDBC_URL_PREFIX = "jdbc:postgresql://";
 
