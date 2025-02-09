@@ -18,8 +18,8 @@ public abstract class PostgresRoleDAO {
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     /**
-     * Be aware: if roleName is NULL, the result is the same as executing
-     * <code>RESET ROLE</code>.
+     * Be aware: if {@code roleName} is {@code NULL}, the result is the same as executing
+     * {@code RESET ROLE}.
      * 
      * @param connection
      * @param roleName

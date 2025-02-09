@@ -23,7 +23,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The {@code DefaultSecurity} class provides default security checks
+ * The {@code PostgresDefaultRoleSecurity} class provides default security
+ * checks
  * for user logins and connections in a database environment.
  * <p>
  * It implements the {@link RoleSecurityListener} interface, performing
@@ -36,7 +37,9 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     private static final Logger LOGGER = LogManager.getLogger(PostgresDefaultRoleSecurity.class);
 
     /**
-     * Constructs a new {@code DefaultSecurity} instance.
+     * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
+     * instance. A static instances will be accessed via the
+     * {@link RoleSecurityProviders} class.
      */
     PostgresDefaultRoleSecurity() {
     }
@@ -48,7 +51,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
      */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {
-        
+
         final PostgresRole role = PostgresRoleDAO.getRole(connection, context.getUsername());
         if (role.isSuperUser()) {
             throw new RoleSecurityException(role.getRoleName() + " is a SUPER user");

@@ -34,9 +34,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
     protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
     /**
-     * Connections returned to the pool maintain existing <code>ROLE</code> which
+     * Connections returned to the pool maintain existing {@code ROLE} which
      * could cause unexpected permission errors when the connection is re-used.
-     * Always reset the <code>ROLE</code> when getting a {@link Connection} from the
+     * Always reset the {@code ROLE} when getting a {@link Connection} from the
      * pool.
      * 
      * @param connection
