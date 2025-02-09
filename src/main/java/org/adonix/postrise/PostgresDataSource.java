@@ -24,9 +24,9 @@ import org.adonix.postrise.security.PostgresConnection;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityListener;
 
-public class PostgresDataSource extends PostriseDataSource {
+public final class PostgresDataSource extends PostriseDataSource {
 
-    protected static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
+    private static final String POSTGRES_URL_PREFIX = "jdbc:postgresql://";
 
     protected PostgresDataSource(final String databaseName) {
         super(databaseName);
@@ -34,7 +34,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public final void setJdbcUrl(final String host, final Integer port) {
+    public void setJdbcUrl(final String host, final Integer port) {
         setJdbcUrl(POSTGRES_URL_PREFIX + host + ":" + port + "/" + getDatabaseName());
     }
 
@@ -44,7 +44,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public final Connection getConnection(final String roleName) throws SQLException {
+    public Connection getConnection(final String roleName) throws SQLException {
         Guard.check("roleName", roleName);
         final Connection connection = getConnection();
         try {

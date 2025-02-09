@@ -67,7 +67,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public final Connection getConnection() throws SQLException {
         return resetConnection(delegate.getConnection());
     }
 
@@ -211,7 +211,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public void close() {
+    public final void close() {
         delegate.close();
     }
 
