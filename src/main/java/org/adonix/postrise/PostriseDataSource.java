@@ -20,7 +20,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
 
@@ -187,27 +186,30 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public final Optional<Integer> getActiveConnections() {
+    public final int getActiveConnections() {
         return getPoolStatus(HikariPoolMXBean::getActiveConnections);
     }
 
     @Override
-    public final Optional<Integer> getIdleConnections() {
+    public final int getIdleConnections() {
         return getPoolStatus(HikariPoolMXBean::getIdleConnections);
     }
 
     @Override
-    public final Optional<Integer> getTotalConnections() {
+    public final int getTotalConnections() {
         return getPoolStatus(HikariPoolMXBean::getTotalConnections);
     }
 
     @Override
-    public final Optional<Integer> getThreadsAwaitingConnection() {
+    public final int getThreadsAwaitingConnection() {
         return getPoolStatus(HikariPoolMXBean::getThreadsAwaitingConnection);
     }
 
-    private Optional<Integer> getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
-        return Optional.ofNullable(delegate.getHikariPoolMXBean()).map(method);
+    private int getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
+        if (delegate.getHikariPoolMXBean() != null) {
+            return method.apply(delegate.getHikariPoolMXBean());
+        }
+        throw new IllegalStateException("Pool status request is invalid");
     }
 
     @Override

@@ -24,13 +24,21 @@ public class AlphaServer extends PostgresDocker {
                 "{}.afterCreate() Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                 context.getDatabaseName(),
                 context.getMaxPoolSize(),
-                context.getTotalConnections().get(),
-                context.getIdleConnections().get(),
-                context.getActiveConnections().get());
+                context.getTotalConnections(),
+                context.getIdleConnections(),
+                context.getActiveConnections());
     }
 
     @Override
     public void afterClose(final DataSourceContext context) {
+
+        LOGGER.debug(
+                "{}.afterClose() Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
+                context.getDatabaseName(),
+                context.getMaxPoolSize(),
+                context.getTotalConnections(),
+                context.getIdleConnections(),
+                context.getActiveConnections());
 
         // This should generate an exception in the log because the data source is now
         // closed.
@@ -48,9 +56,9 @@ public class AlphaServer extends PostgresDocker {
                     "Database: {} Max Pool Size: {} Total Connections: {} Idle Connections: {} ActiveConnections: {}",
                     context.getDatabaseName(),
                     context.getMaxPoolSize(),
-                    context.getTotalConnections().get(),
-                    context.getIdleConnections().get(),
-                    context.getActiveConnections().get());
+                    context.getTotalConnections(),
+                    context.getIdleConnections(),
+                    context.getActiveConnections());
         }
         runSafe(() -> getDataSource("postrise_again"));
     }
