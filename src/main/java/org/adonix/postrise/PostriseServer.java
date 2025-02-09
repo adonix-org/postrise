@@ -202,7 +202,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     /**
-     * Sends an event to a {@link DataSourceListener}.
+     * Send an event to a {@link DataSourceListener}.
      */
     @FunctionalInterface
     private interface DataSourceEvent {
