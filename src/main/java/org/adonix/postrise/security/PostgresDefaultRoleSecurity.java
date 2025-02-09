@@ -19,6 +19,8 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.DataSourceContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The {@code DefaultSecurity} class provides default security checks
@@ -30,6 +32,8 @@ import org.adonix.postrise.DataSourceContext;
  * </p>
  */
 class PostgresDefaultRoleSecurity implements RoleSecurityListener {
+
+    private static final Logger LOGGER = LogManager.getLogger(PostgresDefaultRoleSecurity.class);
 
     /**
      * Constructs a new {@code DefaultSecurity} instance.
@@ -47,6 +51,12 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, context.getUsername());
         if (role.isSuperUser()) {
             throw new RoleSecurityException(role.getRoleName() + " is a SUPER user");
+        }
+        int connectionLimit = role.getConnectionLimit();
+        int minIdle = context.getMinIdle();
+        if (connectionLimit != -1 && minIdle > connectionLimit) {
+            LOGGER.warn("{}: Min IDLE connections ({}) > ROLE connection limit ({})", context, minIdle,
+                    connectionLimit);
         }
     }
 }
