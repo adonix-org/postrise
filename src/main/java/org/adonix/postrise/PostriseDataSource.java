@@ -206,10 +206,14 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     private int getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
-        if (delegate.getHikariPoolMXBean() != null) {
-            return method.apply(delegate.getHikariPoolMXBean());
+        if (delegate.getHikariPoolMXBean() == null) {
+            /**
+             * The HikariPoolMXBean appears to give valid data even after the data source is
+             * closed. Throw an exception in case this changes in the future.
+             */
+            throw new IllegalStateException("Pool status request is invalid");
         }
-        throw new IllegalStateException("Status request is invalid");
+        return method.apply(delegate.getHikariPoolMXBean());
     }
 
     @Override
