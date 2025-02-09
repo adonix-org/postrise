@@ -51,22 +51,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
-    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
-
-    private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
-
-    public final void addListener(final DataSourceListener listener) {
-        Guard.check("listener", listener);
-        isOpenThen(() -> dataSourceListeners.add(listener));
-    }
-
-    public final void addListener(final DatabaseListener listener) {
-        Guard.check("listener", listener);
-        if (isOpenThen(() -> databaseListeners.put(getKey(listener), listener)) != null) {
-            LOGGER.warn("{}: Overwriting existing configuration for database {}", this, listener.getDatabaseName());
-        }
-    }
-
     @Override
     public final Set<String> getDatabaseNames() {
         return databasePools.keySet();
@@ -122,6 +106,25 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             provider.close();
             onException(provider, e);
             throw new CreateDataSourceException(e);
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // LISTENERS
+    // --------------------------------------------------------------------------
+    private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
+
+    private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
+
+    public final void addListener(final DataSourceListener listener) {
+        Guard.check("listener", listener);
+        isOpenThen(() -> dataSourceListeners.add(listener));
+    }
+
+    public final void addListener(final DatabaseListener listener) {
+        Guard.check("listener", listener);
+        if (isOpenThen(() -> databaseListeners.put(getKey(listener), listener)) != null) {
+            LOGGER.warn("{}: Overwriting existing configuration for database {}", this, listener.getDatabaseName());
         }
     }
 
