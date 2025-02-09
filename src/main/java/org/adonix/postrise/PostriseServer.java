@@ -110,8 +110,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // LISTENERS
+    // LISTENERS - Manage listeners to receive data source events.
     // --------------------------------------------------------------------------
+
     private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
@@ -129,7 +130,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // SERVER STATE
+    // SERVER STATE - Manage the state of the server.
     // --------------------------------------------------------------------------
     /**
      * A {@link Server} should be in one of these states.
@@ -162,8 +163,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // HELPERS
+    // HELPERS - Utility functions.
     // --------------------------------------------------------------------------
+
     /**
      * This functional interface, similar to {@link Runnable}, allows an
      * {@link Exception} to be thrown.
@@ -201,7 +203,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // EVENTS
+    // EVENTS - Send data source events to listeners including this server.
     // --------------------------------------------------------------------------
 
     /**
@@ -275,7 +277,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // CLOSE
+    // CLOSE - Clean shutdown of the server and data sources.
     // --------------------------------------------------------------------------
 
     @Override
