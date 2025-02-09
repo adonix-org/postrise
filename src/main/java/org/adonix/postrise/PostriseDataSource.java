@@ -40,7 +40,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
      * pool.
      * 
      * @param connection
-     * @throws SQLException If an error occurs resetting the <code>ROLE</code>.
+     * @throws SQLException If an error occurs resetting the {@link Connection}.
      * @see #getConnection()
      * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
      */
