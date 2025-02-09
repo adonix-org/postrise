@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class Performance {
 
     // @AutoClose
-    final static Server server = PostriseFireServer.getInstance();
+    static final Server server = PostriseFireServer.getInstance();
 
     @Test
     public void run() throws Exception {

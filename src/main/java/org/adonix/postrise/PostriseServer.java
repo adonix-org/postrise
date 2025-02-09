@@ -56,7 +56,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * @return a new {@link ConnectionProvider}.
      * @see PostriseDataSource
      */
-    protected abstract ConnectionProvider createConnectionProvider(final String databaseName);
+    protected abstract ConnectionProvider createDataSource(final String databaseName);
 
     private final ConcurrentMap<String, ConnectionProvider> databasePools = new ConcurrentHashMap<>();
 
@@ -113,7 +113,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     private ConnectionProvider doCreate(final String databaseName) {
 
-        final ConnectionProvider provider = createConnectionProvider(databaseName);
+        final ConnectionProvider provider = createDataSource(databaseName);
         provider.setJdbcUrl(getHostName(), getPort());
         onBeforeCreate(provider);
 
