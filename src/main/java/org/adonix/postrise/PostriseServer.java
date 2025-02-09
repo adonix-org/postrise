@@ -136,7 +136,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * HELPERS
      */
     @FunctionalInterface
-    protected interface RunnableThrows {
+    protected interface ActionThrows {
         void run() throws Exception;
     }
 
@@ -144,9 +144,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * Runs the given action. Any exception is caught and sent to the
      * {@link #onException(Exception)} event.
      * 
-     * @param action - the code to be run safely with exceptions captured.
+     * @param action - the code to be run safely with exceptions caught and not
+     *               thrown.
      */
-    protected final void runSafe(final RunnableThrows action) {
+    protected final void runSafe(final ActionThrows action) {
         try {
             action.run();
         } catch (final Exception e) {
@@ -188,18 +189,21 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * EVENTS
      */
 
+    /**
+     * Sends an event to a {@link DataSourceListener}.
+     */
     @FunctionalInterface
-    private interface ConsumerThrows<T> {
-        void accept(T t) throws Exception;
+    private interface DataSourceEvent {
+        void sendTo(DataSourceListener listener) throws Exception;
     }
 
-    private void doEvent(final DataSourceContext context, final ConsumerThrows<DataSourceListener> event) {
+    private void doEvent(final DataSourceContext context, final DataSourceEvent event) {
         for (final DataSourceListener listener : dataSourceListeners) {
-            runSafe(() -> event.accept(listener));
+            runSafe(() -> event.sendTo(listener));
         }
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            runSafe(() -> event.accept(listener));
+            runSafe(() -> event.sendTo(listener));
         }
     }
 
