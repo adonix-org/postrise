@@ -39,15 +39,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         addListener(this);
     }
 
-    private enum ServerState {
-        OPEN, CLOSING, CLOSED
-    }
-
-    private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
-    private final Lock readState = stateLock.readLock();
-    private final Lock writeState = stateLock.writeLock();
-    private ServerState state = ServerState.OPEN;
-
     /**
      * Subclasses will create and return a new instance of a
      * {@link ConnectionProvider} implementation.
@@ -135,9 +126,45 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
+    // SERVER STATE
+    // --------------------------------------------------------------------------
+    /**
+     * A {@link Server} should be in one of these states.
+     */
+    private enum ServerState {
+        OPEN, CLOSING, CLOSED
+    }
+
+    private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
+    private final Lock readState = stateLock.readLock();
+    private final Lock writeState = stateLock.writeLock();
+    private ServerState state = ServerState.OPEN;
+
+    private <T> T isOpenThen(final Supplier<T> action) {
+        readState.lock();
+        try {
+            switch (state) {
+                case OPEN:
+                    return action.get();
+                case CLOSING:
+                    throw new IllegalStateException(this + " is closing");
+                case CLOSED:
+                    throw new IllegalStateException(this + " is closed");
+                default:
+                    throw new IllegalStateException(this + " state unknown");
+            }
+        } finally {
+            readState.unlock();
+        }
+    }
+
+    // --------------------------------------------------------------------------
     // HELPERS
     // --------------------------------------------------------------------------
-
+    /**
+     * This functional interface, similar to {@link Runnable}, allows an
+     * {@link Exception} to be thrown.
+     */
     @FunctionalInterface
     protected interface ActionThrows {
         void run() throws Exception;
@@ -159,24 +186,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             } catch (final Exception ex) {
                 LOGGER.error("{}: {}", this, ex);
             }
-        }
-    }
-
-    private <T> T isOpenThen(final Supplier<T> action) {
-        readState.lock();
-        try {
-            switch (state) {
-                case OPEN:
-                    return action.get();
-                case CLOSING:
-                    throw new IllegalStateException(this + " is closing");
-                case CLOSED:
-                    throw new IllegalStateException(this + " is closed");
-                default:
-                    throw new IllegalStateException(this + " state unknown");
-            }
-        } finally {
-            readState.unlock();
         }
     }
 
