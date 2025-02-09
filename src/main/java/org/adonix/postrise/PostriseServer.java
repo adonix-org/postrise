@@ -203,7 +203,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // EVENTS - Send data source events to listeners including this server.
+    // SEND EVENTS - Send data source events to listeners including this server.
     // --------------------------------------------------------------------------
 
     /**
@@ -240,6 +240,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         doEvent(provider, listener -> listener.afterClose(provider));
     }
 
+    // --------------------------------------------------------------------------
+    // RECEIVE EVENTS - Receive data source events which can be overridden.
+    // --------------------------------------------------------------------------
+    
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
