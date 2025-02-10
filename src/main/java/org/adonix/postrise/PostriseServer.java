@@ -274,7 +274,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     /**
-     * This event is only fired when the data source could NOT be created.
+     * This event is fired when the data source could NOT be created.
      * 
      * @param settings
      * @param e
