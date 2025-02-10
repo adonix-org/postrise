@@ -99,12 +99,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         try (final Connection connection = provider.getConnection()) {
 
             provider.getRoleSecurity().onLogin(provider, connection);
+            
             onAfterCreate(provider);
             return provider;
 
         } catch (final Exception e) {
-            provider.close();
-            onException(provider, e);
+            runSafe(provider::close);
+            runSafe(() -> onException(provider, e));
             throw new CreateDataSourceException(e);
         }
     }
@@ -273,7 +274,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     /**
-     * This event is only fired when  the data source could NOT be created.
+     * This event is only fired when the data source could NOT be created.
      * 
      * @param settings
      * @param e
