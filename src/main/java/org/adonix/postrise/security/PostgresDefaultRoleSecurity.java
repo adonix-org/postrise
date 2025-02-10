@@ -60,8 +60,8 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
         int connectionLimit = role.getConnectionLimit();
         int minIdle = context.getMinIdle();
         if (connectionLimit != -1 && minIdle > connectionLimit) {
-            LOGGER.warn("{}: Min IDLE connections ({}) > ROLE connection limit ({})", context, minIdle,
-                    connectionLimit);
+            LOGGER.warn("{}: ROLE connection limit ({}) < Minimum IDLE connections ({})",
+                    context, connectionLimit, minIdle);
         }
     }
 }

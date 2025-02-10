@@ -243,7 +243,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
     // RECEIVE EVENTS - Receive data source events which can be overridden.
     // --------------------------------------------------------------------------
-    
+
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
@@ -272,8 +272,14 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.info("{}.afterClose()", this);
     }
 
-    protected void onException(final DataSourceContext context, final Exception e) {
-        LOGGER.error("{}: {} {}", this, context, e);
+    /**
+     * This event is only fired when  the data source could NOT be created.
+     * 
+     * @param settings
+     * @param e
+     */
+    protected void onException(final DataSourceSettings settings, final Exception e) {
+        LOGGER.error("{}: {} {}", this, settings, e);
     }
 
     protected void onException(final Exception e) {
