@@ -99,7 +99,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         try (final Connection connection = provider.getConnection()) {
 
             provider.getRoleSecurity().onLogin(provider, connection);
-            
+
             onAfterCreate(provider);
             return provider;
 
@@ -247,12 +247,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
-        LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
+        LOGGER.info("{}: creating data source: {}...", this, settings);
     }
 
     @Override
     public void afterCreate(final DataSourceContext context) {
-        LOGGER.info("{}: data source created: {}", this, context.getJdbcUrl());
+        LOGGER.info("{}: data source created: {}", this, context);
     }
 
     @Override
