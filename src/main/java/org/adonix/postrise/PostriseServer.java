@@ -249,8 +249,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
-        // TODO: Fix this message when subclasses override this event.
-        LOGGER.info("{}: creating data source: {}...", this, settings);
+        LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
     }
 
     @Override
