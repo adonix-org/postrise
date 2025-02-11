@@ -23,18 +23,6 @@ public class MainTest {
 
     private static final Server server = new TestServer();
 
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        PostgresDocker.start();
-        TestEnvironment.initialize(server);
-    }
-
-    @AfterAll
-    static void afterAll() {
-        server.close();
-        PostgresDocker.stop();
-    }
-
     @DisplayName("EMPTY Database Name")
     @Test
     void testEmptyDatabaseName() throws SQLException {
@@ -58,6 +46,21 @@ public class MainTest {
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: with_login_with_super is a SUPER user", cause.getMessage());
+    }
+
+    @DisplayName("NOLOGIN Exception")
+    @Test
+    void testNoLoginException() throws SQLException {
+
+        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_with_super");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection(listener.getDatabaseName());
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof PSQLException);
+        assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
     }
 
     /**
@@ -85,9 +88,9 @@ public class MainTest {
         // Set the max pool size to 1. Only one connection in the pool.
         final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
         context.setMaxPoolSize(1);
-        assertEquals(context.getMaxPoolSize(), 1);
+        assertEquals(context.getTotalConnections(), 1);
 
-        // Set the single connection in the pool to the beta_application role.
+        // Set the single connection in the pool to the no_login_no_super role.
         try (final Connection connection = context.getConnection("no_login_no_super")) {
             assertNotNull(connection);
 
@@ -106,5 +109,17 @@ public class MainTest {
             assertEquals("with_login_no_super", rs.getString(2));
             assertEquals(connection.getAutoCommit(), true);
         }
+    }
+
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        PostgresDocker.start();
+        TestEnvironment.initialize(server);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        server.close();
+        PostgresDocker.stop();
     }
 }
