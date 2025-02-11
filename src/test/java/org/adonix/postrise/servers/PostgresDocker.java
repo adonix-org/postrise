@@ -23,7 +23,8 @@ public abstract class PostgresDocker extends PostgresServer {
         container
                 .withDatabaseName(DB_NAME)
                 .withUsername(DB_USER)
-                .withPassword(DB_PASS);
+                .withPassword(DB_PASS)
+                .withCommand("postgres -c max_connections=200");
     }
 
     PostgresDocker() {
@@ -45,8 +46,6 @@ public abstract class PostgresDocker extends PostgresServer {
         super.beforeCreate(settings);
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
-        // TODO: Figure out how to increase test connection limit.
-        settings.setMaxPoolSize(5);
     }
 
     public static final void start() {
