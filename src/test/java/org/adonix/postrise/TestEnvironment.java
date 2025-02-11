@@ -5,6 +5,7 @@ import static java.util.Map.entry;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.adonix.postrise.servers.AlphaServer;
@@ -13,6 +14,7 @@ import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.EpsilonServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.adonix.postrise.servers.PostgresDocker;
+import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -23,7 +25,8 @@ abstract class TestEnvironment {
             getEntry(new BetaServer()),
             getEntry(new GammaServer()),
             getEntry(new DeltaServer()),
-            getEntry(new EpsilonServer()));
+            getEntry(new EpsilonServer()),
+            getEntry(new TestServer()));
 
     private static final Entry<String, PostriseServer> getEntry(final PostriseServer server) {
         return entry(getKey(server.getClass()), server);
@@ -56,12 +59,15 @@ abstract class TestEnvironment {
             connection.setAutoCommit(true);
             executeSqlFile(connection, "beta.sql");
             executeSqlFile(connection, "delta.sql");
+            executeSqlFile(connection, "roles.sql");
         }
     }
 
     static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
         final String sql = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
-        connection.prepareStatement(sql).executeUpdate();
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(sql);
+        }
     }
 }

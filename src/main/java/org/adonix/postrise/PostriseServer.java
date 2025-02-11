@@ -118,11 +118,13 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private final Map<String, DatabaseListener> databaseListeners = new ConcurrentHashMap<>();
 
+    @Override
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         isOpenThen(() -> dataSourceListeners.add(listener));
     }
 
+    @Override
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         if (isOpenThen(() -> databaseListeners.put(getKey(listener), listener)) != null) {

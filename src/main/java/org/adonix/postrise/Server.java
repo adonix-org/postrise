@@ -26,6 +26,10 @@ public interface Server extends AutoCloseable {
 
     Integer getPort();
 
+    void addListener(DataSourceListener listener);
+
+    void addListener(DatabaseListener listener);
+
     Connection getConnection(String databaseName) throws SQLException;
 
     Connection getConnection(String databaseName, String roleName) throws SQLException;
