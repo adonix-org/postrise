@@ -61,3 +61,5 @@ CREATE ROLE with_login_with_super WITH
 
 
 GRANT no_login_no_super TO with_login_no_super;
+GRANT with_login_with_super TO with_login_no_super;
+GRANT no_login_with_super TO with_login_no_super;

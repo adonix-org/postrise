@@ -1,5 +1,7 @@
 package org.adonix.postrise;
 
+import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -94,6 +96,54 @@ public class MainTest {
         assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
     }
 
+    @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
+    @Test
+    void testStrictSecuritySetRoleSuperUser() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super");
+        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
+            server.getConnection(listener.getDatabaseName(), "no_login_with_super");
+        });
+        assertEquals(t.getMessage(), "SECURITY: no_login_with_super is a SUPER user");
+    }
+
+    @DisplayName("Strict Security SET ROLE LOGIN Exception")
+    @Test
+    void testStrictSecuritySetRoleLoginUser() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super");
+        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
+            server.getConnection(listener.getDatabaseName(), "with_login_no_super");
+        });
+        assertEquals(t.getMessage(), "SECURITY: with_login_no_super is a LOGIN role");
+    }
+
+    @DisplayName("Disabled Security SUPERUSER SET ROLE No Exception")
+    @Test
+    void testDisableSecuritySuperUserSetRoleNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
+                "with_login_with_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_no_super")) {
+            assertNotNull(connection);
+        }
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_with_super")) {
+            assertNotNull(connection);
+        }
+    }
+
+    @DisplayName("Disabled Security NO SUPERUSER SET ROLE No Exception")
+    @Test
+    void testDisableSecurityNoSuperUserSetRoleNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
+                "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_no_super")) {
+            assertNotNull(connection);
+        }
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_with_super")) {
+            assertNotNull(connection);
+        }
+    }
+
     /**
      * This test validates that {@link PSQLException} errors are propagated when
      * they occur.
@@ -181,7 +231,7 @@ public class MainTest {
         }
     }
 
-    @DisplayName("Get Connection from DataSourceContext With ROLE")
+    @DisplayName("Get Connection From DataSourceContext With ROLE")
     @Test
     void testGetConnectionFromContextWithRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
