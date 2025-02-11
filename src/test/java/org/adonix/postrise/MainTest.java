@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.adonix.postrise.security.PostgresRole;
+import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.PostgresDocker;
 import org.adonix.postrise.servers.TestDatabaseListener;
@@ -153,6 +155,18 @@ public class MainTest {
         final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
+    }
+
+    @DisplayName("ROLE Query")
+    @Test
+    void testRoleQuery() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            final PostgresRole role = PostgresRoleDAO.getRole(connection, "no_login_no_super");
+            assertFalse(role.isSuperUser());
+            assertFalse(role.isLoginRole());
+            assertEquals(role.getConnectionLimit(), -1);
+        }
     }
 
     @BeforeAll

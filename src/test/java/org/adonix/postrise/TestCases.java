@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.adonix.postrise.security.PostgresRole;
-import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.servers.AlphaServer;
 import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.GammaServer;
@@ -35,22 +33,6 @@ class TestCases extends TestEnvironment {
         try (final Connection connection = getServerInstance(DeltaServer.class)
                 .getConnection("database_delta")) {
             assertNotNull(connection);
-        }
-    }
-
-
-    @DisplayName("Postgres SUPERUSER Role Query")
-    @Test
-    void t05() throws SQLException {
-        final Server server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        try (final Connection connection = server.getConnection("postrise")) {
-            PostgresRole role = PostgresRoleDAO.getRole(connection, "postrise");
-            assertTrue(role.isSuperUser());
-            assertTrue(role.isLoginRole());
-            assertEquals(role.getConnectionLimit(), -1);
         }
     }
 
