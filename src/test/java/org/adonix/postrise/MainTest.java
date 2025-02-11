@@ -265,7 +265,7 @@ public class MainTest {
         }
     }
 
-    @DisplayName("Get Max Connections")
+    @DisplayName("Get Max Postgres Connections")
     @Test
     void testGetMaxConnections() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
@@ -277,7 +277,6 @@ public class MainTest {
             assertEquals(rs.getInt(1), PostgresDocker.MAX_CONNECTIONS);
         }
     }
-
 
     @BeforeAll
     static void beforeAll() throws Exception {
