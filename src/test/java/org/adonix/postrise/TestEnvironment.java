@@ -4,12 +4,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Statement;
+import org.adonix.postrise.servers.PostgresDocker;
 
 abstract class TestEnvironment {
 
     public static void initialize(final Server server) throws Exception {
-        try (final Connection connection = server.getConnection("postrise")) {
-            connection.setAutoCommit(true);
+        try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME)) {
             executeSqlFile(connection, "roles.sql");
         }
     }
