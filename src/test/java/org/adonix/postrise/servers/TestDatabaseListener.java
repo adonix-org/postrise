@@ -61,5 +61,7 @@ public class TestDatabaseListener implements DatabaseListener {
         settings.setRoleSecurity(security);
         settings.setUsername(username);
         settings.setPassword(password);
+        settings.setMaxPoolSize(5);
+        settings.setMinIdle(5);
     }
 }

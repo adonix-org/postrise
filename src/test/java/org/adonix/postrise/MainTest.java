@@ -3,6 +3,7 @@ package org.adonix.postrise;
 import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -67,9 +68,37 @@ public class MainTest {
         assertEquals(t.getMessage(), "Illegal NULL String for roleName");
     }
 
-    @DisplayName("Default Security SUPERUSER Exception")
+    @DisplayName("NOLOGIN Exception")
     @Test
-    void testDefaultSecuritySuperUserException() throws SQLException {
+    void testNoLoginException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_no_super");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection(listener.getDatabaseName());
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof PSQLException);
+        assertEquals("FATAL: role \"no_login_no_super\" is not permitted to log in", cause.getMessage());
+    }
+
+    @DisplayName("NOLOGIN SUPERUSER Exception")
+    @Test
+    void testNoLoginSuperUserException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_with_super");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection(listener.getDatabaseName());
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof PSQLException);
+        assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
+    }
+
+    @DisplayName("Default Security SUPERUSER LOGIN Exception")
+    @Test
+    void testDefaultSecuritySuperUserLoginException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "with_login_with_super");
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
@@ -82,18 +111,24 @@ public class MainTest {
         assertEquals("SECURITY: with_login_with_super is a SUPERUSER role", cause.getMessage());
     }
 
-    @DisplayName("NOLOGIN Exception")
+    @DisplayName("Default Security LOGIN No Exception")
     @Test
-    void testNoLoginException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_with_super");
-        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection(listener.getDatabaseName());
-        });
+    void testDefaultSecurityLoginNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            assertNotNull(connection);
+        }
+    }
 
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
+    @DisplayName("Default Security SET ROLE No Exception")
+    @Test
+    void testDefaultSecuritySetRoleNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
+            assertNotNull(connection);
+        }
     }
 
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
@@ -142,6 +177,16 @@ public class MainTest {
             server.getConnection(listener.getDatabaseName(), "with_login_with_super");
         });
         assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
+    }
+
+    @DisplayName("Strict Security SET ROLE No Exception")
+    @Test
+    void testStrictSecuritySetRoleNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
+            assertNotNull(connection);
+        }
     }
 
     @DisplayName("Disabled Security SUPERUSER SET ROLE No Exception")
@@ -196,7 +241,7 @@ public class MainTest {
         assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
     }
 
-    @DisplayName("Max Pool Size = 1 Check Connection Role Reset")
+    @DisplayName("Connection Reset")
     @Test
     void testConnectionRoleReset() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
@@ -210,7 +255,6 @@ public class MainTest {
             assertNotNull(connection);
 
             // Set the single connection auto commit to false to verify reset.
-            // TODO: Make this a separate test.
             assertTrue(connection.getAutoCommit());
             connection.setAutoCommit(false);
             assertFalse(connection.getAutoCommit());
@@ -226,18 +270,6 @@ public class MainTest {
             assertEquals("with_login_no_super", rs.getString(2));
             assertTrue(connection.getAutoCommit());
         }
-    }
-
-    @DisplayName("Postgres TCP Keep Alive Set")
-    @Test
-    void testTcpKeepAlivePropertySet() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
-        final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
-        assertNotNull(dataSource);
-
-        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
-        assertNotNull(tcpKeepAlive);
-        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
     @DisplayName("ROLE Query")
@@ -290,6 +322,18 @@ public class MainTest {
             assertTrue(rs.next());
             assertEquals(rs.getInt(1), PostgresDocker.MAX_CONNECTIONS);
         }
+    }
+
+    @DisplayName("Postgres TCP Keep Alive Set")
+    @Test
+    void testTcpKeepAlivePropertySet() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(dataSource);
+
+        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
+        assertNotNull(tcpKeepAlive);
+        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
     @BeforeAll
