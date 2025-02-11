@@ -45,6 +45,7 @@ public abstract class PostgresDocker extends PostgresServer {
         super.beforeCreate(settings);
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
+        // TODO: Figure out how to increase test connection limit.
         settings.setMaxPoolSize(5);
     }
 
