@@ -69,7 +69,7 @@ public class MainTest {
 
     @DisplayName("Default Security SUPERUSER Exception")
     @Test
-    void testDefaultSecuirtySuperUserException() throws SQLException {
+    void testDefaultSecuritySuperUserException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "with_login_with_super");
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
