@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.adonix.postrise.DataSourceContext;
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.DatabaseListener;
 import org.adonix.postrise.Server;
@@ -14,7 +13,7 @@ import org.adonix.postrise.security.RoleSecurityListener;
 
 public class TestDatabaseListener implements DatabaseListener {
 
-    private static final AtomicInteger databaseIdx = new AtomicInteger();
+    private static final AtomicInteger databaseNameIndex = new AtomicInteger();
 
     private final String username;
     private final String password;
@@ -30,17 +29,21 @@ public class TestDatabaseListener implements DatabaseListener {
         this.security = security;
         this.username = username;
         this.password = "helloworld";
-        this.databaseName = String.format("database_%03d", +databaseIdx.incrementAndGet());
-        createDatabase(server);
+        this.databaseName = String.format("database_%03d", databaseNameIndex.incrementAndGet());
+        createTestDatabase(server);
         server.addListener(this);
     }
 
-    private void createDatabase(final Server server) throws SQLException {
-        final String sql = String.join(" ", "CREATE DATABASE", getDatabaseName(),
+    private void createTestDatabase(final Server server) throws SQLException {
+        
+        final String sql = String.join(" ",
+                "CREATE DATABASE",
+                getDatabaseName(),
                 "WITH ENCODING = 'UTF8'",
                 "TABLESPACE = pg_default",
                 "CONNECTION LIMIT = -1",
                 "IS_TEMPLATE = False");
+
         try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME);
                 final Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(sql);
@@ -57,10 +60,5 @@ public class TestDatabaseListener implements DatabaseListener {
         settings.setRoleSecurity(security);
         settings.setUsername(username);
         settings.setPassword(password);
-    }
-
-    @Override
-    public void afterCreate(final DataSourceContext context) throws Exception {
-        throw new IllegalStateException(context + " should not be created.");
     }
 }
