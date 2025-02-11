@@ -28,7 +28,7 @@ import org.postgresql.util.PSQLException;
 
 public class MainTest {
 
-    private static final Server server = new TestServer();
+    private static final Server server = TestServer.getInstance();
 
     @DisplayName("EMPTY Database Name")
     @Test

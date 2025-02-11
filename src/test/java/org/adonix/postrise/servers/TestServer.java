@@ -7,6 +7,14 @@ public class TestServer extends PostgresDocker {
 
     private static final Logger LOGGER = LogManager.getLogger(PostgresDocker.class);
 
+    private static final TestServer instance = new TestServer();
+    public static final TestServer getInstance() {
+        return instance;
+    }
+
+    private TestServer() {
+    }
+
     @Override
     protected void beforeClose() {
         super.beforeClose();
