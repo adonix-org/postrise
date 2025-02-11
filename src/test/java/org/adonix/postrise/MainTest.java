@@ -142,6 +142,19 @@ public class MainTest {
         }
     }
 
+    @DisplayName("Postgres TCP Keep Alive")
+    @Test
+    void testTcpKeepAlivePropertySet() throws SQLException {
+
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(dataSource);
+
+        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
+        assertNotNull(tcpKeepAlive);
+        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
+    }
+
     @BeforeAll
     static void beforeAll() throws Exception {
         PostgresDocker.start();

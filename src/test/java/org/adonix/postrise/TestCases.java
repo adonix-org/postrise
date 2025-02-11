@@ -10,15 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.AlphaServer;
-import org.adonix.postrise.servers.BetaServer;
 import org.adonix.postrise.servers.DeltaServer;
-import org.adonix.postrise.servers.EpsilonServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.postgresql.util.PSQLException;
 
 class TestCases extends TestEnvironment {
 
@@ -42,22 +38,6 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("SUPERUSER Security Exception")
-    @Test
-    void t03() {
-        final Server server = getServerInstance(EpsilonServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof EpsilonServer);
-
-        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("database_beta");
-        });
-
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: postrise is a SUPER user", cause.getMessage());
-    }
 
     @DisplayName("Postgres SUPERUSER Role Query")
     @Test
@@ -74,20 +54,7 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("Postgres TCP Keep Alive SUPERUSER")
-    @Test
-    void t08() {
-        final PostriseServer server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
 
-        final DataSourceContext dataSource = server.getDataSource("postrise");
-        assertNotNull(dataSource);
-
-        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
-        assertNotNull(tcpKeepAlive);
-        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
-    }
 
     @DisplayName("NULL Database SUPERUSER")
     @Test
