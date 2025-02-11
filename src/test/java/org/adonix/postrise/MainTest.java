@@ -85,7 +85,6 @@ public class MainTest {
     @DisplayName("NOLOGIN Exception")
     @Test
     void testNoLoginException() throws SQLException {
-
         final DatabaseListener listener = new TestDatabaseListener(server, "no_login_with_super");
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection(listener.getDatabaseName());
@@ -200,7 +199,6 @@ public class MainTest {
     @DisplayName("Max Pool Size = 1 Check Connection Role Reset")
     @Test
     void testConnectionRoleReset() throws SQLException {
-
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         // Set the max pool size to 1. Only one connection in the pool.
         final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
