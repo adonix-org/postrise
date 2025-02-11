@@ -79,7 +79,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: with_login_with_super is a SUPER user", cause.getMessage());
+        assertEquals("SECURITY: with_login_with_super is a SUPERUSER role", cause.getMessage());
     }
 
     @DisplayName("NOLOGIN Exception")
@@ -108,7 +108,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: with_login_with_super is a SUPER user", cause.getMessage());
+        assertEquals("SECURITY: with_login_with_super is a SUPERUSER role", cause.getMessage());
     }
 
     @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
@@ -119,7 +119,7 @@ public class MainTest {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "no_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: no_login_with_super is a SUPER user");
+        assertEquals(t.getMessage(), "SECURITY: no_login_with_super is a SUPERUSER role");
     }
 
     @DisplayName("Strict Security SET ROLE LOGIN Exception")
@@ -141,7 +141,7 @@ public class MainTest {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "with_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPER user");
+        assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
     }
 
     @DisplayName("Disabled Security SUPERUSER SET ROLE No Exception")

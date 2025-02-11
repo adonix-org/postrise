@@ -44,7 +44,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
      * @see #getConnection()
      * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
      */
-    protected abstract Connection resetConnection(final Connection connection) throws SQLException;
+    protected abstract void resetConnection(final Connection connection) throws SQLException;
 
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
@@ -69,7 +69,14 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     @Override
     public final Connection getConnection() throws SQLException {
-        return resetConnection(delegate.getConnection());
+        final Connection connection = delegate.getConnection();
+        try {
+            resetConnection(connection);
+            return connection;
+        } catch (final Exception e) {
+            connection.close();
+            throw e;
+        }
     }
 
     @Override
