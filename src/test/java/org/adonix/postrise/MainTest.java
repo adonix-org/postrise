@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class MainTest extends TestEnvironment {
 
     @AutoClose
-    private static final TestServer server = new TestServer();
+    private static final Server server = new TestServer();
 
     @DisplayName("SUPERUSER Security Exception")
     @Test
