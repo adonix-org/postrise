@@ -324,7 +324,7 @@ public class MainTest {
         }
     }
 
-    @DisplayName("Postgres TCP Keep Alive Set")
+    @DisplayName("Postgres TCP Keep Alive Property Set")
     @Test
     void testTcpKeepAlivePropertySet() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
