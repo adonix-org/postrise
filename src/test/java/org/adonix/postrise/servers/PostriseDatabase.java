@@ -15,6 +15,5 @@ class PostriseDatabase implements DatabaseListener {
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
-        settings.setMaxPoolSize(1);
     }
 }

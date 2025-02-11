@@ -1,6 +1,5 @@
 package org.adonix.postrise.servers;
 
-import org.adonix.postrise.DataSourceContext;
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.PostgresServer;
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +26,8 @@ public abstract class PostgresDocker extends PostgresServer {
                 .withPassword(DB_PASS);
     }
 
-    protected PostgresDocker() {
-        LOGGER.debug("Calling constructor for {}", this);
+    PostgresDocker() {
+        addListener(new PostriseDatabase());
     }
 
     @Override
@@ -46,12 +45,6 @@ public abstract class PostgresDocker extends PostgresServer {
         super.beforeCreate(settings);
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
-    }
-
-    @Override
-    public void afterCreate(final DataSourceContext context) {
-        super.afterCreate(context);
-        LOGGER.info(context.getDataSourceProperties());
     }
 
     public static final void start() {
