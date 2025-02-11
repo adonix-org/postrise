@@ -10,15 +10,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.adonix.postrise.security.RoleSecurityException;
+import org.adonix.postrise.servers.PostgresDocker;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class MainTest extends TestCases {
+public class MainTest {
 
-    private static final Server server = getServerInstance(TestServer.class);
+    private static final Server server = new TestServer();
+
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        PostgresDocker.start();
+        TestEnvironment.initialize(server);
+    }
+
+    @AfterAll
+    static void afterAll() throws Exception {
+        server.close();
+        PostgresDocker.stop();
+    }
+
+    @DisplayName("EMPTY Database Name")
+    @Test
+    void testEmptyDatabaseName() throws SQLException {
+
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(" ");
+        });
+        assertEquals("Unexpected empty String for databaseName", t.getMessage());
+    }
 
     @DisplayName("SUPERUSER Security Exception")
     @Test

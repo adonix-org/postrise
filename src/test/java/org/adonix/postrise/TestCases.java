@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +28,10 @@ class TestCases extends TestEnvironment {
                 .getConnection("postrise")) {
             assertNotNull(connection);
         }
+    }
+
+    private PostriseServer getServerInstance(Class<? extends Server> class1) {
+        return null;
     }
 
     @Test

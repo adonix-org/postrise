@@ -1,61 +1,14 @@
 package org.adonix.postrise;
 
-import static java.util.Map.entry;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Map;
-import java.util.Map.Entry;
-import org.adonix.postrise.servers.AlphaServer;
-import org.adonix.postrise.servers.BetaServer;
-import org.adonix.postrise.servers.DeltaServer;
-import org.adonix.postrise.servers.EpsilonServer;
-import org.adonix.postrise.servers.GammaServer;
-import org.adonix.postrise.servers.PostgresDocker;
-import org.adonix.postrise.servers.TestServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 abstract class TestEnvironment {
 
-    private static Map<String, PostriseServer> instances = Map.ofEntries(
-            getEntry(new AlphaServer()),
-            getEntry(new BetaServer()),
-            getEntry(new GammaServer()),
-            getEntry(new DeltaServer()),
-            getEntry(new EpsilonServer()),
-            getEntry(new TestServer()));
-
-    private static final Entry<String, PostriseServer> getEntry(final PostriseServer server) {
-        return entry(getKey(server.getClass()), server);
-    }
-
-    private static final String getKey(final Class<? extends PostriseServer> clazz) {
-        return clazz.getName();
-    }
-
-    static final PostriseServer getServerInstance(final Class<? extends PostriseServer> clazz) {
-        return instances.get(getKey(clazz));
-    }
-
-    @BeforeAll
-    static final void beforeAll() throws Exception {
-        PostgresDocker.start();
-        initialize();
-    }
-
-    @AfterAll
-    static final void afterAll() throws Exception {
-        for (final Server server : instances.values()) {
-            server.close();
-        }
-        PostgresDocker.stop();
-    }
-
-    static void initialize() throws Exception {
-        try (final Connection connection = getServerInstance(AlphaServer.class).getConnection("postrise")) {
+    public static void initialize(final Server server) throws Exception {
+        try (final Connection connection = server.getConnection("postrise")) {
             connection.setAutoCommit(true);
             executeSqlFile(connection, "beta.sql");
             executeSqlFile(connection, "delta.sql");
