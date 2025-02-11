@@ -10,8 +10,6 @@ abstract class TestEnvironment {
     public static void initialize(final Server server) throws Exception {
         try (final Connection connection = server.getConnection("postrise")) {
             connection.setAutoCommit(true);
-            executeSqlFile(connection, "beta.sql");
-            executeSqlFile(connection, "delta.sql");
             executeSqlFile(connection, "roles.sql");
         }
     }

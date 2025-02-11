@@ -46,17 +46,17 @@ public class MainTest {
 
     @DisplayName("EMPTY ROLE String")
     @Test
-    void testCheckForBlankWhenSettingRole() throws SQLException {
+    void testEmptyRoleString() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), "");
+            server.getConnection(listener.getDatabaseName(), " ");
         });
         assertEquals(t.getMessage(), "Unexpected empty String for roleName");
     }
 
     @DisplayName("NULL ROLE String")
     @Test
-    void testCheckForNullWhenSettingRole() throws SQLException {
+    void testNullRoleString() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(listener.getDatabaseName(), null);
