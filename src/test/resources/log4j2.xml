@@ -34,7 +34,7 @@
         </Console>
 
         <!-- File Appender -->
-        <File name="FileAppender" fileName="./src/test/log/postrise.log" append="false">
+        <File name="FileAppender" fileName="target/test-logs/postrise.log" append="false">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1} - %m%n" />
         </File>
     </Appenders>
