@@ -197,7 +197,7 @@ public class MainTest {
         assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
     }
 
-    @DisplayName("Max Pool Size = 1 and Check Connection Role")
+    @DisplayName("Max Pool Size = 1 Check Connection Role Reset")
     @Test
     void testConnectionRoleReset() throws SQLException {
 
