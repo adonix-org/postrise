@@ -1,6 +1,7 @@
 package org.adonix.postrise;
 
 import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,7 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
-        assertEquals("Unexpected empty String for databaseName", t.getMessage());
+        assertEquals("Illegal EMPTY String for databaseName", t.getMessage());
     }
 
     @DisplayName("NULL Database Name")
@@ -43,7 +44,7 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
-        assertEquals("Unexpected null String for databaseName", t.getMessage());
+        assertEquals("Illegal NULL String for databaseName", t.getMessage());
     }
 
     @DisplayName("EMPTY ROLE String")
@@ -53,7 +54,7 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(listener.getDatabaseName(), " ");
         });
-        assertEquals(t.getMessage(), "Unexpected empty String for roleName");
+        assertEquals(t.getMessage(), "Illegal EMPTY String for roleName");
     }
 
     @DisplayName("NULL ROLE String")
@@ -63,14 +64,14 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(listener.getDatabaseName(), null);
         });
-        assertEquals(t.getMessage(), "Unexpected null String for roleName");
+        assertEquals(t.getMessage(), "Illegal NULL String for roleName");
     }
 
-    @DisplayName("SUPERUSER Security Exception")
+    @DisplayName("Default Security SUPERUSER Exception")
     @Test
-    void testSuperUserSecurityException() throws SQLException {
-
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_with_super");
+    void testDefaultSecuirtySuperUserException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "with_login_with_super");
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection(listener.getDatabaseName());
         });
@@ -94,6 +95,21 @@ public class MainTest {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
+    }
+
+    @DisplayName("Strict Security LOGIN SUPERUSER Exception")
+    @Test
+    void testStrictSecurityLoginSuperUser() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_with_super");
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection(listener.getDatabaseName());
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof RoleSecurityException);
+        assertEquals("SECURITY: with_login_with_super is a SUPER user", cause.getMessage());
     }
 
     @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
