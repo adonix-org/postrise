@@ -265,6 +265,20 @@ public class MainTest {
         }
     }
 
+    @DisplayName("Get Max Connections")
+    @Test
+    void testGetMaxConnections() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
+        try (final Connection connection = context.getConnection("no_login_no_super");
+                PreparedStatement stmt = connection.prepareStatement("SELECT current_setting('max_connections')");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals(rs.getInt(1), PostgresDocker.MAX_CONNECTIONS);
+        }
+    }
+
+
     @BeforeAll
     static void beforeAll() throws Exception {
         PostgresDocker.start();

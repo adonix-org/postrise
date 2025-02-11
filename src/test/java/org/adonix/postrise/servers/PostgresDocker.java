@@ -15,6 +15,7 @@ public abstract class PostgresDocker extends PostgresServer {
 
     private static final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
+    public static final int MAX_CONNECTIONS = 199;
     public static final String DB_NAME = "postrise";
     private static final String DB_USER = "postrise";
     private static final String DB_PASS = "postrise";
@@ -24,7 +25,7 @@ public abstract class PostgresDocker extends PostgresServer {
                 .withDatabaseName(DB_NAME)
                 .withUsername(DB_USER)
                 .withPassword(DB_PASS)
-                .withCommand("postgres -c max_connections=200");
+                .withCommand("postgres -c max_connections=" + MAX_CONNECTIONS);
     }
 
     PostgresDocker() {
