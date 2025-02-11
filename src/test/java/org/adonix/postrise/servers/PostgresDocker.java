@@ -45,6 +45,7 @@ public abstract class PostgresDocker extends PostgresServer {
         super.beforeCreate(settings);
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
+        settings.setMaxPoolSize(5);
     }
 
     public static final void start() {

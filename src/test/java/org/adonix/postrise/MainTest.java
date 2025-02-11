@@ -118,6 +118,17 @@ public class MainTest {
         assertEquals(t.getMessage(), "SECURITY: with_login_no_super is a LOGIN role");
     }
 
+    @DisplayName("Strict Security SET ROLE SUPERUSER LOGIN Exception")
+    @Test
+    void testStrictSecuritySetRoleSuperLoginUser() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super");
+        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
+            server.getConnection(listener.getDatabaseName(), "with_login_with_super");
+        });
+        assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPER user");
+    }
+
     @DisplayName("Disabled Security SUPERUSER SET ROLE No Exception")
     @Test
     void testDisableSecuritySuperUserSetRoleNoException() throws SQLException {
@@ -127,6 +138,15 @@ public class MainTest {
             assertNotNull(connection);
         }
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_with_super")) {
+            assertNotNull(connection);
+        }
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_with_super")) {
+            assertNotNull(connection);
+        }
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
+            assertNotNull(connection);
+        }
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "postrise")) {
             assertNotNull(connection);
         }
     }
