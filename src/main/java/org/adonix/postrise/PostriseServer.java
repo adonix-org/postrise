@@ -207,10 +207,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // STATUS - Get the cumulative TOTAL, ACTIVE and IDLE connection count.
+    // STATUS - Return the cumulative TOTAL, ACTIVE and IDLE connection counts.
     // --------------------------------------------------------------------------
 
-    private int getStatus(Function<DataSourceContext, Integer> function) {
+    private int getStatus(final Function<DataSourceContext, Integer> function) {
         int total = 0;
         for (final DataSourceContext context : databasePools.values()) {
             total += function.apply(context);
@@ -219,17 +219,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     @Override
-    public int getTotalConnections() {
+    public final int getTotalConnections() {
         return getStatus(DataSourceContext::getTotalConnections);
     }
 
     @Override
-    public int getActiveConnections() {
+    public final int getActiveConnections() {
         return getStatus(DataSourceContext::getActiveConnections);
     }
 
     @Override
-    public int getIdleConnections() {
+    public final int getIdleConnections() {
         return getStatus(DataSourceContext::getIdleConnections);
     }
 
