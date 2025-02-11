@@ -30,7 +30,7 @@ public class MainTest {
     }
 
     @AfterAll
-    static void afterAll() throws Exception {
+    static void afterAll() {
         server.close();
         PostgresDocker.stop();
     }

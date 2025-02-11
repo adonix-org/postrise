@@ -38,4 +38,5 @@ public interface Server extends AutoCloseable {
 
     Set<String> getDatabaseNames();
 
+    void close();
 }
