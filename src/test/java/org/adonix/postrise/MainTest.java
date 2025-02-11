@@ -1,5 +1,6 @@
 package org.adonix.postrise;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -96,7 +97,9 @@ public class MainTest {
 
             // Set the single connection auto commit to false to verify reset.
             // TODO: Make this a separate test.
+            assertTrue(connection.getAutoCommit());
             connection.setAutoCommit(false);
+            assertFalse(connection.getAutoCommit());
         }
 
         // Get the single connection and verify the current_user has reverted to
@@ -107,7 +110,7 @@ public class MainTest {
             assertTrue(rs.next());
             assertEquals("with_login_no_super", rs.getString(1));
             assertEquals("with_login_no_super", rs.getString(2));
-            assertEquals(connection.getAutoCommit(), true);
+            assertTrue(connection.getAutoCommit());
         }
     }
 
