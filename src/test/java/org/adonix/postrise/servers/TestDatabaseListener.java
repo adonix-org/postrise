@@ -41,7 +41,7 @@ public class TestDatabaseListener implements DatabaseListener {
                 "TABLESPACE = pg_default",
                 "CONNECTION LIMIT = -1",
                 "IS_TEMPLATE = False");
-        try (final Connection connection = server.getConnection("postrise");
+        try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME);
                 final Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(sql);
         }
