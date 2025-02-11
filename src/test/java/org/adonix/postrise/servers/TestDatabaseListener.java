@@ -34,19 +34,20 @@ public class TestDatabaseListener implements DatabaseListener {
         server.addListener(this);
     }
 
-    private void createTestDatabase(final Server server) throws SQLException {
-        
-        final String sql = String.join(" ",
+    protected String getCreateDatabaseSql() {
+        return String.join(" ",
                 "CREATE DATABASE",
                 getDatabaseName(),
                 "WITH ENCODING = 'UTF8'",
                 "TABLESPACE = pg_default",
                 "CONNECTION LIMIT = -1",
                 "IS_TEMPLATE = False");
+    }
 
+    private void createTestDatabase(final Server server) throws SQLException {
         try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME);
                 final Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate(getCreateDatabaseSql());
         }
     }
 

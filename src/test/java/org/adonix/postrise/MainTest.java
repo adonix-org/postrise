@@ -12,15 +12,13 @@ import java.sql.SQLException;
 import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
-import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
 public class MainTest extends TestEnvironment {
 
-    @AutoClose
-    private static final Server server = new TestServer();
+    private static final Server server = getServerInstance(TestServer.class);
 
     @DisplayName("SUPERUSER Security Exception")
     @Test
