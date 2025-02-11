@@ -27,11 +27,39 @@ public class MainTest {
     @DisplayName("EMPTY Database Name")
     @Test
     void testEmptyDatabaseName() throws SQLException {
-
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
         assertEquals("Unexpected empty String for databaseName", t.getMessage());
+    }
+
+    @DisplayName("NULLL Database Name")
+    @Test
+    void testNullDatabaseName() throws SQLException {
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(null);
+        });
+        assertEquals("Unexpected null String for databaseName", t.getMessage());
+    }
+
+    @DisplayName("EMPTY ROLE String")
+    @Test
+    void testCheckForBlankWhenSettingRole() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(listener.getDatabaseName(), "");
+        });
+        assertEquals(t.getMessage(), "Unexpected empty String for roleName");
+    }
+
+    @DisplayName("NULL ROLE String")
+    @Test
+    void testCheckForNullWhenSettingRole() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.getConnection(listener.getDatabaseName(), null);
+        });
+        assertEquals(t.getMessage(), "Unexpected null String for roleName");
     }
 
     @DisplayName("SUPERUSER Security Exception")

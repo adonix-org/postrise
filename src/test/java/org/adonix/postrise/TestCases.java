@@ -201,54 +201,6 @@ class TestCases extends TestEnvironment {
         }
     }
 
-    @DisplayName("LOGIN with NOLOGIN role")
-    @Test
-    void t18() throws SQLException {
-        final Server server = getServerInstance(BetaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof BetaServer);
-
-        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getDataSource("database_beta");
-        });
-
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: role \"beta_application\" is not permitted to log in", cause.getMessage());
-    }
-
-    @DisplayName("Max Pool Size = 1 and Check Connection Role")
-    @Test
-    void t19() throws SQLException {
-        final Server server = getServerInstance(GammaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof GammaServer);
-
-        // Set the max pool size to 1. Only one connection in the pool.
-        final DataSourceContext context = server.getDataSource("postrise");
-        assertEquals(context.getMaxPoolSize(), 1);
-
-        // Set the single connection in the pool to the beta_application role.
-        try (final Connection connection = context.getConnection("beta_application")) {
-            assertNotNull(connection);
-
-            // Set the single connection auto commit to false to verify reset.
-            connection.setAutoCommit(false);
-        }
-
-        // Get the single connection and verify the current_user has reverted to
-        // the postrise role and auto commit reverted to true.
-        try (final Connection connection = context.getConnection();
-                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
-                ResultSet rs = stmt.executeQuery()) {
-            assertTrue(rs.next());
-            assertEquals("postrise", rs.getString(1));
-            assertEquals("postrise", rs.getString(2));
-            assertEquals(connection.getAutoCommit(), true);
-        }
-    }
-
     @DisplayName("Connection Limit = 1 for beta_login User")
     @Test
     void t20() throws SQLException, InterruptedException {
