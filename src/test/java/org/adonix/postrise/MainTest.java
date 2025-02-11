@@ -12,6 +12,7 @@ import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.postgresql.util.PSQLException;
 
 public class MainTest extends TestEnvironment {
 
@@ -31,5 +32,22 @@ public class MainTest extends TestEnvironment {
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: with_login_with_super is a SUPER user", cause.getMessage());
+    }
+
+    /**
+     * This test validates that {@link PSQLException} errors are propagated when
+     * they occur.
+     */
+    @DisplayName("Postgres Exception Propagation")
+    @Test
+    void t04() {
+        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
+            server.getConnection("not_a_database");
+        });
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertTrue(cause instanceof PSQLException);
+        assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
     }
 }
