@@ -56,27 +56,6 @@ class TestCases extends TestEnvironment {
         assertEquals("SECURITY: postrise is a SUPER user", cause.getMessage());
     }
 
-    /**
-     * This test validates that {@link PSQLException} errors are propagated when
-     * they occur.
-     */
-    @DisplayName("Postgres Exception Propagation")
-    @Test
-    void t04() {
-        final Server server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection("not_a_database");
-        });
-
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
-    }
-
     @DisplayName("Postgres SUPERUSER Role Query")
     @Test
     void t05() throws SQLException {
