@@ -16,13 +16,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class MainTest extends TestEnvironment {
+public class MainTest extends TestCases {
 
     private static final Server server = getServerInstance(TestServer.class);
 
     @DisplayName("SUPERUSER Security Exception")
     @Test
-    void t03() throws SQLException {
+    void testSuperUserSecurityException() throws SQLException {
 
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_with_super");
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
@@ -41,7 +41,7 @@ public class MainTest extends TestEnvironment {
      */
     @DisplayName("Postgres Exception Propagation")
     @Test
-    void t04() {
+    void testPostgresExceptionPropagation() {
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
             server.getConnection("not_a_database");
         });
@@ -54,7 +54,7 @@ public class MainTest extends TestEnvironment {
 
     @DisplayName("Max Pool Size = 1 and Check Connection Role")
     @Test
-    void t19() throws SQLException {
+    void testConnectionRoleReset() throws SQLException {
 
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         // Set the max pool size to 1. Only one connection in the pool.
