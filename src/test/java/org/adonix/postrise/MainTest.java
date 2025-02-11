@@ -37,7 +37,7 @@ public class MainTest {
         assertEquals("Unexpected empty String for databaseName", t.getMessage());
     }
 
-    @DisplayName("NULLL Database Name")
+    @DisplayName("NULL Database Name")
     @Test
     void testNullDatabaseName() throws SQLException {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
@@ -214,7 +214,7 @@ public class MainTest {
         }
     }
 
-    @DisplayName("Postgres TCP Keep Alive")
+    @DisplayName("Postgres TCP Keep Alive Set")
     @Test
     void testTcpKeepAlivePropertySet() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");

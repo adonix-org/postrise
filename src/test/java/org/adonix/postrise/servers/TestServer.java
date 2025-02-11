@@ -1,13 +1,28 @@
 package org.adonix.postrise.servers;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
-import org.adonix.postrise.DataSourceSettings;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TestServer extends PostgresDocker {
 
+    private static final Logger LOGGER = LogManager.getLogger(PostgresDocker.class);
+
     @Override
-    public void beforeCreate(final DataSourceSettings settings) {
-        super.beforeCreate(settings);
-        settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
+    protected void beforeClose() {
+        super.beforeClose();
+        logStatus();
+    }
+
+    @Override
+    protected void afterClose() {
+        super.afterClose();
+        logStatus();
+    }
+
+    private void logStatus() {
+        LOGGER.info("{}: Connection Total: {} Active: {} Idle: {}", this,
+                getTotalConnections(),
+                getActiveConnections(),
+                getIdleConnections());
     }
 }
