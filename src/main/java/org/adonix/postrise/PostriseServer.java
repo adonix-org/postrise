@@ -210,9 +210,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // STATUS - Get the cumulative TOTAL, ACTIVE and IDLE connection count.
     // --------------------------------------------------------------------------
 
-    private int getStatus(Function<ConnectionPoolStatus, Integer> function) {
+    private int getStatus(Function<DataSourceContext, Integer> function) {
         int total = 0;
-        for (final ConnectionPoolStatus context : databasePools.values()) {
+        for (final DataSourceContext context : databasePools.values()) {
             total += function.apply(context);
         }
         return total;
@@ -220,17 +220,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public int getTotalConnections() {
-        return getStatus(ConnectionPoolStatus::getTotalConnections);
+        return getStatus(DataSourceContext::getTotalConnections);
     }
 
     @Override
     public int getActiveConnections() {
-        return getStatus(ConnectionPoolStatus::getActiveConnections);
+        return getStatus(DataSourceContext::getActiveConnections);
     }
 
     @Override
     public int getIdleConnections() {
-        return getStatus(ConnectionPoolStatus::getIdleConnections);
+        return getStatus(DataSourceContext::getIdleConnections);
     }
 
     // --------------------------------------------------------------------------
@@ -296,11 +296,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     protected void beforeClose() {
-        LOGGER.info("{}.beforeClose()", this);
+        LOGGER.info("{}: beforeClose()", this);
     }
 
     protected void afterClose() {
-        LOGGER.info("{}.afterClose()", this);
+        LOGGER.info("{}: afterClose()", this);
     }
 
     /**
