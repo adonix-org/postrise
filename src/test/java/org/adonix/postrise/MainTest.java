@@ -147,7 +147,6 @@ public class MainTest {
     @DisplayName("Postgres TCP Keep Alive")
     @Test
     void testTcpKeepAlivePropertySet() throws SQLException {
-
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
         assertNotNull(dataSource);
@@ -166,6 +165,33 @@ public class MainTest {
             assertFalse(role.isSuperUser());
             assertFalse(role.isLoginRole());
             assertEquals(role.getConnectionLimit(), -1);
+        }
+    }
+
+    @DisplayName("Get Connection From Server With ROLE")
+    @Test
+    void testGetConnectionFromServerWithRole() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super");
+                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals("with_login_no_super", rs.getString(1));
+            assertEquals("no_login_no_super", rs.getString(2));
+        }
+    }
+
+    @DisplayName("Get Connection from DataSourceContext With ROLE")
+    @Test
+    void testGetConnectionFromContextWithRole() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
+        try (final Connection connection = context.getConnection("no_login_no_super");
+                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
+                ResultSet rs = stmt.executeQuery()) {
+            assertTrue(rs.next());
+            assertEquals("with_login_no_super", rs.getString(1));
+            assertEquals("no_login_no_super", rs.getString(2));
         }
     }
 

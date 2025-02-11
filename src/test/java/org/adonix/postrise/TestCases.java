@@ -2,87 +2,18 @@ package org.adonix.postrise;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import org.adonix.postrise.servers.AlphaServer;
-import org.adonix.postrise.servers.DeltaServer;
 import org.adonix.postrise.servers.GammaServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TestCases extends TestEnvironment {
 
-    @Test
-    void t01() throws SQLException {
-        try (final Connection connection = getServerInstance(AlphaServer.class)
-                .getConnection("postrise")) {
-            assertNotNull(connection);
-        }
-    }
-
     private PostriseServer getServerInstance(Class<? extends Server> class1) {
         return null;
-    }
-
-    @Test
-    void t02() throws SQLException {
-        try (final Connection connection = getServerInstance(DeltaServer.class)
-                .getConnection("database_delta")) {
-            assertNotNull(connection);
-        }
-    }
-
-
-
-    @DisplayName("NULL Database SUPERUSER")
-    @Test
-    void t09() {
-        final PostriseServer server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(null);
-        });
-
-        assertEquals("Unexpected null String for databaseName", t.getMessage());
-    }
-
-    @DisplayName("EMPTY Database String SUPERUSER")
-    @Test
-    void t11() throws SQLException {
-        final PostriseServer server = getServerInstance(AlphaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof AlphaServer);
-
-        try (final Connection connection = server.getConnection("postrise")) {
-            assertNotNull(connection);
-        }
-
-        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(" ");
-        });
-
-        assertEquals("Unexpected empty String for databaseName", t.getMessage());
-    }
-
-    @DisplayName("Postgres TCP Keep Alive Not SUPERUSER")
-    @Test
-    void t13() {
-        final PostriseServer server = getServerInstance(DeltaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof DeltaServer);
-
-        final DataSourceContext dataSource = server.getDataSource("database_delta");
-        assertNotNull(dataSource);
-
-        final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
-        assertNotNull(tcpKeepAlive);
-        assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
     @DisplayName("PostriseDataSource Getters and Setters at Runtime")
@@ -102,52 +33,6 @@ class TestCases extends TestEnvironment {
         assertEquals(1, dataSource.getMinIdle());
 
         assertTrue(dataSource.isAutoCommit());
-    }
-
-    @DisplayName("Check for NULL when Setting the Role")
-    @Test
-    void t15() throws SQLException {
-        final PostriseServer server = getServerInstance(DeltaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof DeltaServer);
-
-        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection("postrise", null);
-        });
-        assertEquals(t.getMessage(), "Unexpected null String for roleName");
-    }
-
-    @DisplayName("Get a Connection from a Serer with a Specified ROLE")
-    @Test
-    void t16() throws SQLException {
-        final PostriseServer server = getServerInstance(DeltaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof DeltaServer);
-
-        try (final Connection connection = server.getConnection("postrise", "delta_application");
-                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
-                ResultSet rs = stmt.executeQuery()) {
-            assertTrue(rs.next());
-            assertEquals("delta_login", rs.getString(1));
-            assertEquals("delta_application", rs.getString(2));
-        }
-    }
-
-    @DisplayName("Get a Connection from a DataSourceContext with a Specified ROLE")
-    @Test
-    void t17() throws SQLException {
-        final Server server = getServerInstance(DeltaServer.class);
-        assertNotNull(server);
-        assertTrue(server instanceof DeltaServer);
-
-        final DataSourceContext dataSource = server.getDataSource("postrise");
-        try (final Connection connection = dataSource.getConnection("delta_application");
-                PreparedStatement stmt = connection.prepareStatement("SELECT session_user, current_user");
-                ResultSet rs = stmt.executeQuery()) {
-            assertTrue(rs.next());
-            assertEquals("delta_login", rs.getString(1));
-            assertEquals("delta_application", rs.getString(2));
-        }
     }
 
     @DisplayName("Connection Limit = 1 for beta_login User")
