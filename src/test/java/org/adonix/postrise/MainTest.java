@@ -390,6 +390,15 @@ public class MainTest {
         }
     }
 
+    @DisplayName("Server Close Idempotency")
+    @Test
+    void testServerCloseIdempotency() throws SQLException {
+        final Server server = new PostgresServer();
+        server.close();
+        server.close();
+        server.close();
+    }
+
     @BeforeAll
     static void beforeAll() throws Exception {
         PostgresDocker.start();
@@ -398,8 +407,6 @@ public class MainTest {
 
     @AfterAll
     static void afterAll() {
-        server.close();
-        // Call close a second time on server exit test.
         server.close();
         PostgresDocker.stop();
     }
