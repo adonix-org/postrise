@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
+import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresDocker;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
@@ -392,6 +393,14 @@ public class MainTest {
         final Server server = new PostgresServer();
         server.close();
         server.close();
+        server.close();
+    }
+
+    @DisplayName("Server Edge Casesw")
+    @Test
+    void testServerEdgeCases() throws SQLException {
+        final Server server = new EdgeCaseServer();
+        assertEquals(server.getDatabaseNames().size(), 0);
         server.close();
     }
 
