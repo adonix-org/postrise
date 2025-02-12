@@ -1,9 +1,9 @@
 package org.adonix.postrise;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
-
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +32,22 @@ public class SubMainTest {
     void testServerEdgeCases() throws SQLException {
         final Server server = new EdgeCaseServer();
         assertEquals(server.getDatabaseNames().size(), 0);
+        server.close();
+    }
+
+    @DisplayName("Invalid Pool Status Request")
+    @Test
+    void testInvalidPoolStatusRequest() throws SQLException {
+        final Server server = new EdgeCaseServer();
+        server.addListener(new DataSourceListener() {
+            @Override
+            public void beforeCreate(final DataSourceSettings settings) {
+                final DataSourceContext context = (DataSourceContext) settings;
+                final Throwable t = assertThrows(IllegalStateException.class, context::getActiveConnections);
+                assertEquals(t.getMessage(), "Pool status request is invalid");
+            }
+        });
+        assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
         server.close();
     }
 }

@@ -32,7 +32,7 @@ import org.postgresql.util.PSQLException;
 
 public class MainTest {
 
-    private static final Server server = TestServer.getInstance();
+    private static final PostgresDocker server = TestServer.getInstance();
 
     @DisplayName("EMPTY Database Name")
     @Test
@@ -407,13 +407,13 @@ public class MainTest {
 
     @BeforeAll
     static void beforeAll() throws Exception {
-        PostgresDocker.start();
+        server.start();
         TestEnvironment.initialize(server);
     }
 
     @AfterAll
     static void afterAll() {
         server.close();
-        PostgresDocker.stop();
+        server.stop();
     }
 }
