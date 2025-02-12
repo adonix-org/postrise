@@ -36,7 +36,7 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
-        assertEquals("Illegal EMPTY String for databaseName", t.getMessage());
+        assertEquals(t.getMessage(), "Illegal EMPTY String for databaseName");
     }
 
     @DisplayName("NULL Database Name")
@@ -45,7 +45,7 @@ public class MainTest {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
-        assertEquals("Illegal NULL String for databaseName", t.getMessage());
+        assertEquals(t.getMessage(), "Illegal NULL String for databaseName");
     }
 
     @DisplayName("EMPTY ROLE String")
@@ -88,7 +88,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: role \"no_login_no_super\" is not permitted to log in", cause.getMessage());
+        assertEquals(cause.getMessage(), "FATAL: role \"no_login_no_super\" is not permitted to log in");
     }
 
     @DisplayName("NOLOGIN SUPERUSER Exception")
@@ -102,7 +102,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
+        assertEquals(cause.getMessage(), "FATAL: role \"no_login_with_super\" is not permitted to log in");
     }
 
     @DisplayName("Default Security SUPERUSER LOGIN Exception")
@@ -117,7 +117,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: with_login_with_super is a SUPERUSER role", cause.getMessage());
+        assertEquals(cause.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
     }
 
     @DisplayName("Default Security LOGIN No Exception")
@@ -267,7 +267,7 @@ public class MainTest {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
+        assertEquals(cause.getMessage(), "FATAL: database \"not_a_database\" does not exist");
     }
 
     @DisplayName("Connection Reset")
