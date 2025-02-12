@@ -381,9 +381,9 @@ public class MainTest {
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
-    @DisplayName("Getters and Setters")
+    @DisplayName("Data Source Getters and Setters")
     @Test
-    void testGettersAndSetters() throws SQLException {
+    void testDataSourceGettersAndSetters() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
         assertNotNull(dataSource);
