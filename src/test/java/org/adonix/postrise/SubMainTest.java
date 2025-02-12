@@ -27,7 +27,7 @@ public class SubMainTest {
         server.close();
     }
 
-    @DisplayName("Server Edge Case")
+    @DisplayName("Server Edge Cases")
     @Test
     void testServerEdgeCases() throws SQLException {
         final Server server = new EdgeCaseServer();
