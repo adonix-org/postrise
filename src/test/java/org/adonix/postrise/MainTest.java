@@ -395,7 +395,6 @@ public class MainTest {
         getAndSet(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
         getAndSet(6, dataSource::getMinIdle, dataSource::setMinIdle);
         getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
-
     }
 
     public static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
