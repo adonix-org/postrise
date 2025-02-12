@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 public class TestServer extends PostgresDocker {
 
-    private static final Logger LOGGER = LogManager.getLogger(PostgresDocker.class);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final TestServer instance = new TestServer();
 

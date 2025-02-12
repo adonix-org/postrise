@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 public abstract class PostgresDocker extends PostgresServer {
 
-    private static final Logger LOGGER = LogManager.getLogger(PostgresDocker.class);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 

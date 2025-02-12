@@ -30,7 +30,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class MainTest<V> {
+public class MainTest {
 
     private static final Server server = TestServer.getInstance();
 
@@ -388,17 +388,18 @@ public class MainTest<V> {
         final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
         assertNotNull(dataSource);
 
-        runTest(45000L, dataSource::getConnectionTimeout, dataSource::setConnectionTimeout);
-        runTest(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
-        runTest(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
-        runTest(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
-        runTest(10, dataSource::getMinIdle, dataSource::setMinIdle);
-        runTest(45000L, dataSource::getIdleTimeout, dataSource::setIdleTimeout);
-        runTest(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
+        getAndSet(45000L, dataSource::getConnectionTimeout, dataSource::setConnectionTimeout);
+        getAndSet(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
+        getAndSet(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
+        getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
+        getAndSet(6, dataSource::getMinIdle, dataSource::setMinIdle);
+        getAndSet(45000L, dataSource::getIdleTimeout, dataSource::setIdleTimeout);
+        getAndSet(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
 
     }
 
-    public <T> void runTest(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
+    public static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
+        assertNotNull(newValue);
         assertNotEquals(newValue, getter.get());
         setter.accept(newValue);
         assertNotNull(getter.get());
