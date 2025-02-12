@@ -68,6 +68,15 @@ public class MainTest {
         assertEquals(t.getMessage(), "Illegal NULL String for roleName");
     }
 
+    @DisplayName("NULL Listener")
+    @Test
+    void testNullListener() throws SQLException {
+        final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
+            server.addListener(null);
+        });
+        assertEquals(t.getMessage(), "Illegal NULL Object for listener");
+    }
+
     @DisplayName("NOLOGIN Exception")
     @Test
     void testNoLoginException() throws SQLException {
@@ -278,9 +287,25 @@ public class MainTest {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
             final PostgresRole role = PostgresRoleDAO.getRole(connection, "no_login_no_super");
-            assertFalse(role.isSuperUser());
+            assertFalse(role.isCreateRole());
+            assertFalse(role.isCreateDbRole());
+            assertFalse(role.isInheritRole());
             assertFalse(role.isLoginRole());
+            assertFalse(role.isReplicationRole());
+            assertFalse(role.isSuperUser());
             assertEquals(role.getConnectionLimit(), -1);
+        }
+    }
+
+    @DisplayName("ROLE Does Not Exist Exception")
+    @Test
+    void testRoleDoesNotExistException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            final Throwable t = assertThrows(RoleSecurityException.class, () -> {
+                PostgresRoleDAO.getRole(connection, "role_does_not_exist");
+            });
+            assertEquals(t.getMessage(), "SECURITY: role 'role_does_not_exist' does not exist");
         }
     }
 
@@ -344,6 +369,8 @@ public class MainTest {
 
     @AfterAll
     static void afterAll() {
+        server.close();
+        // Call close a second time on server for exit test.
         server.close();
         PostgresDocker.stop();
     }
