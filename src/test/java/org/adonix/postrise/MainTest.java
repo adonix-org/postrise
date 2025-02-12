@@ -5,6 +5,7 @@ import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAUL
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,6 +15,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
@@ -26,7 +30,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class MainTest {
+public class MainTest<V> {
 
     private static final Server server = TestServer.getInstance();
 
@@ -375,6 +379,30 @@ public class MainTest {
         final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
+    }
+
+    @DisplayName("Getters and Setters")
+    @Test
+    void testGettersAndSetters() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(dataSource);
+
+        runTest(45000L, dataSource::getConnectionTimeout, dataSource::setConnectionTimeout);
+        runTest(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
+        runTest(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
+        runTest(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
+        runTest(10, dataSource::getMinIdle, dataSource::setMinIdle);
+        runTest(45000L, dataSource::getIdleTimeout, dataSource::setIdleTimeout);
+        runTest(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
+
+    }
+
+    public <T> void runTest(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
+        assertNotEquals(newValue, getter.get());
+        setter.accept(newValue);
+        assertNotNull(getter.get());
+        assertEquals(getter.get(), newValue);
     }
 
     @BeforeAll
