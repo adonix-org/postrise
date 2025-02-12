@@ -393,7 +393,7 @@ public class MainTest {
         getAndSet(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
         getAndSet(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
         getAndSet(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
-        getAndSet(6, dataSource::getMinIdle, dataSource::setMinIdle);
+        getAndSet(8, dataSource::getMinIdle, dataSource::setMinIdle);
         getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
     }
 
