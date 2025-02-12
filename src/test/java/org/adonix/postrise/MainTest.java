@@ -140,6 +140,16 @@ public class MainTest {
         }
     }
 
+    @DisplayName("Default Security Connection Limit No Exception")
+    @Test
+    void testDefaultSecurityConnectionLimitNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "connection_limited");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            assertNotNull(connection);
+        }
+    }
+
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
     @Test
     void testStrictSecurityLoginSuperUser() throws SQLException {

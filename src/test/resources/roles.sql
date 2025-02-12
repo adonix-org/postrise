@@ -59,6 +59,17 @@ CREATE ROLE with_login_with_super WITH
     NOBYPASSRLS
     ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
+DROP ROLE IF EXISTS connection_limited;
+CREATE ROLE connection_limited WITH
+    LOGIN
+    NOSUPERUSER
+    NOINHERIT
+    NOCREATEDB
+    NOCREATEROLE
+    NOREPLICATION
+    NOBYPASSRLS
+    CONNECTION LIMIT 2
+    ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:AKVCAySzvEjk1qtVw9JB9Q==$Mi+0cxtlwWR/q2s1uHdnoGs2eJkWZG0Ah5UPi9QrcOE=:3qa+BAcGnisr35gDUEBtt0ZavQ2jYeoEIjfZ0hIx6rg=';
 
 GRANT no_login_no_super TO with_login_no_super;
 GRANT with_login_with_super TO with_login_no_super;
