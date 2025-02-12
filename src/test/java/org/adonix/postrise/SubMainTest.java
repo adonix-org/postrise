@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class SubMainTest {
-        @DisplayName("Postgres Server Validate Default Host and Port")
+    @DisplayName("Postgres Server Validate Default Host and Port")
     @Test
     void testPostgresServerDefaultHostPort() throws SQLException {
         try (final Server server = new PostgresServer()) {
@@ -27,7 +27,7 @@ public class SubMainTest {
         server.close();
     }
 
-    @DisplayName("Server Edge Casesw")
+    @DisplayName("Server Edge Case")
     @Test
     void testServerEdgeCases() throws SQLException {
         final Server server = new EdgeCaseServer();
