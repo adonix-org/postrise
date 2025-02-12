@@ -255,7 +255,7 @@ public class MainTest {
 
     /**
      * This test validates that {@link PSQLException} errors are propagated when
-     * they occur.
+     * they happen.
      */
     @DisplayName("Postgres Exception Propagation")
     @Test
