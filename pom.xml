@@ -46,8 +46,7 @@
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <log4j.version>2.24.3</log4j.version>
-        <org.json.version>20250107</org.json.version>
-        <org.postgresql.version>42.7.4</org.postgresql.version>
+        <org.postgresql.version>42.7.5</org.postgresql.version>
         <com.zaxxer.hikaricp.version>6.2.1</com.zaxxer.hikaricp.version>
         <org.junit.jupiter.version>5.11.4</org.junit.jupiter.version>
         <org.testcontainers.version>1.20.4</org.testcontainers.version>
@@ -56,12 +55,6 @@
     <dependencies>
 
         <!-- Compile -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${org.json.version}</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -173,13 +166,17 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
