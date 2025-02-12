@@ -32,7 +32,7 @@ import org.postgresql.util.PSQLException;
 
 public class MainTest {
 
-    private static final PostgresDocker server = TestServer.getInstance();
+    private static final PostgresDocker server = new TestServer();
 
     @DisplayName("EMPTY Database Name")
     @Test

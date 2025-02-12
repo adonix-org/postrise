@@ -5,10 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
+import org.adonix.postrise.servers.PostgresDocker;
+import org.adonix.postrise.servers.TestServer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class SubMainTest {
+
+    private static final PostgresDocker server = new TestServer();
+
     @DisplayName("Postgres Server Validate Default Host and Port")
     @Test
     void testPostgresServerDefaultHostPort() throws SQLException {
@@ -49,5 +56,17 @@ public class SubMainTest {
         });
         assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
         server.close();
+    }
+
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        server.start();
+        TestEnvironment.initialize(server);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        server.close();
+        server.stop();
     }
 }

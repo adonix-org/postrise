@@ -7,13 +7,7 @@ public class TestServer extends PostgresDocker {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final TestServer instance = new TestServer();
-
-    public static final TestServer getInstance() {
-        return instance;
-    }
-
-    private TestServer() {
+    public TestServer() {
         // Add listener a second time to generate warning.
         addListener(new PostriseDatabase());
     }
