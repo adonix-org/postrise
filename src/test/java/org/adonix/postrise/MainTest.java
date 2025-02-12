@@ -389,12 +389,12 @@ public class MainTest {
         assertNotNull(dataSource);
 
         getAndSet(45000L, dataSource::getConnectionTimeout, dataSource::setConnectionTimeout);
-        getAndSet(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
-        getAndSet(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
-        getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
-        getAndSet(6, dataSource::getMinIdle, dataSource::setMinIdle);
         getAndSet(45000L, dataSource::getIdleTimeout, dataSource::setIdleTimeout);
+        getAndSet(45000L, dataSource::getLeakDetectionThreshold, dataSource::setLeakDetectionThreshold);
+        getAndSet(45000L, dataSource::getMaxLifetime, dataSource::setMaxLifetime);
         getAndSet(15, dataSource::getMaxPoolSize, dataSource::setMaxPoolSize);
+        getAndSet(6, dataSource::getMinIdle, dataSource::setMinIdle);
+        getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
 
     }
 
