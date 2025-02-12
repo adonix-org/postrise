@@ -150,6 +150,16 @@ public class MainTest {
         }
     }
 
+    @DisplayName("Default Security Connection Limit Large No Exception")
+    @Test
+    void testDefaultSecurityConnectionLimitLargeNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "connection_limited_large");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            assertNotNull(connection);
+        }
+    }
+
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
     @Test
     void testStrictSecurityLoginSuperUser() throws SQLException {
@@ -371,6 +381,15 @@ public class MainTest {
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
     }
 
+    @DisplayName("Postgres Server Validate Default Host and Port")
+    @Test
+    void testPostgresServerDefaultHostPort() throws SQLException {
+        try (final Server server = new PostgresServer()) {
+            assertEquals(server.getHostName(), PostgresServer.POSTGRES_DEFAULT_HOSTNAME);
+            assertEquals(server.getPort(), PostgresServer.POSTGRES_DEFAULT_PORT);
+        }
+    }
+
     @BeforeAll
     static void beforeAll() throws Exception {
         PostgresDocker.start();
@@ -380,7 +399,7 @@ public class MainTest {
     @AfterAll
     static void afterAll() {
         server.close();
-        // Call close a second time on server for exit test.
+        // Call close a second time on server exit test.
         server.close();
         PostgresDocker.stop();
     }
