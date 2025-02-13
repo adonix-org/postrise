@@ -25,7 +25,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TestSafe {
+public class TestExpected {
 
     private static final PostgresDocker server = new TestServer();
 

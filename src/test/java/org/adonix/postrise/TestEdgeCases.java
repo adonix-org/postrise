@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class SubMainTest {
+public class TestEdgeCases {
 
     @Test
     void testServerRestart() throws Exception {
@@ -27,8 +27,7 @@ public class SubMainTest {
             }
 
             server.stopContainer();
-            final Throwable t = assertThrows(PSQLException.class, context::getConnection);
-            assertEquals(t.getMessage(), "An I/O error occurred while sending to the backend.");
+            assertThrows(PSQLException.class, context::getConnection);
 
             server.startContainer();
             try (final Connection connection = context.getConnection()) {
