@@ -131,7 +131,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Connection Reset")
+    @DisplayName("Connection RESET")
     @Test
     void testConnectionRoleReset() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
@@ -239,9 +239,9 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Data Source Getters and Setters")
+    @DisplayName("Postrise Data Source Getters and Setters")
     @Test
-    void testDataSourceGettersAndSetters() throws SQLException {
+    void testPostriseDataSourceGettersAndSetters() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
         assertNotNull(dataSource);
