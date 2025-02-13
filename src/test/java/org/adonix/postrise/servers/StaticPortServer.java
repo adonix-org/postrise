@@ -5,12 +5,12 @@ import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 
-public class RestartServer extends PostgresDocker {
+public class StaticPortServer extends PostgresDocker {
 
     private static final int FIXED_HOST_PORT = 5433; // Always use this port on the host
     private static final int CONTAINER_PORT = 5432; // Default Postgres port inside the container
 
-    public RestartServer() {
+    public StaticPortServer() {
         super();
         container.withExposedPorts(CONTAINER_PORT) // Expose the default Postgres port
                 .withExposedPorts(CONTAINER_PORT) // Expose PostgreSQL inside the container

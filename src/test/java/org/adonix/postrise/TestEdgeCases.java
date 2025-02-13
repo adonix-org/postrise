@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresDocker;
-import org.adonix.postrise.servers.RestartServer;
+import org.adonix.postrise.servers.StaticPortServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
@@ -18,7 +18,7 @@ public class TestEdgeCases {
     @Test
     void testServerRestart() throws Exception {
 
-        try (final PostgresDocker server = new RestartServer()) {
+        try (final PostgresDocker server = new StaticPortServer()) {
 
             server.startContainer();
             final DataSourceContext context = server.getDataSource("postrise");
