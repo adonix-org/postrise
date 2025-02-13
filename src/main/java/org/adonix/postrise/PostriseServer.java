@@ -134,8 +134,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // SERVER STATE - Manage the state of the server.
+    // SERVER STATE - Thread-safe management of the server state.
     // --------------------------------------------------------------------------
+
     /**
      * A {@link Server} should be in one of these states.
      */
