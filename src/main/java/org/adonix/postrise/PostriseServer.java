@@ -27,8 +27,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -209,10 +210,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // STATUS - Return the cumulative TOTAL, ACTIVE and IDLE connection counts.
     // --------------------------------------------------------------------------
 
-    private int getStatus(final Function<DataSourceContext, Integer> function) {
+    private int getStatus(final ToIntFunction<DataSourceContext> function) {
         int total = 0;
         for (final DataSourceContext context : databasePools.values()) {
-            total += function.apply(context);
+            total += function.applyAsInt(context);
         }
         return total;
     }

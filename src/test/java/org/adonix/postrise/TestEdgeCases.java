@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
@@ -66,7 +65,7 @@ class TestEdgeCases {
 
     @DisplayName("Server Close Idempotency")
     @Test
-    void testServerCloseIdempotency() throws SQLException {
+    void testServerCloseIdempotency() {
         final Server server = new PostgresServer();
         assertNotNull(server);
         server.close();
@@ -76,7 +75,7 @@ class TestEdgeCases {
 
     @DisplayName("Server Get Empty Database Names")
     @Test
-    void testServerGetEmptyDatabaseNames() throws SQLException {
+    void testServerGetEmptyDatabaseNames() {
         try (final Server server = new EdgeCaseServer()) {
             assertEquals(0, server.getDatabaseNames().size());
         }

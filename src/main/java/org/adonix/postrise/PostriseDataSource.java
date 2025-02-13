@@ -21,7 +21,7 @@ import com.zaxxer.hikari.HikariPoolMXBean;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 import org.adonix.postrise.security.RoleSecurityListener;
 
@@ -215,11 +215,11 @@ abstract class PostriseDataSource implements ConnectionProvider {
         return getPoolStatus(HikariPoolMXBean::getThreadsAwaitingConnection);
     }
 
-    private int getPoolStatus(Function<HikariPoolMXBean, Integer> method) {
+    private int getPoolStatus(ToIntFunction<HikariPoolMXBean> method) {
         if (delegate.getHikariPoolMXBean() == null) {
             throw new IllegalStateException("Pool status request is invalid");
         }
-        return method.apply(delegate.getHikariPoolMXBean());
+        return method.applyAsInt(delegate.getHikariPoolMXBean());
     }
 
     @Override
