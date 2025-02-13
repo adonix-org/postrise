@@ -30,7 +30,7 @@ class PostriseDatabase implements DatabaseListener {
 
     @Override
     public String getDatabaseName() {
-        return "postrise";
+        return PostgresDocker.DB_NAME;
     }
 
     @Override

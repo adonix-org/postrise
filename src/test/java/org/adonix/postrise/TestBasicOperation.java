@@ -113,7 +113,7 @@ public class TestBasicOperation {
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
             assertNotNull(connection);
         }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "postrise")) {
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), PostgresDocker.DB_USER)) {
             assertNotNull(connection);
         }
     }

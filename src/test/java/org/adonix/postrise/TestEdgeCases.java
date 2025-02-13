@@ -37,7 +37,7 @@ public class TestEdgeCases {
         try (final PostgresDocker server = new StaticPortServer()) {
 
             server.startContainer();
-            final DataSourceContext context = server.getDataSource("postrise");
+            final DataSourceContext context = server.getDataSource(PostgresDocker.DB_NAME);
             try (final Connection connection = context.getConnection()) {
                 connection.createStatement().executeQuery("SELECT 1");
             }
