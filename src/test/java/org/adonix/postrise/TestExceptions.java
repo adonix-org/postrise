@@ -47,7 +47,7 @@ class TestExceptions {
 
     @DisplayName("EMPTY Database Name")
     @Test
-    void testEmptyDatabaseName() throws SQLException {
+    void testEmptyDatabaseName() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
@@ -57,7 +57,7 @@ class TestExceptions {
 
     @DisplayName("NULL Database Name")
     @Test
-    void testNullDatabaseName() throws SQLException {
+    void testNullDatabaseName() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
@@ -68,9 +68,9 @@ class TestExceptions {
     @DisplayName("EMPTY ROLE String")
     @Test
     void testEmptyRoleString() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), " ");
+            server.getConnection(databaseName, " ");
         });
         assertEquals("Illegal EMPTY String for roleName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -79,9 +79,9 @@ class TestExceptions {
     @DisplayName("NULL ROLE String")
     @Test
     void testNullRoleString() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), null);
+            server.getConnection(databaseName, null);
         });
         assertEquals("Illegal NULL String for roleName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -89,7 +89,7 @@ class TestExceptions {
 
     @DisplayName("NULL Listener")
     @Test
-    void testNullListener() throws SQLException {
+    void testNullListener() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener(null);
         });
@@ -100,9 +100,9 @@ class TestExceptions {
     @DisplayName("NOLOGIN Exception")
     @Test
     void testNoLoginException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, "no_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection(listener.getDatabaseName());
+            server.getConnection(databaseName);
         });
 
         final Throwable cause = t.getCause();
@@ -115,9 +115,9 @@ class TestExceptions {
     @DisplayName("NOLOGIN SUPERUSER Exception")
     @Test
     void testNoLoginSuperUserException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "no_login_with_super");
+        final String databaseName = new TestDatabaseListener(server, "no_login_with_super").getDatabaseName();
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection(listener.getDatabaseName());
+            server.getConnection(databaseName);
         });
 
         final Throwable cause = t.getCause();
@@ -130,10 +130,10 @@ class TestExceptions {
     @DisplayName("Default Security SUPERUSER LOGIN Exception")
     @Test
     void testDefaultSecuritySuperUserLoginException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
-                "with_login_with_super");
+        final String databaseName = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "with_login_with_super").getDatabaseName();
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection(listener.getDatabaseName());
+            server.getConnection(databaseName);
         });
 
         final Throwable cause = t.getCause();
@@ -146,10 +146,10 @@ class TestExceptions {
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
     @Test
     void testStrictSecurityLoginSuperUser() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_with_super");
+        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_with_super").getDatabaseName();
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
-            server.getConnection(listener.getDatabaseName());
+            server.getConnection(databaseName);
         });
 
         final Throwable cause = t.getCause();
@@ -162,10 +162,10 @@ class TestExceptions {
     @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
     @Test
     void testStrictSecuritySetRoleSuperUser() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), "no_login_with_super");
+            server.getConnection(databaseName, "no_login_with_super");
         });
         assertEquals("SECURITY: \"no_login_with_super\" is a SUPERUSER role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -174,10 +174,10 @@ class TestExceptions {
     @DisplayName("Strict Security SET ROLE LOGIN Exception")
     @Test
     void testStrictSecuritySetRoleLoginUser() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), "with_login_no_super");
+            server.getConnection(databaseName, "with_login_no_super");
         });
         assertEquals("SECURITY: \"with_login_no_super\" is a LOGIN role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -186,10 +186,10 @@ class TestExceptions {
     @DisplayName("Strict Security SET ROLE SUPERUSER LOGIN Exception")
     @Test
     void testStrictSecuritySetRoleSuperLoginUser() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super");
+        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(listener.getDatabaseName(), "with_login_with_super");
+            server.getConnection(databaseName, "with_login_with_super");
         });
         assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -212,8 +212,8 @@ class TestExceptions {
     @DisplayName("ROLE Does Not Exist Exception")
     @Test
     void testRoleDoesNotExistException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
-        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+        final String databaseName = new TestDatabaseListener(server, "with_login_no_super").getDatabaseName();
+        try (final Connection connection = server.getConnection(databaseName)) {
             final Throwable t = assertThrows(RoleSecurityException.class, () -> {
                 PostgresRoleDAO.getRole(connection, "role_does_not_exist");
             });

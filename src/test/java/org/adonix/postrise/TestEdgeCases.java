@@ -84,8 +84,9 @@ class TestEdgeCases {
 
     @DisplayName("Server Add Listener Twice")
     @Test
-    void testServerAddListenerTwice() throws SQLException {
+    void testServerAddListenerTwice() {
         try (final Server server = new EdgeCaseServer()) {
+            assertNotNull(server);
             final DatabaseListener listener = new PostriseListener();
             server.addListener(listener);
             server.addListener(listener);
@@ -94,7 +95,7 @@ class TestEdgeCases {
 
     @DisplayName("Invalid Pool Status Request")
     @Test
-    void testInvalidPoolStatusRequest() throws SQLException {
+    void testInvalidPoolStatusRequest() {
         try (final Server server = new EdgeCaseServer()) {
             server.addListener(new DataSourceListener() {
                 @Override
