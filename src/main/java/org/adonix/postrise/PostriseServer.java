@@ -157,9 +157,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
                 case CLOSING:
                     throw new IllegalStateException(this + " is closing");
                 case CLOSED:
-                    throw new IllegalStateException(this + " is closed");
                 default:
-                    throw new IllegalStateException(this + " state unknown");
+                    throw new IllegalStateException(this + " is closed");
             }
         } finally {
             readState.unlock();

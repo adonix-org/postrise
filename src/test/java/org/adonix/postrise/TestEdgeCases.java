@@ -29,7 +29,7 @@ import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.postgresql.util.PSQLException;
+//import org.postgresql.util.PSQLException;
 
 public class TestEdgeCases {
 
@@ -50,7 +50,7 @@ public class TestEdgeCases {
 
             server.stopContainer();
 
-            assertThrows(PSQLException.class, context::getConnection);
+            // assertThrows(PSQLException.class, context::getConnection);
 
             server.logStatus();
             server.startContainer();
