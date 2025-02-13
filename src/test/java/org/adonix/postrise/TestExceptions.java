@@ -163,15 +163,6 @@ public class TestExceptions {
         assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
     }
 
-    @DisplayName("Strict Security SET ROLE No Exception")
-    @Test
-    void testStrictSecuritySetRoleNoException() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super");
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
-            assertNotNull(connection);
-        }
-    }
 
     @DisplayName("Postgres Exception Propagation")
     @Test

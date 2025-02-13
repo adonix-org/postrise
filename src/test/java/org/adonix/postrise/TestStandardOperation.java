@@ -2,6 +2,7 @@ package org.adonix.postrise;
 
 import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_STRICT_ROLE_SECURITY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TestExpected {
+public class TestStandardOperation {
 
     private static final PostgresDocker server = new TestServer();
 
@@ -55,6 +56,16 @@ public class TestExpected {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "connection_limited");
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            assertNotNull(connection);
+        }
+    }
+
+    @DisplayName("Strict Security SET ROLE No Exception")
+    @Test
+    void testStrictSecuritySetRoleNoException() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
+                "with_login_no_super");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
             assertNotNull(connection);
         }
     }
@@ -201,6 +212,15 @@ public class TestExpected {
         final String tcpKeepAlive = dataSource.getDataSourceProperties().getProperty("tcpKeepAlive");
         assertNotNull(tcpKeepAlive);
         assertTrue(Boolean.parseBoolean(tcpKeepAlive));
+    }
+
+    @DisplayName("Postgres Server Validate Default Host Name and Port")
+    @Test
+    void testPostgresServerDefaultHostNameAndPort() throws SQLException {
+        try (final Server server = new PostgresServer()) {
+            assertEquals(server.getHostName(), PostgresServer.POSTGRES_DEFAULT_HOSTNAME);
+            assertEquals(server.getPort(), PostgresServer.POSTGRES_DEFAULT_PORT);
+        }
     }
 
     @DisplayName("Data Source Getters and Setters")

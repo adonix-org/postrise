@@ -39,15 +39,6 @@ public class TestEdgeCases {
         }
     }
 
-    @DisplayName("Postgres Server Validate Default Host and Port")
-    @Test
-    void testPostgresServerDefaultHostPort() throws SQLException {
-        try (final Server server = new PostgresServer()) {
-            assertEquals(server.getHostName(), PostgresServer.POSTGRES_DEFAULT_HOSTNAME);
-            assertEquals(server.getPort(), PostgresServer.POSTGRES_DEFAULT_PORT);
-        }
-    }
-
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() throws SQLException {
