@@ -34,7 +34,7 @@ public class TestEdgeCases {
                 assertNotNull(connection);
                 connection.createStatement().executeQuery("SELECT 1");
             }
-
+            
             server.stopContainer();
         }
     }

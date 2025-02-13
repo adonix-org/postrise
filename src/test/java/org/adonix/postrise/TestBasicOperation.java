@@ -32,7 +32,7 @@ public class TestBasicOperation {
 
     @DisplayName("Default Security LOGIN")
     @Test
-    void testDefaultSecurityLoginNoException() throws SQLException {
+    void testDefaultSecurityLogin() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "with_login_no_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
@@ -42,7 +42,7 @@ public class TestBasicOperation {
 
     @DisplayName("Default Security SET ROLE")
     @Test
-    void testDefaultSecuritySetRoleNoException() throws SQLException {
+    void testDefaultSecuritySetRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "with_login_no_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
@@ -52,7 +52,7 @@ public class TestBasicOperation {
 
     @DisplayName("Default Security Connection Limit")
     @Test
-    void testDefaultSecurityConnectionLimitNoException() throws SQLException {
+    void testDefaultSecurityConnectionLimit() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "connection_limited");
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
@@ -62,7 +62,7 @@ public class TestBasicOperation {
 
     @DisplayName("Strict Security SET ROLE")
     @Test
-    void testStrictSecuritySetRoleNoException() throws SQLException {
+    void testStrictSecuritySetRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
                 "with_login_no_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
@@ -72,7 +72,7 @@ public class TestBasicOperation {
 
     @DisplayName("Default Security Connection Limit Large")
     @Test
-    void testDefaultSecurityConnectionLimitLargeNoException() throws SQLException {
+    void testDefaultSecurityConnectionLimitLarge() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
                 "connection_limited_large");
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
@@ -82,7 +82,7 @@ public class TestBasicOperation {
 
     @DisplayName("Disabled Security SUPERUSER SET ROLE")
     @Test
-    void testDisableSecuritySuperUserSetRoleNoException() throws SQLException {
+    void testDisableSecuritySuperUserSetRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
                 "with_login_with_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_no_super")) {
@@ -104,7 +104,7 @@ public class TestBasicOperation {
 
     @DisplayName("Disabled Security NO SUPERUSER SET ROLE")
     @Test
-    void testDisableSecurityNoSuperUserSetRoleNoException() throws SQLException {
+    void testDisableSecurityNoSuperUserSetRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
                 "with_login_no_super");
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_no_super")) {
