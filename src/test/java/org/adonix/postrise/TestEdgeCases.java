@@ -16,11 +16,12 @@
 
 package org.adonix.postrise;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresDocker;
@@ -31,24 +32,29 @@ import org.postgresql.util.PSQLException;
 
 public class TestEdgeCases {
 
+    @DisplayName("Server Restart And Recovery")
     @Test
-    void testServerRestart() throws Exception {
+    void testServerRestartAndRecovery() throws Exception {
 
         try (final PostgresDocker server = new StaticPortServer()) {
 
             server.startContainer();
             final DataSourceContext context = server.getDataSource(PostgresDocker.DB_NAME);
-            try (final Connection connection = context.getConnection()) {
-                connection.createStatement().executeQuery("SELECT 1");
+            try (final Connection connection = context.getConnection();
+                    final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
+                assertTrue(rs.next());
+                assertEquals(rs.getInt(1), 1);
             }
 
             server.stopContainer();
             assertThrows(PSQLException.class, context::getConnection);
 
             server.startContainer();
-            try (final Connection connection = context.getConnection()) {
-                assertNotNull(connection);
-                connection.createStatement().executeQuery("SELECT 1");
+
+            try (final Connection connection = context.getConnection();
+                    final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
+                assertTrue(rs.next());
+                assertEquals(rs.getInt(1), 1);
             }
 
             server.stopContainer();
