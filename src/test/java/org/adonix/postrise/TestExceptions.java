@@ -51,7 +51,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
-        assertEquals(t.getMessage(), "Illegal EMPTY String for databaseName");
+        assertEquals("Illegal EMPTY String for databaseName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -61,7 +61,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
-        assertEquals(t.getMessage(), "Illegal NULL String for databaseName");
+        assertEquals("Illegal NULL String for databaseName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -72,7 +72,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(listener.getDatabaseName(), " ");
         });
-        assertEquals(t.getMessage(), "Illegal EMPTY String for roleName");
+        assertEquals("Illegal EMPTY String for roleName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -83,7 +83,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(listener.getDatabaseName(), null);
         });
-        assertEquals(t.getMessage(), "Illegal NULL String for roleName");
+        assertEquals("Illegal NULL String for roleName", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -93,7 +93,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener(null);
         });
-        assertEquals(t.getMessage(), "Illegal NULL Object for listener");
+        assertEquals("Illegal NULL Object for listener", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -108,7 +108,7 @@ class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals(cause.getMessage(), "FATAL: role \"no_login_no_super\" is not permitted to log in");
+        assertEquals("FATAL: role \"no_login_no_super\" is not permitted to log in", cause.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -123,7 +123,7 @@ class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals(cause.getMessage(), "FATAL: role \"no_login_with_super\" is not permitted to log in");
+        assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -139,7 +139,7 @@ class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals(cause.getMessage(), "SECURITY: \"with_login_with_super\" is a SUPERUSER role");
+        assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", cause.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -167,7 +167,7 @@ class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "no_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: \"no_login_with_super\" is a SUPERUSER role");
+        assertEquals("SECURITY: \"no_login_with_super\" is a SUPERUSER role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -179,7 +179,7 @@ class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "with_login_no_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: \"with_login_no_super\" is a LOGIN role");
+        assertEquals("SECURITY: \"with_login_no_super\" is a LOGIN role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -191,7 +191,7 @@ class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "with_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: \"with_login_with_super\" is a SUPERUSER role");
+        assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -205,7 +205,7 @@ class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
-        assertEquals(cause.getMessage(), "FATAL: database \"not_a_database\" does not exist");
+        assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 
@@ -217,7 +217,7 @@ class TestExceptions {
             final Throwable t = assertThrows(RoleSecurityException.class, () -> {
                 PostgresRoleDAO.getRole(connection, "role_does_not_exist");
             });
-            assertEquals(t.getMessage(), "SECURITY: role \"role_does_not_exist\" does not exist");
+            assertEquals("SECURITY: role \"role_does_not_exist\" does not exist", t.getMessage());
             LOGGER.error("{}: {}", server, t);
         }
     }
