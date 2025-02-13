@@ -8,13 +8,17 @@ import org.adonix.postrise.servers.PostgresDocker;
 
 abstract class TestEnvironment {
 
+    private static final String[] SQL_FILES = { "roles.sql" };
+
     public static void initialize(final Server server) throws Exception {
         try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME)) {
-            executeSqlFile(connection, "roles.sql");
+            for (final String fileName : SQL_FILES) {
+                executeSqlFile(connection, fileName);
+            }
         }
     }
 
-    static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
+    public static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
         final String sql = Files.readString(
                 Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
         try (Statement stmt = connection.createStatement()) {
