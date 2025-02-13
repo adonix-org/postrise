@@ -16,7 +16,7 @@
 
 package org.adonix.postrise.servers;
 
-public class TestServer extends PostgresDocker {
+public class TestServer extends PostgresContainer {
 
     @Override
     protected void beforeClose() {

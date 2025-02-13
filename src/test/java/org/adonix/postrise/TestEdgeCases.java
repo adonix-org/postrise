@@ -24,8 +24,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
-import org.adonix.postrise.servers.PostgresDocker;
-import org.adonix.postrise.servers.PostriseDatabase;
+import org.adonix.postrise.servers.PostgresContainer;
+import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,10 +37,10 @@ public class TestEdgeCases {
     @Test
     void testServerRestartAndRecovery() throws Exception {
 
-        try (final PostgresDocker server = new StaticPortServer()) {
+        try (final PostgresContainer server = new StaticPortServer()) {
 
             server.startContainer();
-            final DataSourceContext context = server.getDataSource(PostgresDocker.DB_NAME);
+            final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
             try (final Connection connection = context.getConnection();
                     final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
                 assertTrue(rs.next());
@@ -87,7 +87,7 @@ public class TestEdgeCases {
     @Test
     void testServerAddListenerTwice() throws SQLException {
         try (final Server server = new EdgeCaseServer()) {
-            final DatabaseListener listener = new PostriseDatabase();
+            final DatabaseListener listener = new PostriseListener();
             server.addListener(listener);
             server.addListener(listener);
         }

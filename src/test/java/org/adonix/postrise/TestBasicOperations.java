@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 
 import org.adonix.postrise.security.PostgresRole;
 import org.adonix.postrise.security.PostgresRoleDAO;
-import org.adonix.postrise.servers.PostgresDocker;
+import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AfterAll;
@@ -42,9 +42,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TestBasicOperation {
+public class TestBasicOperations {
 
-    private static final PostgresDocker server = new TestServer();
+    private static final PostgresContainer server = new TestServer();
 
     @DisplayName("Default Security LOGIN")
     @Test
@@ -113,7 +113,8 @@ public class TestBasicOperation {
         try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
             assertNotNull(connection);
         }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), PostgresDocker.DB_USER)) {
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(),
+                PostgresContainer.DB_USER)) {
             assertNotNull(connection);
         }
     }
@@ -214,7 +215,7 @@ public class TestBasicOperation {
                 PreparedStatement stmt = connection.prepareStatement("SELECT current_setting('max_connections')");
                 ResultSet rs = stmt.executeQuery()) {
             assertTrue(rs.next());
-            assertEquals(rs.getInt(1), PostgresDocker.MAX_CONNECTIONS);
+            assertEquals(rs.getInt(1), PostgresContainer.MAX_CONNECTIONS);
         }
     }
 

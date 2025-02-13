@@ -20,14 +20,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Statement;
-import org.adonix.postrise.servers.PostgresDocker;
+import org.adonix.postrise.servers.PostgresContainer;
 
 abstract class TestEnvironment {
 
     private static final String[] SQL_FILES = { "roles.sql" };
 
     public static void initialize(final Server server) throws Exception {
-        try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME)) {
+        try (final Connection connection = server.getConnection(PostgresContainer.DB_NAME)) {
             for (final String fileName : SQL_FILES) {
                 executeSqlFile(connection, fileName);
             }

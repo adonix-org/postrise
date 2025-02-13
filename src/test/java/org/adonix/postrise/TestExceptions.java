@@ -28,7 +28,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityException;
-import org.adonix.postrise.servers.PostgresDocker;
+import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
 import org.apache.logging.log4j.LogManager;
@@ -41,7 +41,7 @@ import org.postgresql.util.PSQLException;
 
 public class TestExceptions {
 
-    private static final PostgresDocker server = new TestServer();
+    private static final PostgresContainer server = new TestServer();
 
     private static final Logger LOGGER = LogManager.getLogger(TestExceptions.class);
 

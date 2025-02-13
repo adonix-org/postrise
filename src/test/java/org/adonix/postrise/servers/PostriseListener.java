@@ -24,13 +24,13 @@ import org.adonix.postrise.DatabaseListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PostriseDatabase implements DatabaseListener {
+public class PostriseListener implements DatabaseListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public String getDatabaseName() {
-        return PostgresDocker.DB_NAME;
+        return PostgresContainer.DB_NAME;
     }
 
     @Override

@@ -61,7 +61,7 @@ public class TestDatabaseListener implements DatabaseListener {
     }
 
     private void createTestDatabase(final Server server) throws SQLException {
-        try (final Connection connection = server.getConnection(PostgresDocker.DB_NAME);
+        try (final Connection connection = server.getConnection(PostgresContainer.DB_NAME);
                 final Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(getCreateDatabaseSql());
         }

@@ -23,7 +23,7 @@ import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 
-public class StaticPortServer extends PostgresDocker {
+public class StaticPortServer extends PostgresContainer {
 
     private static final Integer HOST_PORT = 5801;
 

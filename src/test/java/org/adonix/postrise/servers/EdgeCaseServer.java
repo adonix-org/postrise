@@ -29,13 +29,13 @@ public class EdgeCaseServer extends PostgresServer {
     @Override
     protected void beforeClose() {
         super.beforeClose();
-        this.addListener(new PostriseDatabase());
+        this.addListener(new PostriseListener());
     }
 
     @Override
     protected void afterClose() {
         super.afterClose();
-        this.addListener(new PostriseDatabase());
+        this.addListener(new PostriseListener());
     }
 
     @Override
