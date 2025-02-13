@@ -1,20 +1,44 @@
 package org.adonix.postrise;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresDocker;
-import org.adonix.postrise.servers.TestServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.adonix.postrise.servers.RestartServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.postgresql.util.PSQLException;
 
 public class SubMainTest {
 
-    private static final PostgresDocker server = new TestServer();
+    @Test
+    void testServerRestart() throws Exception {
+        
+        try (final PostgresDocker server = new RestartServer()) {
+
+            server.start();
+            final DataSourceContext context = server.getDataSource("postrise");
+            try (final Connection connection = context.getConnection()) {
+                connection.createStatement().executeQuery("SELECT 1");
+            }
+
+            server.stop();
+            final Throwable t = assertThrows(PSQLException.class, context::getConnection);
+            assertEquals(t.getMessage(), "An I/O error occurred while sending to the backend.");
+
+            server.start();
+            try (final Connection connection = context.getConnection()) {
+                assertNotNull(connection);
+                connection.createStatement().executeQuery("SELECT 1");
+            }
+
+            server.stop();
+        }
+    }
 
     @DisplayName("Postgres Server Validate Default Host and Port")
     @Test
@@ -56,17 +80,5 @@ public class SubMainTest {
         });
         assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
         server.close();
-    }
-
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        server.start();
-        TestEnvironment.initialize(server);
-    }
-
-    @AfterAll
-    static void afterAll() {
-        server.close();
-        server.stop();
     }
 }

@@ -13,7 +13,7 @@ public abstract class PostgresDocker extends PostgresServer {
 
     private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 
-    private final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
+    protected final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
 
     public static final int MAX_CONNECTIONS = 199;
     public static final String DB_NAME = "postrise";
