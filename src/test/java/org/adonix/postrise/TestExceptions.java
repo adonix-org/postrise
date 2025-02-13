@@ -37,6 +37,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.postgresql.util.PSQLException;
 
 class TestExceptions {
@@ -159,39 +161,22 @@ class TestExceptions {
         LOGGER.error("{}: {}", server, t);
     }
 
-    @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
-    @Test
-    void testStrictSecuritySetRoleSuperUser() throws SQLException {
+    @DisplayName("Strict Security SET ROLE Exception Tests")
+    @ParameterizedTest(name = "[{index}] Role: {1}")
+    @CsvSource({
+            "no_login_with_super, SECURITY: \"no_login_with_super\" is a SUPERUSER role",
+            "with_login_no_super, SECURITY: \"with_login_no_super\" is a LOGIN role",
+            "with_login_with_super, SECURITY: \"with_login_with_super\" is a SUPERUSER role"
+    })
+    void testStrictSecuritySetRoleException(String role, String expectedMessage) throws SQLException {
         final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
                 "with_login_no_super").getDatabaseName();
-        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(databaseName, "no_login_with_super");
-        });
-        assertEquals("SECURITY: \"no_login_with_super\" is a SUPERUSER role", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
-    }
 
-    @DisplayName("Strict Security SET ROLE LOGIN Exception")
-    @Test
-    void testStrictSecuritySetRoleLoginUser() throws SQLException {
-        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(databaseName, "with_login_no_super");
+            server.getConnection(databaseName, role);
         });
-        assertEquals("SECURITY: \"with_login_no_super\" is a LOGIN role", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
-    }
 
-    @DisplayName("Strict Security SET ROLE SUPERUSER LOGIN Exception")
-    @Test
-    void testStrictSecuritySetRoleSuperLoginUser() throws SQLException {
-        final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
-                "with_login_no_super").getDatabaseName();
-        final Throwable t = assertThrows(RoleSecurityException.class, () -> {
-            server.getConnection(databaseName, "with_login_with_super");
-        });
-        assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", t.getMessage());
+        assertEquals(expectedMessage, t.getMessage());
         LOGGER.error("{}: {}", server, t);
     }
 

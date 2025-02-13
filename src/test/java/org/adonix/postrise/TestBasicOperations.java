@@ -41,16 +41,18 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class TestBasicOperations {
 
     private static final PostgresContainer server = new TestServer();
 
-    @DisplayName("Default Security LOGIN")
-    @Test
-    void testDefaultSecurityLogin() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
-                "with_login_no_super");
+    @DisplayName("Default Security Tests")
+    @ParameterizedTest
+    @ValueSource(strings = { "with_login_no_super", "connection_limited", "connection_limited_large" })
+    void testDefaultSecurity(final String roleName) throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY, roleName);
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
             assertNotNull(connection);
         }
@@ -66,16 +68,6 @@ class TestBasicOperations {
         }
     }
 
-    @DisplayName("Default Security Connection Limit")
-    @Test
-    void testDefaultSecurityConnectionLimit() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
-                "connection_limited");
-        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
-            assertNotNull(connection);
-        }
-    }
-
     @DisplayName("Strict Security SET ROLE")
     @Test
     void testStrictSecuritySetRole() throws SQLException {
@@ -86,35 +78,14 @@ class TestBasicOperations {
         }
     }
 
-    @DisplayName("Default Security Connection Limit Large")
-    @Test
-    void testDefaultSecurityConnectionLimitLarge() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
-                "connection_limited_large");
-        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
-            assertNotNull(connection);
-        }
-    }
-
     @DisplayName("Disabled Security SUPERUSER SET ROLE")
-    @Test
-    void testDisableSecuritySuperUserSetRole() throws SQLException {
+    @ParameterizedTest
+    @ValueSource(strings = { "with_login_no_super", "with_login_with_super", "no_login_with_super", "no_login_no_super",
+            PostgresContainer.DB_USER })
+    void testDisableSecuritySuperUserSetRole(final String roleName) throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
                 "with_login_with_super");
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_no_super")) {
-            assertNotNull(connection);
-        }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "with_login_with_super")) {
-            assertNotNull(connection);
-        }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_with_super")) {
-            assertNotNull(connection);
-        }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(), "no_login_no_super")) {
-            assertNotNull(connection);
-        }
-        try (final Connection connection = server.getConnection(listener.getDatabaseName(),
-                PostgresContainer.DB_USER)) {
+        try (final Connection connection = server.getConnection(listener.getDatabaseName(), roleName)) {
             assertNotNull(connection);
         }
     }
