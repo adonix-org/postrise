@@ -42,7 +42,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TestBasicOperations {
+class TestBasicOperations {
 
     private static final PostgresContainer server = new TestServer();
 
@@ -175,7 +175,7 @@ public class TestBasicOperations {
             assertFalse(role.isLoginRole());
             assertFalse(role.isReplicationRole());
             assertFalse(role.isSuperUser());
-            assertEquals(role.getConnectionLimit(), -1);
+            assertEquals(-1, role.getConnectionLimit());
         }
     }
 
@@ -215,7 +215,7 @@ public class TestBasicOperations {
                 PreparedStatement stmt = connection.prepareStatement("SELECT current_setting('max_connections')");
                 ResultSet rs = stmt.executeQuery()) {
             assertTrue(rs.next());
-            assertEquals(rs.getInt(1), PostgresContainer.MAX_CONNECTIONS);
+            assertEquals(PostgresContainer.MAX_CONNECTIONS, rs.getInt(1));
         }
     }
 
@@ -233,10 +233,10 @@ public class TestBasicOperations {
 
     @DisplayName("Postgres Server Validate Default Host Name and Port")
     @Test
-    void testPostgresServerDefaultHostNameAndPort() throws SQLException {
-        try (final Server server = new PostgresServer()) {
-            assertEquals(server.getHostName(), PostgresServer.POSTGRES_DEFAULT_HOSTNAME);
-            assertEquals(server.getPort(), PostgresServer.POSTGRES_DEFAULT_PORT);
+    void testPostgresServerDefaultHostNameAndPort() {
+        try (final Server serverDefaults = new PostgresServer()) {
+            assertEquals(PostgresServer.POSTGRES_DEFAULT_HOSTNAME, serverDefaults.getHostName());
+            assertEquals(PostgresServer.POSTGRES_DEFAULT_PORT, serverDefaults.getPort());
         }
     }
 
@@ -263,7 +263,7 @@ public class TestBasicOperations {
         assertNotEquals(newValue, getter.get());
         setter.accept(newValue);
         assertNotNull(getter.get());
-        assertEquals(getter.get(), newValue);
+        assertEquals(newValue, getter.get());
     }
 
     @BeforeAll

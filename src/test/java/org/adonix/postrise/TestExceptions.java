@@ -39,7 +39,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-public class TestExceptions {
+class TestExceptions {
 
     private static final PostgresContainer server = new TestServer();
 
