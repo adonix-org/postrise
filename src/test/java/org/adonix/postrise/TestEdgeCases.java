@@ -48,9 +48,9 @@ public class TestEdgeCases {
         server.close();
     }
 
-    @DisplayName("Server Edge Cases")
+    @DisplayName("Server Get Empty Database Names")
     @Test
-    void testServerEdgeCases() throws SQLException {
+    void testServerGetEmptyDatabaseNames() throws SQLException {
         try (final Server server = new EdgeCaseServer()) {
             assertEquals(server.getDatabaseNames().size(), 0);
         }
