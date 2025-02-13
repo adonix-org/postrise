@@ -73,4 +73,11 @@ public abstract class PostgresDocker extends PostgresServer {
         container.stop();
         LOGGER.info("{} container stopped.", container.getDockerImageName());
     }
+
+    public void logStatus() {
+        LOGGER.info("{}: Connections Total={} Active={} Idle={}", this,
+                getTotalConnections(),
+                getActiveConnections(),
+                getIdleConnections());
+    }
 }

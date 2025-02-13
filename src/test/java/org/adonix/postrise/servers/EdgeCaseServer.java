@@ -24,6 +24,7 @@ public class EdgeCaseServer extends PostgresServer {
     @Override
     public void beforeCreate(final DataSourceSettings settings) {
         super.beforeCreate(settings);
+        settings.setUsername("postrise");
     }
 
     @Override

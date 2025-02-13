@@ -44,11 +44,14 @@ public class TestEdgeCases {
                     final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
                 assertTrue(rs.next());
                 assertEquals(rs.getInt(1), 1);
+                server.logStatus();
             }
 
             server.stopContainer();
+
             assertThrows(PSQLException.class, context::getConnection);
 
+            server.logStatus();
             server.startContainer();
 
             try (final Connection connection = context.getConnection();
@@ -57,6 +60,7 @@ public class TestEdgeCases {
                 assertEquals(rs.getInt(1), 1);
             }
 
+            server.logStatus();
             server.stopContainer();
         }
     }
