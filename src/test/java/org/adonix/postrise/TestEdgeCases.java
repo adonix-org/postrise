@@ -34,7 +34,7 @@ public class TestEdgeCases {
                 assertNotNull(connection);
                 connection.createStatement().executeQuery("SELECT 1");
             }
-            
+
             server.stopContainer();
         }
     }
@@ -51,24 +51,24 @@ public class TestEdgeCases {
     @DisplayName("Server Edge Cases")
     @Test
     void testServerEdgeCases() throws SQLException {
-        final Server server = new EdgeCaseServer();
-        assertEquals(server.getDatabaseNames().size(), 0);
-        server.close();
+        try (final Server server = new EdgeCaseServer()) {
+            assertEquals(server.getDatabaseNames().size(), 0);
+        }
     }
 
     @DisplayName("Invalid Pool Status Request")
     @Test
     void testInvalidPoolStatusRequest() throws SQLException {
-        final Server server = new EdgeCaseServer();
-        server.addListener(new DataSourceListener() {
-            @Override
-            public void beforeCreate(final DataSourceSettings settings) {
-                final DataSourceContext context = (DataSourceContext) settings;
-                final Throwable t = assertThrows(IllegalStateException.class, context::getActiveConnections);
-                assertEquals(t.getMessage(), "Pool status request is invalid");
-            }
-        });
-        assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
-        server.close();
+        try (final Server server = new EdgeCaseServer()) {
+            server.addListener(new DataSourceListener() {
+                @Override
+                public void beforeCreate(final DataSourceSettings settings) {
+                    final DataSourceContext context = (DataSourceContext) settings;
+                    final Throwable t = assertThrows(IllegalStateException.class, context::getActiveConnections);
+                    assertEquals(t.getMessage(), "Pool status request is invalid");
+                }
+            });
+            assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
+        }
     }
 }
