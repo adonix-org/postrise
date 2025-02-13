@@ -17,26 +17,26 @@ public class SubMainTest {
 
     @Test
     void testServerRestart() throws Exception {
-        
+
         try (final PostgresDocker server = new RestartServer()) {
 
-            server.start();
+            server.startContainer();
             final DataSourceContext context = server.getDataSource("postrise");
             try (final Connection connection = context.getConnection()) {
                 connection.createStatement().executeQuery("SELECT 1");
             }
 
-            server.stop();
+            server.stopContainer();
             final Throwable t = assertThrows(PSQLException.class, context::getConnection);
             assertEquals(t.getMessage(), "An I/O error occurred while sending to the backend.");
 
-            server.start();
+            server.startContainer();
             try (final Connection connection = context.getConnection()) {
                 assertNotNull(connection);
                 connection.createStatement().executeQuery("SELECT 1");
             }
 
-            server.stop();
+            server.stopContainer();
         }
     }
 

@@ -50,12 +50,12 @@ public abstract class PostgresDocker extends PostgresServer {
         settings.setPassword(container.getPassword());
     }
 
-    public final void start() {
+    public final void startContainer() {
         container.start();
         LOGGER.info("{} container started.", container.getDockerImageName());
     }
 
-    public final void stop() {
+    public final void stopContainer() {
         container.stop();
         LOGGER.info("{} container stopped.", container.getDockerImageName());
     }
