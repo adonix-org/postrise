@@ -69,7 +69,7 @@ public abstract class PostgresRoleDAO {
             stmt.setString(1, roleName);
             try (final ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
-                    throw new RoleSecurityException("role '" + roleName + "' does not exist");
+                    throw new RoleSecurityException("role \"" + roleName + "\" does not exist");
                 }
                 return new PostgresRole()
                         .setRoleName(rs.getString(1))

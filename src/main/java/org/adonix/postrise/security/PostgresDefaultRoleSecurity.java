@@ -54,7 +54,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
         final PostgresRole role = PostgresRoleDAO.getRole(connection, context.getUsername());
         if (role.isSuperUser()) {
-            throw new RoleSecurityException(role.getRoleName() + " is a SUPERUSER role");
+            throw new RoleSecurityException("\"" + role.getRoleName() + "\" is a SUPERUSER role");
         }
 
         int connectionLimit = role.getConnectionLimit();

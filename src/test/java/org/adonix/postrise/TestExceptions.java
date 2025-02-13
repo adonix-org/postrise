@@ -128,7 +128,7 @@ public class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals(cause.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
+        assertEquals(cause.getMessage(), "SECURITY: \"with_login_with_super\" is a SUPERUSER role");
     }
 
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
@@ -143,7 +143,7 @@ public class TestExceptions {
         final Throwable cause = t.getCause();
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
-        assertEquals("SECURITY: with_login_with_super is a SUPERUSER role", cause.getMessage());
+        assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", cause.getMessage());
     }
 
     @DisplayName("Strict Security SET ROLE SUPERUSER Exception")
@@ -154,7 +154,7 @@ public class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "no_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: no_login_with_super is a SUPERUSER role");
+        assertEquals(t.getMessage(), "SECURITY: \"no_login_with_super\" is a SUPERUSER role");
     }
 
     @DisplayName("Strict Security SET ROLE LOGIN Exception")
@@ -165,7 +165,7 @@ public class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "with_login_no_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: with_login_no_super is a LOGIN role");
+        assertEquals(t.getMessage(), "SECURITY: \"with_login_no_super\" is a LOGIN role");
     }
 
     @DisplayName("Strict Security SET ROLE SUPERUSER LOGIN Exception")
@@ -176,7 +176,7 @@ public class TestExceptions {
         final Throwable t = assertThrows(RoleSecurityException.class, () -> {
             server.getConnection(listener.getDatabaseName(), "with_login_with_super");
         });
-        assertEquals(t.getMessage(), "SECURITY: with_login_with_super is a SUPERUSER role");
+        assertEquals(t.getMessage(), "SECURITY: \"with_login_with_super\" is a SUPERUSER role");
     }
 
     @DisplayName("Postgres Exception Propagation")
@@ -200,7 +200,7 @@ public class TestExceptions {
             final Throwable t = assertThrows(RoleSecurityException.class, () -> {
                 PostgresRoleDAO.getRole(connection, "role_does_not_exist");
             });
-            assertEquals(t.getMessage(), "SECURITY: role 'role_does_not_exist' does not exist");
+            assertEquals(t.getMessage(), "SECURITY: role \"role_does_not_exist\" does not exist");
         }
     }
 
