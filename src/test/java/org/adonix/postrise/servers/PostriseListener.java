@@ -39,7 +39,7 @@ public class PostriseListener implements DatabaseListener {
     }
 
     @Override
-    public void beforeClose(final DataSourceContext context) throws Exception {
+    public void beforeClose(final DataSourceContext context) {
         LOGGER.info("{}: Threads Awaiting Connection: {}", context, context.getThreadsAwaitingConnection());
         throw new RuntimeException("Not an error. Testing event exception propagation.");
     }
