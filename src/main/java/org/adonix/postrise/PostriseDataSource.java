@@ -49,7 +49,8 @@ abstract class PostriseDataSource implements ConnectionProvider {
     PostriseDataSource(final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
-        this.roleSecurity = getDefaultRoleSecurity();
+        setRoleSecurity(getDefaultRoleSecurity());
+        setUsername(System.getProperty("user.name"));
     }
 
     @Override
