@@ -106,7 +106,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         } catch (final Exception e) {
             runSafe(provider::close);
-            runSafe(() -> onException(provider, e));
             throw new CreateDataSourceException(e);
         }
     }
@@ -302,16 +301,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     protected void afterClose() {
         LOGGER.info("{}: afterClose()", this);
-    }
-
-    /**
-     * This event is fired when the data source could NOT be created.
-     * 
-     * @param settings
-     * @param e
-     */
-    protected void onException(final DataSourceSettings settings, final Exception e) {
-        LOGGER.error("{}: {} {}", this, settings, e);
     }
 
     protected void onException(final Exception e) {
