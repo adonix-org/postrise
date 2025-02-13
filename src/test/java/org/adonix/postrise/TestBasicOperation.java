@@ -30,7 +30,7 @@ public class TestBasicOperation {
 
     private static final PostgresDocker server = new TestServer();
 
-    @DisplayName("Default Security LOGIN No Exception")
+    @DisplayName("Default Security LOGIN")
     @Test
     void testDefaultSecurityLoginNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
@@ -40,7 +40,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Default Security SET ROLE No Exception")
+    @DisplayName("Default Security SET ROLE")
     @Test
     void testDefaultSecuritySetRoleNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
@@ -50,7 +50,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Default Security Connection Limit No Exception")
+    @DisplayName("Default Security Connection Limit")
     @Test
     void testDefaultSecurityConnectionLimitNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
@@ -60,7 +60,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Strict Security SET ROLE No Exception")
+    @DisplayName("Strict Security SET ROLE")
     @Test
     void testStrictSecuritySetRoleNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
@@ -70,7 +70,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Default Security Connection Limit Large No Exception")
+    @DisplayName("Default Security Connection Limit Large")
     @Test
     void testDefaultSecurityConnectionLimitLargeNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
@@ -80,7 +80,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Disabled Security SUPERUSER SET ROLE No Exception")
+    @DisplayName("Disabled Security SUPERUSER SET ROLE")
     @Test
     void testDisableSecuritySuperUserSetRoleNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
@@ -102,7 +102,7 @@ public class TestBasicOperation {
         }
     }
 
-    @DisplayName("Disabled Security NO SUPERUSER SET ROLE No Exception")
+    @DisplayName("Disabled Security NO SUPERUSER SET ROLE")
     @Test
     void testDisableSecurityNoSuperUserSetRoleNoException() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, DISABLE_ROLE_SECURITY,
@@ -124,7 +124,7 @@ public class TestBasicOperation {
         context.setMaxPoolSize(1);
         assertEquals(context.getTotalConnections(), 1);
 
-        // Set the single connection in the pool to the no_login_no_super role.
+        // Set the single connection in the pool to no_login_no_super role.
         try (final Connection connection = context.getConnection("no_login_no_super")) {
             assertNotNull(connection);
 
@@ -239,7 +239,7 @@ public class TestBasicOperation {
         getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
     }
 
-    public static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
+    static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
         assertNotNull(newValue);
         assertNotEquals(newValue, getter.get());
         setter.accept(newValue);
