@@ -18,11 +18,6 @@ package org.adonix.postrise.servers;
 
 public class TestServer extends PostgresDocker {
 
-    public TestServer() {
-        // Add listener a second time to generate warning.
-        addListener(new PostriseDatabase());
-    }
-
     @Override
     protected void beforeClose() {
         super.beforeClose();

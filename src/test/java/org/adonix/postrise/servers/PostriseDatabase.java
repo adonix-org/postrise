@@ -24,7 +24,7 @@ import org.adonix.postrise.DatabaseListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class PostriseDatabase implements DatabaseListener {
+public class PostriseDatabase implements DatabaseListener {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
