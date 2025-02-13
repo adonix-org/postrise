@@ -17,6 +17,7 @@
 package org.adonix.postrise;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,7 +44,7 @@ class TestEdgeCases {
             try (final Connection connection = context.getConnection();
                     final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
                 assertTrue(rs.next());
-                assertEquals(rs.getInt(1), 1);
+                assertEquals(1, rs.getInt(1));
                 server.logStatus();
             }
 
@@ -55,7 +56,7 @@ class TestEdgeCases {
             try (final Connection connection = context.getConnection();
                     final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
                 assertTrue(rs.next());
-                assertEquals(rs.getInt(1), 1);
+                assertEquals(1, rs.getInt(1));
             }
 
             server.logStatus();
@@ -67,6 +68,7 @@ class TestEdgeCases {
     @Test
     void testServerCloseIdempotency() throws SQLException {
         final Server server = new PostgresServer();
+        assertNotNull(server);
         server.close();
         server.close();
         server.close();
@@ -76,7 +78,7 @@ class TestEdgeCases {
     @Test
     void testServerGetEmptyDatabaseNames() throws SQLException {
         try (final Server server = new EdgeCaseServer()) {
-            assertEquals(server.getDatabaseNames().size(), 0);
+            assertEquals(0, server.getDatabaseNames().size());
         }
     }
 
@@ -99,7 +101,7 @@ class TestEdgeCases {
                 public void beforeCreate(final DataSourceSettings settings) {
                     final DataSourceContext context = (DataSourceContext) settings;
                     final Throwable t = assertThrows(IllegalStateException.class, context::getActiveConnections);
-                    assertEquals(t.getMessage(), "Pool status request is invalid");
+                    assertEquals("Pool status request is invalid", t.getMessage());
                 }
             });
             assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));

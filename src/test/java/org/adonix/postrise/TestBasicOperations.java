@@ -139,7 +139,7 @@ class TestBasicOperations {
         // Set the max pool size to 1. Only one connection in the pool.
         final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
         context.setMaxPoolSize(1);
-        assertEquals(context.getTotalConnections(), 1);
+        assertEquals(1, context.getTotalConnections());
 
         // Set the single connection in the pool to no_login_no_super role.
         try (final Connection connection = context.getConnection("no_login_no_super")) {
