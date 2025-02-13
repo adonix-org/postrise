@@ -17,8 +17,8 @@ public abstract class PostgresDocker extends PostgresServer {
 
     public static final int MAX_CONNECTIONS = 199;
     public static final String DB_NAME = "postrise";
-    private static final String DB_USER = "postrise";
-    private static final String DB_PASS = "postrise";
+    public static final String DB_USER = "postrise";
+    public static final String DB_PASS = "postrise";
 
     PostgresDocker() {
         container
