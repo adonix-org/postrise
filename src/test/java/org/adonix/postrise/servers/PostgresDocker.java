@@ -44,7 +44,6 @@ public abstract class PostgresDocker extends PostgresServer {
     public void beforeCreate(final DataSourceSettings settings) {
         super.beforeCreate(settings);
         settings.setAutoCommit(true);
-        settings.isAutoCommit();
         settings.setUsername(container.getUsername());
         settings.setPassword(container.getPassword());
     }
