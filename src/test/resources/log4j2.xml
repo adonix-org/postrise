@@ -9,7 +9,7 @@
         </Root>
 
         <!-- Logger for HikariCP -->
-        <Logger name="com.zaxxer" level="WARN" additivity="false">
+        <Logger name="com.zaxxer" level="ERROR" additivity="false">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="FileAppender" />
         </Logger>
