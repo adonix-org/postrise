@@ -110,12 +110,21 @@ class TestEdgeCases {
 
     @DisplayName("Server Add Listener Twice")
     @Test
-    void testServerAddListenerTwice() {
+    void testServerAddDatabaseListenerTwice() {
         try (final Server server = new EdgeCaseServer()) {
             assertNotNull(server);
             final DatabaseListener listener = new PostriseListener();
             server.addListener(listener);
             server.addListener(listener);
+        }
+    }
+
+    @DisplayName("Server Add Data Source Listener Again")
+    @Test
+    void testServerAddDataSourceListenerAgain() {
+        try (final PostriseServer server = new EdgeCaseServer()) {
+            assertNotNull(server);
+            server.addListener(server);
         }
     }
 
