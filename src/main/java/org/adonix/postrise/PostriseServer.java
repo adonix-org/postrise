@@ -106,7 +106,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             return provider;
 
         } catch (final Exception e) {
-            runSafe(provider::close);
+            runCatch(provider::close);
             throw new CreateDataSourceException(e);
         }
     }
@@ -185,7 +185,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param action - the action to be run with exceptions safely caught.
      */
-    protected final void runSafe(final ActionThrows action) {
+    protected final void runCatch(final ActionThrows action) {
         try {
             action.run();
         } catch (final Exception e) {
@@ -246,11 +246,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     private void doEvent(final DataSourceContext context, final DataSourceEvent event) {
         for (final DataSourceListener listener : dataSourceListeners) {
-            runSafe(() -> event.sendTo(listener));
+            runCatch(() -> event.sendTo(listener));
         }
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            runSafe(() -> event.sendTo(listener));
+            runCatch(() -> event.sendTo(listener));
         }
     }
 
@@ -320,17 +320,17 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             }
             state = ServerState.CLOSING;
 
-            runSafe(this::beforeClose);
+            runCatch(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
                 onBeforeClose(provider);
-                runSafe(provider::close);
+                runCatch(provider::close);
                 onAfterClose(provider);
             }
-            runSafe(databaseListeners::clear);
-            runSafe(databasePools::clear);
+            runCatch(databaseListeners::clear);
+            runCatch(databasePools::clear);
 
             state = ServerState.CLOSED;
-            runSafe(this::afterClose);
+            runCatch(this::afterClose);
 
         } finally {
             writeState.unlock();
