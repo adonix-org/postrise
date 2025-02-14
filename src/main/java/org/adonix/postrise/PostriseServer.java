@@ -171,8 +171,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     /**
-     * This functional interface, similar to {@link Runnable}, allows an
-     * {@link Exception} to be thrown.
+     * Allows an {@link Exception} to be thrown from the {@link #run()} method.
+     * 
+     * @see PostriseServer#runCatch(ActionThrows) runCatch()
      */
     @FunctionalInterface
     protected interface ActionThrows {
