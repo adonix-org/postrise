@@ -131,7 +131,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         if (isOpenThen(() -> databaseListeners.put(getKey(listener), listener)) != null) {
-            LOGGER.warn("{}: Overwriting existing listener for database \"{}\"", this, listener.getDatabaseName());
+            LOGGER.warn("{}: Overwriting listener for database \"{}\"", this, listener.getDatabaseName());
         }
     }
 
