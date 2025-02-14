@@ -89,9 +89,9 @@ class TestExceptions {
         LOGGER.error("{}: {}", server, t);
     }
 
-    @DisplayName("NULL Data Source Listener")
+    @DisplayName("Add NULL Data Source Listener")
     @Test
-    void testNullDataSourceListener() {
+    void testAddNullDataSourceListener() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DataSourceListener)null);
         });
@@ -99,9 +99,9 @@ class TestExceptions {
         LOGGER.error("{}: {}", server, t);
     }
 
-    @DisplayName("NULL Data Base Listener")
+    @DisplayName("Add NULL Database Listener")
     @Test
-    void testNullDatabaseListener() {
+    void testAddNullDatabaseListener() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DatabaseListener)null);
         });
