@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
@@ -67,6 +69,23 @@ class TestEdgeCases {
             }
 
             server.logStatus();
+            server.stopContainer();
+        }
+    }
+
+    @DisplayName("Data Source Context After Server Close")
+    @Test
+    void testDataSourceContextAfterServerClosed() throws Exception {
+        final PostgresContainer server = new StaticPortServer();
+        server.startContainer();
+        try {
+            final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
+
+            server.close();
+
+            final Throwable t = assertThrows(SQLException.class, context::getConnection);
+            LOGGER.error("{}: {}", server, t);
+        } finally {
             server.stopContainer();
         }
     }
