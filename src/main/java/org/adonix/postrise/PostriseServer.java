@@ -183,8 +183,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * Runs the given action. Any exception is caught and sent to the
      * {@link #onException(Exception)} event.
      * 
-     * @param action - the code to be run safely with exceptions caught and not
-     *               thrown.
+     * @param action - the action to be run with exceptions safely caught.
      */
     protected final void runSafe(final ActionThrows action) {
         try {
