@@ -75,7 +75,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     private ConnectionProvider getConnectionProvider(final String databaseName) {
-        return databasePools.computeIfAbsent(getKey(databaseName), _ -> create(databaseName));
+        return databasePools.computeIfAbsent(getKey(databaseName), key -> create(key));
     }
 
     private ConnectionProvider create(final String databaseName) {
