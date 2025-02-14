@@ -27,11 +27,15 @@ import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
 class TestEdgeCases {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @DisplayName("Server Restart And Recovery")
     @Test
@@ -50,7 +54,8 @@ class TestEdgeCases {
 
             server.stopContainer();
 
-            assertThrows(PSQLException.class, context::getConnection);
+            final Throwable t = assertThrows(PSQLException.class, context::getConnection);
+            LOGGER.error("{}: {}", server, t);
 
             server.logStatus();
             server.startContainer();

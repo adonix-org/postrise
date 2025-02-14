@@ -45,7 +45,7 @@ class TestExceptions {
 
     private static final PostgresContainer server = new TestServer();
 
-    private static final Logger LOGGER = LogManager.getLogger(TestExceptions.class);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @DisplayName("EMPTY Database Name")
     @Test
