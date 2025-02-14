@@ -240,7 +240,7 @@ class TestBasicOperations {
     @BeforeAll
     static void beforeAll() throws Exception {
         server.startContainer();
-        TestEnvironment.initialize(server);
+        Environment.initialize(server);
     }
 
     @AfterAll

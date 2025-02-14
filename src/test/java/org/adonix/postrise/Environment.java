@@ -22,7 +22,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import org.adonix.postrise.servers.PostgresContainer;
 
-abstract class TestEnvironment {
+abstract class Environment {
 
     private static final String[] SQL_FILES = { "roles.sql" };
 
@@ -36,7 +36,7 @@ abstract class TestEnvironment {
 
     public static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
         final String sql = Files.readString(
-                Paths.get(TestEnvironment.class.getClassLoader().getResource(fileName).toURI()));
+                Paths.get(Environment.class.getClassLoader().getResource(fileName).toURI()));
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(sql);
         }

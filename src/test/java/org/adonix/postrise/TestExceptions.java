@@ -93,7 +93,7 @@ class TestExceptions {
     @Test
     void testAddNullDataSourceListener() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.addListener((DataSourceListener)null);
+            server.addListener((DataSourceListener) null);
         });
         assertEquals("Illegal NULL Object for listener", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -103,7 +103,7 @@ class TestExceptions {
     @Test
     void testAddNullDatabaseListener() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
-            server.addListener((DatabaseListener)null);
+            server.addListener((DatabaseListener) null);
         });
         assertEquals("Illegal NULL Object for listener", t.getMessage());
         LOGGER.error("{}: {}", server, t);
@@ -220,7 +220,7 @@ class TestExceptions {
     @BeforeAll
     static void beforeAll() throws Exception {
         server.startContainer();
-        TestEnvironment.initialize(server);
+        Environment.initialize(server);
     }
 
     @AfterAll
