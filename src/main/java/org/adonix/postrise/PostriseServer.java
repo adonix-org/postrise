@@ -75,7 +75,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     private ConnectionProvider getConnectionProvider(final String databaseName) {
-        return databasePools.computeIfAbsent(getKey(databaseName), key -> create(key));
+        return databasePools.computeIfAbsent(getKey(databaseName), this::create);
     }
 
     private ConnectionProvider create(final String databaseName) {
@@ -122,7 +122,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     @Override
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
-        if (!isOpenThen(() -> dataSourceListeners.add(listener))) {
+        if (!isOpenThen(() -> dataSourceListeners.add(listener)).booleanValue()) {
             LOGGER.warn("{}: Data source listener \"{}\" already exists", this, listener);
         }
     }

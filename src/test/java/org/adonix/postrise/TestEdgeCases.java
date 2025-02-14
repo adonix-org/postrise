@@ -75,7 +75,7 @@ class TestEdgeCases {
 
     @DisplayName("Data Source Context After Server Close")
     @Test
-    void testDataSourceContextAfterServerClosed() throws Exception {
+    void testDataSourceContextAfterServerClosed() {
         final PostgresContainer server = new StaticPortServer();
         server.startContainer();
         try {
