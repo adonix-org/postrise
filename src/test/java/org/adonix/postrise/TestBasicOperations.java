@@ -213,7 +213,7 @@ class TestBasicOperations {
 
     @DisplayName("Data Source Not Listening")
     @Test
-    void testDataSourceNotlistening() throws SQLException {
+    void testDataSourceNotListening() throws SQLException {
         server.addListener(new DataSourceListener() {
         });
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
