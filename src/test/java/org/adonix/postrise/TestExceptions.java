@@ -220,7 +220,7 @@ class TestExceptions {
     @BeforeAll
     static void beforeAll() throws Exception {
         server.startContainer();
-        Environment.initialize(server);
+        Environment.initialize(server, "roles.sql");
     }
 
     @AfterAll

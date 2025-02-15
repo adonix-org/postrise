@@ -24,17 +24,16 @@ import org.adonix.postrise.servers.PostgresContainer;
 
 abstract class Environment {
 
-    private static final String[] SQL_FILES = { "roles.sql" };
-
-    public static void initialize(final Server server) throws Exception {
+    public static void initialize(final Server server, final String... files) throws Exception {
         try (final Connection connection = server.getConnection(PostgresContainer.DB_NAME)) {
-            for (final String fileName : SQL_FILES) {
+            for (final String fileName : files) {
                 executeSqlFile(connection, fileName);
             }
         }
     }
 
-    public static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
+    private static void executeSqlFile(final Connection connection, final String fileName) throws Exception {
+        connection.setAutoCommit(true);
         final String sql = Files.readString(
                 Paths.get(Environment.class.getClassLoader().getResource(fileName).toURI()));
         try (Statement stmt = connection.createStatement()) {
