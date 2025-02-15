@@ -123,7 +123,7 @@ class TestEdgeCases {
         assertNotNull(server);
         server.close();
         server.close();
-        assertThat(logCaptor.getWarnLogs()).contains("PostgresServer: extra close request ignored");
+        assertThat(logCaptor.getWarnLogs()).containsExactly("PostgresServer: extra close request ignored");
     }
 
     @DisplayName("Server Get Empty Database Names")
