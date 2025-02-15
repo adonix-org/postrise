@@ -229,6 +229,15 @@ class TestBasicOperations {
         assertTrue(dataSource.isAutoCommit());
     }
 
+    @DisplayName("Data Source Listener No Events")
+    @Test
+    void testDataSourceNoEvents() throws SQLException {
+        server.addListener(new DataSourceListener() {
+        });
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        server.getDataSource(listener.getDatabaseName());
+    }
+
     static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
         assertNotNull(newValue);
         assertNotEquals(newValue, getter.get());
