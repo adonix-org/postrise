@@ -11,15 +11,14 @@ public abstract class PostgresRoleDAO {
     private PostgresRoleDAO() {
     }
 
-    private static final String SQL_RESET_ROLE = "RESET ROLE";
     /**
-     * PostgreSQL specific query to SET the role for the {@link Connection}
+     * PostgreSQL specific SQL to {@code SET ROLE} on the {@link Connection}
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     /**
-     * Be aware: if {@code roleName} is {@code NULL}, the result is the same as executing
-     * {@code RESET ROLE}.
+     * Be aware: if {@code roleName} is {@code NULL}, the result is the same as
+     * executing {@code RESET ROLE}.
      * 
      * @param connection
      * @param roleName
@@ -32,6 +31,11 @@ public abstract class PostgresRoleDAO {
         }
     }
 
+    /**
+     * PostgreSQL specific SQL to {@code RESET ROLE} on the {@link Connection}
+     */
+    private static final String SQL_RESET_ROLE = "RESET ROLE";
+
     public static final void resetRole(final Connection connection) throws SQLException {
         try (final Statement stmt = connection.createStatement()) {
             stmt.execute(SQL_RESET_ROLE);
@@ -39,7 +43,7 @@ public abstract class PostgresRoleDAO {
     }
 
     /**
-     * PostgreSQL specific query to SELECT privileges for a role from the
+     * PostgreSQL specific query to SELECT privileges for a ROLE from the
      * pg_roles TABLE.
      */
     private static final String SQL_SELECT_ROLE_PRIVILEGES = String.join(" ",
