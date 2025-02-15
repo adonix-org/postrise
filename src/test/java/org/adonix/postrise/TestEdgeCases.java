@@ -16,8 +16,10 @@
 
 package org.adonix.postrise;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -34,6 +36,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
+
+import nl.altindag.log.LogCaptor;
 
 class TestEdgeCases {
 
@@ -114,10 +118,12 @@ class TestEdgeCases {
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() {
+        LogCaptor logCaptor = LogCaptor.forClass(PostriseServer.class);
         final Server server = new PostgresServer();
         assertNotNull(server);
         server.close();
         server.close();
+        assertThat(logCaptor.getWarnLogs()).contains("PostgresServer: extra close request ignored");
     }
 
     @DisplayName("Server Get Empty Database Names")
