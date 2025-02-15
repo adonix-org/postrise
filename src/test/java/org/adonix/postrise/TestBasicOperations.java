@@ -250,7 +250,7 @@ class TestBasicOperations {
     @BeforeAll
     static void beforeAll() throws Exception {
         server.startContainer();
-        Environment.initialize(server, "roles.sql");
+        server.apply("roles.sql");
     }
 
     @AfterAll
