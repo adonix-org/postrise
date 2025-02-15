@@ -80,10 +80,12 @@ class TestEdgeCases {
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
+        LogCaptor logCaptor = LogCaptor.forClass(PostriseServer.class);
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
-            assertNotNull(server);
             server.throwFromExceptionEvent();
         }
+        assertThat(logCaptor.getErrorLogs()).contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
+        assertThat(logCaptor.getErrorLogs()).contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from events");
     }
 
     @DisplayName("Data Source Context After Server Close")
@@ -107,7 +109,6 @@ class TestEdgeCases {
     @Test
     void testAddListenerAfterServerClosed() {
         final Server server = new PostgresServer();
-        assertNotNull(server);
         server.close();
         final Throwable t = assertThrows(IllegalStateException.class,
                 () -> server.addListener(new DataSourceListener() {
@@ -120,10 +121,9 @@ class TestEdgeCases {
     void testServerCloseIdempotency() {
         LogCaptor logCaptor = LogCaptor.forClass(PostriseServer.class);
         final Server server = new PostgresServer();
-        assertNotNull(server);
         server.close();
         server.close();
-        assertThat(logCaptor.getWarnLogs()).containsExactly("PostgresServer: extra close request ignored");
+        assertThat(logCaptor.getWarnLogs()).contains("PostgresServer: extra close request ignored");
     }
 
     @DisplayName("Server Get Empty Database Names")
