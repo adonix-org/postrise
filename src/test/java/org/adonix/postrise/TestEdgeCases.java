@@ -75,7 +75,7 @@ class TestEdgeCases {
 
     @DisplayName("Server Throws From Exception Handler")
     @Test
-    void testServerThrowsFromExceptonHandler() {
+    void testServerThrowsFromExceptionHandler() {
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
             assertNotNull(server);
             server.throwFromExceptionEvent();
