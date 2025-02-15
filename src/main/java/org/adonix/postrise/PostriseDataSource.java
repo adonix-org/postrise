@@ -34,12 +34,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
     protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
     /**
-     * Connections returned to the pool maintain any existing {@code ROLE} which
-     * could cause unexpected permission errors when the connection is re-used.
-     * Always reset the {@code ROLE} when getting a {@link Connection} from the
-     * pool.
+     * Resets the {@link Connection} returned from the pool.
      * 
-     * @param connection - the connection from the pool to be reset.
+     * @param connection - the {@link Connection} from the pool to be reset.
      * @throws SQLException If an error occurs resetting the {@link Connection}.
      * @see #getConnection()
      * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis

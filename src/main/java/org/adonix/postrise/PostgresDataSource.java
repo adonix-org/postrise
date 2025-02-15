@@ -56,6 +56,14 @@ public class PostgresDataSource extends PostriseDataSource {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Any {@link Connection} returned to the pool retains previous {@code SET ROLE}
+     * which could cause unexpected permission errors when the connection is
+     * re-used. Always {@code RESET ROLE} when getting a {@link Connection} from
+     * the pool.
+     */
     @Override
     protected void resetConnection(final Connection connection) throws SQLException {
         PostgresRoleDAO.resetRole(connection);
