@@ -15,7 +15,6 @@
  */
 
 package org.adonix.postrise.servers;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -79,12 +78,12 @@ public abstract class PostgresContainer extends PostgresServer {
         LOGGER.info("{} container stopped.", container.getDockerImageName());
     }
 
-    public void apply(final String... files) throws Exception {
-        try (final Connection connection = getConnection(PostgresContainer.DB_NAME)) {
+    public void apply(final String... scripts) throws Exception {
+        try (final Connection connection = getConnection(DB_NAME)) {
             connection.setAutoCommit(true);
-            for (final String fileName : files) {
+            for (final String script : scripts) {
                 final String sql = Files.readString(
-                        Paths.get(TestServer.class.getClassLoader().getResource(fileName).toURI()));
+                        Paths.get(TestServer.class.getClassLoader().getResource(script).toURI()));
                 try (Statement stmt = connection.createStatement()) {
                     stmt.executeUpdate(sql);
                 }
