@@ -21,18 +21,6 @@ import org.adonix.postrise.PostgresServer;
 public class EdgeCaseServer extends PostgresServer {
 
     @Override
-    protected void beforeClose() {
-        super.beforeClose();
-        this.addListener(new PostriseListener());
-    }
-
-    @Override
-    protected void afterClose() {
-        super.afterClose();
-        this.addListener(new PostriseListener());
-    }
-
-    @Override
     protected void onException(Exception e) {
         super.onException(e);
         throw new RuntimeException("Do not throw exceptions from events");
