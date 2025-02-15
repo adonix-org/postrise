@@ -211,6 +211,16 @@ class TestBasicOperations {
         }
     }
 
+    @DisplayName("Data Source Not Listening")
+    @Test
+    void testDataSourceNotlistening() throws SQLException {
+        server.addListener(new DataSourceListener() {
+        });
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(context);
+    }
+
     @DisplayName("Postrise Data Source Getters and Setters")
     @Test
     void testPostriseDataSourceGettersAndSetters() throws SQLException {
@@ -227,15 +237,6 @@ class TestBasicOperations {
         getAndSet(45000L, dataSource::getValidationTimeout, dataSource::setValidationTimeout);
 
         assertTrue(dataSource.isAutoCommit());
-    }
-
-    @DisplayName("Data Source Listener No Events")
-    @Test
-    void testDataSourceNoEvents() throws SQLException {
-        server.addListener(new DataSourceListener() {
-        });
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
-        server.getDataSource(listener.getDatabaseName());
     }
 
     static final <T> void getAndSet(final T newValue, final Supplier<T> getter, final Consumer<T> setter) {
