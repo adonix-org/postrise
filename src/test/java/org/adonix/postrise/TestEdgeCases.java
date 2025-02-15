@@ -73,6 +73,15 @@ class TestEdgeCases {
         }
     }
 
+    @DisplayName("Server Throws From Exception Handler")
+    @Test
+    void testServerThrowsFromExceptonHandler() {
+        try (final EdgeCaseServer server = new EdgeCaseServer()) {
+            assertNotNull(server);
+            server.throwFromExceptionEvent();
+        }
+    }
+
     @DisplayName("Data Source Context After Server Close")
     @Test
     void testDataSourceContextAfterServerClosed() {
