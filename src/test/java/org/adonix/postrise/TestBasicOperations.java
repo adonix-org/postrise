@@ -221,6 +221,21 @@ class TestBasicOperations {
         assertNotNull(context);
     }
 
+    @DisplayName("Server Closing Or Closed")
+    @Test
+    void testServerClosingOrClosed() throws SQLException {
+        server.addListener(new DataSourceListener() {
+            @Override
+            public void beforeClose(final DataSourceContext context) {
+                server.addListener(new DataSourceListener() {
+                });
+            }
+        });
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(context);
+    }
+
     @DisplayName("Postrise Data Source Getters and Setters")
     @Test
     void testPostriseDataSourceGettersAndSetters() throws SQLException {

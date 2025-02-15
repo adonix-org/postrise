@@ -90,12 +90,23 @@ class TestEdgeCases {
         }
     }
 
+    @DisplayName("Add Listener After Server Closed")
+    @Test
+    void testAddListenerAfterServerClosed() {
+        final Server server = new PostgresServer();
+        assertNotNull(server);
+        server.close();
+        final Throwable t = assertThrows(IllegalStateException.class,
+                () -> server.addListener(new DataSourceListener() {
+                }));
+        assertEquals("PostgresServer is closed", t.getMessage());
+    }
+
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() {
         final Server server = new PostgresServer();
         assertNotNull(server);
-        server.close();
         server.close();
         server.close();
     }
