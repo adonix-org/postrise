@@ -23,17 +23,17 @@ import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
 import org.adonix.postrise.security.RoleSecurityListener;
 
-final class PostgresDataSource extends PostriseDataSource {
+public class PostgresDataSource extends PostriseDataSource {
 
     private static final String JDBC_URL_PREFIX = "jdbc:postgresql://";
 
-    PostgresDataSource(final String databaseName) {
+    public PostgresDataSource(final String databaseName) {
         super(databaseName);
         addDataSourceProperty("tcpKeepAlive", "true");
     }
 
     @Override
-    public void setJdbcUrl(final String host, final Integer port) {
+    public final void setJdbcUrl(final String host, final Integer port) {
         setJdbcUrl(JDBC_URL_PREFIX + host + ":" + port + "/" + getDatabaseName());
     }
 
@@ -43,7 +43,7 @@ final class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public Connection getConnection(final String roleName) throws SQLException {
+    public final Connection getConnection(final String roleName) throws SQLException {
         Guard.check("roleName", roleName);
         final Connection connection = getConnection();
         try {
