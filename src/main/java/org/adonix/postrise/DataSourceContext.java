@@ -3,7 +3,7 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface DataSourceContext extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsReadable {
+public interface DataSourceContext extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsRead {
 
     /**
      * @return A {@link Connection} to the data source.

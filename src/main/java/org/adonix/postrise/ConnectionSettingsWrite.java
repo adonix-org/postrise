@@ -31,9 +31,9 @@ import javax.sql.DataSource;
  * {@link DataSourceListener#beforeCreate(DataSourceSettings)
  * beforeCreate(DataSourceSettings)} method.
  */
-interface ConnectionSettingsWriteable extends ConnectionSettingsReadable {
+interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
-    void setUsername(String role);
+    void setUsername(String username);
 
     void setPassword(String password);
 

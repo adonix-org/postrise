@@ -18,7 +18,7 @@ package org.adonix.postrise;
 
 import java.util.Properties;
 
-interface ConnectionSettingsReadable extends DatabaseNameProvider {
+interface ConnectionSettingsRead extends DatabaseNameProvider {
     /**
      * Get the current JDBC Url.
      * 
