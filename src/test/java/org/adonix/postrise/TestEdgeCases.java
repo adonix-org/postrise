@@ -38,7 +38,7 @@ import org.postgresql.util.PSQLException;
 
 class TestEdgeCases {
 
-    private static LogCaptor LOG_CAPTOR = LogCaptor.forClass(PostriseServer.class);
+    private static final LogCaptor LOG_CAPTOR = LogCaptor.forClass(PostriseServer.class);
 
     @DisplayName("Server Restart And Recovery")
     @Test
