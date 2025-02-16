@@ -118,18 +118,21 @@ class TestEdgeCases {
         final PostgresContainer server = new StaticPortServer();
         server.startContainer();
         server.getDataSource(PostgresContainer.DB_NAME);
+        final DataSourceListener listener = new DataSourceListener() {
+        };
         server.addListener(new DataSourceListener() {
+            @Override
             public void beforeClose(final DataSourceContext context) {
                 server.addListener(new DatabaseListener() {
                     @Override
                     public String getDatabaseName() {
                         return StaticPortServer.DB_NAME;
                     }
+
                     @Override
                     public void beforeClose(final DataSourceContext context) {
                         final Throwable t = assertThrows(IllegalStateException.class,
-                                () -> server.addListener(new DataSourceListener() {
-                                }));
+                                () -> server.addListener(listener));
                         assertEquals("StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
                                 t.getMessage());
                     }
