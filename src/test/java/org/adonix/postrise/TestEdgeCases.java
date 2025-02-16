@@ -26,22 +26,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import nl.altindag.log.LogCaptor;
 import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
-import nl.altindag.log.LogCaptor;
-
 class TestEdgeCases {
 
     private static final Logger LOGGER = LogManager.getLogger();
+
+    private static LogCaptor POSTRISE_LOGGER = LogCaptor.forClass(PostriseServer.class);
 
     @DisplayName("Server Restart And Recovery")
     @Test
@@ -121,11 +123,10 @@ class TestEdgeCases {
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() {
-        LogCaptor logCaptor = LogCaptor.forClass(PostriseServer.class);
         final Server server = new PostgresServer();
         server.close();
         server.close();
-        assertThat(logCaptor.getWarnLogs()).contains("PostgresServer: extra close request ignored");
+        assertThat(POSTRISE_LOGGER.getWarnLogs()).contains("PostgresServer: extra close request ignored");
     }
 
     @DisplayName("Server Get Empty Database Names")
@@ -140,11 +141,12 @@ class TestEdgeCases {
     @Test
     void testServerAddDatabaseListenerTwice() {
         try (final Server server = new EdgeCaseServer()) {
-            assertNotNull(server);
             final DatabaseListener listener = new PostriseListener();
             server.addListener(listener);
             server.addListener(listener);
         }
+        assertThat(POSTRISE_LOGGER.getWarnLogs())
+                .contains("EdgeCaseServer: Database listener \"postrise\" already exists");
     }
 
     @DisplayName("Server Add Data Source Listener Twice")
@@ -170,5 +172,15 @@ class TestEdgeCases {
             });
             assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
         }
+    }
+
+    @AfterEach
+    void afterEach() {
+        POSTRISE_LOGGER.clearLogs();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        POSTRISE_LOGGER.close();
     }
 }
