@@ -38,7 +38,7 @@ import org.postgresql.util.PSQLException;
 
 class TestEdgeCases {
 
-    private static LogCaptor POSTRISE_LOGGER = LogCaptor.forClass(PostriseServer.class);
+    private static LogCaptor LOG_CAPTOR = LogCaptor.forClass(PostriseServer.class);
 
     @DisplayName("Server Restart And Recovery")
     @Test
@@ -76,13 +76,12 @@ class TestEdgeCases {
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
-        LogCaptor logCaptor = LogCaptor.forClass(PostriseServer.class);
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
             server.throwFromExceptionEvent();
         }
-        assertThat(logCaptor.getErrorLogs())
+        assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
-        assertThat(logCaptor.getErrorLogs())
+        assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from events");
     }
 
@@ -119,7 +118,7 @@ class TestEdgeCases {
         final Server server = new PostgresServer();
         server.close();
         server.close();
-        assertThat(POSTRISE_LOGGER.getWarnLogs()).contains("PostgresServer: extra close request ignored");
+        assertThat(LOG_CAPTOR.getWarnLogs()).contains("PostgresServer: extra close request ignored");
     }
 
     @DisplayName("Server Get Empty Database Names")
@@ -138,7 +137,7 @@ class TestEdgeCases {
             server.addListener(listener);
             server.addListener(listener);
         }
-        assertThat(POSTRISE_LOGGER.getWarnLogs())
+        assertThat(LOG_CAPTOR.getWarnLogs())
                 .contains("EdgeCaseServer: Database listener \"postrise\" already exists");
     }
 
@@ -147,7 +146,7 @@ class TestEdgeCases {
     void testServerAddDataSourceListenerTwice() {
         try (final PostriseServer server = new EdgeCaseServer()) {
             server.addListener(server);
-            assertThat(POSTRISE_LOGGER.getWarnLogs())
+            assertThat(LOG_CAPTOR.getWarnLogs())
                     .contains("EdgeCaseServer: Data source listener \"EdgeCaseServer\" already exists");
         }
     }
@@ -170,11 +169,11 @@ class TestEdgeCases {
 
     @AfterEach
     void afterEach() {
-        POSTRISE_LOGGER.clearLogs();
+        LOG_CAPTOR.clearLogs();
     }
 
     @AfterAll
     static void afterAll() {
-        POSTRISE_LOGGER.close();
+        LOG_CAPTOR.close();
     }
 }
