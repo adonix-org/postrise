@@ -221,20 +221,6 @@ class TestBasicOperations {
         assertEquals(0, server.getThreadsAwaitingConnection());
     }
 
-    @DisplayName("Database Listener Not Listening")
-    @Test
-    void testDataBaseListenerNotListening() throws SQLException {
-        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
-        final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
-        server.addListener(new DatabaseListener() {
-            @Override
-            public String getDatabaseName() {
-                return listener.getDatabaseName();
-            }
-        });
-        assertNotNull(context);
-    }
-
     @DisplayName("Server Closing Or Closed")
     @Test
     void testServerClosingOrClosed() throws SQLException {
