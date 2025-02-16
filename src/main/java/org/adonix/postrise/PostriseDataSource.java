@@ -33,6 +33,8 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
+    protected abstract String getJdbcUrl(final Server server);
+
     /**
      * Resets the {@link Connection} returned from the pool.
      * 
@@ -82,8 +84,8 @@ abstract class PostriseDataSource implements ConnectionProvider {
         return delegate.getJdbcUrl();
     }
 
-    final void setJdbcUrl(final String url) {
-        delegate.setJdbcUrl(url);
+    public final void setJdbcUrl(final Server server) {
+        delegate.setJdbcUrl(getJdbcUrl(server));
     }
 
     @Override
