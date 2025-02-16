@@ -33,7 +33,7 @@ public class PostgresDataSource extends PostriseDataSource {
     }
 
     @Override
-    public final String getJdbcUrl(final Server server) {
+    final String getJdbcUrl(final Server server) {
         return JDBC_URL_PREFIX + server.getHostName() + ":" + server.getPort() + "/" + getDatabaseName();
     }
 
