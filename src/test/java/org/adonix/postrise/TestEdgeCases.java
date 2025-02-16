@@ -107,9 +107,9 @@ class TestEdgeCases {
         }
     }
 
-    @DisplayName("Add Listener After Server Closed")
+    @DisplayName("Add Listener After Server Close")
     @Test
-    void testAddListenerAfterServerClosed() {
+    void testAddListenerAfterServerClose() {
         final Server server = new PostgresServer();
         final DataSourceListener listener = new DataSourceListener() {
         };
