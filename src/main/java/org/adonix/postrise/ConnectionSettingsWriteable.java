@@ -32,24 +32,6 @@ import javax.sql.DataSource;
  * beforeCreate(DataSourceSettings)} method.
  */
 interface ConnectionSettingsWriteable extends ConnectionSettingsReadable {
-    /**
-     * Set the JDBC Url for this connection.
-     * 
-     * @param url - a valid JDBC Url most often in the format
-     *            jdbc:db://hostname:port/database
-     */
-    void setJdbcUrl(String url);
-
-    /**
-     * Set the JDBC Url using the provided host and port.
-     * <p>
-     * Implementations will typically require a database name which can be accessed
-     * via the {@link #getDatabaseName()} method.
-     * 
-     * @param hostname - the database server hostname.
-     * @param port     - the database server port.
-     */
-    void setJdbcUrl(String hostname, Integer port);
 
     void setUsername(String role);
 

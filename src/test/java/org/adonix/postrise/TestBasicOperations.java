@@ -211,6 +211,15 @@ class TestBasicOperations {
         }
     }
 
+    @DisplayName("Threads Awaiting Connections")
+    @Test
+    void testThreadsAwaitingConnections() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
+        final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
+        assertNotNull(dataSource);
+        assertEquals(0, dataSource.getThreadsAwaitingConnection());
+    }
+
     @DisplayName("Data Source Not Listening")
     @Test
     void testDataSourceNotListening() throws SQLException {

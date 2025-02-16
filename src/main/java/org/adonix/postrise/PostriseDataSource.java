@@ -82,8 +82,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
         return delegate.getJdbcUrl();
     }
 
-    @Override
-    public final void setJdbcUrl(final String url) {
+    final void setJdbcUrl(final String url) {
         delegate.setJdbcUrl(url);
     }
 
