@@ -31,8 +31,6 @@ import org.adonix.postrise.security.RoleSecurityException;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -45,8 +43,6 @@ class TestExceptions {
 
     private static final PostgresContainer server = new TestServer();
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @DisplayName("EMPTY Database Name")
     @Test
     void testEmptyDatabaseName() {
@@ -54,7 +50,6 @@ class TestExceptions {
             server.getConnection(" ");
         });
         assertEquals("Illegal EMPTY String for databaseName", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("NULL Database Name")
@@ -64,7 +59,6 @@ class TestExceptions {
             server.getConnection(null);
         });
         assertEquals("Illegal NULL String for databaseName", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("EMPTY ROLE String")
@@ -75,7 +69,6 @@ class TestExceptions {
             server.getConnection(databaseName, " ");
         });
         assertEquals("Illegal EMPTY String for roleName", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("NULL ROLE String")
@@ -86,7 +79,6 @@ class TestExceptions {
             server.getConnection(databaseName, null);
         });
         assertEquals("Illegal NULL String for roleName", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Add NULL Data Source Listener")
@@ -96,7 +88,6 @@ class TestExceptions {
             server.addListener((DataSourceListener) null);
         });
         assertEquals("Illegal NULL Object for listener", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Add NULL Database Listener")
@@ -106,7 +97,6 @@ class TestExceptions {
             server.addListener((DatabaseListener) null);
         });
         assertEquals("Illegal NULL Object for listener", t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("NOLOGIN Exception")
@@ -121,7 +111,6 @@ class TestExceptions {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: role \"no_login_no_super\" is not permitted to log in", cause.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("NOLOGIN SUPERUSER Exception")
@@ -136,7 +125,6 @@ class TestExceptions {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: role \"no_login_with_super\" is not permitted to log in", cause.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Default Security SUPERUSER LOGIN Exception")
@@ -152,7 +140,6 @@ class TestExceptions {
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", cause.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
@@ -168,7 +155,6 @@ class TestExceptions {
         assertNotNull(cause);
         assertTrue(cause instanceof RoleSecurityException);
         assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", cause.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Strict Security SET ROLE Exception Tests")
@@ -187,7 +173,6 @@ class TestExceptions {
         });
 
         assertEquals(expectedMessage, t.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("Postgres Exception Propagation")
@@ -201,7 +186,6 @@ class TestExceptions {
         assertNotNull(cause);
         assertTrue(cause instanceof PSQLException);
         assertEquals("FATAL: database \"not_a_database\" does not exist", cause.getMessage());
-        LOGGER.error("{}: {}", server, t);
     }
 
     @DisplayName("ROLE Does Not Exist Exception")
@@ -213,7 +197,6 @@ class TestExceptions {
                 PostgresRoleDAO.getRole(connection, "role_does_not_exist");
             });
             assertEquals("SECURITY: role \"role_does_not_exist\" does not exist", t.getMessage());
-            LOGGER.error("{}: {}", server, t);
         }
     }
 

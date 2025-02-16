@@ -31,8 +31,6 @@ import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,8 +38,6 @@ import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 
 class TestEdgeCases {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static LogCaptor POSTRISE_LOGGER = LogCaptor.forClass(PostriseServer.class);
 
@@ -62,8 +58,7 @@ class TestEdgeCases {
 
             server.stopContainer();
 
-            final Throwable t = assertThrows(PSQLException.class, context::getConnection);
-            LOGGER.error("{}: {}", server, t);
+            assertThrows(PSQLException.class, context::getConnection);
 
             server.logStatus();
             server.startContainer();
@@ -102,8 +97,7 @@ class TestEdgeCases {
 
             server.close();
 
-            final Throwable t = assertThrows(SQLException.class, context::getConnection);
-            LOGGER.error("{}: {}", server, t);
+            assertThrows(SQLException.class, context::getConnection);
         } finally {
             server.stopContainer();
         }

@@ -93,9 +93,10 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     public void logStatus() {
-        LOGGER.info("{}: Connections Total={} Active={} Idle={}", this,
+        LOGGER.info("{}: Connections Total={} Active={} Idle={} Threads={}", this,
                 getTotalConnections(),
                 getActiveConnections(),
-                getIdleConnections());
+                getIdleConnections(),
+                getThreadsAwaitingConnection());
     }
 }
