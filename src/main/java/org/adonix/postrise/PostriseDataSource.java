@@ -45,9 +45,10 @@ abstract class PostriseDataSource implements ConnectionProvider {
      */
     protected abstract void resetConnection(final Connection connection) throws SQLException;
 
-    PostriseDataSource(final String databaseName) {
+    PostriseDataSource(final Server server, final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
+        setJdbcUrl(server);
         setRoleSecurity(getDefaultRoleSecurity());
         setUsername(System.getProperty("user.name"));
     }

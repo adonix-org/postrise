@@ -25,9 +25,6 @@ import java.sql.Connection;
  * event.
  */
 interface ConnectionProvider extends AutoCloseable, DataSourceContext, DataSourceSettings {
-
-    void setJdbcUrl(final Server server);
-
     /**
      * Closes this {@link ConnectionProvider}. Closing all data sources is handled
      * by the {@link Server} implementation.
