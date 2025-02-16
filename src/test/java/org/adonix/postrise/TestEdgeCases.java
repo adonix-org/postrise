@@ -84,8 +84,10 @@ class TestEdgeCases {
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
             server.throwFromExceptionEvent();
         }
-        assertThat(logCaptor.getErrorLogs()).contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
-        assertThat(logCaptor.getErrorLogs()).contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from events");
+        assertThat(logCaptor.getErrorLogs())
+                .contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
+        assertThat(logCaptor.getErrorLogs())
+                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from events");
     }
 
     @DisplayName("Data Source Context After Server Close")
@@ -109,10 +111,10 @@ class TestEdgeCases {
     @Test
     void testAddListenerAfterServerClosed() {
         final Server server = new PostgresServer();
+        final DataSourceListener listener = new DataSourceListener() {
+        };
         server.close();
-        final Throwable t = assertThrows(IllegalStateException.class,
-                () -> server.addListener(new DataSourceListener() {
-                }));
+        final Throwable t = assertThrows(IllegalStateException.class, () -> server.addListener(listener));
         assertEquals("PostgresServer is closed", t.getMessage());
     }
 
