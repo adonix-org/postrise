@@ -235,6 +235,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return getStatus(DataSourceContext::getIdleConnections);
     }
 
+    @Override
+    public final int getThreadsAwaitingConnection() {
+        return getStatus(DataSourceContext::getThreadsAwaitingConnection);
+    }
+
     // --------------------------------------------------------------------------
     // SEND EVENTS - Send data source events to listeners including this server.
     // --------------------------------------------------------------------------

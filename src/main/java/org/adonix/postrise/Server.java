@@ -44,5 +44,7 @@ public interface Server extends AutoCloseable {
 
     int getActiveConnections();
 
+    int getThreadsAwaitingConnection();
+
     void close();
 }
