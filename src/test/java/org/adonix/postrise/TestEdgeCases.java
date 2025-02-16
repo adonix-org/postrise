@@ -19,7 +19,6 @@ package org.adonix.postrise;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -147,8 +146,9 @@ class TestEdgeCases {
     @Test
     void testServerAddDataSourceListenerTwice() {
         try (final PostriseServer server = new EdgeCaseServer()) {
-            assertNotNull(server);
             server.addListener(server);
+            assertThat(POSTRISE_LOGGER.getWarnLogs())
+                    .contains("EdgeCaseServer: Data source listener \"EdgeCaseServer\" already exists");
         }
     }
 
