@@ -33,7 +33,7 @@ import java.util.function.ToIntFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-abstract class PostriseServer implements DataSourceListener, Server {
+public abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
