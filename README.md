@@ -1,6 +1,6 @@
 [![Build Status](https://github.com/adonix-org/Postrise/actions/workflows/build.yml/badge.svg)](https://github.com/adonix-org/Postrise/actions)
 [![JDK Compatibility](https://img.shields.io/badge/JDK_Compatibility-11+-blue.svg)](https://www.oracle.com/java/technologies/downloads/)
-[![Apache2 License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://github.com/adonix-org/Postrise/blob/master/LICENSE)
+[![Apache2 License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](https://github.com/adonix-org/Postrise/blob/master/LICENSE)
 
 # Postrise
 
