@@ -29,6 +29,6 @@ public class EdgeCaseServer extends PostgresServer {
     @Override
     protected void onException(Exception e) {
         super.onException(e);
-        throw new RuntimeException("Do not throw exceptions from events");
+        throw new RuntimeException("Do not throw exceptions from event handlers");
     }
 }

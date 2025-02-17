@@ -82,7 +82,7 @@ class TestEdgeCases {
         assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from events");
+                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from event handlers");
     }
 
     @DisplayName("Data Source Context After Server Close")
