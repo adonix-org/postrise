@@ -52,7 +52,7 @@
         <version.hikaricp>6.2.1</version.hikaricp>
 
         <!--    test dependency properties    -->
-        <version.junit5>5.11.4</version.junit5>
+        <version.junit>5.11.4</version.junit>
         <version.slf4j>2.0.16</version.slf4j>
         <version.testcontainers>1.20.4</version.testcontainers>
         <version.assertj>3.27.3</version.assertj>
@@ -92,13 +92,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${version.junit5}</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${version.junit5}</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
