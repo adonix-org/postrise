@@ -188,6 +188,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * @param action - the action to be run.
      */
     protected final void runCatch(final ActionThrows action) {
+        Guard.check("action", action);
         try {
             action.run();
         } catch (final Exception e) {

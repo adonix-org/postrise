@@ -73,11 +73,21 @@ class TestEdgeCases {
         }
     }
 
+    @DisplayName("NULL Action Sent To RunCatch")
+    @Test
+    void testNullActionSentToRunCatch() {
+        try (final EdgeCaseServer server = new EdgeCaseServer()) {
+            assertThrows(IllegalArgumentException.class, () -> server.runCatch(null));
+        }
+    }
+
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
-            server.doRunCatch();
+            server.runCatch(() -> {
+                throw new RuntimeException("Throw from runCatch()");
+            });
         }
         assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("EdgeCaseServer: java.lang.RuntimeException: Throw from runCatch()");
