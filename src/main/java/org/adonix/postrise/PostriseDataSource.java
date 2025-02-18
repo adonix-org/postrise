@@ -54,6 +54,15 @@ abstract class PostriseDataSource implements ConnectionProvider {
         setUsername(System.getProperty("user.name"));
     }
 
+    private void setJdbcUrl(final Server server) {
+        delegate.setJdbcUrl(getJdbcUrl(server));
+    }
+
+    @Override
+    public final String getJdbcUrl() {
+        return delegate.getJdbcUrl();
+    }
+
     @Override
     public final RoleSecurityListener getRoleSecurity() {
         return roleSecurity;
@@ -79,15 +88,6 @@ abstract class PostriseDataSource implements ConnectionProvider {
             connection.close();
             throw e;
         }
-    }
-
-    @Override
-    public final String getJdbcUrl() {
-        return delegate.getJdbcUrl();
-    }
-
-    private void setJdbcUrl(final Server server) {
-        delegate.setJdbcUrl(getJdbcUrl(server));
     }
 
     @Override
