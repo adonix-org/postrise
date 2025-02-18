@@ -181,8 +181,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     /**
-     * Runs the given action. Any exception is caught and sent to the
-     * {@link #onException(Exception)} event.
+     * Run the {@link ActionThrows} function. Any exception is caught and sent to
+     * the {@link #onException(Exception)} event.
      * 
      * @param action - the action to be run.
      */
