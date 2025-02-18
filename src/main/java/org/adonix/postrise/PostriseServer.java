@@ -101,6 +101,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
             provider.getRoleSecurity().onLogin(provider, connection);
 
             onAfterCreate(provider);
+
             return provider;
 
         } catch (final Exception e) {
@@ -240,7 +241,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // SEND EVENTS - Send data source events to listeners including this server.
+    // SEND EVENTS - Send data source events to listeners including "this".
     // --------------------------------------------------------------------------
 
     /**
@@ -293,7 +294,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public void beforeClose(final DataSourceContext context) {
-        LOGGER.info("{}: closing {}...", this, context);
+        LOGGER.info("{}: {} closing...", this, context);
     }
 
     @Override
@@ -302,11 +303,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     protected void beforeClose() {
-        LOGGER.info("{}: beforeClose()", this);
+        LOGGER.info("{}: closing...", this);
     }
 
     protected void afterClose() {
-        LOGGER.info("{}: afterClose()", this);
+        LOGGER.info("{}: closed", this);
     }
 
     protected void onException(final Exception e) {
