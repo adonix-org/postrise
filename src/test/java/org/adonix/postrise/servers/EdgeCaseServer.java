@@ -20,15 +20,15 @@ import org.adonix.postrise.PostgresServer;
 
 public class EdgeCaseServer extends PostgresServer {
 
-    public void throwFromExceptionEvent() {
+    public final void doRunCatch() {
         runCatch(() -> {
-            throw new RuntimeException("Testing Throw From Exception");
+            throw new RuntimeException("Throw from runCatch()");
         });
     }
 
     @Override
     protected void onException(Exception e) {
         super.onException(e);
-        throw new RuntimeException("Do not throw exceptions from event handlers");
+        throw new RuntimeException("Do not throw exceptions from here");
     }
 }

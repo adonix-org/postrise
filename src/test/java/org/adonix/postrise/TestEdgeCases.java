@@ -77,12 +77,12 @@ class TestEdgeCases {
     @Test
     void testServerThrowsFromExceptionHandler() {
         try (final EdgeCaseServer server = new EdgeCaseServer()) {
-            server.throwFromExceptionEvent();
+            server.doRunCatch();
         }
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("EdgeCaseServer: java.lang.RuntimeException: Testing Throw From Exception");
+                .contains("EdgeCaseServer: java.lang.RuntimeException: Throw from runCatch()");
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from event handlers");
+                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from here");
     }
 
     @DisplayName("Data Source Context After Server Close")
