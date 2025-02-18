@@ -17,7 +17,6 @@
 package org.adonix.postrise;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,7 +83,7 @@ class TestEdgeCases {
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
-        try (final EdgeCaseServer server = new EdgeCaseServer()) {
+        try (final PostriseServer server = new EdgeCaseServer()) {
             server.runCatch(() -> {
                 throw new RuntimeException("Throw from runCatch()");
             });

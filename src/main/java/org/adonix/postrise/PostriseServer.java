@@ -29,7 +29,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -92,7 +91,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
         final ConnectionProvider provider = createDataSource(databaseName);
 
-        // All listeners will configure the data source in this event.
+        // Listeners can configure the data source in this event.
         onBeforeCreate(provider);
 
         // Create the first connection to validate settings, initialize the connection
