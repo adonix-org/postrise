@@ -63,6 +63,9 @@ public class PostgresDataSource extends PostriseDataSource {
      * which could cause unexpected permission errors when the connection is
      * re-used. Always {@code RESET ROLE} when getting a {@link Connection} from
      * the pool.
+     * 
+     * @see #getConnection()
+     * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
      */
     @Override
     protected void resetConnection(final Connection connection) throws SQLException {
