@@ -10,6 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <name>Postrise</name>
+    <description>Secure PostgreSQL connections simplified.</description>
+    <url>https://github.com/adonix-org/Postrise</url>
+
     <organization>
         <name>adonix.org</name>
         <url>https://github.com/adonix-org</url>
