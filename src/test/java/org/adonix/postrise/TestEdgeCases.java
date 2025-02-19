@@ -188,7 +188,7 @@ class TestEdgeCases {
             server.addListener(listener);
             server.addListener(listener);
         }
-        assertThat(LOG_CAPTOR.getWarnLogs())
+        assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("PostgresServer: Database listener \"postrise\" already exists");
     }
 
@@ -197,7 +197,7 @@ class TestEdgeCases {
     void testServerAddDataSourceListenerTwice() {
         try (final PostriseServer server = new PostgresServer()) {
             server.addListener(server);
-            assertThat(LOG_CAPTOR.getWarnLogs())
+            assertThat(LOG_CAPTOR.getErrorLogs())
                     .contains("PostgresServer: Data source listener \"PostgresServer\" already exists");
         }
     }

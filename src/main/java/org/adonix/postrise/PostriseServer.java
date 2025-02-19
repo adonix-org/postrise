@@ -122,7 +122,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     public final void addListener(final DataSourceListener listener) {
         Guard.check("listener", listener);
         if (!isOpenThen(() -> dataSourceListeners.add(listener)).booleanValue()) {
-            LOGGER.warn("{}: Data source listener \"{}\" already exists", this, listener);
+            LOGGER.error("{}: Data source listener \"{}\" already exists", this, listener);
         }
     }
 
@@ -130,7 +130,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     public final void addListener(final DatabaseListener listener) {
         Guard.check("listener", listener);
         if (isOpenThen(() -> databaseListeners.putIfAbsent(getKey(listener), listener)) != null) {
-            LOGGER.warn("{}: Database listener \"{}\" already exists", this, listener.getDatabaseName());
+            LOGGER.error("{}: Database listener \"{}\" already exists", this, listener.getDatabaseName());
         }
     }
 
