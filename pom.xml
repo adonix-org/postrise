@@ -61,7 +61,7 @@
         <version.testcontainers>1.20.4</version.testcontainers>
         <version.assertj>3.27.3</version.assertj>
         <version.logcaptor>2.10.1</version.logcaptor>
-        <version.sonar>5.0.0.4389</version.sonar>
+        <version.sonar>4.0.0.4121</version.sonar>
 
         <!--    plugin properties   -->
         <version.maven-compiler-plugin>3.13.0</version.maven-compiler-plugin>
