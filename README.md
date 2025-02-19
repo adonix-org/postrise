@@ -6,6 +6,6 @@
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=org.adonix%3Apostrise)
 
-# postrise
+# Postrise
 
 <img src="./img/postrise.png" width=50px>
