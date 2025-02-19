@@ -220,7 +220,7 @@ class TestEdgeCases {
 
     @DisplayName("Test Empty Listener")
     @Test
-    void testEmptyListener() throws SQLException {
+    void testEmptyListener() {
         try (final Server server = new PostgresServer()) {
             server.addListener(new DataSourceListener() {
             });
