@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>Postrise</name>
-    <description>Secure PostgreSQL connections simplified.</description>
+    <description>Simple and secure PostgreSQL connections.</description>
     <url>https://github.com/adonix-org/Postrise</url>
 
     <organization>
