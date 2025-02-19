@@ -249,7 +249,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     @FunctionalInterface
     private interface DataSourceEvent {
-        void sendTo(DataSourceListener listener) throws Exception;
+        void sendTo(DataSourceListener listener);
     }
 
     private void doEvent(final DataSourceContext context, final DataSourceEvent event) {
