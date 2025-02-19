@@ -218,6 +218,16 @@ class TestEdgeCases {
         }
     }
 
+    @DisplayName("Test Empty Listener")
+    @Test
+    void testEmptyListener() throws SQLException {
+        try (final Server server = new PostgresServer()) {
+            server.addListener(new DataSourceListener() {
+            });
+            assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
+        }
+    }
+
     @AfterEach
     void afterEach() {
         LOG_CAPTOR.clearLogs();
