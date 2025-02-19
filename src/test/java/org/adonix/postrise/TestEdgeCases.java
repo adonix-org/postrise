@@ -25,7 +25,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import nl.altindag.log.LogCaptor;
-import org.adonix.postrise.servers.EdgeCaseServer;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
@@ -75,7 +74,7 @@ class TestEdgeCases {
     @DisplayName("NULL Action Sent To RunCatch")
     @Test
     void testNullActionSentToRunCatch() {
-        try (final EdgeCaseServer server = new EdgeCaseServer()) {
+        try (final PostgresServer server = new PostgresServer()) {
             assertThrows(IllegalArgumentException.class, () -> server.runCatch(null));
         }
     }
@@ -83,15 +82,27 @@ class TestEdgeCases {
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
-        try (final PostriseServer server = new EdgeCaseServer()) {
+        try (final PostgresServer server = new PostgresServer() {
+
+            @Override
+            protected void onException(final Exception e) {
+                super.onException(e);
+                throw new RuntimeException("Do not throw exceptions from here");
+            }
+
+            @Override
+            public String toString() {
+                return "OnExceptionServer";
+            }
+        }) {
             server.runCatch(() -> {
                 throw new RuntimeException("Throw from runCatch()");
             });
         }
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("EdgeCaseServer: java.lang.RuntimeException: Throw from runCatch()");
+                .contains("OnExceptionServer: java.lang.RuntimeException: Throw from runCatch()");
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("EdgeCaseServer: java.lang.RuntimeException: Do not throw exceptions from here");
+                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw exceptions from here");
     }
 
     @DisplayName("Data Source Context After Server Close")
@@ -164,7 +175,7 @@ class TestEdgeCases {
     @DisplayName("Server Get Empty Database Names")
     @Test
     void testServerGetEmptyDatabaseNames() {
-        try (final Server server = new EdgeCaseServer()) {
+        try (final Server server = new PostgresServer()) {
             assertEquals(0, server.getDatabaseNames().size());
         }
     }
@@ -172,29 +183,29 @@ class TestEdgeCases {
     @DisplayName("Server Add Database Listener Twice")
     @Test
     void testServerAddDatabaseListenerTwice() {
-        try (final Server server = new EdgeCaseServer()) {
+        try (final Server server = new PostgresServer()) {
             final DatabaseListener listener = new PostriseListener();
             server.addListener(listener);
             server.addListener(listener);
         }
         assertThat(LOG_CAPTOR.getWarnLogs())
-                .contains("EdgeCaseServer: Database listener \"postrise\" already exists");
+                .contains("PostgresServer: Database listener \"postrise\" already exists");
     }
 
     @DisplayName("Server Add Data Source Listener Twice")
     @Test
     void testServerAddDataSourceListenerTwice() {
-        try (final PostriseServer server = new EdgeCaseServer()) {
+        try (final PostriseServer server = new PostgresServer()) {
             server.addListener(server);
             assertThat(LOG_CAPTOR.getWarnLogs())
-                    .contains("EdgeCaseServer: Data source listener \"EdgeCaseServer\" already exists");
+                    .contains("PostgresServer: Data source listener \"PostgresServer\" already exists");
         }
     }
 
     @DisplayName("Invalid Pool Status Request")
     @Test
     void testInvalidPoolStatusRequest() {
-        try (final Server server = new EdgeCaseServer()) {
+        try (final Server server = new PostgresServer()) {
             server.addListener(new DataSourceListener() {
                 @Override
                 public void beforeCreate(final DataSourceSettings settings) {
