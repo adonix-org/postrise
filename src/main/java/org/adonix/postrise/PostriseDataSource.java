@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.function.ToIntFunction;
-
 import org.adonix.postrise.security.RoleSecurityListener;
 
 abstract class PostriseDataSource implements ConnectionProvider {
@@ -53,7 +52,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
         setRoleSecurity(getDefaultRoleSecurity());
         setUsername(System.getProperty("user.name"));
     }
-
+    
     private void setJdbcUrl(final Server server) {
         delegate.setJdbcUrl(getJdbcUrl(server));
     }
