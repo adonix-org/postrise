@@ -18,6 +18,7 @@ package org.adonix.postrise;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -163,12 +164,25 @@ class TestEdgeCases {
         server.stopContainer();
     }
 
-    @DisplayName("No Database Listener On Close")
+    @DisplayName("Test Before Create Exceptions")
     @Test
-    void testNoDatabaseListenerOnClose() {
+    // TODO: Fix this for database listener = null for 100% coverage.
+    void testBeforeCreateExceptions() {
         final PostgresContainer server = new StaticPortServer();
         server.startContainer();
-        server.getDataSource(PostgresContainer.DB_NAME);
+        server.addListener(new DataSourceListener() {
+            @Override
+            public void beforeCreate(DataSourceSettings settings) {
+                throw new RuntimeException("Before create exception");
+            }
+        });
+        final Throwable t = assertThrows(CreateDataSourceException.class,
+                () -> server.getDataSource(PostgresContainer.DB_NAME));
+
+        final Throwable cause = t.getCause();
+        assertNotNull(cause);
+        assertEquals("Before create exception", cause.getMessage());
+
         server.close();
         server.stopContainer();
     }
