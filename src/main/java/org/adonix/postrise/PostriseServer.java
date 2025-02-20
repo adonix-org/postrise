@@ -267,7 +267,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private void onBeforeCreate(final ConnectionProvider provider) throws SQLException {
+    private void onBeforeCreate(final ConnectionProvider provider) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(provider);
         }
@@ -294,9 +294,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     @Override
-    public void beforeCreate(final DataSourceSettings settings) throws SQLException {
-        settings.setLoginTimeout(1000);
-
+    public void beforeCreate(final DataSourceSettings settings) {
         LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
     }
 

@@ -16,7 +16,6 @@
 
 package org.adonix.postrise;
 
-import java.sql.SQLException;
 import java.util.EventListener;
 
 /**
@@ -32,7 +31,7 @@ public interface DataSourceListener extends EventListener {
      * @param settings - the {@link DataSourceSettings} applied when creating a new
      *                 {@link ConnectionProvider} instance.
      */
-    default void beforeCreate(DataSourceSettings settings) throws SQLException {
+    default void beforeCreate(DataSourceSettings settings) {
     }
 
     default void afterCreate(DataSourceContext context) {

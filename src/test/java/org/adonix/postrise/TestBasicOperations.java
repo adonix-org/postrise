@@ -221,9 +221,9 @@ class TestBasicOperations {
         assertEquals(0, server.getThreadsAwaitingConnection());
     }
 
-    @DisplayName("Postrise Data Source Getters and Setters")
+    @DisplayName("Data Source Context Getters and Setters")
     @Test
-    void testPostriseDataSourceGettersAndSetters() throws SQLException {
+    void testDataSourceContextGettersAndSetters() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         final DataSourceContext dataSource = server.getDataSource(listener.getDatabaseName());
         assertNotNull(dataSource);
