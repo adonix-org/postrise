@@ -105,6 +105,16 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
+    public final int getLoginTimeout() throws SQLException {
+        return delegate.getLoginTimeout();
+    }
+
+    @Override
+    public final void setLoginTimeout(int seconds) throws SQLException {
+        delegate.setLoginTimeout(seconds);
+    }
+
+    @Override
     public final int getMaxPoolSize() {
         return delegate.getMaximumPoolSize();
     }

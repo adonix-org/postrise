@@ -16,6 +16,7 @@
 
 package org.adonix.postrise;
 
+import java.sql.SQLException;
 import java.util.Properties;
 import javax.sql.DataSource;
 
@@ -38,6 +39,8 @@ interface ConnectionSettingsWrite extends ConnectionSettingsRead {
     void setPassword(String password);
 
     void setAutoCommit(boolean isAutoCommit);
+
+    void setLoginTimeout(int seconds) throws SQLException;
 
     /**
      * Add a property (name/value pair) that will be used to configure the

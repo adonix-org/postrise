@@ -86,13 +86,18 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * @param databaseName - the name of the database for creating the
      *                     {@link ConnectionProvider}.
      * @return a valid and configured {@link ConnectionProvider} implementation.
+     * @throws SQLException
      */
     private ConnectionProvider doCreate(final String databaseName) {
 
         final ConnectionProvider provider = createDataSource(databaseName);
 
         // Listeners can configure the data source in this event.
-        onBeforeCreate(provider);
+        try {
+            onBeforeCreate(provider);
+        } catch (final Exception e) {
+            throw new CreateDataSourceException(e);
+        }
 
         // Create the first connection to validate settings, initialize the connection
         // pool, and send events to all listeners including "this".
@@ -262,8 +267,14 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private void onBeforeCreate(final ConnectionProvider provider) {
-        doEvent(provider, listener -> listener.beforeCreate(provider));
+    private void onBeforeCreate(final ConnectionProvider provider) throws SQLException {
+        for (final DataSourceListener listener : dataSourceListeners) {
+            listener.beforeCreate(provider);
+        }
+        final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+        if (listener != null) {
+            listener.beforeCreate(provider);
+        }
     }
 
     private void onAfterCreate(final ConnectionProvider provider) {
@@ -283,7 +294,9 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     @Override
-    public void beforeCreate(final DataSourceSettings settings) {
+    public void beforeCreate(final DataSourceSettings settings) throws SQLException {
+        settings.setLoginTimeout(1000);
+
         LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
     }
 

@@ -19,6 +19,7 @@ package org.adonix.postrise.servers;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.adonix.postrise.DataSourceSettings;
@@ -62,7 +63,7 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    public void beforeCreate(final DataSourceSettings settings) {
+    public void beforeCreate(final DataSourceSettings settings) throws SQLException {
         super.beforeCreate(settings);
         settings.setAutoCommit(true);
         settings.setUsername(container.getUsername());

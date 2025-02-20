@@ -16,6 +16,7 @@
 
 package org.adonix.postrise;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 interface ConnectionSettingsRead extends DatabaseNameProvider {
@@ -29,6 +30,8 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     String getUsername();
 
     boolean isAutoCommit();
+
+    int getLoginTimeout() throws SQLException;
 
     Properties getDataSourceProperties();
 }
