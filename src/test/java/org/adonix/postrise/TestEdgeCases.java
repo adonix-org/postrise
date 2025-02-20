@@ -163,6 +163,16 @@ class TestEdgeCases {
         server.stopContainer();
     }
 
+    @DisplayName("No Database Listener On Close")
+    @Test
+    void testNoDatabaseListenerOnClose() {
+        final PostgresContainer server = new StaticPortServer();
+        server.startContainer();
+        server.getDataSource(PostgresContainer.DB_NAME);
+        server.close();
+        server.stopContainer();
+    }
+
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() {

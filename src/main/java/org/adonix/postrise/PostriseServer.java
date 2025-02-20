@@ -267,26 +267,26 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
-    private void onBeforeCreate(final ConnectionProvider provider) {
+    private void onBeforeCreate(final DataSourceSettings settings) {
         for (final DataSourceListener listener : dataSourceListeners) {
-            listener.beforeCreate(provider);
+            listener.beforeCreate(settings);
         }
-        final DatabaseListener listener = databaseListeners.get(provider.getDatabaseName());
+        final DatabaseListener listener = databaseListeners.get(settings.getDatabaseName());
         if (listener != null) {
-            listener.beforeCreate(provider);
+            listener.beforeCreate(settings);
         }
     }
 
-    private void onAfterCreate(final ConnectionProvider provider) {
-        doEvent(provider, listener -> listener.afterCreate(provider));
+    private void onAfterCreate(final DataSourceContext context) {
+        doEvent(context, listener -> listener.afterCreate(context));
     }
 
-    private void onBeforeClose(final ConnectionProvider provider) {
-        doEvent(provider, listener -> listener.beforeClose(provider));
+    private void onBeforeClose(final DataSourceContext context) {
+        doEvent(context, listener -> listener.beforeClose(context));
     }
 
-    private void onAfterClose(final ConnectionProvider provider) {
-        doEvent(provider, listener -> listener.afterClose(provider));
+    private void onAfterClose(final DataSourceContext context) {
+        doEvent(context, listener -> listener.afterClose(context));
     }
 
     // --------------------------------------------------------------------------
