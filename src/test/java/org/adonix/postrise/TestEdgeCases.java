@@ -16,6 +16,7 @@
 
 package org.adonix.postrise;
 
+import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +30,8 @@ import nl.altindag.log.LogCaptor;
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
+import org.adonix.postrise.servers.TestDatabaseCreator;
+import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -166,7 +169,6 @@ class TestEdgeCases {
 
     @DisplayName("Before Create Exception")
     @Test
-    // TODO: Duplicate this test except for NULL database listener.
     void testBeforeCreateException() {
         final PostgresContainer server = new StaticPortServer();
         server.startContainer();
@@ -186,6 +188,25 @@ class TestEdgeCases {
 
         server.close();
         server.stopContainer();
+    }
+
+    @DisplayName("No Database Listeners")
+    @Test
+    void testNoDatabaseListeners() throws SQLException {
+        final PostgresContainer server = new TestServer() {
+
+            @Override
+            public void beforeCreate(final DataSourceSettings settings) {
+                super.beforeCreate(settings);
+                settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
+            }
+        };
+        try {
+            server.startContainer();
+            assertNotNull(server.getDataSource(TestDatabaseCreator.createTestDatabase(server)));
+        } finally {
+            server.stopContainer();
+        }
     }
 
     @DisplayName("Server Close Idempotency")

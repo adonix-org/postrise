@@ -18,18 +18,13 @@ package org.adonix.postrise.servers;
 
 import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_ROLE_SECURITY;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.DatabaseListener;
 import org.adonix.postrise.Server;
 import org.adonix.postrise.security.RoleSecurityListener;
 
 public class TestDatabaseListener implements DatabaseListener {
-
-    private static final AtomicInteger databaseNameIndex = new AtomicInteger();
 
     private final String username;
     private final String password;
@@ -45,26 +40,8 @@ public class TestDatabaseListener implements DatabaseListener {
         this.security = security;
         this.username = username;
         this.password = "helloworld";
-        this.databaseName = String.format("database_%03d", databaseNameIndex.incrementAndGet());
-        createTestDatabase(server);
+        this.databaseName = TestDatabaseCreator.createTestDatabase(server);
         server.addListener(this);
-    }
-
-    protected String getCreateDatabaseSql() {
-        return String.join(" ",
-                "CREATE DATABASE",
-                getDatabaseName(),
-                "WITH ENCODING = 'UTF8'",
-                "TABLESPACE = pg_default",
-                "CONNECTION LIMIT = -1",
-                "IS_TEMPLATE = False");
-    }
-
-    private void createTestDatabase(final Server server) throws SQLException {
-        try (final Connection connection = server.getConnection(PostgresContainer.DB_NAME);
-                final Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(getCreateDatabaseSql());
-        }
     }
 
     @Override
