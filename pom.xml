@@ -161,6 +161,9 @@
                     <source>${version.java}</source>
                     <target>${version.java}</target>
                     <release>${version.java}</release>
+                    <compilerArgs>
+                        <arg>-proc:none</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
