@@ -201,12 +201,9 @@ class TestEdgeCases {
                 settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
             }
         };
-        try {
-            server.startContainer();
-            assertNotNull(server.getDataSource(TestDatabaseCreator.createTestDatabase(server)));
-        } finally {
-            server.stopContainer();
-        }
+        server.startContainer();
+        assertNotNull(server.getDataSource(TestDatabaseCreator.createTestDatabase(server)));
+        server.stopContainer();
     }
 
     @DisplayName("Server Close Idempotency")
