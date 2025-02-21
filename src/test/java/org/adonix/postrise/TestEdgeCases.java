@@ -110,102 +110,93 @@ class TestEdgeCases {
     @DisplayName("Data Source Context After Server Close")
     @Test
     void testDataSourceContextAfterServerClosed() {
-        try (final Server server = new StaticPortServer()){
-            final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
-
-            server.close();
-
-            assertThrows(SQLException.class, context::getConnection);
-        }
+        final Server server = new StaticPortServer();
+        final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
+        server.close();
+        assertThrows(SQLException.class, context::getConnection);
     }
 
-    @DisplayName("Add Listener After Server Close")
+    @DisplayName("Add Data Source Listener After Server Close")
     @Test
-    void testAddListenerAfterServerClose() {
+    void testAddLDataSourceListenerAfterServerClose() {
         final Server server = new PostgresServer();
-        final DataSourceListener listener = new DataSourceListener() {
-        };
         server.close();
-        final Throwable t = assertThrows(IllegalStateException.class, () -> server.addListener(listener));
+        final Throwable t = assertThrows(IllegalStateException.class,
+                () -> server.addListener(new DataSourceListener() {
+                }));
         assertEquals("PostgresServer is closed", t.getMessage());
     }
 
     @DisplayName("Add Listener During Server Close")
     @Test
     void testAddListenerDuringServerClose() {
-        final PostgresContainer server = new StaticPortServer();
-        server.startContainer();
-        server.getDataSource(PostgresContainer.DB_NAME);
-        final DataSourceListener listener = new DataSourceListener() {
-        };
-        server.addListener(new DataSourceListener() {
-            @Override
-            public void beforeClose(final DataSourceContext context) {
-                server.addListener(new DatabaseListener() {
-                    @Override
-                    public String getDatabaseName() {
-                        return StaticPortServer.DB_NAME;
-                    }
+        try (final Server server = new StaticPortServer()) {
+            server.getDataSource(PostgresContainer.DB_NAME);
+            final DataSourceListener listener = new DataSourceListener() {
+            };
+            server.addListener(new DataSourceListener() {
+                @Override
+                public void beforeClose(final DataSourceContext context) {
+                    server.addListener(new DatabaseListener() {
+                        @Override
+                        public String getDatabaseName() {
+                            return StaticPortServer.DB_NAME;
+                        }
 
-                    @Override
-                    public void beforeClose(final DataSourceContext context) {
-                        final Throwable t = assertThrows(IllegalStateException.class,
-                                () -> server.addListener(listener));
-                        assertEquals("StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
-                                t.getMessage());
-                    }
-                });
-            }
-        });
-        server.close();
-        server.stopContainer();
+                        @Override
+                        public void beforeClose(final DataSourceContext context) {
+                            final Throwable t = assertThrows(IllegalStateException.class,
+                                    () -> server.addListener(listener));
+                            assertEquals(
+                                    "StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
+                                    t.getMessage());
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @DisplayName("Before Create Exception")
     @Test
     void testBeforeCreateException() {
-        final PostgresContainer server = new StaticPortServer();
-        server.startContainer();
-        server.addListener(new DataSourceListener() {
-            @Override
-            public void beforeCreate(DataSourceSettings settings) {
-                throw new RuntimeException("Before create exception");
-            }
-        });
-        final Throwable t = assertThrows(CreateDataSourceException.class,
-                () -> server.getDataSource(PostgresContainer.DB_NAME));
+        try (final Server server = new StaticPortServer()) {
+            server.addListener(new DataSourceListener() {
+                @Override
+                public void beforeCreate(DataSourceSettings settings) {
+                    throw new RuntimeException("Before create exception");
+                }
+            });
+            final Throwable t = assertThrows(CreateDataSourceException.class,
+                    () -> server.getDataSource(PostgresContainer.DB_NAME));
 
-        final Throwable cause = t.getCause();
-        assertNotNull(cause);
-        assertTrue(cause instanceof RuntimeException);
-        assertEquals("Before create exception", cause.getMessage());
-
-        server.close();
-        server.stopContainer();
+            final Throwable cause = t.getCause();
+            assertNotNull(cause);
+            assertTrue(cause instanceof RuntimeException);
+            assertEquals("Before create exception", cause.getMessage());
+        }
     }
 
     @DisplayName("No Database Listeners")
     @Test
     void testNoDatabaseListeners() throws SQLException {
-        final PostgresContainer server = new TestServer() {
-
+        try (final Server server = new TestServer() {
             @Override
             public void beforeCreate(final DataSourceSettings settings) {
                 super.beforeCreate(settings);
                 settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
             }
-        };
-        server.startContainer();
-        assertNotNull(server.getDataSource(TestDatabaseCreator.createTestDatabase(server)));
-        server.stopContainer();
+        }) {
+            assertNotNull(server.getDataSource(TestDatabaseCreator.createTestDatabase(server)));
+        }
     }
 
     @DisplayName("Server Close Idempotency")
     @Test
     void testServerCloseIdempotency() {
-        final Server server = new PostgresServer();
-        server.close();
-        server.close();
+        try (final Server server = new PostgresServer()) {
+            server.close();
+        }
         assertThat(LOG_CAPTOR.getWarnLogs()).contains("PostgresServer: extra close request ignored");
     }
 
