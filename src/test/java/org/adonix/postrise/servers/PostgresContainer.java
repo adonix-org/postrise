@@ -20,7 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Statement;
-
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.PostgresServer;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +33,7 @@ public abstract class PostgresContainer extends PostgresServer {
 
     private static final String POSTGRES_IMAGE_NAME = "postgres:17";
 
-    protected final JdbcDatabaseContainer<?> container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
+    protected JdbcDatabaseContainer<?> container;
 
     public static final int MAX_CONNECTIONS = 199;
     public static final String DB_NAME = "postrise";
@@ -42,13 +41,7 @@ public abstract class PostgresContainer extends PostgresServer {
     public static final String DB_PASS = "postrise";
 
     PostgresContainer() {
-        container
-                .withDatabaseName(DB_NAME)
-                .withUsername(DB_USER)
-                .withPassword(DB_PASS)
-                .withCommand("postgres -c max_connections=" + MAX_CONNECTIONS);
-
-        addListener(new PostriseListener());
+        startContainer();
     }
 
     @Override
@@ -62,6 +55,18 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
+    protected void onCreate() {
+        super.onCreate();
+        container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
+        container
+                .withDatabaseName(DB_NAME)
+                .withUsername(DB_USER)
+                .withPassword(DB_PASS)
+                .withCommand("postgres -c max_connections=" + MAX_CONNECTIONS);
+        addListener(new PostriseListener());
+    }
+
+    @Override
     public void beforeCreate(final DataSourceSettings settings) {
         super.beforeCreate(settings);
         settings.setAutoCommit(true);
@@ -69,14 +74,20 @@ public abstract class PostgresContainer extends PostgresServer {
         settings.setPassword(container.getPassword());
     }
 
+    @Override
+    protected void beforeClose() {
+        super.beforeClose();
+        stopContainer();
+    }
+
     public final void startContainer() {
         container.start();
-        LOGGER.info("{} container started.", container.getDockerImageName());
+        LOGGER.info("{}: container started.", this);
     }
 
     public final void stopContainer() {
         container.stop();
-        LOGGER.info("{} container stopped.", container.getDockerImageName());
+        LOGGER.info("{}: container stopped.", this);
     }
 
     public final void apply(final String... scripts) throws Exception {

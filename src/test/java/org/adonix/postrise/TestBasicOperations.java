@@ -249,13 +249,11 @@ class TestBasicOperations {
 
     @BeforeAll
     static void beforeAll() throws Exception {
-        server.startContainer();
         server.apply("roles.sql");
     }
 
     @AfterAll
     static void afterAll() {
         server.close();
-        server.stopContainer();
     }
 }

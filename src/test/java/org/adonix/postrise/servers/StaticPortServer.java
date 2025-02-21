@@ -27,8 +27,9 @@ public class StaticPortServer extends PostgresContainer {
 
     private static final Integer HOST_PORT = 5801;
 
-    public StaticPortServer() {
-        super();
+    @Override
+    protected void onCreate() {
+        super.onCreate();
         container.withExposedPorts(PostgreSQLContainer.POSTGRESQL_PORT)
                 .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(
                         new HostConfig().withPortBindings(

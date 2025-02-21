@@ -48,7 +48,6 @@ class TestEdgeCases {
 
         try (final PostgresContainer server = new StaticPortServer()) {
 
-            server.startContainer();
             final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
             try (final Connection connection = context.getConnection();
                     final ResultSet rs = connection.createStatement().executeQuery("SELECT 1")) {
@@ -71,7 +70,6 @@ class TestEdgeCases {
             }
 
             server.logStatus();
-            server.stopContainer();
         }
     }
 
@@ -112,16 +110,12 @@ class TestEdgeCases {
     @DisplayName("Data Source Context After Server Close")
     @Test
     void testDataSourceContextAfterServerClosed() {
-        final PostgresContainer server = new StaticPortServer();
-        server.startContainer();
-        try {
+        try (final Server server = new StaticPortServer()){
             final DataSourceContext context = server.getDataSource(PostgresContainer.DB_NAME);
 
             server.close();
 
             assertThrows(SQLException.class, context::getConnection);
-        } finally {
-            server.stopContainer();
         }
     }
 
