@@ -66,6 +66,7 @@
         <!--    plugin properties   -->
         <version.maven-compiler-plugin>3.13.0</version.maven-compiler-plugin>
         <version.maven-source-plugin>3.3.1</version.maven-source-plugin>
+        <version.maven-javadoc-plugin>3.11.2</version.maven-javadoc-plugin>
         <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
 
     </properties>
@@ -170,6 +171,23 @@
                     <execution>
                         <id>attach-sources</id>
                         <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven-javadoc-plugin}</version>
+                <configuration>
+                    <source>${version.java}</source>
+                    <doclint>all,-missing</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>

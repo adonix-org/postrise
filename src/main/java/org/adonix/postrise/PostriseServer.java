@@ -44,7 +44,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      * Subclasses will create and return a new instance of a
      * {@link ConnectionProvider} implementation.
      * 
-     * @param database - the database for the new {@link ConnectionProvider}.
+     * @param databaseName - the database for the new {@link ConnectionProvider}.
      * @return a new {@link ConnectionProvider}.
      * @see PostriseDataSource
      */

@@ -41,7 +41,9 @@ abstract class PostriseDataSource implements ConnectionProvider {
      * @throws SQLException If an error occurs resetting the {@link Connection}.
      * 
      * @see #getConnection()
-     * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
+     * @see <a href=
+     *      "https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis">HikariCP
+     *      Pool Analysis</a>
      */
     protected abstract void resetConnection(final Connection connection) throws SQLException;
 
@@ -52,7 +54,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
         setRoleSecurity(getDefaultRoleSecurity());
         setUsername(System.getProperty("user.name"));
     }
-    
+
     private void setJdbcUrl(final Server server) {
         delegate.setJdbcUrl(getJdbcUrl(server));
     }

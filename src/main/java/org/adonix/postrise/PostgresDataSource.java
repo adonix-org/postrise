@@ -65,7 +65,9 @@ public class PostgresDataSource extends PostriseDataSource {
      * the pool.
      * 
      * @see #getConnection()
-     * @see https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis
+     * @see <a href=
+     *      "https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis">HikariCP
+     *      Pool Analysis</a>
      */
     @Override
     protected void resetConnection(final Connection connection) throws SQLException {
