@@ -120,10 +120,11 @@ class TestEdgeCases {
     @Test
     void testAddLDataSourceListenerAfterServerClose() {
         final Server server = new PostgresServer();
+        final DataSourceListener listener = new DataSourceListener() {
+        };
         server.close();
         final Throwable t = assertThrows(IllegalStateException.class,
-                () -> server.addListener(new DataSourceListener() {
-                }));
+                () -> server.addListener(listener));
         assertEquals("PostgresServer is closed", t.getMessage());
     }
 
