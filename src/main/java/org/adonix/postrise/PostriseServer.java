@@ -38,7 +38,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     PostriseServer() {
         addListener(this);
-        onCreate();
+        doInit();
     }
 
     /**
@@ -314,8 +314,8 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         LOGGER.info("{}: {} closed", this, context);
     }
 
-    protected void onCreate() {
-        LOGGER.info("{}: created", this);
+    protected void doInit() {
+        LOGGER.info("{}: initialize", this);
     }
 
     protected void beforeClose() {
