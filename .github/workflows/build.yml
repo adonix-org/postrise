@@ -30,3 +30,6 @@ jobs:
 
             - name: Build and Test
               run: mvn clean verify --no-transfer-progress
+
+            - name: SonarQube Analysis
+              run: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=adonix-org -Dsonar.token=${{ secrets.SONAR_TOKEN }}
