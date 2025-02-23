@@ -75,8 +75,8 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    protected void beforeClose() {
-        super.beforeClose();
+    protected void afterClose() {
+        super.afterClose();
         stopContainer();
     }
 
