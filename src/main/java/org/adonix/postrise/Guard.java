@@ -20,7 +20,7 @@ public abstract class Guard {
 
     protected static final String NULL_OBJECT_ERROR = "Illegal NULL Object for ";
     protected static final String NULL_STRING_ERROR = "Illegal NULL String for ";
-    protected static final String BLANK_STRING_ERROR = "Illegal EMPTY String for ";
+    protected static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
 
     private Guard() {
     }
@@ -36,7 +36,7 @@ public abstract class Guard {
             throw new IllegalArgumentException(NULL_STRING_ERROR + parameterName);
         }
         if (parameter.isBlank()) {
-            throw new IllegalArgumentException(BLANK_STRING_ERROR + parameterName);
+            throw new IllegalArgumentException(EMPTY_STRING_ERROR + parameterName);
         }
     }
 }
