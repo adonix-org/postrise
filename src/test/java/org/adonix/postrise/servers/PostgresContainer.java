@@ -55,8 +55,8 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    protected void doInit() {
-        super.doInit();
+    protected void onInit() {
+        super.onInit();
         container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
         container
                 .withDatabaseName(DB_NAME)
