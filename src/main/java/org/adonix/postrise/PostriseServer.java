@@ -128,7 +128,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // LISTENERS - Manage listeners to receive data source events.
+    // LISTENERS - Manage listeners to receive events.
     // --------------------------------------------------------------------------
 
     private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
