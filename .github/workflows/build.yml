@@ -32,4 +32,4 @@ jobs:
               run: mvn clean verify --no-transfer-progress
 
             - name: SonarQube Analysis
-              run: mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=adonix-org -Dsonar.token=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
+              run: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=adonix-org -Dsonar.token=${{ secrets.SONAR_TOKEN }} --no-transfer-progress
