@@ -38,7 +38,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
-     * instance. A static instances will be accessed via the
+     * instance. A static instance will be accessed via the
      * {@link RoleSecurityProviders} class.
      */
     PostgresDefaultRoleSecurity() {
@@ -47,7 +47,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws RoleSecurityException is not a login user, or is a super user.
+     * @throws RoleSecurityException is a super user.
      */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {
