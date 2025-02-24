@@ -18,7 +18,6 @@ package org.adonix.postrise.security;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.adonix.postrise.DataSourceContext;
 
 final class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
