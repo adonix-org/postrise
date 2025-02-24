@@ -89,7 +89,7 @@ class TestEdgeCases {
             @Override
             protected void onException(final Exception e) {
                 super.onException(e);
-                throw new RuntimeException("Do not throw exceptions from here");
+                throw new RuntimeException("Do not throw from events.");
             }
 
             @Override
@@ -104,7 +104,7 @@ class TestEdgeCases {
         assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("OnExceptionServer: java.lang.RuntimeException: Throw from runCatch()");
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw exceptions from here");
+                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw from events.");
     }
 
     @DisplayName("Data Source Context After Server Close")
