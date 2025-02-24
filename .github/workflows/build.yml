@@ -26,6 +26,7 @@ jobs:
               with:
                   distribution: "temurin"
                   java-version: ${{ env.JAVA_VERSION }}
+                  cache: "maven"
 
             - name: Build and Test
               run: mvn clean verify --no-transfer-progress
