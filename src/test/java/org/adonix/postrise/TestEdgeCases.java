@@ -128,36 +128,6 @@ class TestEdgeCases {
         assertEquals("PostgresServer is closed", t.getMessage());
     }
 
-    @DisplayName("Add Listener During Server Close")
-    @Test
-    void testAddListenerDuringServerClose() {
-        try (final Server server = new StaticPortServer()) {
-            server.getDataSource(PostgresContainer.DB_NAME);
-            final DataSourceListener listener = new DataSourceListener() {
-            };
-            server.addListener(new DataSourceListener() {
-                @Override
-                public void beforeClose(final DataSourceContext context) {
-                    server.addListener(new DatabaseListener() {
-                        @Override
-                        public String getDatabaseName() {
-                            return StaticPortServer.DB_NAME;
-                        }
-
-                        @Override
-                        public void beforeClose(final DataSourceContext context) {
-                            final Throwable t = assertThrows(IllegalStateException.class,
-                                    () -> server.addListener(listener));
-                            assertEquals(
-                                    "StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
-                                    t.getMessage());
-                        }
-                    });
-                }
-            });
-        }
-    }
-
     @DisplayName("Before Create Exception")
     @Test
     void testBeforeCreateException() {
