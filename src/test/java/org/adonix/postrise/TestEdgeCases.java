@@ -81,6 +81,32 @@ class TestEdgeCases {
         }
     }
 
+    @DisplayName("Server Throws From Run Catch")
+    @Test
+    void testServerThrowsFromRunCatch() {
+        try (final PostgresServer server = new PostgresServer() {
+
+            @Override
+            protected void onException(final Exception e) {
+                super.onException(e);
+                throw new RuntimeException("Do not throw from events.");
+            }
+
+            @Override
+            public String toString() {
+                return "OnExceptionServer";
+            }
+        }) {
+            server.runCatch(() -> {
+                throw new RuntimeException("Throw from runCatch()");
+            });
+        }
+        assertThat(LOG_CAPTOR.getErrorLogs())
+                .contains("OnExceptionServer: java.lang.RuntimeException: Throw from runCatch()");
+        assertThat(LOG_CAPTOR.getErrorLogs())
+                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw from events.");
+    }
+
     @DisplayName("Server Throws From Exception Handler")
     @Test
     void testServerThrowsFromExceptionHandler() {
