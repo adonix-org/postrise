@@ -141,6 +141,11 @@ class TestEdgeCases {
                     final Throwable t = assertThrows(IllegalStateException.class, () -> server.addListener(listener));
                     assertEquals("StaticPortServer is closing", t.getMessage());
                 }
+
+                @Override
+                public void afterClose(final DataSourceContext context) {
+                    server.addListener(listener);
+                }
             });
         }
     }
