@@ -81,15 +81,15 @@ class TestEdgeCases {
         }
     }
 
-    @DisplayName("Server Throws From Run Catch")
+    @DisplayName("Server Throws From Exception Handler")
     @Test
-    void testServerThrowsFromRunCatch() {
+    void testServerThrowsFromExceptionHandler() {
         try (final PostgresServer server = new PostgresServer() {
 
             @Override
             protected void onException(final Exception e) {
                 super.onException(e);
-                throw new RuntimeException("Do not throw from onException()");
+                throw new RuntimeException("Do not throw exceptions from here");
             }
 
             @Override
@@ -104,7 +104,7 @@ class TestEdgeCases {
         assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("OnExceptionServer: java.lang.RuntimeException: Throw from runCatch()");
         assertThat(LOG_CAPTOR.getErrorLogs())
-                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw from onException()");
+                .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw exceptions from here");
     }
 
     @DisplayName("Data Source Context After Server Close")
@@ -126,6 +126,36 @@ class TestEdgeCases {
         final Throwable t = assertThrows(IllegalStateException.class,
                 () -> server.addListener(listener));
         assertEquals("PostgresServer is closed", t.getMessage());
+    }
+
+    @DisplayName("Add Listener During Server Close")
+    @Test
+    void testAddListenerDuringServerClose() {
+        try (final Server server = new StaticPortServer()) {
+            server.getDataSource(PostgresContainer.DB_NAME);
+            final DataSourceListener listener = new DataSourceListener() {
+            };
+            server.addListener(new DataSourceListener() {
+                @Override
+                public void beforeClose(final DataSourceContext context) {
+                    server.addListener(new DatabaseListener() {
+                        @Override
+                        public String getDatabaseName() {
+                            return StaticPortServer.DB_NAME;
+                        }
+
+                        @Override
+                        public void beforeClose(final DataSourceContext context) {
+                            final Throwable t = assertThrows(IllegalStateException.class,
+                                    () -> server.addListener(listener));
+                            assertEquals(
+                                    "StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
+                                    t.getMessage());
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @DisplayName("Before Create Exception")
