@@ -138,7 +138,8 @@ class TestEdgeCases {
             server.addListener(new DataSourceListener() {
                 @Override
                 public void beforeClose(final DataSourceContext context) {
-                    server.addListener(listener);
+                    final Throwable t = assertThrows(IllegalStateException.class, () -> server.addListener(listener));
+                    assertEquals("StaticPortServer is closing", t.getMessage());
                 }
             });
         }
