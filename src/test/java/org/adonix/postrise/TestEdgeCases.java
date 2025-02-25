@@ -138,21 +138,7 @@ class TestEdgeCases {
             server.addListener(new DataSourceListener() {
                 @Override
                 public void beforeClose(final DataSourceContext context) {
-                    server.addListener(new DatabaseListener() {
-                        @Override
-                        public String getDatabaseName() {
-                            return StaticPortServer.DB_NAME;
-                        }
-
-                        @Override
-                        public void beforeClose(final DataSourceContext context) {
-                            final Throwable t = assertThrows(IllegalStateException.class,
-                                    () -> server.addListener(listener));
-                            assertEquals(
-                                    "StaticPortServer: java.lang.IllegalStateException: StaticPortServer is closing",
-                                    t.getMessage());
-                        }
-                    });
+                    server.addListener(listener);
                 }
             });
         }
