@@ -20,7 +20,7 @@ import java.sql.Connection;
 
 /**
  * Implementations of this interface will return a JDBC {@link Connection}
- * using {@link DataSourceSettings} provided in the
+ * using {@link DataSourceSettings} configured in the
  * {@link DataSourceListener#beforeCreate(DataSourceSettings) beforeCreate()}
  * event.
  */
