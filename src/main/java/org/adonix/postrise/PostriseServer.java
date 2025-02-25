@@ -24,7 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 import org.apache.logging.log4j.LogManager;
@@ -80,19 +82,6 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         return isOpenThen(() -> doCreate(databaseName));
     }
 
-    // --------------------------------------------------------------------------
-    // SERVER STATUS - Atomically manage the current state of the server.
-    // --------------------------------------------------------------------------
-
-    private final AtomicBoolean isOpen = new AtomicBoolean(true);
-
-    private <T> T isOpenThen(final Supplier<T> action) {
-        if (isOpen.get()) {
-            return action.get();
-        }
-        throw new IllegalStateException(this + " is closed");
-    }
-
     /**
      * 
      * @param databaseName - the name of the database for creating the
@@ -128,7 +117,7 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // LISTENERS - Manage listeners to receive events.
+    // LISTENERS - Manage listeners to receive data source events.
     // --------------------------------------------------------------------------
 
     private final Set<DataSourceListener> dataSourceListeners = Collections.synchronizedSet(new LinkedHashSet<>());
@@ -148,6 +137,39 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         Guard.check("listener", listener);
         if (isOpenThen(() -> databaseListeners.putIfAbsent(getKey(listener), listener)) != null) {
             LOGGER.error("{}: Database listener \"{}\" already exists", this, listener.getDatabaseName());
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // SERVER STATE - Thread-safe management of the server state.
+    // --------------------------------------------------------------------------
+
+    /**
+     * A {@link Server} should be in one of these states.
+     */
+    private enum ServerState {
+        OPEN, CLOSING, CLOSED
+    }
+
+    private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
+    private final Lock readState = stateLock.readLock();
+    private final Lock writeState = stateLock.writeLock();
+    private ServerState state = ServerState.OPEN;
+
+    private <T> T isOpenThen(final Supplier<T> action) {
+        readState.lock();
+        try {
+            switch (state) {
+                case OPEN:
+                    return action.get();
+                case CLOSING:
+                    throw new IllegalStateException(this + " is closing");
+                case CLOSED:
+                default:
+                    throw new IllegalStateException(this + " is closed");
+            }
+        } finally {
+            readState.unlock();
         }
     }
 
@@ -314,19 +336,29 @@ public abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public final void close() {
-        if (!isOpen.getAndSet(false)) {
-            LOGGER.warn("{}: extra close request ignored", this);
-            return;
+        writeState.lock();
+        try {
+            if (state != ServerState.OPEN) {
+                LOGGER.warn("{}: extra close request ignored", this);
+                return;
+            }
+            state = ServerState.CLOSING;
+
+            runCatch(this::beforeClose);
+            for (final ConnectionProvider provider : databasePools.values()) {
+                onBeforeClose(provider);
+                runCatch(provider::close);
+                onAfterClose(provider);
+            }
+            runCatch(databaseListeners::clear);
+            runCatch(databasePools::clear);
+
+            state = ServerState.CLOSED;
+            runCatch(this::afterClose);
+
+        } finally {
+            writeState.unlock();
         }
-        runCatch(this::beforeClose);
-        for (final ConnectionProvider provider : databasePools.values()) {
-            onBeforeClose(provider);
-            runCatch(provider::close);
-            onAfterClose(provider);
-        }
-        runCatch(databaseListeners::clear);
-        runCatch(databasePools::clear);
-        runCatch(this::afterClose);
     }
 
     @Override
