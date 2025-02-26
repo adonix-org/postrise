@@ -315,15 +315,15 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     protected void onInit() {
-        LOGGER.info("{}: initialize", this);
+        LOGGER.info("{}: server initialize", this);
     }
 
     protected void beforeClose() {
-        LOGGER.info("{}: closing...", this);
+        LOGGER.info("{}: server closing...", this);
     }
 
     protected void afterClose() {
-        LOGGER.info("{}: closed", this);
+        LOGGER.info("{}: server closed", this);
     }
 
     protected void onException(final Exception e) {
