@@ -45,7 +45,7 @@ public class PostgresDataSource extends PostriseDataSource {
     @Override
     public final Connection getConnection(final String roleName) throws SQLException {
         Guard.check("roleName", roleName);
-        final Connection connection = getConnection();
+        final Connection connection = super.getConnection();
         try {
             getRoleSecurity().onSetRole(this, connection, roleName);
             PostgresRoleDAO.setRole(connection, roleName);
@@ -56,21 +56,31 @@ public class PostgresDataSource extends PostriseDataSource {
         }
     }
 
+    @Override
+    public final Connection getConnection() throws SQLException {
+        final Connection connection = super.getConnection();
+        try {
+            resetRole(connection);
+            return connection;
+        } catch (final Exception e) {
+            connection.close();
+            throw e;
+        }
+    }
+
     /**
-     * {@inheritDoc}
-     * <p>
      * Any {@link Connection} returned to the pool retains previous {@code SET ROLE}
      * which could cause unexpected permission errors when the connection is
-     * re-used. Always {@code RESET ROLE} when getting a {@link Connection} from
-     * the pool.
+     * re-used. {@code RESET ROLE} when getting a {@link Connection} from the pool
+     * unless a {@code ROLE} is provided via
+     * {@link #getConnection(String roleName)}.
      * 
      * @see #getConnection()
      * @see <a href=
      *      "https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis">HikariCP
      *      Pool Analysis</a>
      */
-    @Override
-    protected void resetConnection(final Connection connection) throws SQLException {
+    protected void resetRole(final Connection connection) throws SQLException {
         PostgresRoleDAO.resetRole(connection);
     }
 }

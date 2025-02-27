@@ -34,19 +34,6 @@ abstract class PostriseDataSource implements ConnectionProvider {
 
     abstract String getJdbcUrl(final Server server);
 
-    /**
-     * Resets the {@link Connection} returned from the pool.
-     * 
-     * @param connection - the {@link Connection} from the pool to be reset.
-     * @throws SQLException If an error occurs resetting the {@link Connection}.
-     * 
-     * @see #getConnection()
-     * @see <a href=
-     *      "https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis">HikariCP
-     *      Pool Analysis</a>
-     */
-    protected abstract void resetConnection(final Connection connection) throws SQLException;
-
     PostriseDataSource(final Server server, final String databaseName) {
         this.databaseName = databaseName;
         this.delegate = new HikariDataSource();
@@ -80,15 +67,8 @@ abstract class PostriseDataSource implements ConnectionProvider {
     }
 
     @Override
-    public final Connection getConnection() throws SQLException {
-        final Connection connection = delegate.getConnection();
-        try {
-            resetConnection(connection);
-            return connection;
-        } catch (final Exception e) {
-            connection.close();
-            throw e;
-        }
+    public Connection getConnection() throws SQLException {
+        return delegate.getConnection();
     }
 
     @Override
