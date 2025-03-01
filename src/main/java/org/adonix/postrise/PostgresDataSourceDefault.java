@@ -48,7 +48,7 @@ final class PostgresDataSourceDefault extends PostgresDataSource {
      *      "https://github.com/brettwooldridge/HikariCP/wiki/Pool-Analysis">HikariCP
      *      Pool Analysis</a>
      */
-    protected void resetRole(final Connection connection) throws SQLException {
+    private void resetRole(final Connection connection) throws SQLException {
         PostgresRoleDAO.resetRole(connection);
     }
 }
