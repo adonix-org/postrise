@@ -16,7 +16,7 @@
 
 package org.adonix.postrise.servers;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
 
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.DatabaseListener;

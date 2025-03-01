@@ -16,7 +16,7 @@
 
 package org.adonix.postrise.servers;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.POSTGRES_DEFAULT_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProvider.POSTGRES_DEFAULT_ROLE_SECURITY;
 
 import java.sql.SQLException;
 import org.adonix.postrise.DataSourceSettings;

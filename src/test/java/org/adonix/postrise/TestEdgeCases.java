@@ -16,7 +16,7 @@
 
 package org.adonix.postrise;
 
-import static org.adonix.postrise.security.RoleSecurityProviders.DISABLE_ROLE_SECURITY;
+import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;

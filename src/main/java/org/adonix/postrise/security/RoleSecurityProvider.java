@@ -16,9 +16,9 @@
 
 package org.adonix.postrise.security;
 
-public abstract class RoleSecurityProviders {
+public abstract class RoleSecurityProvider {
 
-    private RoleSecurityProviders() {
+    private RoleSecurityProvider() {
     }
 
     /**

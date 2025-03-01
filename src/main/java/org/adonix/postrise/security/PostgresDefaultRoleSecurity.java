@@ -39,7 +39,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     /**
      * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
      * instance. A static instance will be accessed via the
-     * {@link RoleSecurityProviders} class.
+     * {@link RoleSecurityProvider} class.
      */
     PostgresDefaultRoleSecurity() {
     }
