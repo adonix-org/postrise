@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import nl.altindag.log.LogCaptor;
+
 import org.adonix.postrise.servers.PostgresContainer;
 import org.adonix.postrise.servers.PostriseListener;
 import org.adonix.postrise.servers.StaticPortServer;
@@ -223,7 +224,7 @@ class TestEdgeCases {
     @DisplayName("Invalid Pool Status Request")
     @Test
     void testInvalidPoolStatusRequest() {
-        try (final Server server = new PostgresServer()) {
+        try (final Server server = new StaticPortServer()) {
             server.addListener(new DataSourceListener() {
                 @Override
                 public void beforeCreate(final DataSourceSettings settings) {
@@ -239,10 +240,26 @@ class TestEdgeCases {
     @DisplayName("Test Empty Listener")
     @Test
     void testEmptyListener() {
-        try (final Server server = new PostgresServer()) {
+        try (final Server server = new StaticPortServer()) {
             server.addListener(new DataSourceListener() {
             });
             assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
+        }
+    }
+
+    @DisplayName("Server Roles Unsupported Exception")
+    @Test
+    void testServerRolesUnsupportedException() throws SQLException {
+        try (final PostgresServer server = new StaticPortServer() {
+
+            @Override
+            protected PostgresDataSource createDataSource(String databaseName) {
+                return new PostgresDataSourceNoRoles(this, databaseName);
+            }
+        }) {
+            final Throwable t = assertThrows(UnsupportedOperationException.class,
+                    () -> server.getConnection(PostgresContainer.DB_NAME, "no_role"));
+            assertEquals("This data source does not allow roles", t.getMessage());
         }
     }
 

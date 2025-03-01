@@ -157,7 +157,7 @@ class TestExceptions {
         assertEquals("SECURITY: \"with_login_with_super\" is a SUPERUSER role", cause.getMessage());
     }
 
-    @DisplayName("Strict Security SET ROLE Exception Tests")
+    @DisplayName("Strict Security SET ROLE Exception")
     @ParameterizedTest(name = "[{index}] Role: {1}")
     @CsvSource({
             "no_login_with_super, SECURITY: \"no_login_with_super\" is a SUPERUSER role",

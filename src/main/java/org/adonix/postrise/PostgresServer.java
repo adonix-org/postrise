@@ -37,6 +37,6 @@ public class PostgresServer extends PostriseServer {
 
     @Override
     protected PostgresDataSource createDataSource(final String databaseName) {
-        return new PostgresDataSource(this, databaseName);
+        return new PostgresDataSourceRoles(this, databaseName);
     }
 }
