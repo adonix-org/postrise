@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
 
-public class PostgresDataSourceRoles extends PostgresDataSource {
+public final class PostgresDataSourceRoles extends PostgresDataSource {
 
     public PostgresDataSourceRoles(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 
     @Override
-    public final Connection getConnection(final String roleName) throws SQLException {
+    public Connection getConnection(final String roleName) throws SQLException {
         Guard.check("roleName", roleName);
         final Connection connection = super.getConnection();
         try {
@@ -25,7 +25,7 @@ public class PostgresDataSourceRoles extends PostgresDataSource {
     }
 
     @Override
-    public final Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         final Connection connection = super.getConnection();
         try {
             resetRole(connection);
