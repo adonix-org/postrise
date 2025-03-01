@@ -20,7 +20,7 @@ import static org.adonix.postrise.security.RoleSecurityProvider.POSTGRES_DEFAULT
 
 import org.adonix.postrise.security.RoleSecurityListener;
 
-abstract class PostgresDataSource extends PostriseDataSource {
+public abstract class PostgresDataSource extends PostriseDataSource {
 
     private static final String JDBC_POSTGRES_PREFIX = "jdbc:postgresql://";
 
