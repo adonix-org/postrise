@@ -249,7 +249,7 @@ class TestEdgeCases {
 
     @DisplayName("Roles Unsupported Exception")
     @Test
-    void testRolesUnsupportedException() throws SQLException {
+    void testRolesUnsupportedException() {
         try (final PostgresServer server = new StaticPortServer() {
 
             @Override
