@@ -259,7 +259,7 @@ class TestEdgeCases {
         }) {
             final Throwable t = assertThrows(UnsupportedOperationException.class,
                     () -> server.getConnection(PostgresContainer.DB_NAME, "no_roles"));
-            assertEquals("This data source does not permit roles", t.getMessage());
+            assertEquals("This data source does not support roles", t.getMessage());
         }
     }
 

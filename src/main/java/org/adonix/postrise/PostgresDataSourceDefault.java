@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
 
-public final class PostgresDataSourceRoles extends PostgresDataSource {
+final class PostgresDataSourceDefault extends PostgresDataSource {
 
-    public PostgresDataSourceRoles(final Server server, final String databaseName) {
+    public PostgresDataSourceDefault(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 

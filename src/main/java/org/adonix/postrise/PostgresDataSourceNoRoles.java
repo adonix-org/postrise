@@ -1,7 +1,6 @@
 package org.adonix.postrise;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
@@ -10,7 +9,7 @@ public final class PostgresDataSourceNoRoles extends PostgresDataSource {
     }
 
     @Override
-    public Connection getConnection(final String roleName) throws SQLException {
-        throw new UnsupportedOperationException("This data source does not permit roles");
+    public Connection getConnection(final String roleName) {
+        throw new UnsupportedOperationException("This data source does not support roles");
     }
 }
