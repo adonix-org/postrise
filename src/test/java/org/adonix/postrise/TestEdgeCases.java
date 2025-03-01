@@ -254,12 +254,13 @@ class TestEdgeCases {
 
             @Override
             protected PostgresDataSource createDataSource(String databaseName) {
-                return new PostgresDataSourceNoRoles(this, databaseName);
+                return new PostgresDataSourceLite(this, databaseName);
             }
         }) {
             final Throwable t = assertThrows(UnsupportedOperationException.class,
                     () -> server.getConnection(PostgresContainer.DB_NAME, "no_roles"));
-            assertEquals("This data source does not support roles", t.getMessage());
+            assertEquals("PostgresDataSourceLite does not support roles",
+                    t.getMessage());
         }
     }
 
