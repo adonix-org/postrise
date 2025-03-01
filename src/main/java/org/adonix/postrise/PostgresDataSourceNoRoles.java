@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class PostgresDataSourceNoRoles extends PostgresDataSource {
 
-    protected PostgresDataSourceNoRoles(final Server server, final String databaseName) {
+    public PostgresDataSourceNoRoles(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 
