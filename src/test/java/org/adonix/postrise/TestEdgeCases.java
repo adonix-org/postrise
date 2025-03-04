@@ -254,7 +254,7 @@ class TestEdgeCases {
 
             @Override
             protected PostgresDataSource createDataSource(String databaseName) {
-                return new PostgresDataSourceLite(this, databaseName);
+                return new PostgresDataSourceNoRoles(this, databaseName);
             }
         }) {
             final Throwable t = assertThrows(UnsupportedOperationException.class,

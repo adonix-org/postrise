@@ -2,9 +2,9 @@ package org.adonix.postrise;
 
 import java.sql.Connection;
 
-public final class PostgresDataSourceLite extends PostgresDataSource {
+public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
-    public PostgresDataSourceLite(final Server server, final String databaseName) {
+    public PostgresDataSourceNoRoles(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 
