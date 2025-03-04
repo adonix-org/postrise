@@ -22,23 +22,31 @@ import org.adonix.postrise.DataSourceContext;
 /**
  * A no-op implementation of {@link RoleSecurityListener} that disables all
  * security checks for user login and role validation.
- * 
  * <p>
  * This class is for scenarios where security checks are unnecessary, such
  * as when performing SUPERUSER DDL operations like creating databases,
  * indexes, tables, or roles.
- * </p>
  */
 final class DisableRoleSecurity implements RoleSecurityListener {
 
     /**
-     * Constructs a new {@code DisableRoleSecurity} instance.
+     * Constructs a new package-private {@code DisableRoleSecurity} instance.
      * <p>
-     * Constructor is package-private.
+     * The only instance is created and accessed via {@link RoleSecurityProvider}.
      */
     DisableRoleSecurity() {
     }
 
+    /**
+     * Disables security checks for the
+     * {@link RoleSecurityListener#onLogin(DataSourceContext, Connection) onLogin}
+     * event.
+     * <p>
+     * This implementation is a no-op.
+     * 
+     * @param context    - ignored
+     * @param connection - ignored
+     */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) {
         // Security is disabled for this event.
