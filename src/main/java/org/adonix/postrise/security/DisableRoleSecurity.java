@@ -25,7 +25,7 @@ import org.adonix.postrise.DataSourceContext;
  * 
  * <p>
  * This class is for scenarios where security checks are unnecessary, such
- * as when performing super-user DDL operations like creating databases,
+ * as when performing SUPERUSER DDL operations like creating databases,
  * indexes, tables, or roles.
  * </p>
  */

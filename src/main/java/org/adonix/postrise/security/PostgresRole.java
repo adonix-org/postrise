@@ -16,6 +16,9 @@
 
 package org.adonix.postrise.security;
 
+/**
+ * A PostgreSQL role as defined by the pg_roles table.
+ */
 public final class PostgresRole {
 
     private String roleName;
@@ -27,77 +30,137 @@ public final class PostgresRole {
     private boolean isReplicationRole;
     private int connectionLimit;
 
+    /**
+     * The package-private constructor. Instances will be created by
+     * {@link PostgresRoleDAO} class.
+     */
     PostgresRole() {
     }
 
+    /**
+     * @param roleName - rolname name from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setRoleName(final String roleName) {
         this.roleName = roleName;
         return this;
     }
 
+    /**
+     * @param isSuperUser - rolsuper from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setSuperUser(final boolean isSuperUser) {
         this.isSuperUser = isSuperUser;
         return this;
     }
 
+    /**
+     * @param isLoginUser - rolcanlogin from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setLoginRole(final boolean isLoginUser) {
         this.isLoginRole = isLoginUser;
         return this;
     }
 
+    /**
+     * @param isInherit - rolinherit from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setInherit(final boolean isInherit) {
         this.isInheritRole = isInherit;
         return this;
     }
 
+    /**
+     * @param isCreateRole - rolcreaterole from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setCreateRole(final boolean isCreateRole) {
         this.isCreateRole = isCreateRole;
         return this;
     }
 
+    /**
+     * @param isCreateDbRole - rolcreatedb from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setCreateDbRole(final boolean isCreateDbRole) {
         this.isCreateDbRole = isCreateDbRole;
         return this;
     }
 
+    /**
+     * @param isReplicationRole - rolreplication from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setReplicationRole(final boolean isReplicationRole) {
         this.isReplicationRole = isReplicationRole;
         return this;
     }
 
+    /**
+     * @param connectionLimit - rolconnlimit from the pg_roles table.
+     * @return {@link PostgresRole}
+     */
     PostgresRole setConnectionLimit(final int connectionLimit) {
         this.connectionLimit = connectionLimit;
         return this;
     }
 
+    /**
+     * @return rolname from the pg_roles table.
+     */
     public String getRoleName() {
         return roleName;
     }
 
+    /**
+     * @return rolsuper from the pg_roles table.
+     */
     public boolean isSuperUser() {
         return isSuperUser;
     }
 
+    /**
+     * @return rolcanlogin from the pg_roles table.
+     */
     public boolean isLoginRole() {
         return isLoginRole;
     }
 
+    /**
+     * @return rolinherit from the pg_roles table.
+     */
     public boolean isInheritRole() {
         return isInheritRole;
     }
 
+    /**
+     * @return rolcreaterole from the pg_roles table.
+     */
     public boolean isCreateRole() {
         return isCreateRole;
     }
 
+    /**
+     * @return rolcreatedb from the pg_roles table.
+     */
     public boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
+    /**
+     * @return rolreplication from the pg_roles table.
+     */
     public boolean isReplicationRole() {
         return isReplicationRole;
     }
 
+    /**
+     * @return rolconnlimit from the pg_roles table.
+     */
     public int getConnectionLimit() {
         return connectionLimit;
     }
