@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * 
+ * The default {@code ROLE} security implementation.
  */
 class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
@@ -41,7 +41,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws RoleSecurityException is a SUPERUSER.
+     * @throws RoleSecurityException if a SUPERUSER.
      */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {

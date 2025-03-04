@@ -22,8 +22,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * This Data Access Object provides PostgreSQL {@code ROLE} accessibility.
+ */
 public abstract class PostgresRoleDAO {
 
+    /**
+     * Private constructor. Access DAO methods statically.
+     */
     private PostgresRoleDAO() {
     }
 
@@ -59,8 +65,8 @@ public abstract class PostgresRoleDAO {
     }
 
     /**
-     * PostgreSQL specific query to SELECT privileges for a ROLE from the
-     * pg_roles TABLE.
+     * PostgreSQL specific query to {@code SELECT} privileges for a {@code ROLE}
+     * from the pg_roles view.
      */
     private static final String SQL_SELECT_ROLE_PRIVILEGES = String.join(" ",
             "SELECT",
@@ -76,9 +82,12 @@ public abstract class PostgresRoleDAO {
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
     /**
-     * @param connection - an open {@link Connection } to a PostgreSQL database.
-     * @param roleName   - the name of the ROLE to SELECT from the pg_roles TABLE.
-     * @return a populated {@link PostgresRole} from the current database.
+     * Gets a specified {@code ROLE} from the pg_roles view.
+     * 
+     * @param connection - an open PostgreSQL {@link Connection}.
+     * @param roleName   - the name of the {@code ROLE} to {@code SELECT} from the
+     *                   pg_roles view.
+     * @return a populated {@link PostgresRole} from the pg_roles view.
      * @throws SQLException
      * @see <a href=
      *      "https://www.postgresql.org/docs/current/view-pg-roles.html">pg_roles</a>

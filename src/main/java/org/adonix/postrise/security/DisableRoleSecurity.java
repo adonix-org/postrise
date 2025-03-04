@@ -42,7 +42,7 @@ final class DisableRoleSecurity implements RoleSecurityListener {
      * {@link RoleSecurityListener#onLogin(DataSourceContext, Connection) onLogin}
      * event.
      * <p>
-     * This implementation is a no-op.
+     * This implementation is no-op.
      * 
      * @param context    - ignored
      * @param connection - ignored
