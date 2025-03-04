@@ -16,20 +16,8 @@
 
 package org.adonix.postrise;
 
-import java.util.Properties;
-import javax.sql.DataSource;
-
 /**
- * This interface provides configuration parameters for a connection to the
- * database.
- * 
- * Apply specific {@link DataSourceSettings} for the data source by
- * implementing the {@link DataSourceListener} interface.
- * <p>
- * Most implementations will call {@link #setUsername(String)} and
- * {@link #setPassword(String)} in the
- * {@link DataSourceListener#beforeCreate(DataSourceSettings)
- * beforeCreate(DataSourceSettings)} method.
+ * Configuration parameters for a connection to a data source.
  */
 interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
@@ -39,22 +27,5 @@ interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
     void setAutoCommit(boolean isAutoCommit);
 
-    /**
-     * Add a property (name/value pair) that will be used to configure the
-     * {@link DataSource}/{@link java.sql.Driver}.
-     * <p>
-     * In the case of a {@link DataSource}, the property names will be translated to
-     * Java setters following the Java Bean
-     * naming convention. For example, the property {@code cachePrepStmts} will
-     * translate into {@code setCachePrepStmts()} with the {@code value} passed as a
-     * parameter.
-     * <p>
-     * In the case of a {@link java.sql.Driver}, the property will be added to a
-     * {@link Properties} instance that will be passed to the driver during
-     * {@link java.sql.Driver#connect(String, Properties)} calls.
-     *
-     * @param propertyName the name of the property
-     * @param value        the value to be used by the DataSource/Driver
-     */
     void addDataSourceProperty(String propertyName, Object value);
 }
