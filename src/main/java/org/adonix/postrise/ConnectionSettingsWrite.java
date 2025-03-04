@@ -18,9 +18,10 @@ package org.adonix.postrise;
 
 /**
  * Writable settings for a data source before it is created. After creation
- * these settings become read-only.
+ * these settings are read-only.
  * 
  * @see ConnectionSettingsRead
+ * @see DataSourceSettings
  */
 interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
