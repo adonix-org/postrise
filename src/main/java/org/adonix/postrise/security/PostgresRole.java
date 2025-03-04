@@ -17,7 +17,8 @@
 package org.adonix.postrise.security;
 
 /**
- * A PostgreSQL {@code ROLE} as defined by the pg_roles view.
+ * A PostgreSQL {@code ROLE} as defined by the pg_roles view. Represents role
+ * attributes retrieved from the database.
  */
 public final class PostgresRole {
 
