@@ -18,17 +18,30 @@ package org.adonix.postrise;
 
 import java.util.Properties;
 
+/**
+ * Readable settings for a data source after it is created.
+ * 
+ * @see DataSourceSettings
+ */
 interface ConnectionSettingsRead extends DatabaseNameProvider {
+
     /**
-     * Get the current JDBC Url.
-     * 
      * @return the JDBC Url for this data source.
      */
     String getJdbcUrl();
 
+    /**
+     * @return the {@code LOGIN} username.
+     */
     String getUsername();
 
+    /**
+     * @return - {@code COMMIT} setting for new data sources.
+     */
     boolean isAutoCommit();
 
+    /**
+     * @return the {@link Properties} for this data source.
+     */
     Properties getDataSourceProperties();
 }
