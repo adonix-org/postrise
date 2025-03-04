@@ -17,8 +17,7 @@
 package org.adonix.postrise.security;
 
 /**
- * A PostgreSQL {@code ROLE} as defined by the pg_roles view. Represents role
- * attributes retrieved from the database.
+ * A PostgreSQL {@code ROLE} as defined by the read-only {@code pg_roles} view.
  */
 public final class PostgresRole {
 
@@ -39,8 +38,8 @@ public final class PostgresRole {
     }
 
     /**
-     * @param roleName - rolname name from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @param roleName - rolname from the pg_roles view.
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setRoleName(final String roleName) {
         this.roleName = roleName;
@@ -49,7 +48,7 @@ public final class PostgresRole {
 
     /**
      * @param isSuperUser - rolsuper from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setSuperUser(final boolean isSuperUser) {
         this.isSuperUser = isSuperUser;
@@ -58,7 +57,7 @@ public final class PostgresRole {
 
     /**
      * @param isLoginUser - rolcanlogin from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setLoginRole(final boolean isLoginUser) {
         this.isLoginRole = isLoginUser;
@@ -67,7 +66,7 @@ public final class PostgresRole {
 
     /**
      * @param isInherit - rolinherit from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setInherit(final boolean isInherit) {
         this.isInheritRole = isInherit;
@@ -76,7 +75,7 @@ public final class PostgresRole {
 
     /**
      * @param isCreateRole - rolcreaterole from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setCreateRole(final boolean isCreateRole) {
         this.isCreateRole = isCreateRole;
@@ -85,7 +84,7 @@ public final class PostgresRole {
 
     /**
      * @param isCreateDbRole - rolcreatedb from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setCreateDbRole(final boolean isCreateDbRole) {
         this.isCreateDbRole = isCreateDbRole;
@@ -94,7 +93,7 @@ public final class PostgresRole {
 
     /**
      * @param isReplicationRole - rolreplication from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setReplicationRole(final boolean isReplicationRole) {
         this.isReplicationRole = isReplicationRole;
@@ -103,7 +102,7 @@ public final class PostgresRole {
 
     /**
      * @param connectionLimit - rolconnlimit from the pg_roles view.
-     * @return {@link PostgresRole}
+     * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setConnectionLimit(final int connectionLimit) {
         this.connectionLimit = connectionLimit;
