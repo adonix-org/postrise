@@ -19,9 +19,9 @@ package org.adonix.postrise;
 import java.util.Properties;
 
 /**
- * Readable settings for a data source after it is created.
+ * Read-only settings for a data source after it is created.
  * 
- * @see DataSourceSettings
+ * @see DataSourceContext
  */
 interface ConnectionSettingsRead extends DatabaseNameProvider {
 
@@ -36,7 +36,7 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     String getUsername();
 
     /**
-     * @return - {@code COMMIT} setting for new data sources.
+     * @return {@code COMMIT} setting for this data source.
      */
     boolean isAutoCommit();
 
