@@ -16,13 +16,28 @@
 
 package org.adonix.postrise;
 
+/**
+ * Connection Pool Status
+ */
 interface ConnectionPoolStatus {
 
+    /**
+     * @return the number of active connections.
+     */
     int getActiveConnections();
 
+    /**
+     * @return the number of idle connections.
+     */
     int getIdleConnections();
 
+    /**
+     * @return the number of total connections.
+     */
     int getTotalConnections();
 
+    /**
+     * @return the number of threads awaiting connections.
+     */
     int getThreadsAwaitingConnection();
 }
