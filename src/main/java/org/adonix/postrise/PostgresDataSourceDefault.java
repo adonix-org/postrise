@@ -15,7 +15,7 @@ final class PostgresDataSourceDefault extends PostgresDataSource {
         Guard.check("roleName", roleName);
         final Connection connection = super.getConnection();
         try {
-            getRoleSecurity().onSetRole(this, connection, roleName);
+            getRoleSecurity().onSetRole(connection, roleName);
             PostgresRoleDAO.setRole(connection, roleName);
             return connection;
         } catch (final Exception e) {

@@ -22,21 +22,29 @@ import java.util.EventListener;
 import org.adonix.postrise.DataSourceContext;
 
 /**
- * Implementations will validate each security event.
+ * Implementations authorize users during security events.
  */
 public interface RoleSecurityListener extends EventListener {
 
     /**
-     * After creating a {@link DataSourceContext}, the server will provide a
-     * {@link Connection} which can be used to validate the login user.
+     * After successfully creating a new {@link DataSourceContext}, the server will
+     * provide a {@link Connection} for authorizing the {@code LOGIN} user. If an
+     * exception is thrown, the data source is immediately closed.
      * 
-     * @param context    - the new data source.
-     * @param connection - the connection to be used for validation.
-     * @throws SQLException a database or {@link RoleSecurityException} has
-     *                      occurred.
+     * @param context    - the new {@link DataSourceContext}.
+     * @param connection - {@link Connection} used for authorization.
+     * @throws SQLException a database or {@link RoleSecurityException}.
      */
     void onLogin(DataSourceContext context, Connection connection) throws SQLException;
 
-    default void onSetRole(DataSourceContext context, Connection connection, String roleName) throws SQLException {
+    /**
+     * This event is dispatched after requesting a {@link Connection} with a
+     * specific {@code ROLE}. The default implementation is NO-OP.
+     * 
+     * @param connection - {@link Connection} used for authorization.
+     * @param roleName   - The {@code ROLE} to be authorized.
+     * @throws SQLException a database or {@link RoleSecurityException}.
+     */
+    default void onSetRole(Connection connection, String roleName) throws SQLException {
     }
 }
