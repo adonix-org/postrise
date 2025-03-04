@@ -32,7 +32,7 @@ final class DisableRoleSecurity implements RoleSecurityListener {
     /**
      * Constructs a new package-private {@code DisableRoleSecurity} instance.
      * <p>
-     * The only instance is created and accessed via {@link RoleSecurityProvider}.
+     * The static instance is created and accessed via {@link RoleSecurityProvider}.
      */
     DisableRoleSecurity() {
     }

@@ -23,14 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The {@code PostgresDefaultRoleSecurity} class provides default security
- * checks
- * for user logins and connections in a database environment.
- * <p>
- * It implements the {@link RoleSecurityListener} interface, performing
- * specific validation for users and roles using SQL queries on the
- * PostgreSQL system catalog.
- * </p>
+ * 
  */
 class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
@@ -38,8 +31,9 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
     /**
      * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
-     * instance. A static instance will be accessed via the
-     * {@link RoleSecurityProvider} class.
+     * instance.
+     * <p>
+     * The static instance is created and accessed via {@link RoleSecurityProvider}.
      */
     PostgresDefaultRoleSecurity() {
     }
@@ -47,7 +41,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws RoleSecurityException is a super user.
+     * @throws RoleSecurityException is a SUPERUSER.
      */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {
