@@ -46,23 +46,24 @@
     </developers>
 
     <properties>
+
         <!--    project properties    -->
         <version.java>11</version.java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!--    dependency properties    -->
-        <version.postgresql.jdbc>42.7.5</version.postgresql.jdbc>
-        <version.log4j2>2.24.3</version.log4j2>
+        <!--    dependency versions    -->
         <version.hikaricp>6.2.1</version.hikaricp>
+        <version.log4j2>2.24.3</version.log4j2>
+        <version.postgresql.jdbc>42.7.5</version.postgresql.jdbc>
 
-        <!--    test dependency properties    -->
+        <!--    test dependency versions    -->
+        <version.assertj>3.27.3</version.assertj>
         <version.junit>5.12.0</version.junit>
+        <version.logcaptor>2.10.1</version.logcaptor>
         <version.slf4j>2.0.16</version.slf4j>
         <version.testcontainers>1.20.5</version.testcontainers>
-        <version.assertj>3.27.3</version.assertj>
-        <version.logcaptor>2.10.1</version.logcaptor>
 
-        <!--    plugin properties   -->
+        <!--    plugin properties    -->
         <version.maven-compiler-plugin>3.14.0</version.maven-compiler-plugin>
         <version.maven-source-plugin>3.3.1</version.maven-source-plugin>
         <version.maven-javadoc-plugin>3.11.2</version.maven-javadoc-plugin>
@@ -73,7 +74,7 @@
 
     <dependencies>
 
-        <!-- Compile -->
+        <!--    compile    -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -87,7 +88,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Runtime -->
+        <!--   runtime   -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -95,7 +96,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Test -->
+        <!--    test    -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
