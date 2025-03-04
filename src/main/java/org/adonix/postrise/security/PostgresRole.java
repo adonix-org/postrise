@@ -31,7 +31,7 @@ public final class PostgresRole {
     private int connectionLimit;
 
     /**
-     * The package-private constructor. Instances will be created by
+     * The package-private constructor. Instances are created by
      * {@link PostgresRoleDAO} class.
      */
     PostgresRole() {
