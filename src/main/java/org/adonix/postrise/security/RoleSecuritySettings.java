@@ -17,7 +17,7 @@
 package org.adonix.postrise.security;
 
 /**
- * Implementations persist a {@link RoleSecurityListener}.
+ * Implementations persist and provide a {@link RoleSecurityListener}.
  */
 public interface RoleSecuritySettings {
 
@@ -29,7 +29,7 @@ public interface RoleSecuritySettings {
 
     /**
      * @param listener - sets the active {@link RoleSecurityListener}
-     *  @see RoleSecurityProvider
+     * @see RoleSecurityProvider
      */
     void setRoleSecurity(RoleSecurityListener listener);
 }
