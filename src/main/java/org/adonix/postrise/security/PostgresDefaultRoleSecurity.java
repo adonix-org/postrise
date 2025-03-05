@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The default {@code ROLE} security implementation.
+ * The default PostgreSQL {@link RoleSecurityListener} implementation.
  */
 class PostgresDefaultRoleSecurity implements RoleSecurityListener {
 
@@ -33,7 +33,8 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
      * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
      * instance.
      * <p>
-     * The static instance is created and accessed via {@link RoleSecurityProvider}.
+     * The {@code static} instance is created and accessed via
+     * {@link RoleSecurityProvider}.
      */
     PostgresDefaultRoleSecurity() {
     }

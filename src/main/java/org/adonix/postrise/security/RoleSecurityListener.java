@@ -22,7 +22,7 @@ import java.util.EventListener;
 import org.adonix.postrise.DataSourceContext;
 
 /**
- * Implementations authorize users during security events.
+ * Implementations authorize a provided {@code ROLE} during security events.
  */
 public interface RoleSecurityListener extends EventListener {
 

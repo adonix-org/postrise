@@ -16,8 +16,15 @@
 
 package org.adonix.postrise.security;
 
+/**
+ * Provides {@code static} access to {@link RoleSecurityListener
+ * RoleSecurityListeners}.
+ */
 public abstract class RoleSecurityProvider {
 
+    /**
+     * The {@code public} constants should be access statically.
+     */
     private RoleSecurityProvider() {
     }
 
