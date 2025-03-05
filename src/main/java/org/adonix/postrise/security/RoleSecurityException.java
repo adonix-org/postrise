@@ -19,14 +19,22 @@ package org.adonix.postrise.security;
 import java.sql.SQLException;
 
 /**
- * An exception that is thrown during {@code ROLE} security errors.
+ * An exception thrown during {@code ROLE} security errors.
  */
 public final class RoleSecurityException extends SQLException {
 
+    /**
+     * SQL State "invalid_role_specification" passed to the super-class.
+     */
     private static final String INVALID_ROLE = "0P000";
 
     private static final String MESSAGE_PREFIX = "SECURITY: ";
 
+    /**
+     * The package-private constructor.
+     * 
+     * @param message - the {@code ROLE} security error message.
+     */
     RoleSecurityException(final String message) {
         super(MESSAGE_PREFIX + message.trim(), INVALID_ROLE);
     }
