@@ -20,12 +20,10 @@ import java.sql.Connection;
 import org.adonix.postrise.DataSourceContext;
 
 /**
- * A no-op implementation of {@link RoleSecurityListener} that disables all
- * security checks for user login and role validation.
+ * This implementation of {@link RoleSecurityListener} is no-op for all security
+ * events.
  * <p>
- * This class is for scenarios where security checks are unnecessary, such
- * as when performing SUPERUSER DDL operations like creating databases,
- * indexes, tables, or roles.
+ * Use when SUPERUSER privileges are required.
  */
 final class DisableRoleSecurity implements RoleSecurityListener {
 

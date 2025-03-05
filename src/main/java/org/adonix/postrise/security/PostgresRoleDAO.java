@@ -82,7 +82,7 @@ public abstract class PostgresRoleDAO {
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
     /**
-     * Gets a specified {@code ROLE} from the pg_roles view.
+     * Gets the specified {@code ROLE} from the pg_roles view.
      * 
      * @param connection - an open PostgreSQL {@link Connection}.
      * @param roleName   - the name of the {@code ROLE} to {@code SELECT} from the

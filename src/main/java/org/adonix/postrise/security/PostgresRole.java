@@ -41,7 +41,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param roleName - rolname from the pg_roles view.
+     * @param roleName - rolname from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setRoleName(final String roleName) {
@@ -50,7 +50,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isSuperUser - rolsuper from the pg_roles view.
+     * @param isSuperUser - rolsuper from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setSuperUser(final boolean isSuperUser) {
@@ -59,7 +59,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isLoginUser - rolcanlogin from the pg_roles view.
+     * @param isLoginUser - rolcanlogin from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setLoginRole(final boolean isLoginUser) {
@@ -68,7 +68,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isInherit - rolinherit from the pg_roles view.
+     * @param isInherit - rolinherit from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setInherit(final boolean isInherit) {
@@ -77,7 +77,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isCreateRole - rolcreaterole from the pg_roles view.
+     * @param isCreateRole - rolcreaterole from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setCreateRole(final boolean isCreateRole) {
@@ -86,7 +86,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isCreateDbRole - rolcreatedb from the pg_roles view.
+     * @param isCreateDbRole - rolcreatedb from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setCreateDbRole(final boolean isCreateDbRole) {
@@ -95,7 +95,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param isReplicationRole - rolreplication from the pg_roles view.
+     * @param isReplicationRole - rolreplication from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setReplicationRole(final boolean isReplicationRole) {
@@ -104,7 +104,7 @@ public final class PostgresRole {
     }
 
     /**
-     * @param connectionLimit - rolconnlimit from the pg_roles view.
+     * @param connectionLimit - rolconnlimit from the {@code pg_roles} view.
      * @return {@link PostgresRole} - instance for method chaining.
      */
     PostgresRole setConnectionLimit(final int connectionLimit) {
@@ -113,56 +113,56 @@ public final class PostgresRole {
     }
 
     /**
-     * @return rolname from the pg_roles view.
+     * @return rolname from the {@code pg_roles} view.
      */
     public String getRoleName() {
         return roleName;
     }
 
     /**
-     * @return rolsuper from the pg_roles view.
+     * @return rolsuper from the {@code pg_roles} view.
      */
     public boolean isSuperUser() {
         return isSuperUser;
     }
 
     /**
-     * @return rolcanlogin from the pg_roles view.
+     * @return rolcanlogin from the {@code pg_roles} view.
      */
     public boolean isLoginRole() {
         return isLoginRole;
     }
 
     /**
-     * @return rolinherit from the pg_roles view.
+     * @return rolinherit from the {@code pg_roles} view.
      */
     public boolean isInheritRole() {
         return isInheritRole;
     }
 
     /**
-     * @return rolcreaterole from the pg_roles view.
+     * @return rolcreaterole from the {@code pg_roles} view.
      */
     public boolean isCreateRole() {
         return isCreateRole;
     }
 
     /**
-     * @return rolcreatedb from the pg_roles view.
+     * @return rolcreatedb from the {@code pg_roles} view.
      */
     public boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
     /**
-     * @return rolreplication from the pg_roles view.
+     * @return rolreplication from the {@code pg_roles} view.
      */
     public boolean isReplicationRole() {
         return isReplicationRole;
     }
 
     /**
-     * @return rolconnlimit from the pg_roles view.
+     * @return rolconnlimit from the {@code pg_roles} view.
      */
     public int getConnectionLimit() {
         return connectionLimit;

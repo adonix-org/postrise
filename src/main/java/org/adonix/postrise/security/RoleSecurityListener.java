@@ -33,17 +33,17 @@ public interface RoleSecurityListener extends EventListener {
      * 
      * @param context    - the new {@link DataSourceContext}.
      * @param connection - {@link Connection} used for authorization.
-     * @throws SQLException a database or {@link RoleSecurityException}.
+     * @throws SQLException if a database access error occurs.
      */
     void onLogin(DataSourceContext context, Connection connection) throws SQLException;
 
     /**
      * This event is dispatched after requesting a {@link Connection} with a
-     * specific {@code ROLE}. The default implementation is NO-OP.
+     * specific {@code ROLE}.
      * 
      * @param connection - {@link Connection} used for authorization.
-     * @param roleName   - The {@code ROLE} to be authorized.
-     * @throws SQLException a database or {@link RoleSecurityException}.
+     * @param roleName   - the {@code ROLE} to be authorized.
+     * @throws SQLException if a database access error occurs.
      */
     default void onSetRole(Connection connection, String roleName) throws SQLException {
     }

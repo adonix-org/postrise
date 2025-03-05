@@ -41,7 +41,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
     /**
      * {@inheritDoc}
      * 
-     * @throws RoleSecurityException if user is SUPERUSER.
+     * @throws RoleSecurityException if the {@code LOGIN} user is a SUPERUSER.
      */
     @Override
     public void onLogin(final DataSourceContext context, final Connection connection) throws SQLException {

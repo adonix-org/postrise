@@ -19,11 +19,27 @@ package org.adonix.postrise.security;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * A strict {@code ROLE} security implementation. Recommended use is during
+ * development to verify correct {@code ROLE} permissions. NOT recommended for
+ * use in production if performance is important.
+ */
 final class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
 
+    /**
+     * Constructs a new package-private {@code PostgresStrictRoleSecurity} instance.
+     * <p>
+     * The static instance is created and accessed via {@link RoleSecurityProvider}.
+     */
     PostgresStrictRoleSecurity() {
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws RoleSecurityException if the {@code ROLE} is a SUPERUSER.
+     * @throws RoleSecurityException if the {@code ROLE} can LOGIN.
+     */
     @Override
     public void onSetRole(Connection connection, String roleName) throws SQLException {
         final PostgresRole role = PostgresRoleDAO.getRole(connection, roleName);
