@@ -17,8 +17,8 @@
 package org.adonix.postrise;
 
 /**
- * Writable settings for a data source before it is created. After creation
- * these settings are read-only.
+ * Writable settings for a data source before it is created. After the data
+ * source is created, these settings are read-only.
  * 
  * @see ConnectionSettingsRead
  * @see DataSourceSettings
@@ -26,17 +26,17 @@ package org.adonix.postrise;
 interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
     /**
-     * @param username - the {@code LOGIN} username.
+     * @param username - the data source {@code LOGIN} username.
      */
     void setUsername(String username);
 
     /**
-     * @param password - the {@code LOGIN} password.
+     * @param password - the data source {@code LOGIN} password.
      */
     void setPassword(String password);
 
     /**
-     * @param isAutoCommit - default {@code COMMIT} setting for new data sources.
+     * @param isAutoCommit - default auto commit setting for new data sources.
      */
     void setAutoCommit(boolean isAutoCommit);
 
