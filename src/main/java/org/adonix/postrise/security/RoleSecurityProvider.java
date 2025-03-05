@@ -23,19 +23,23 @@ package org.adonix.postrise.security;
 public abstract class RoleSecurityProvider {
 
     /**
-     * The {@code public} constants should be access statically.
+     * All {@code public} constants should be access statically.
      */
     private RoleSecurityProvider() {
     }
 
     /**
-     * PostgreSQL specific security listeners.
+     * Default PostgreSQL {@link RoleSecurityListener}.
      */
     public static final RoleSecurityListener POSTGRES_DEFAULT_ROLE_SECURITY = new PostgresDefaultRoleSecurity();
+
+    /**
+     * Strict PostgreSQL {@link RoleSecurityListener}.
+     */
     public static final RoleSecurityListener POSTGRES_STRICT_ROLE_SECURITY = new PostgresStrictRoleSecurity();
 
     /**
-     * No-op security listener.
+     * No-op {@link RoleSecurityListener}.
      */
     public static final RoleSecurityListener DISABLE_ROLE_SECURITY = new DisableRoleSecurity();
 }
