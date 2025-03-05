@@ -34,6 +34,7 @@ public interface RoleSecurityListener extends EventListener {
      * @param context    - the new {@link DataSourceContext}.
      * @param connection - {@link Connection} used for authorization.
      * @throws SQLException if a database access error occurs.
+     * @see DataSourceContext#getUsername()
      */
     void onLogin(DataSourceContext context, Connection connection) throws SQLException;
 
