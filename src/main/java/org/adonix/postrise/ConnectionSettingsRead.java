@@ -36,7 +36,7 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     String getUsername();
 
     /**
-     * @return {@code COMMIT} setting for this data source.
+     * @return the auto commit setting for this data source.
      */
     boolean isAutoCommit();
 
