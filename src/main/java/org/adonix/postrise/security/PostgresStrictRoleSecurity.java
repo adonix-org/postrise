@@ -21,8 +21,9 @@ import java.sql.SQLException;
 
 /**
  * A strict {@code ROLE} security implementation. Recommended use is during
- * development to verify correct {@code ROLE} permissions. NOT recommended for
- * use in production if performance is important.
+ * development to verify correct {@code ROLE} permissions.
+ * <p>
+ * NOT recommended for use in production if performance is important.
  */
 final class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
 

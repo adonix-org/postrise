@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This Data Access Object provides PostgreSQL {@code ROLE} accessibility.
+ * This Data Access Object provides PostgreSQL {@code ROLE} functionality.
  */
 public abstract class PostgresRoleDAO {
 
@@ -39,12 +39,15 @@ public abstract class PostgresRoleDAO {
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     /**
+     * Sets the {@code ROLE} on a {@link Connection}.
+     * <p>
      * Be aware: if {@code roleName} is {@code NULL}, the result is the same as
      * executing {@code RESET ROLE}.
      * 
-     * @param connection
-     * @param roleName
-     * @throws SQLException
+     * @param connection - the {@link Connection} on which the {@code ROLE} will be
+     *                   set.
+     * @param roleName   - the {@code ROLE} to be set.
+     * @throws SQLException if a database access error occurs.
      */
     public static final void setRole(final Connection connection, final String roleName) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
