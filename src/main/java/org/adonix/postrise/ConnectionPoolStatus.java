@@ -17,27 +17,32 @@
 package org.adonix.postrise;
 
 /**
- * Connection Pool Status
+ * Provides a snapshot of the connection pool. All values are transient and
+ * depend on the underlying implementation which represents a point-in-time
+ * measurement.
+ * <p>
+ * Therefore, the TOTAL connections could be greater or less than the SUM of the
+ * ACTIVE and IDLE connections when queried.
  */
 interface ConnectionPoolStatus {
 
     /**
-     * @return the number of active connections.
+     * @return the current number of active (in-use) connections in the pool.
      */
     int getActiveConnections();
 
     /**
-     * @return the number of idle connections.
+     * @return the current number of idle connections in the pool.
      */
     int getIdleConnections();
 
     /**
-     * @return the number of total connections.
+     * @return the total number of connections in the pool.
      */
     int getTotalConnections();
 
     /**
-     * @return the number of threads awaiting connections.
+     * @return the number of threads awaiting a connection from the pool.
      */
     int getThreadsAwaitingConnection();
 }
