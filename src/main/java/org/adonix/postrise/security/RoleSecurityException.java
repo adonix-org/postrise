@@ -24,7 +24,8 @@ import java.sql.SQLException;
 public final class RoleSecurityException extends SQLException {
 
     /**
-     * SQL State "invalid_role_specification" passed to the super-class.
+     * SQL State "invalid_role_specification" passed to the super-class
+     * {@link SQLException}.
      */
     private static final String INVALID_ROLE = "0P000";
 
