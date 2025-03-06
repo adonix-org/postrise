@@ -60,6 +60,12 @@ public abstract class PostgresRoleDAO {
      */
     private static final String SQL_RESET_ROLE = "RESET ROLE";
 
+    /**
+     * Reset the PostgreSQL {@code ROLE} for this {@link Connection}.
+     * 
+     * @param connection - the connection on which to {@code RESET ROLE}.
+     * @throws SQLException if a database access error occurs.
+     */
     public static final void resetRole(final Connection connection) throws SQLException {
         try (final Statement stmt = connection.createStatement()) {
             stmt.execute(SQL_RESET_ROLE);
