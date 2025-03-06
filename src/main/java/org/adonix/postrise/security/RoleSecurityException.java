@@ -19,7 +19,7 @@ package org.adonix.postrise.security;
 import java.sql.SQLException;
 
 /**
- * Exception thrown for {@code ROLE} security errors.
+ * Thrown for any {@code ROLE} security exceptions.
  */
 public final class RoleSecurityException extends SQLException {
 
@@ -30,12 +30,13 @@ public final class RoleSecurityException extends SQLException {
     private static final String INVALID_ROLE = "0P000";
 
     /**
-     * Align {@code ROLE} exception messages with the SECURITY prefix.
+     * {@code ROLE} exception messages will share the SECURITY prefix.
      */
     private static final String MESSAGE_PREFIX = "SECURITY: ";
 
     /**
-     * The package-private constructor.
+     * The package-private constructor. A {@code RoleSecurityException} will be
+     * created and thrown from classes in this package.
      * 
      * @param message - the {@code ROLE} security error message.
      */
