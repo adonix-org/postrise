@@ -16,6 +16,9 @@
 
 package org.adonix.postrise;
 
+/**
+ * A simple guard clause implementation.
+ */
 public abstract class Guard {
 
     protected static final String NULL_OBJECT_ERROR = "Illegal NULL Object for ";
@@ -23,24 +26,39 @@ public abstract class Guard {
     protected static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
 
     /**
-     * The {@code private} constructor. Access all {@code public} methods
-     * statically.
+     * The {@code private} constructor. Access {@code public} methods statically.
      */
     private Guard() {
     }
 
-    public static final void check(final String parameterName, final Object parameter) throws IllegalArgumentException {
-        if (parameter == null) {
-            throw new IllegalArgumentException(NULL_OBJECT_ERROR + parameterName);
+    /**
+     * Checks if the expected {@link Object} value is {@code NULL}.
+     * 
+     * @param parameter - the name of the parameter.
+     * @param value     - the {@link Object} to be validated.
+     * @throws IllegalArgumentException if the value is {@code NULL}.
+     */
+    public static final void check(final String parameter, final Object value) throws IllegalArgumentException {
+        if (value == null) {
+            throw new IllegalArgumentException(NULL_OBJECT_ERROR + parameter);
         }
     }
 
-    public static final void check(final String parameterName, final String parameter) throws IllegalArgumentException {
-        if (parameter == null) {
-            throw new IllegalArgumentException(NULL_STRING_ERROR + parameterName);
+    /**
+     * Checks if the expected {@link String} value is {@code NULL} or
+     * {@code EMPTY}.
+     * 
+     * @param parameter - the name of the parameter.
+     * @param value     - the {@link String} to be validated.
+     * @throws IllegalArgumentException if the value is {@code NULL} or
+     *                                  {@code EMPTY}.
+     */
+    public static final void check(final String parameter, final String value) throws IllegalArgumentException {
+        if (value == null) {
+            throw new IllegalArgumentException(NULL_STRING_ERROR + parameter);
         }
-        if (parameter.isBlank()) {
-            throw new IllegalArgumentException(EMPTY_STRING_ERROR + parameterName);
+        if (value.isBlank()) {
+            throw new IllegalArgumentException(EMPTY_STRING_ERROR + parameter);
         }
     }
 }
