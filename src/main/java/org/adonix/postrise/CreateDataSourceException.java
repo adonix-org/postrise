@@ -17,15 +17,14 @@
 package org.adonix.postrise;
 
 /**
- * A {@link RuntimeException} that can be thrown when creating a data source.
+ * A {@link RuntimeException} thrown when creating a data source.
  */
 public final class CreateDataSourceException extends RuntimeException {
 
     /**
-     * {@link Server} will throw this exception
-     * if unable to create the data source.
+     * A {@link Server} will throw this exception if unable to create the data source.
      * 
-     * @param cause - the source exception.
+     * @param cause - the exception thrown while creating the data source.
      */
     CreateDataSourceException(final Exception cause) {
         super(cause);
