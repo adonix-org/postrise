@@ -16,5 +16,9 @@
 
 package org.adonix.postrise;
 
+/**
+ * Listen to events for a specific database provided by
+ * {@link DatabaseNameProvider}.
+ */
 public interface DatabaseListener extends DatabaseNameProvider, DataSourceListener {
 }
