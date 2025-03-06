@@ -22,6 +22,10 @@ public abstract class Guard {
     protected static final String NULL_STRING_ERROR = "Illegal NULL String for ";
     protected static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
 
+    /**
+     * The {@code private} constructor. Access all {@code public} methods
+     * statically.
+     */
     private Guard() {
     }
 
