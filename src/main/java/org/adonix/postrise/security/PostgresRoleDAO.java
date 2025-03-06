@@ -36,15 +36,12 @@ public abstract class PostgresRoleDAO {
 
     /**
      * PostgreSQL specific statement to {@code SET ROLE} on the {@link Connection}.
-     * Prepared statement employed for security.
+     * Prepared statement is employed for security.
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
     /**
      * Sets the {@code ROLE} on a {@link Connection}.
-     * <p>
-     * Be aware: if {@code roleName} is {@code NULL}, the result is the same as
-     * executing {@code RESET ROLE}.
      * 
      * @param connection - the {@link Connection} on which the {@code ROLE} will be
      *                   set.
