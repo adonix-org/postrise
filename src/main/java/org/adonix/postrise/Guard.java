@@ -21,9 +21,9 @@ package org.adonix.postrise;
  */
 public abstract class Guard {
 
-    protected static final String NULL_OBJECT_ERROR = "Illegal NULL Object for ";
-    protected static final String NULL_STRING_ERROR = "Illegal NULL String for ";
-    protected static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
+    private static final String NULL_OBJECT_ERROR = "Illegal NULL Object for ";
+    private static final String NULL_STRING_ERROR = "Illegal NULL String for ";
+    private static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
 
     /**
      * The {@code private} constructor. Access {@code public} methods statically.
