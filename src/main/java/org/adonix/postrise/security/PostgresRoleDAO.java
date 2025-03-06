@@ -28,13 +28,15 @@ import java.sql.Statement;
 public abstract class PostgresRoleDAO {
 
     /**
-     * Private constructor. Access DAO methods statically.
+     * Private constructor. Access to {@code PostgresRoleDAO} methods must be done
+     * statically.
      */
     private PostgresRoleDAO() {
     }
 
     /**
-     * PostgreSQL specific SQL to {@code SET ROLE} on the {@link Connection}
+     * PostgreSQL specific statement to {@code SET ROLE} on the {@link Connection}.
+     * Prepared statement employed for security.
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
@@ -85,12 +87,12 @@ public abstract class PostgresRoleDAO {
             "WHERE pg_roles.rolname = ? LIMIT 1");
 
     /**
-     * Gets the specified {@code ROLE} from the pg_roles view.
+     * Get the specified {@code ROLE} from the pg_roles view.
      * 
      * @param connection - an open PostgreSQL {@link Connection}.
      * @param roleName   - the name of the {@code ROLE} to {@code SELECT} from the
-     *                   pg_roles view.
-     * @return a populated {@link PostgresRole} from the pg_roles view.
+     *                   {@code pg_roles} view.
+     * @return a populated {@link PostgresRole} from the {@code pg_roles} view.
      * @throws SQLException
      * @see <a href=
      *      "https://www.postgresql.org/docs/current/view-pg-roles.html">pg_roles</a>
