@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This Data Access Object provides PostgreSQL {@code ROLE} functionality.
+ * Data Access Object provides PostgreSQL {@code ROLE} functionality.
  */
 public abstract class PostgresRoleDAO {
 
