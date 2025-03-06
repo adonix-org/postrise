@@ -21,9 +21,9 @@ package org.adonix.postrise;
  */
 public abstract class Guard {
 
-    private static final String NULL_OBJECT_ERROR = "Illegal NULL Object for ";
-    private static final String NULL_STRING_ERROR = "Illegal NULL String for ";
-    private static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for ";
+    private static final String NULL_OBJECT_ERROR = "Illegal NULL Object for \"%s\"";
+    private static final String NULL_STRING_ERROR = "Illegal NULL String for \"%s\"";
+    private static final String EMPTY_STRING_ERROR = "Illegal EMPTY String for \"%s\"";
 
     /**
      * The {@code private} constructor. Access {@code public} methods statically.
@@ -40,7 +40,7 @@ public abstract class Guard {
      */
     public static final void check(final String parameter, final Object value) throws IllegalArgumentException {
         if (value == null) {
-            throw new IllegalArgumentException(NULL_OBJECT_ERROR + parameter);
+            throw new IllegalArgumentException(String.format(NULL_OBJECT_ERROR, parameter));
         }
     }
 
@@ -55,10 +55,10 @@ public abstract class Guard {
      */
     public static final void check(final String parameter, final String value) throws IllegalArgumentException {
         if (value == null) {
-            throw new IllegalArgumentException(NULL_STRING_ERROR + parameter);
+            throw new IllegalArgumentException(String.format(NULL_STRING_ERROR, parameter));
         }
         if (value.isBlank()) {
-            throw new IllegalArgumentException(EMPTY_STRING_ERROR + parameter);
+            throw new IllegalArgumentException(String.format(EMPTY_STRING_ERROR, parameter));
         }
     }
 }

@@ -49,7 +49,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
-        assertEquals("Illegal EMPTY String for databaseName", t.getMessage());
+        assertEquals("Illegal EMPTY String for \"databaseName\"", t.getMessage());
     }
 
     @DisplayName("NULL Database Name")
@@ -58,7 +58,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
-        assertEquals("Illegal NULL String for databaseName", t.getMessage());
+        assertEquals("Illegal NULL String for \"databaseName\"", t.getMessage());
     }
 
     @DisplayName("EMPTY ROLE String")
@@ -68,7 +68,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(databaseName, " ");
         });
-        assertEquals("Illegal EMPTY String for roleName", t.getMessage());
+        assertEquals("Illegal EMPTY String for \"roleName\"", t.getMessage());
     }
 
     @DisplayName("NULL ROLE String")
@@ -78,7 +78,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(databaseName, null);
         });
-        assertEquals("Illegal NULL String for roleName", t.getMessage());
+        assertEquals("Illegal NULL String for \"roleName\"", t.getMessage());
     }
 
     @DisplayName("Add NULL Data Source Listener")
@@ -87,7 +87,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DataSourceListener) null);
         });
-        assertEquals("Illegal NULL Object for listener", t.getMessage());
+        assertEquals("Illegal NULL Object for \"listener\"", t.getMessage());
     }
 
     @DisplayName("Add NULL Database Listener")
@@ -96,7 +96,7 @@ class TestExceptions {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DatabaseListener) null);
         });
-        assertEquals("Illegal NULL Object for listener", t.getMessage());
+        assertEquals("Illegal NULL Object for \"listener\"", t.getMessage());
     }
 
     @DisplayName("NOLOGIN Exception")
