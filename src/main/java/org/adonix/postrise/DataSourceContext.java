@@ -30,8 +30,8 @@ public interface DataSourceContext extends ConnectionPoolSettings, ConnectionPoo
     /**
      * Set the role to the roleName on the {@link Connection}.
      * 
-     * @param roleName - The ROLE to be set for the connection.
-     * @return A {@link Connection} to the data source.
+     * @param roleName - The {@code ROLE} to be set for the connection.
+     * @return {@link Connection} to the data source with the {@code ROLE} set.
      * @throws SQLException if a database error occurs.
      */
     Connection getConnection(String roleName) throws SQLException;
