@@ -17,7 +17,7 @@
 package org.adonix.postrise;
 
 /**
- * A simple guard clause implementation.
+ * Simple and reusable guard clause implementation.
  */
 public abstract class Guard {
 
