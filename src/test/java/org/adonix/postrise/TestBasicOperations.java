@@ -113,9 +113,9 @@ class TestBasicOperations {
         }
     }
 
-    @DisplayName("Connection RESET")
+    @DisplayName("Connection RESET ROLE")
     @Test
-    void testConnectionRoleReset() throws SQLException {
+    void testConnectionResetRole() throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, "with_login_no_super");
         // Set the max pool size to 1. Only one connection in the pool.
         final DataSourceContext context = server.getDataSource(listener.getDatabaseName());
