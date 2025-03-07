@@ -48,6 +48,16 @@ class TestBasicOperations {
 
     private static final PostgresContainer server = new TestServer();
 
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        server.apply("roles.sql");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        server.close();
+    }
+
     @DisplayName("Default Security Tests")
     @ParameterizedTest
     @ValueSource(strings = { "with_login_no_super", "connection_limited", "connection_limited_large" })
@@ -245,15 +255,5 @@ class TestBasicOperations {
         setter.accept(newValue);
         assertNotNull(getter.get());
         assertEquals(newValue, getter.get());
-    }
-
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        server.apply("roles.sql");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        server.close();
     }
 }

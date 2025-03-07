@@ -43,27 +43,37 @@ class TestExceptions {
 
     private static final PostgresContainer server = new TestServer();
 
-    @DisplayName("EMPTY Database Name")
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        server.apply("roles.sql");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        server.close();
+    }
+
+    @DisplayName("EMPTY Database Name Exception")
     @Test
-    void testEmptyDatabaseName() {
+    void testEmptyDatabaseNameException() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(" ");
         });
         assertEquals("Illegal EMPTY String for \"databaseName\"", t.getMessage());
     }
 
-    @DisplayName("NULL Database Name")
+    @DisplayName("NULL Database Name Exception")
     @Test
-    void testNullDatabaseName() {
+    void testNullDatabaseNameException() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(null);
         });
         assertEquals("Illegal NULL String for \"databaseName\"", t.getMessage());
     }
 
-    @DisplayName("EMPTY ROLE String")
+    @DisplayName("EMPTY ROLE String Exception")
     @Test
-    void testEmptyRoleString() throws SQLException {
+    void testEmptyRoleStringException() throws SQLException {
         final String databaseName = new TestDatabaseListener(server, "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(databaseName, " ");
@@ -71,9 +81,9 @@ class TestExceptions {
         assertEquals("Illegal EMPTY String for \"roleName\"", t.getMessage());
     }
 
-    @DisplayName("NULL ROLE String")
+    @DisplayName("NULL ROLE String Exception")
     @Test
-    void testNullRoleString() throws SQLException {
+    void testNullRoleStringException() throws SQLException {
         final String databaseName = new TestDatabaseListener(server, "with_login_no_super").getDatabaseName();
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.getConnection(databaseName, null);
@@ -81,18 +91,18 @@ class TestExceptions {
         assertEquals("Illegal NULL String for \"roleName\"", t.getMessage());
     }
 
-    @DisplayName("Add NULL Data Source Listener")
+    @DisplayName("Add NULL Data Source Listener Exception")
     @Test
-    void testAddNullDataSourceListener() {
+    void testAddNullDataSourceListenerException() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DataSourceListener) null);
         });
         assertEquals("Illegal NULL Object for \"listener\"", t.getMessage());
     }
 
-    @DisplayName("Add NULL Database Listener")
+    @DisplayName("Add NULL Database Listener Exception")
     @Test
-    void testAddNullDatabaseListener() {
+    void testAddNullDatabaseListenerException() {
         final Throwable t = assertThrows(IllegalArgumentException.class, () -> {
             server.addListener((DatabaseListener) null);
         });
@@ -144,7 +154,7 @@ class TestExceptions {
 
     @DisplayName("Strict Security LOGIN SUPERUSER Exception")
     @Test
-    void testStrictSecurityLoginSuperUser() throws SQLException {
+    void testStrictSecurityLoginSuperUserException() throws SQLException {
         final String databaseName = new TestDatabaseListener(server, POSTGRES_STRICT_ROLE_SECURITY,
                 "with_login_with_super").getDatabaseName();
         final Throwable t = assertThrows(CreateDataSourceException.class, () -> {
@@ -198,15 +208,5 @@ class TestExceptions {
             });
             assertEquals("SECURITY: role \"role_does_not_exist\" does not exist", t.getMessage());
         }
-    }
-
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        server.apply("roles.sql");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        server.close();
     }
 }

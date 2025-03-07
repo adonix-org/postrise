@@ -43,6 +43,16 @@ class TestEdgeCases {
 
     private static final LogCaptor LOG_CAPTOR = LogCaptor.forClass(PostriseServer.class);
 
+    @AfterEach
+    void afterEach() {
+        LOG_CAPTOR.clearLogs();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        LOG_CAPTOR.close();
+    }
+
     @DisplayName("Server Restart And Recovery")
     @Test
     void testServerRestartAndRecovery() throws Exception {
@@ -262,15 +272,5 @@ class TestEdgeCases {
             assertEquals(PostgresDataSourceNoRoles.class.getSimpleName() + " does not support roles",
                     t.getMessage());
         }
-    }
-
-    @AfterEach
-    void afterEach() {
-        LOG_CAPTOR.clearLogs();
-    }
-
-    @AfterAll
-    static void afterAll() {
-        LOG_CAPTOR.close();
     }
 }
