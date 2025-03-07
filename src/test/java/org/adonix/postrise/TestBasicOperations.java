@@ -19,6 +19,7 @@ package org.adonix.postrise;
 import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProvider.POSTGRES_DEFAULT_ROLE_SECURITY;
 import static org.adonix.postrise.security.RoleSecurityProvider.POSTGRES_STRICT_ROLE_SECURITY;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -39,14 +40,23 @@ import org.adonix.postrise.servers.TestDatabaseListener;
 import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import nl.altindag.log.LogCaptor;
+
 class TestBasicOperations {
 
     private static final PostgresContainer server = new TestServer();
+    private static final LogCaptor LOG_CAPTOR = LogCaptor.forClass(POSTGRES_DEFAULT_ROLE_SECURITY.getClass());
+
+    @BeforeEach
+    void beforeEach() {
+        LOG_CAPTOR.clearLogs();
+    }
 
     @BeforeAll
     static void beforeAll() throws Exception {
@@ -56,16 +66,29 @@ class TestBasicOperations {
     @AfterAll
     static void afterAll() {
         server.close();
+        LOG_CAPTOR.close();
     }
 
     @DisplayName("Default Security Tests")
     @ParameterizedTest
-    @ValueSource(strings = { "with_login_no_super", "connection_limited", "connection_limited_large" })
+    @ValueSource(strings = { "with_login_no_super", "connection_limited_large" })
     void testDefaultSecurity(final String roleName) throws SQLException {
         final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY, roleName);
         try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
             assertNotNull(connection);
         }
+    }
+
+    @DisplayName("Connection Limit Warning")
+    @Test
+    void testConnectionLimitWarning() throws SQLException {
+        final DatabaseListener listener = new TestDatabaseListener(server, POSTGRES_DEFAULT_ROLE_SECURITY,
+                "connection_limited");
+        try (final Connection connection = server.getConnection(listener.getDatabaseName())) {
+            assertNotNull(connection);
+        }
+        assertThat(LOG_CAPTOR.getWarnLogs())
+                .anyMatch(log -> log.endsWith("ROLE connection limit (2) < Maximum Pool Size (5)"));
     }
 
     @DisplayName("Default Security SET ROLE")

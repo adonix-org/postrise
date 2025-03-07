@@ -34,7 +34,7 @@ import org.adonix.postrise.servers.StaticPortServer;
 import org.adonix.postrise.servers.TestDatabaseCreator;
 import org.adonix.postrise.servers.TestServer;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
@@ -43,8 +43,8 @@ class TestEdgeCases {
 
     private static final LogCaptor LOG_CAPTOR = LogCaptor.forClass(PostriseServer.class);
 
-    @AfterEach
-    void afterEach() {
+    @BeforeEach
+    void beforeEach() {
         LOG_CAPTOR.clearLogs();
     }
 
