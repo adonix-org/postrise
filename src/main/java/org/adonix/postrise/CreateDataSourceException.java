@@ -24,7 +24,7 @@ public final class CreateDataSourceException extends RuntimeException {
     /**
      * A {@link Server} will throw this exception if unable to create the data source.
      * 
-     * @param cause - the exception thrown while creating the data source.
+     * @param cause - the exception thrown when creating the data source.
      */
     CreateDataSourceException(final Exception cause) {
         super(cause);
