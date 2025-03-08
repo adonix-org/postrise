@@ -5,12 +5,6 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
-<table style="border-collapse: collapse; border: none;">
-  <tr>
-    <td><img src="./img/postrise.png" width="50"></td>
-    <td>
-      <strong>Postrise</strong><br>
-      <span style="color: gray;">Your description goes here</span>
-    </td>
-  </tr>
-</table>
+<h1 style="display: flex; align-items: center;">
+    <img src="./img/postrise.png" width="30" style="vertical-align: middle; margin-right: 10px;"> Postrise
+</h1>
