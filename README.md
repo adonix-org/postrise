@@ -5,12 +5,10 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
-<table>
-  <tr>
-    <td><img src="./img/postrise.png" width="60"></td>
-    <td>
-      <h2 style="margin: 0;">Postrise</h2>
-      <span style="color: gray;">Simple and secure PostgreSQL connectivity.</span>
-    </td>
-  </tr>
-</table>
+<div style="display: flex; align-items: center;">
+  <img src="./img/postrise.png" width="50" style="margin-right: 10px;">
+  <div style="display: flex; flex-direction: column;">
+    <span style="font-size: 1.5em; font-weight: bold;">Postrise</span>
+    <span style="color: #555;">Simple and secure PostgreSQL connectivity.</span>
+  </div>
+</div>
