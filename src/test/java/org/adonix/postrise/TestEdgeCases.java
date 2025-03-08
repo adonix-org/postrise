@@ -231,16 +231,16 @@ class TestEdgeCases {
         }
     }
 
-    @DisplayName("Invalid Pool Status Request")
+    @DisplayName("Invalid Pool State Request")
     @Test
-    void testInvalidPoolStatusRequest() {
+    void testInvalidPoolStateRequest() {
         try (final Server server = new StaticPortServer()) {
             server.addListener(new DataSourceListener() {
                 @Override
                 public void beforeCreate(final DataSourceSettings settings) {
                     final DataSourceContext context = (DataSourceContext) settings;
                     final Throwable t = assertThrows(IllegalStateException.class, context::getActiveConnections);
-                    assertEquals("Pool status request is invalid", t.getMessage());
+                    assertEquals("Pool state is invalid for this request", t.getMessage());
                 }
             });
             assertThrows(CreateDataSourceException.class, () -> server.getConnection("database"));
