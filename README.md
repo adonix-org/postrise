@@ -5,7 +5,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td><img src="./img/postrise.png" width="50"></td>
     <td>
