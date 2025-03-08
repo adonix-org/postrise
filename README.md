@@ -6,5 +6,5 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
 <h1 style="display: flex; align-items: center;">
-    <img src="./img/postrise.png" width="30" style="vertical-align: middle; margin-right: 10px;"> Postrise
+    <img src="./img/postrise.png" width="40" style="vertical-align: middle; margin-right: 10px;"> Postrise
 </h1>
