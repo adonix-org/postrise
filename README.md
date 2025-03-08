@@ -8,7 +8,7 @@
 <a href="https://postrise.adonix.org">
     <picture>
         <source srcset="./img/header-dark.png" media="(prefers-color-scheme: dark)">
-        <img src="./img/header-light.png" alt="Postrise" height="100px"></img>
+        <img src="./img/header-light.png" alt="Postrise" height="auto" width="400px"></img>
     </picture>
 </a>
 
