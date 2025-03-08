@@ -5,9 +5,11 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
-<picture>
-  <source srcset="./img/header-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="./img/header-light.png" alt="Postrise" height="100px"></img>
-</picture>
+<a href="https://postrise.adonix.org">
+    <picture>
+        <source srcset="./img/header-dark.png" media="(prefers-color-scheme: dark)">
+        <img src="./img/header-light.png" alt="Postrise" height="100px"></img>
+    </picture>
+</a>
 
 ![Code](./img/code.png)
