@@ -6,3 +6,5 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
 # Postrise
+
+![Code](./img/code.png)
