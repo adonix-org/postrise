@@ -12,4 +12,6 @@
     </picture>
 </a>
 
+Lorem ipsum dolor sit amet. Aut amet galisum vel quis officiis et ipsum distinctio sed architecto vitae. Qui earum dolore quo aspernatur quisquam vel ratione molestias At deserunt nemo!
+
 ![Code](./img/code.png)
