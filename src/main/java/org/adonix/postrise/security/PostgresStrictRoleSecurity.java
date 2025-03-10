@@ -30,7 +30,7 @@ final class PostgresStrictRoleSecurity extends PostgresDefaultRoleSecurity {
     /**
      * Constructs a new package-private {@code PostgresStrictRoleSecurity} instance.
      * <p>
-     * The {@code static} instance is created and accessed via
+     * The single {@code static} instance is created and accessed via
      * {@link RoleSecurityProvider}.
      */
     PostgresStrictRoleSecurity() {

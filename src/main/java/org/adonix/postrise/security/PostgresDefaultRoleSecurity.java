@@ -33,7 +33,7 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
      * Constructs a new package-private {@code PostgresDefaultRoleSecurity}
      * instance.
      * <p>
-     * The {@code static} instance is created and accessed via
+     * The single {@code static} instance is created and accessed via
      * {@link RoleSecurityProvider}.
      */
     PostgresDefaultRoleSecurity() {
@@ -53,6 +53,9 @@ class PostgresDefaultRoleSecurity implements RoleSecurityListener {
             throw new RoleSecurityException("\"" + role.getRoleName() + "\" is a SUPERUSER role");
         }
 
+        // Since we have a valid ROLE here, check if the ROLE has a connection limit
+        // and if so, WARN if the connection limit is less than the configured max
+        // pool size.
         int connectionLimit = role.getConnectionLimit();
         int maxPoolSize = context.getMaxPoolSize();
         if (connectionLimit != -1 && maxPoolSize > connectionLimit) {
