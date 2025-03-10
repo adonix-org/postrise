@@ -39,7 +39,7 @@ public interface RoleSecurityListener extends EventListener {
     void onLogin(DataSourceContext context, Connection connection) throws SQLException;
 
     /**
-     * This event is dispatched after requesting a {@link Connection} with a
+     * This event is dispatched when requesting a {@link Connection} with a
      * specific {@code ROLE}.
      * 
      * @param connection - {@link Connection} used for authorization.
