@@ -36,7 +36,6 @@ public abstract class PostgresRoleDAO {
 
     /**
      * PostgreSQL specific statement to {@code SET ROLE} on the {@link Connection}.
-     * Prepared statement is employed for security.
      */
     private static final String SQL_SET_ROLE = "SELECT set_config('ROLE', ?, false)";
 
@@ -46,7 +45,7 @@ public abstract class PostgresRoleDAO {
      * @param connection - the {@link Connection} on which the {@code ROLE} will be
      *                   set.
      * @param roleName   - the {@code ROLE} to be set.
-     * @throws SQLException if a database access error occurs.
+     * @throws SQLException if a database access or {@code ROLE} error occurs.
      */
     public static final void setRole(final Connection connection, final String roleName) throws SQLException {
         try (final PreparedStatement stmt = connection.prepareStatement(SQL_SET_ROLE)) {
@@ -96,7 +95,8 @@ public abstract class PostgresRoleDAO {
      * @param roleName   - the name of the {@code ROLE} to {@code SELECT} from the
      *                   {@code pg_roles} view.
      * @return a populated {@link PostgresRole} from the {@code pg_roles} view.
-     * @throws SQLException
+     * @throws RoleSecurityException if the {@code ROLE} does not exist.
+     * @throws SQLException          if a database access error occurs.
      * @see <a href=
      *      "https://www.postgresql.org/docs/current/view-pg-roles.html">pg_roles</a>
      */
