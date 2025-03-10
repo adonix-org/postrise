@@ -19,9 +19,7 @@ package org.adonix.postrise;
 import java.util.EventListener;
 
 /**
- * Implementations will receive the {@link #beforeCreate(DataSourceSettings)}
- * event to configure {@link DataSourceSettings} when a new data source is
- * created.
+ * Implementations will receive events during the lifecycle of a data source.
  * 
  * @see PostriseServer#addListener(DataSourceListener)
  */
