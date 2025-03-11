@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Lorem ipsum dolor sit amet. Aut amet galisum vel quis officiis et ipsum distinctio sed architecto vitae. Qui earum dolore quo aspernatur quisquam vel ratione molestias At deserunt nemo!
+Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution to configuring data sources and encourages secure access. An event-based architecture enables subscriptions to data source lifecycles.
 
 ![Code](./img/code.png)
 
