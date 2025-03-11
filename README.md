@@ -12,7 +12,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=coverage)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 
-Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture also enables subscriptions to data source lifecycles.
+Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture also enables subscriptions to the data source lifecycle.
 
 ![Code](./img/code.png)
 
