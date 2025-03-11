@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution to configuring data sources and encourages secure access. The event-based architecture also enables subscriptions to data source lifecycles.
+Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution to configuring data sources and encourages secure access. This event-based architecture also enables subscriptions to data source lifecycles.
 
 ![Code](./img/code.png)
 
