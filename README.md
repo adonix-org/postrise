@@ -16,4 +16,30 @@ Get connected *FAST* with **Postrise**, a thread-safe library for Java develo
 
 ![Code](./img/code.png)
 
+## Install
+
+#### Maven
+
+```xml
+<properties>
+    <!-- Check for latest version -->
+    <version.postrise>1.0.0</version.postrise>
+</properties>
+
+<dependency>
+    <groupId>org.adonix</groupId>
+    <artifactId>postrise</artifactId>
+    <version>${version.postrise}</version>
+    <scope>compile</scope>
+</dependency>
+```
+
+#### Gradle
+
+```gradle
+dependencies {
+    implementation 'org.adonix:postrise:1.0.0'
+}
+```
+
 ## Quickstart
