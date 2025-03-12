@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture also enables subscriptions to the data source lifecycle.
+Get connected *FAST* with **Postrise**, a thread-safe library for Java developers to acquire pooled JDBC connections from PostgreSQL servers. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture also enables subscriptions to the data source lifecycle. Connection pooling is provided by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
 ![Code](./img/code.png)
 
