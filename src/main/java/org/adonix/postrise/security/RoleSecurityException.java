@@ -35,12 +35,11 @@ public final class RoleSecurityException extends SQLException {
     private static final String MESSAGE_PREFIX = "SECURITY: ";
 
     /**
-     * The package-private constructor. A {@code RoleSecurityException} will be
-     * created and thrown from classes in this package.
+     * Create a {@code RoleSecurityException}.
      * 
      * @param message - the {@code ROLE} security error message.
      */
-    RoleSecurityException(final String message) {
+    public RoleSecurityException(final String message) {
         super(MESSAGE_PREFIX + message.trim(), INVALID_ROLE);
     }
 }
