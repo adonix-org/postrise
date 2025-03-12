@@ -18,7 +18,7 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ## Install
 
-💡 Find the latest Postrise version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
+💡 Find the latest **Postrise** version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
 
 #### Maven
 
