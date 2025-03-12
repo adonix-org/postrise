@@ -7,7 +7,7 @@
 
     <groupId>org.adonix</groupId>
     <artifactId>postrise</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Postrise</name>
@@ -70,6 +70,7 @@
         <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
         <version.sonar-maven-plugin>5.0.0.4389</version.sonar-maven-plugin>
         <version.maven-gpg-plugin>3.2.7</version.maven-gpg-plugin>
+        <version.central-publishing-maven-plugin>0.7.0</version.central-publishing-maven-plugin>
 
     </properties>
 
@@ -140,17 +141,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <plugins>
@@ -256,6 +246,15 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${version.central-publishing-maven-plugin}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
