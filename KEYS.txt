@@ -1,1 +1,36 @@
-Ty Busby tybusby@gmail.com 805F CDB3 0B17 961D 9107  C63A 1FC3 33C0 B76F 8A93
+# KEYS File for Postrise
+# =======================
+# This file contains the public GPG keys used to sign the releases of the
+# Postrise project. Use these keys to verify the integrity and authenticity 
+# of downloaded artifacts.
+
+# Fetch the keys:
+# gpg --keyserver keyserver.ubuntu.com --recv-keys 1FC333C0B76F8A93
+
+# Verify a signature:
+# gpg --verify postrise-1.0.1.jar.asc postrise-1.0.1.jar
+
+# ---------------------------
+# Public Key: Ty Busby
+# ---------------------------
+pub   ed25519/1FC333C0B76F8A93 2025-03-12 [SC] [expires: 2028-03-11]
+      Key Fingerprint: 805F CDB3 0B17 961D 9107  C63A 1FC3 33C0 B76F 8A93
+uid   Ty Busby <tybusby@gmail.com>
+sub   cv25519/B53176EF16A9F83C 2025-03-12 [E] [expires: 2028-03-11]
+
+# Export the key:
+# gpg --export --armor 1FC333C0B76F8A93
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEZ9EZcBYJKwYBBAHaRw8BAQdA8Rgz0Qxi/kDwBezLvaj6WLeb5ha/jKZhVdn5
+XJx3hr+0HFR5IEJ1c2J5IDx0eWJ1c2J5QGdtYWlsLmNvbT6ImQQTFgoAQRYhBIBf
+zbMLF5YdkQfGOh/DM8C3b4qTBQJn0RlwAhsDBQkFo5qABQsJCAcCAiICBhUKCQgL
+AgQWAgMBAh4HAheAAAoJEB/DM8C3b4qTXfAA/0vHVb455l49S6Xowd9VAA5aIh54
+ifHGpQTqQNuHOZPlAP952qNgiUB3fZIDhvAbFry6yu7HN+ryg+kvNhCDAoKlCLg4
+BGfRGXASCisGAQQBl1UBBQEBB0DK7p8CqBnBMD/gp5FOxVY349xYibmJd1Vrx4WP
+o0UkCgMBCAeIfgQYFgoAJhYhBIBfzbMLF5YdkQfGOh/DM8C3b4qTBQJn0RlwAhsM
+BQkFo5qAAAoJEB/DM8C3b4qTyXwBAKvRmPNFN8qM/cS/RGCjJGhLR2nlG3Ss71HO
+6TOToFpKAP9NRxy63GTY3XczdbGvqk9i3VP/mfCSEi7Hes8uOTokDg==
+=7CzD
+-----END PGP PUBLIC KEY BLOCK-----
