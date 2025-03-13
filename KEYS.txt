@@ -4,7 +4,10 @@
 # Postrise project. Use these keys to verify the integrity and authenticity 
 # of downloaded artifacts.
 
-# Import KEYS File
+# Fetch the key:
+# gpg --keyserver keyserver.ubuntu.com --recv-keys 1FC333C0B76F8A93
+
+# Or import this KEYS File:
 # gpg --import KEYS.txt
 
 # Verify a signature:
