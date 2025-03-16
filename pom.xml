@@ -12,11 +12,11 @@
 
     <name>Postrise</name>
     <description>Simple and secure PostgreSQL connectivity.</description>
-    <url>https://github.com/adonix-org/Postrise</url>
+    <url>https://postrise.adonix.org</url>
 
     <organization>
         <name>adonix.org</name>
-        <url>https://github.com/adonix-org</url>
+        <url>https://www.adonix.org</url>
     </organization>
 
     <scm>
