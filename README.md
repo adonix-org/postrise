@@ -60,7 +60,7 @@ CREATE ROLE my_login_user LOGIN
             NOBYPASSRLS;
 ```
 
-Next, create a new Java `class` that extends PostgresServer:
+Next, create your Java `class` that extends PostgresServer:
 
 ```java
 
@@ -72,7 +72,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-Lastly, override any methods required to connect to your specific PostgreSQL server:
+Lastly, `@Override` any methods required to connect to your specific PostgreSQL server:
 
 #### HostName:
 
