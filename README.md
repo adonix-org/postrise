@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture also enables subscriptions to the data source lifecycle. Connection pooling is delegated to the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
+Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is delegated to the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
 ![Code](./img/code.png)
 
@@ -44,3 +44,61 @@ dependencies {
 ```
 
 ## Quickstart
+
+Create and configure your new PostgreSQL server. By default, an exception will be thrown by **Postrise** when logging in as a `SUPERUSER`. See the [Security](#security) section for details and how to bypass this behavior if required.
+
+If a non-privileged user does not already exist, create a secure PostgreSQL `LOGIN` role without `SUPERUSER` privileges:
+
+```sql
+CREATE ROLE my_login_user LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS;
+```
+
+Next, create a new `class` that extends PostgresServer:
+
+```java
+
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.PostgresServer;
+
+public class MyPostgresServer extends PostgresServer {
+}
+```
+
+Lastly, override any methods required to connect to your specific PostgreSQL server:
+
+#### HostName
+
+```java
+    /**
+     * Default is "localhost".
+     */
+    @Override
+    public String getHostName() {
+        return "db.mydomain.com";
+    }
+```
+
+#### Port
+
+```java
+    /**
+     * Default is 5432.
+     */
+    @Override
+    public Integer getPort() {
+        return 5433;
+    }
+```
+
+#### beforeCreate()
+
+```java
+    @Override
+    public void beforeCreate(final DataSourceSettings settings) {
+        settings.setUsername("my_login_user");
+    }
+```
+
+## Events
+
+## Security
