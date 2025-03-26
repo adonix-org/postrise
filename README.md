@@ -46,14 +46,15 @@ dependencies {
 ## ⏱️ Quickstart
 Create and configure your PostgreSQL server connection.
 
-⚠️ By default, an exception will be thrown by **Postrise** when connecting as a `SUPERUSER`. See the [Security](#security) section for details on how to bypass this behavior if needed.
+⚠️ By default, an exception will be thrown by **Postrise** when connecting as a `SUPERUSER`. See the [Security](#security) section for details on how to bypass this behavior if required.
 
-If a non-privileged user does not already exist, create a secure PostgreSQL `LOGIN` role without `SUPERUSER` privileges:
+If a non-privileged `ROLE` does not already exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
 
 ```sql
 DROP ROLE IF EXISTS my_login_user;
 
-CREATE ROLE my_login_user LOGIN
+CREATE ROLE my_login_user 
+            LOGIN
             NOSUPERUSER
             NOCREATEDB
             NOCREATEROLE
@@ -73,13 +74,13 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-💡 `@Override` the configuration default of any method to connect to your PostgreSQL server.
+`@Override` the configuration defaults of any method to connect to your PostgreSQL server.
 
-#### HostName:
+#### Host:
 
 ```java
 /**
- * Default is "localhost".
+ * Default: "localhost"
  */
 @Override
 public String getHostName() {
@@ -91,7 +92,7 @@ public String getHostName() {
 
 ```java
 /**
- * Default is 5432.
+ * Default: 5432
  */
 @Override
 public Integer getPort() {
@@ -122,3 +123,5 @@ public void beforeCreate(final DataSourceSettings settings) {
 ## ⚡ Events
 
 ## 🔒 Security
+
+## 🛠️ Build
