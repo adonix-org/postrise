@@ -52,7 +52,12 @@ Create and configure your new PostgreSQL server.
 If a non-privileged user does not already exist, create a secure PostgreSQL `LOGIN` role without `SUPERUSER` privileges:
 
 ```sql
-CREATE ROLE my_login_user LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS;
+CREATE ROLE my_login_user LOGIN
+            NOSUPERUSER
+            NOCREATEDB
+            NOCREATEROLE
+            NOINHERIT
+            NOBYPASSRLS;
 ```
 
 Next, create a new Java `class` that extends PostgresServer:
@@ -69,7 +74,7 @@ public class MyPostgresServer extends PostgresServer {
 
 Lastly, override any methods required to connect to your specific PostgreSQL server:
 
-#### HostName
+#### HostName:
 
 ```java
 /**
@@ -81,7 +86,7 @@ public String getHostName() {
 }
 ```
 
-#### Port
+#### Port:
 
 ```java
 /**
@@ -93,17 +98,25 @@ public Integer getPort() {
 }
 ```
 
-#### New Data Source Event
+#### Create DataSource Event:
 
 ```java
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
-    /**
-     * Default username is the logged in user.
-     */
+
+    // Default username is the logged in user.
     settings.setUsername("my_login_user");
+
+    // Either set the password, or use pg_hba.conf to configure
+    // secure access for your user.
+    settings.setPassword("In1g0M@nt0Ya");
+
+    // For all other settings, it is recommended to start with
+    // the default values.
 }
 ```
+
+💡 See [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) documentation.
 
 ## Events
 
