@@ -44,16 +44,17 @@ dependencies {
 ```
 
 ## ⏱️ Quickstart
+
 Create and configure your PostgreSQL server connection.
 
-⚠️ By default, an exception will be thrown by **Postrise** when connecting as a `SUPERUSER`. See the [Security](#security) section for details on how to bypass this behavior if required.
+⚠️ By default, an exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See the [Security](#security) section for details on how to bypass this behavior if required.
 
 If a non-privileged `ROLE` does not already exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
 
 ```sql
 DROP ROLE IF EXISTS my_login_user;
 
-CREATE ROLE my_login_user 
+CREATE ROLE my_login_user
             LOGIN
             NOSUPERUSER
             NOCREATEDB
