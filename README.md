@@ -45,7 +45,9 @@ dependencies {
 
 ## Quickstart
 
-Create and configure your new PostgreSQL server. By default, an exception will be thrown by **Postrise** when logging in as a `SUPERUSER`. See the [Security](#security) section for details and how to bypass this behavior if required.
+Create and configure your new PostgreSQL server.
+
+⚠️ By default, an exception will be thrown by **Postrise** when logging in as a `SUPERUSER`. See the [Security](#security) section below for details on how to bypass this behavior if needed.
 
 If a non-privileged user does not already exist, create a secure PostgreSQL `LOGIN` role without `SUPERUSER` privileges:
 
@@ -61,7 +63,7 @@ import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.PostgresServer;
 
 public class MyPostgresServer extends PostgresServer {
-    
+
 }
 ```
 
@@ -91,7 +93,7 @@ public Integer getPort() {
 }
 ```
 
-#### beforeCreate()
+#### New Data Source Event
 
 ```java
 @Override
