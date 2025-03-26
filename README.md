@@ -12,11 +12,11 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. Postrise provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is delegated to the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
+Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is delegated to the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
 ![Code](./img/code.png)
 
-## Install
+## ⚙️ Install
 
 💡 Find the latest **Postrise** version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
 
@@ -43,15 +43,16 @@ dependencies {
 }
 ```
 
-## Quickstart
+## ⏱️ Quickstart
+Create and configure your PostgreSQL server connection.
 
-Create and configure your new PostgreSQL server.
-
-⚠️ By default, an exception will be thrown by **Postrise** when logging in as a `SUPERUSER`. See the [Security](#security) section below for details on how to bypass this behavior if needed.
+⚠️ By default, an exception will be thrown by **Postrise** when connecting as a `SUPERUSER`. See the [Security](#security) section for details on how to bypass this behavior if needed.
 
 If a non-privileged user does not already exist, create a secure PostgreSQL `LOGIN` role without `SUPERUSER` privileges:
 
 ```sql
+DROP ROLE IF EXISTS my_login_user;
+
 CREATE ROLE my_login_user LOGIN
             NOSUPERUSER
             NOCREATEDB
@@ -60,7 +61,7 @@ CREATE ROLE my_login_user LOGIN
             NOBYPASSRLS;
 ```
 
-Next, create your Java `class` that extends PostgresServer:
+Create a Java `class` that extends PostgresServer:
 
 ```java
 
@@ -72,13 +73,13 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-Lastly, `@Override` any methods required to connect to your specific PostgreSQL server:
+💡 `@Override` the configuration default of any method to connect to your PostgreSQL server.
 
 #### HostName:
 
 ```java
 /**
- * Default hostname is "localhost".
+ * Default is "localhost".
  */
 @Override
 public String getHostName() {
@@ -90,7 +91,7 @@ public String getHostName() {
 
 ```java
 /**
- * Default port is 5432.
+ * Default is 5432.
  */
 @Override
 public Integer getPort() {
@@ -116,8 +117,8 @@ public void beforeCreate(final DataSourceSettings settings) {
 }
 ```
 
-💡 See [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) documentation.
+💡 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)documentation.
 
-## Events
+## ⚡ Events
 
-## Security
+## 🔒 Security
