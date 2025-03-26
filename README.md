@@ -53,7 +53,7 @@ If a non-privileged user does not already exist, create a secure PostgreSQL `LOG
 CREATE ROLE my_login_user LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS;
 ```
 
-Next, create a new `class` that extends PostgresServer:
+Next, create a new Java `class` that extends PostgresServer:
 
 ```java
 
@@ -61,6 +61,7 @@ import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.PostgresServer;
 
 public class MyPostgresServer extends PostgresServer {
+    
 }
 ```
 
@@ -69,34 +70,37 @@ Lastly, override any methods required to connect to your specific PostgreSQL ser
 #### HostName
 
 ```java
-    /**
-     * Default is "localhost".
-     */
-    @Override
-    public String getHostName() {
-        return "db.mydomain.com";
-    }
+/**
+ * Default hostname is "localhost".
+ */
+@Override
+public String getHostName() {
+    return "db.mydomain.com";
+}
 ```
 
 #### Port
 
 ```java
-    /**
-     * Default is 5432.
-     */
-    @Override
-    public Integer getPort() {
-        return 5433;
-    }
+/**
+ * Default port is 5432.
+ */
+@Override
+public Integer getPort() {
+    return 5433;
+}
 ```
 
 #### beforeCreate()
 
 ```java
-    @Override
-    public void beforeCreate(final DataSourceSettings settings) {
-        settings.setUsername("my_login_user");
-    }
+@Override
+public void beforeCreate(final DataSourceSettings settings) {
+    /**
+     * Default username is the logged in user.
+     */
+    settings.setUsername("my_login_user");
+}
 ```
 
 ## Events
