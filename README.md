@@ -138,6 +138,21 @@ public void beforeCreate(final DataSourceSettings settings) {
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - must be installed and running.
 
+##
+💡 Before continuing, use this command to verify the expected Maven and Java versions are on your PATH:
+```bash
+mvn -v
+```
+
+The result should look something like this:
+```bash
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: /Users/Inigo/Programs/apache-maven-3.9.9
+Java version: 23, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home
+Default locale: en_US, platform encoding: UTF-8
+OS name: "mac os x", version: "15.3.2", arch: "aarch64", family: "mac"
+```
+##
 Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository into that folder:
 
 ```bash
