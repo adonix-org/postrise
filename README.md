@@ -63,7 +63,7 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
-💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE`:
+💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE` as follows:
 
 ```sql
 CREATE ROLE my_application_role
