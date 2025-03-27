@@ -131,13 +131,28 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 **Postrise** is a simple Java library that can easily be cloned and built locally.
 
-💡 A few prerequisites must be installed locally before building:
+⚠️ A few prerequisites must be installed locally before building:
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/)
--   [Maven](https://maven.apache.org/download.cgi)
+-   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - installed and running.
 
-Create a folder where the **Postrise** project will be installed and use the command-line to clone the repository within that folder:
+Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository within that folder:
 
 ```bash
 git clone https://github.com/adonix-org/Postrise.git
+```
+
+Next use that same command-line to switch to the **Postrise** folder.
+```bash
+cd Postrise
+```
+
+Use this Maven command to build and test **Postrise**:
+```bash
+mvn clean verify
+```
+
+Or use this Maven command to build, test, and install **Postrise**:
+```bash
+mvn clean install
 ```
