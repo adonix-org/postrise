@@ -123,7 +123,9 @@ public void beforeCreate(final DataSourceSettings settings) {
 ```
 
 💡 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)documentation.
+
 ##
+
 After the server has been created and configured, we can create an instance. New data sources will be created on demand. Your new server implements the `AutoCloseable` interface, so all data sources will be closed when the server is closed. The instantiation and closure of the server will depend on your application, but here is a simple use-case for demonstration:
 
 ```java
@@ -132,11 +134,13 @@ import org.adonix.postrise.Server;
 
 public class MyApp {
 
-    // Your PostgreSQL server.
+    // Your PostgreSQL server. Also could be declared in the
+    // try-with-resources scope of the application.
     private static final Server server = new MyPostgresServer();
 
     public static void main(String[] args) throws Exception {
-        // The data source is created on first access.
+        // A new data source is created on the first connection
+        // request to the database.
         try (final Connection connection = server.getConnection("my_database")) {
             // Do something with this connection.
         } finally {
