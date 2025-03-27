@@ -146,7 +146,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 mvn -v
 ```
 
-The result should look something like this, with some variance for OS and versions:
+The result should look something like this, with variance for OS and versions:
 
 ```bash
 Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
