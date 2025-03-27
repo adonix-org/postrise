@@ -132,7 +132,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 **Postrise** is a simple Java library that can easily be cloned and built locally.
 
-⚠️ A few prerequisites **must** be installed locally before building:
+⚠️ A few prerequisites **must** be installed before building:
 
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the current Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
