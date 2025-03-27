@@ -107,6 +107,7 @@ public Integer getPort() {
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
 
+    // Call this for default logging.
     super.beforeCreate(settings);
 
     // Default username is the logged in user.
@@ -116,7 +117,7 @@ public void beforeCreate(final DataSourceSettings settings) {
     // secure access for your user.
     settings.setPassword("In1g0M@nt0Ya");
 
-    // For all other settings, it is recommended to start with
+    // For all other settings, it is recommended to begin with
     // the default values.
 }
 ```
@@ -132,6 +133,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 **Postrise** is a simple Java library that can easily be cloned and built locally.
 
 ⚠️ A few prerequisites must be installed locally before building:
+
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/)
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - installed and running.
@@ -143,16 +145,19 @@ git clone https://github.com/adonix-org/Postrise.git
 ```
 
 Next use that same command-line to switch to the **Postrise** folder.
+
 ```bash
 cd Postrise
 ```
 
 Use this Maven command to build and test **Postrise**:
+
 ```bash
 mvn clean verify
 ```
 
 Or use this Maven command to build, test, and install **Postrise**:
+
 ```bash
 mvn clean install
 ```
