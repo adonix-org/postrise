@@ -45,7 +45,7 @@ dependencies {
 
 ## ⏱️ Quickstart
 
-Create and configure your PostgreSQL server connection.
+Create and configure your PostgreSQL data source connections.
 
 ⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for details on how to bypass this behavior if required.
 
