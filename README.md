@@ -49,7 +49,7 @@ Create and configure your PostgreSQL server connection.
 
 ⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for details on how to bypass this behavior if required.
 
-If a non-privileged `ROLE` does not already exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
+If a non-privileged `ROLE` does not exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
 
 ```sql
 DROP ROLE IF EXISTS my_login_user;
