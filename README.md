@@ -52,8 +52,10 @@ Create and configure your PostgreSQL data source connections.
 If a non-privileged `ROLE` does not exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
 
 ```sql
+-- Recreate if exists
 DROP ROLE IF EXISTS my_login_user;
 
+-- The LOGIN role is NOSUPERUSER.
 CREATE ROLE my_login_user
             LOGIN
             NOSUPERUSER
@@ -66,6 +68,10 @@ CREATE ROLE my_login_user
 💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE` as follows:
 
 ```sql
+-- Recreate if exists
+DROP ROLE IF EXISTS my_application_role;
+
+-- The application role cannot LOGIN.
 CREATE ROLE my_application_role
             NOLOGIN
             NOSUPERUSER
@@ -74,9 +80,15 @@ CREATE ROLE my_application_role
             NOINHERIT
             NOBYPASSRLS;
 
+-- Allow the LOGIN user to switch to this ROLE.
 GRANT my_application_role TO my_login_user;
+
+-- The application role can only SELECT from my_table.
+GRANT SELECT ON my_table TO my_application_role;
 ```
+
 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html).
+
 ##
 
 Create a Java `class` which extends PostgresServer:
