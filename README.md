@@ -63,6 +63,22 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
+💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE`:
+
+```sql
+CREATE ROLE my_application_role
+            NOLOGIN
+            NOSUPERUSER
+            NOCREATEDB
+            NOCREATEROLE
+            NOINHERIT
+            NOBYPASSRLS;
+
+GRANT my_application_role TO my_login_user;
+```
+See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html).
+##
+
 Create a Java `class` which extends PostgresServer:
 
 ```java
