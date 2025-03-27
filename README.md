@@ -170,7 +170,7 @@ Next use that same command-line to switch to the **Postrise** folder.
 cd Postrise
 ```
 
-Finally, this Maven command to build and test **Postrise**:
+Finally, run this Maven command to build and test **Postrise**:
 
 ```bash
 mvn clean verify
