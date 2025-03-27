@@ -107,7 +107,7 @@ public Integer getPort() {
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
 
-    // Call this for default logging.
+    // Not required, but logs the create event.
     super.beforeCreate(settings);
 
     // Default username is the logged in user.
