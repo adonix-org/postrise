@@ -63,7 +63,7 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
-Create a Java `class` that extends PostgresServer:
+Create a Java `class` which extends PostgresServer:
 
 ```java
 
