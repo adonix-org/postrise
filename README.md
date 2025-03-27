@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is delegated to the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
+Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from PostgreSQL. **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is handled by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
 ![Code](./img/code.png)
 
@@ -106,7 +106,7 @@ public Integer getPort() {
 ```java
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
-    
+
     super.beforeCreate(settings);
 
     // Default username is the logged in user.
@@ -128,3 +128,16 @@ public void beforeCreate(final DataSourceSettings settings) {
 ## 🔒 Security
 
 ## 🛠️ Build
+
+**Postrise** is a simple Java library that can easily be cloned and built locally.
+
+💡 A few prerequisites must be installed locally before building:
+-   [JDK 11+](https://www.oracle.com/java/technologies/downloads/)
+-   [Maven](https://maven.apache.org/download.cgi)
+-   [Docker](https://www.docker.com) - installed and running.
+
+Create a folder where the **Postrise** project will be installed and use the command-line to clone the repository within that folder:
+
+```bash
+git clone https://github.com/adonix-org/Postrise.git
+```
