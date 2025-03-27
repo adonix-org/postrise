@@ -106,6 +106,8 @@ public Integer getPort() {
 ```java
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
+    
+    super.beforeCreate(settings);
 
     // Default username is the logged in user.
     settings.setUsername("my_login_user");
