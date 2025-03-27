@@ -126,7 +126,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ##
 
-After the server has been created and configured, we can create an instance. New data sources will be created on demand. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure of the server will depend on your application, but here is a simple use-case as an example:
+After the server has been created and configured, we can create an instance. New data sources will be created on demand. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure of any servers will depend on your application, but here is a simple use-case as an example:
 
 ```java
 import java.sql.Connection;
