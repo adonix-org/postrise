@@ -134,7 +134,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ⚠️ A few prerequisites **must** be installed locally before building:
 
--   [JDK 11+](https://www.oracle.com/java/technologies/downloads/)
+-   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the current Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - must be installed and running.
 
