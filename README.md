@@ -136,7 +136,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/)
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
--   [Docker](https://www.docker.com) - installed and running.
+-   [Docker](https://www.docker.com) - must be installed and running.
 
 Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository within that folder:
 
