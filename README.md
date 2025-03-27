@@ -87,7 +87,7 @@ GRANT my_application_role TO my_login_user;
 GRANT SELECT ON my_table TO my_application_role;
 ```
 
-See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html).
+🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html).
 
 ##
 
@@ -150,7 +150,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 }
 ```
 
-💡 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)documentation.
+🔗 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)documentation.
 
 ##
 
