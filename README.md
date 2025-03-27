@@ -138,7 +138,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - must be installed and running.
 
-Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository within that folder:
+Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository into that folder:
 
 ```bash
 git clone https://github.com/adonix-org/Postrise.git
