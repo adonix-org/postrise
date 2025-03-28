@@ -111,7 +111,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ##
 
-After your server has been configured, it can be instantiated. The data source and connection pool are created on demand when a connection is requested by your application. Your new server implements the `AutoCloseable` interface, and all contained data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is a simple example:
+After your server has been configured, it can be instantiated. Each data source and connection pool are created on demand when a connection is requested by your application. Your new server implements the `AutoCloseable` interface, and all contained data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is a simple example:
 
 ```java
 import java.sql.Connection;
