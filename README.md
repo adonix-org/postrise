@@ -154,7 +154,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ##
 
-After the server has been created and configured, we can create a new instance. The data source and connection pool will be created on demand when a connection is requested by the application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is one simple example for demonstration:
+After the server has been configured, we can create a new instance. The data source and connection pool will be created on demand when a connection is requested by the application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is one simple example for demonstration:
 
 ```java
 import java.sql.Connection;
@@ -176,6 +176,13 @@ public class MyApp {
             server.close();
         }
     }
+}
+```
+
+Or if using a `NOLOGIN` role:
+```java
+try (final Connection connection = server.getConnection("my_database", "my_application_role")) {
+    // The user identifier for the connection is "my_application_role".
 }
 ```
 
