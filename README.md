@@ -203,7 +203,7 @@ An example result set:
 
 **Postrise** is a simple Java library that can easily be cloned and built locally.
 
-⚠️ A few prerequisites **must** be installed before building:
+⚠️ The following prerequisites **must** be installed before building:
 
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the latest Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
@@ -217,7 +217,7 @@ An example result set:
 mvn -v
 ```
 
-The result should look similar to this with variances for OS and versions:
+The output should look similar to this with variances for OS and versions:
 
 ```bash
 Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
