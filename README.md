@@ -52,7 +52,6 @@ Create and configure PostgreSQL data sources after [Install](#️-install).
 Create a Java `class` extending PostgresServer:
 
 ```java
-
 import org.adonix.postrise.DataSourceSettings;
 import org.adonix.postrise.PostgresServer;
 
@@ -61,7 +60,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-`@Override` superclass methods to connect to your PostgreSQL server as required.
+`@Override` any superclass methods to connect to your PostgreSQL server as required.
 
 #### Host:
 
@@ -108,11 +107,11 @@ public void beforeCreate(final DataSourceSettings settings) {
 }
 ```
 
-🔗 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)documentation.
+🔗 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)
 
 ##
 
-After your server has been configured, it's time to create a new instance. The data source and connection pool will be created on demand when a connection is requested by your application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is a simple example:
+After your server has been configured, it can be instantiated. The data source and connection pool are created on demand when a connection is requested by your application. Your new server implements the `AutoCloseable` interface, and all contained data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is a simple example:
 
 ```java
 import java.sql.Connection;
@@ -137,7 +136,7 @@ public class MyApp {
 }
 ```
 
-Or if you delegate to a `NOLOGIN` role:
+Or if delgating to a `NOLOGIN` role:
 
 ```java
 try (final Connection connection = server.getConnection("my_database", "my_application_role")) {
@@ -165,7 +164,7 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
-💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE` as follows:
+💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to as follows:
 
 ```sql
 -- Recreate if exists
@@ -198,7 +197,7 @@ An example result set:
 |------------------|------------------|
 | my_login_user | my_application_role |
 
-🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html).
+🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html)
 
 ## 🛠️ Build
 
