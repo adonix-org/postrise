@@ -183,7 +183,7 @@ Or if using a `NOLOGIN` role:
 
 ```java
 try (final Connection connection = server.getConnection("my_database", "my_application_role")) {
-    // The user identifier for this connection is "my_application_role".
+    // The current_user for this connection is "my_application_role".
 }
 ```
 
