@@ -154,7 +154,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ##
 
-After the server has been configured, we can create a new instance. The data source and connection pool will be created on demand when a connection is requested by the application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is one simple example for demonstration:
+After your server has been configured, an instance can be created. The data source and connection pool will be created on demand when a connection is requested by the application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is one simple example for demonstration:
 
 ```java
 import java.sql.Connection;
@@ -180,11 +180,23 @@ public class MyApp {
 ```
 
 Or if using a `NOLOGIN` role:
+
 ```java
 try (final Connection connection = server.getConnection("my_database", "my_application_role")) {
-    // The user identifier for the connection is "my_application_role".
+    // The user identifier for this connection is "my_application_role".
 }
 ```
+
+Session and current users can be queried as such:
+
+```sql
+SELECT session_user, current_user;
+```
+
+An example result:
+| **session_user** | **current_user** |
+|------------------|------------------|
+| my_login_user | my_application_role |
 
 ## ⚡ Events
 
@@ -196,7 +208,7 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 ⚠️ A few prerequisites **must** be installed before building:
 
--   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the current Long-Term Support (LTS) version is JDK 21.
+-   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the latest Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
 -   [Docker](https://www.docker.com) - must be installed and running.
 
