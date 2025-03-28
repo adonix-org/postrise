@@ -47,7 +47,7 @@ dependencies {
 
 Create and configure PostgreSQL data sources after [Install](#️-install).
 
-⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass this behavior if required.
+⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when  required.
 
 Create a Java `class` extending PostgresServer:
 
