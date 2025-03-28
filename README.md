@@ -45,51 +45,9 @@ dependencies {
 
 ## ⏱️ Quickstart
 
-Create and configure your PostgreSQL data source connections.
+Create and configure PostgreSQL data sources.
 
-⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for details on how to bypass this behavior if required.
-
-If a non-privileged `ROLE` does not exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
-
-```sql
--- Recreate if exists
-DROP ROLE IF EXISTS my_login_user;
-
--- The LOGIN role is NOSUPERUSER.
-CREATE ROLE my_login_user
-            LOGIN
-            NOSUPERUSER
-            NOCREATEDB
-            NOCREATEROLE
-            NOINHERIT
-            NOBYPASSRLS;
-```
-
-💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE` as follows:
-
-```sql
--- Recreate if exists
-DROP ROLE IF EXISTS my_application_role;
-
--- The application role cannot LOGIN.
-CREATE ROLE my_application_role
-            NOLOGIN
-            NOSUPERUSER
-            NOCREATEDB
-            NOCREATEROLE
-            NOINHERIT
-            NOBYPASSRLS;
-
--- Allow the LOGIN user to switch to this ROLE.
-GRANT my_application_role TO my_login_user;
-
--- The application role can only SELECT from my_table.
-GRANT SELECT ON my_table TO my_application_role;
-```
-
-🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html).
-
-##
+⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) to create a `NOSUPERUSER` role or bypass this behavior if required.
 
 Create a Java `class` which extends PostgresServer:
 
@@ -103,7 +61,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-`@Override` the configuration defaults of any method to connect to your PostgreSQL server.
+`@Override` superclass methods to connect to your PostgreSQL server as required.
 
 #### Host:
 
@@ -154,7 +112,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 
 ##
 
-After your server has been configured, an instance can be created. The data source and connection pool will be created on demand when a connection is requested by the application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is one simple example for demonstration:
+After your server has been configured, it's time to create a new instance. The data source and connection pool will be created on demand when a connection is requested by your application. Your new server implements the `AutoCloseable` interface, and all data sources will be closed when the server is closed. The instantiation and closure details of **Postrise** servers will depend on your application, but here is a simple example:
 
 ```java
 import java.sql.Connection;
@@ -179,7 +137,7 @@ public class MyApp {
 }
 ```
 
-Or if using a `NOLOGIN` role:
+Or if you delegate to  a `NOLOGIN` role:
 
 ```java
 try (final Connection connection = server.getConnection("my_database", "my_application_role")) {
@@ -187,20 +145,60 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 }
 ```
 
-Session and current users can be queried as such:
+## ⚡ Events
+
+## 🔒 Security
+
+If a non-privileged `ROLE` does not exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
+
+```sql
+-- Recreate if exists
+DROP ROLE IF EXISTS my_login_user;
+
+-- The LOGIN role is NOSUPERUSER.
+CREATE ROLE my_login_user
+            LOGIN
+            NOSUPERUSER
+            NOCREATEDB
+            NOCREATEROLE
+            NOINHERIT
+            NOBYPASSRLS;
+```
+
+💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to with `SET ROLE` as follows:
+
+```sql
+-- Recreate if exists
+DROP ROLE IF EXISTS my_application_role;
+
+-- The application role cannot LOGIN.
+CREATE ROLE my_application_role
+            NOLOGIN
+            NOSUPERUSER
+            NOCREATEDB
+            NOCREATEROLE
+            NOINHERIT
+            NOBYPASSRLS;
+
+-- Allow the LOGIN user to switch to this ROLE.
+GRANT my_application_role TO my_login_user;
+
+-- The application role can only SELECT from my_table.
+GRANT SELECT ON my_table TO my_application_role;
+```
+
+Session and current users can be queried with this SQL:
 
 ```sql
 SELECT session_user, current_user;
 ```
 
-An example result:
+An example result set:
 | **session_user** | **current_user** |
 |------------------|------------------|
 | my_login_user | my_application_role |
 
-## ⚡ Events
-
-## 🔒 Security
+🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html).
 
 ## 🛠️ Build
 
