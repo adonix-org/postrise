@@ -186,13 +186,13 @@ GRANT my_application_role TO my_login_user;
 GRANT SELECT ON my_table TO my_application_role;
 ```
 
-Session and current users can be queried with this SQL:
+Use SQL to query the session and current users on any connection:
 
 ```sql
 SELECT session_user, current_user;
 ```
 
-An example result set:
+Example result set:
 | **session_user** | **current_user** |
 |------------------|------------------|
 | my_login_user | my_application_role |
