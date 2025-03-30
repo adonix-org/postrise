@@ -201,7 +201,7 @@ Example result set:
 
 ## 🛠️ Build
 
-**Postrise** is a simple Java library that can easily be cloned and built locally.
+**Postrise** is a simple Java library that can easily be cloned and built.
 
 ⚠️ The following prerequisites **must** be installed before building:
 
