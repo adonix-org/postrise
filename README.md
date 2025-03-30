@@ -161,7 +161,7 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
-💡 Grant the minimally required database and table permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to as follows:
+💡 Grant the minimally required permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to as follows:
 
 ```sql
 -- Recreate if exists
