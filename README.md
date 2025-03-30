@@ -196,6 +196,24 @@ Example result set:
 
 🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html)
 
+##
+
+⚠️ If `SUPERUSER` connections are *absolutely* required, disable **Postrise** `ROLE` security as follows:
+
+```java
+import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
+
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.PostgresServer;
+
+public class MyPostgresServer extends PostgresServer {
+    @Override
+    public void beforeCreate(final DataSourceSettings settings) {
+        settings.setRoleSecurity(DISABLE_ROLE_SECURITY);
+    }
+}
+```
+
 ## 🛠️ Build
 
 **Postrise** is a simple Java library that can easily be cloned and built.
