@@ -92,9 +92,6 @@ public Integer getPort() {
 @Override
 public void beforeCreate(final DataSourceSettings settings) {
 
-    // Not required, but logs the create event.
-    super.beforeCreate(settings);
-
     // Default username is the current OS user.
     settings.setUsername("my_login_user");
 
