@@ -95,7 +95,7 @@ public void beforeCreate(final DataSourceSettings settings) {
     // Default username is the current OS user.
     settings.setUsername("my_login_user");
 
-    // Either set the password, or use pg_hba.conf to configure
+    // Either set the password or use pg_hba.conf to configure
     // secure access for your user.
     settings.setPassword("In1g0M@nt0Ya");
 
@@ -198,7 +198,7 @@ Example result set:
 
 ##
 
-⚠️ If `SUPERUSER` connections are *absolutely* required, disable **Postrise** `ROLE` security as follows:
+⚠️ If `SUPERUSER` connections are _absolutely_ required, disable **Postrise** `ROLE` security as follows:
 
 ```java
 import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
