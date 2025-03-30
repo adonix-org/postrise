@@ -276,43 +276,27 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         if (listener != null) {
             listener.beforeCreate(settings);
         }
+        LOGGER.info("{}: creating data source: {}...", this, settings);
     }
 
     private void onAfterCreate(final DataSourceContext context) {
         doEvent(context, listener -> listener.afterCreate(context));
+        LOGGER.info("{}: data source created: {}", this, context);
     }
 
     private void onBeforeClose(final DataSourceContext context) {
+        LOGGER.info("{}: {} closing...", this, context);
         doEvent(context, listener -> listener.beforeClose(context));
     }
 
     private void onAfterClose(final DataSourceContext context) {
         doEvent(context, listener -> listener.afterClose(context));
-    }
-
-    // --------------------------------------------------------------------------
-    // RECEIVE EVENTS - Receive data source events which can be overridden.
-    // --------------------------------------------------------------------------
-
-    @Override
-    public void beforeCreate(final DataSourceSettings settings) {
-        LOGGER.info("{}: creating data source: {}...", this, settings.getJdbcUrl());
-    }
-
-    @Override
-    public void afterCreate(final DataSourceContext context) {
-        LOGGER.info("{}: data source created: {}", this, context);
-    }
-
-    @Override
-    public void beforeClose(final DataSourceContext context) {
-        LOGGER.info("{}: {} closing...", this, context);
-    }
-
-    @Override
-    public void afterClose(final DataSourceContext context) {
         LOGGER.info("{}: {} closed", this, context);
     }
+
+    // --------------------------------------------------------------------------
+    // SERVER EVENTS - Server events which can be overridden.
+    // --------------------------------------------------------------------------
 
     protected void onInit() {
         LOGGER.info("{}: server initialize", this);
