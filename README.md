@@ -216,7 +216,7 @@ public class MyPostgresServer extends PostgresServer {
 
 ## 🛠️ Build
 
-**Postrise** is a simple Java library that can easily be cloned and built.
+**Postrise** is a pure Java library that can easily be cloned and built locally.
 
 ⚠️ The following prerequisites **must** be installed before building:
 
