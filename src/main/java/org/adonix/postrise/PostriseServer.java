@@ -151,10 +151,10 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         OPEN, CLOSING, CLOSED
     }
 
+    private ServerState state = ServerState.OPEN;
     private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
     private final Lock readState = stateLock.readLock();
     private final Lock writeState = stateLock.writeLock();
-    private ServerState state = ServerState.OPEN;
 
     private <T> T isOpenThen(final Supplier<T> action) {
         readState.lock();
