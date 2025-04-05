@@ -141,17 +141,21 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // SERVER STATE - Thread-safe management of the server state.
+    // SERVER STATE - Thread-safe management of the Server state.
     // --------------------------------------------------------------------------
 
     /**
-     * A {@link Server} should be in one of these states.
+     * A {@link Server} should be in one of three states.
      */
     private enum ServerState {
         OPEN, CLOSING, CLOSED
     }
 
+    /**
+     * Initialize the {@link Server} state to {@link ServerState#OPEN}
+     */
     private ServerState state = ServerState.OPEN;
+
     private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
     private final Lock readState = stateLock.readLock();
     private final Lock writeState = stateLock.writeLock();
