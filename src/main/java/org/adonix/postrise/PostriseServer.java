@@ -272,6 +272,12 @@ public abstract class PostriseServer implements DataSourceListener, Server {
         }
     }
 
+    /**
+     * Exceptions thrown by the beforeCreate events will prevent creation of the
+     * data source. This is intentional.
+     * 
+     * @param settings
+     */
     private void onBeforeCreate(final DataSourceSettings settings) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(settings);
