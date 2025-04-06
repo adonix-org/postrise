@@ -60,7 +60,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-`@Override` any superclass methods to connect to your PostgreSQL server as required.
+`@Override` any superclass methods to connect to your PostgreSQL server.
 
 #### Host
 
