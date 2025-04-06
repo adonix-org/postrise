@@ -62,7 +62,7 @@ public class MyPostgresServer extends PostgresServer {
 
 `@Override` any superclass methods to connect to your PostgreSQL server as required.
 
-#### Host:
+#### Host
 
 ```java
 /**
@@ -74,7 +74,7 @@ public String getHostName() {
 }
 ```
 
-#### Port:
+#### Port
 
 ```java
 /**
@@ -86,7 +86,7 @@ public Integer getPort() {
 }
 ```
 
-#### Create DataSource Event:
+#### Before Create
 
 ```java
 @Override
