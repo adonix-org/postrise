@@ -49,7 +49,7 @@ Create and configure PostgreSQL data sources after [Install](#️-install).
 
 ⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
 
-Create a Java `class` extending PostgresServer:
+Create a Java `class` extending [`PostgresServer`](src/main/java/org/adonix/postrise/PostgresServer.java):
 
 ```java
 import org.adonix.postrise.DataSourceSettings;
@@ -216,14 +216,14 @@ public class MyPostgresServer extends PostgresServer {
 
 ##
 
-Built-in `ROLE` security settings are provided by `org.adonix.postrise.security.RoleSecurityProvider`:
+Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/main/java/org/adonix/postrise/security/RoleSecurityProvider.java):
 | **Name** | **Description** |
 | ---------------- | ------------------- |
 | POSTGRES_DEFAULT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER`. **No check** is performed when switching from the `LOGIN` user to a different `ROLE`. |
 | POSTGRES_STRICT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER` or when switching from the `LOGIN` user to a different `ROLE` with `SUPERUSER`.<br><br>⚠️ There will be a performance penalty using STRICT security, so it is recommended for use only during development.|
 | DISABLE_ROLE_SECURITY | No security checks are performed on any `ROLE`. Use this setting only if `SUPERUSER` is required. |
 
-💡 Custom security can be created by implementing the `org.adonix.postrise.security.RoleSecurityListener` interface.
+💡 Custom security can be created by implementing the [`RoleSecurityListener`](src/main/java/org/adonix/postrise/security/RoleSecurityListener.java) interface.
 
 ## 🛠️ Build
 
