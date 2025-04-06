@@ -221,7 +221,7 @@ The built-in `ROLE` security settings are provided by `org.adonix.postrise.secur
 | POSTGRES_STRICT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER` or when switching from the `LOGIN` user to a different `ROLE` with `SUPERUSER`.<br><br>⚠️ There will be a performance penalty using STRICT security, so it is recommended for use only during development.|
 | DISABLE_ROLE_SECURITY | No security checks are performed on any `ROLE`. Use this setting only if `SUPERUSER` is required. |
 
-💡 Additional custom security settings can be created by implementing the `org.adonix.postrise.security.RoleSecurityListener` interface.
+💡 Additional custom security can be created by implementing the `org.adonix.postrise.security.RoleSecurityListener` interface.
 
 ## 🛠️ Build
 
