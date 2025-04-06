@@ -214,7 +214,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 ##
-The built-in `ROLE` security settings are provided by `org.adonix.postrise.security.RoleSecurityProvider`:
+Built-in `ROLE` security settings are provided by `org.adonix.postrise.security.RoleSecurityProvider`:
 | **Name** | **Description** |
 | ---------------- | ------------------- |
 | POSTGRES_DEFAULT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER`. **No check** is performed when switching from the `LOGIN` user to a different `ROLE`. |
