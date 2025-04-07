@@ -227,7 +227,7 @@ Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/m
 
 ##
 
-💡 If your application does not use PostgreSQL roles, you can achieve a performance improvement by disabling role checks on your server as follows:
+If your application does not use PostgreSQL roles, you can achieve a performance improvement by disabling role checks on your server as follows:
 
 ```java
 import org.adonix.postrise.PostgresDataSourceNoRoles;
