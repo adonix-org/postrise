@@ -198,7 +198,7 @@ Example result set:
 
 ##
 
-⚠️ If `SUPERUSER` connections are _absolutely_ required, disable **Postrise** `ROLE` security as follows:
+If `SUPERUSER` connections are _absolutely_ required, disable **Postrise** `ROLE` security as follows:
 
 ```java
 import static org.adonix.postrise.security.RoleSecurityProvider.DISABLE_ROLE_SECURITY;
