@@ -224,10 +224,10 @@ Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/m
 | DISABLE_ROLE_SECURITY | No security checks are performed on any `ROLE`. Use this setting only if `SUPERUSER` is required. |
 
 💡 Custom security can be created by implementing the [`RoleSecurityListener`](src/main/java/org/adonix/postrise/security/RoleSecurityListener.java) interface.
+
 ##
 
-
-💡 If your application does not use of PostgreSQL roles, you can achieve a performance improvement by disabling role checks on your server as follows:
+💡 If your application does not use PostgreSQL roles, you can achieve a performance improvement by disabling role checks on your server as follows:
 
 ```java
 import org.adonix.postrise.PostgresDataSourceNoRoles;
