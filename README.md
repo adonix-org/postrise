@@ -227,7 +227,7 @@ Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/m
 
 ##
 
-If your application does not use PostgreSQL roles, you can achieve a performance improvement by disabling role checks on your server as follows:
+If your application **does not use** PostgreSQL roles, performance will be improved by disabling role checks on your server as follows:
 
 ```java
 import org.adonix.postrise.PostgresDataSourceNoRoles;
@@ -248,7 +248,7 @@ public class MyPostgresServer extends PostgresServer {
 
 **Postrise** is a pure Java library that can easily be cloned and built locally.
 
-⚠️ The following prerequisites **must** be installed before building:
+The following prerequisites **must** be installed before building:
 
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the latest Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
