@@ -242,7 +242,7 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-⚠️ An [`UnsupportedOperationException`](src/main/java/org/adonix/postrise/PostgresDataSourceNoRoles.java) will then be thrown when attempting to acquire a connection with a given `ROLE`.
+⚠️ An `UnsupportedOperationException` [will be thrown](src/main/java/org/adonix/postrise/PostgresDataSourceNoRoles.java) when attempting to acquire a connection with a given `ROLE`.
 
 ## 🛠️ Build
 
