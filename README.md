@@ -18,15 +18,15 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ## 📚 Contents
 
-#### [Install](#️-install)
+[Install](#️-install)
 
-#### [Quickstart](#️-quickstart)
+[Quickstart](#️-quickstart)
 
-#### [Events](#️-events)
+[Events](#️-events)
 
-#### [Security](#️-security)
+[Security](#️-security)
 
-#### [Build](#️-build)
+[Build](#️-build)
 
 ## ⚙️ Install
 
@@ -154,6 +154,8 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 ```
 
 ## ⚡ Events
+
+Subscribe to **Postrise** events.
 
 ## 🔒 Security
 
