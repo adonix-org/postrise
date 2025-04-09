@@ -57,7 +57,7 @@ dependencies {
 
 ## ⏱️ Quickstart
 
-Create and configure a PostgreSQL Server and data sources after [Install](#️-install).
+Create and configure a PostgreSQL server and data sources after [Install](#️-install).
 
 ⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
 
