@@ -18,15 +18,15 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ## 📚 Contents
 
-[Install](#️-install)
+[Install](#-install)
 
-[Quickstart](#️-quickstart)
+[Quickstart](#-quickstart)
 
 [Events](#-events)
 
 [Security](#-security)
 
-[Build](#️-build)
+[Build](#-build)
 
 ## ⚙️ Install
 
