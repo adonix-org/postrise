@@ -233,7 +233,7 @@ public class MyPostgresServer extends PostgresServer {
 Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/main/java/org/adonix/postrise/security/RoleSecurityProvider.java):
 | **Name** | **Description** |
 | ---------------- | ------------------- |
-| POSTGRES_DEFAULT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER`. **No check** is performed when switching from the `LOGIN` user to a different `ROLE`. |
+| POSTGRES_DEFAULT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER`. **No check** is performed when getting a connection with a different `ROLE`. |
 | POSTGRES_STRICT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER` or when switching from the `LOGIN` user to a different `ROLE` with `SUPERUSER`.<br><br>⚠️ There will be a performance penalty using STRICT security, so it is recommended for use **only during development**.|
 | DISABLE_ROLE_SECURITY | No security checks are performed on any `ROLE`. Use this setting only if `SUPERUSER` is required. |
 
