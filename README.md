@@ -22,9 +22,9 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 [Quickstart](#️-quickstart)
 
-[Events](#️-events)
+[Events](#-events)
 
-[Security](#️-security)
+[Security](#-security)
 
 [Build](#️-build)
 
