@@ -252,7 +252,7 @@ The following prerequisites **must** be installed before building:
 
 -   [JDK 11+](https://www.oracle.com/java/technologies/downloads/) - the latest Long-Term Support (LTS) version is JDK 21.
 -   [Maven](https://maven.apache.org/download.cgi) - may already be installed with your IDE.
--   [Docker](https://www.docker.com) - must be installed and running to perform [JUnit 5](https://junit.org/junit5/) tests.
+-   [Docker](https://www.docker.com) - installed and running to perform [JUnit 5](https://junit.org/junit5/) tests.
 
 ##
 
