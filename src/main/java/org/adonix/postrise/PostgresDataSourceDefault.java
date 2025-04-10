@@ -22,7 +22,7 @@ import org.adonix.postrise.security.PostgresRoleDAO;
 
 final class PostgresDataSourceDefault extends PostgresDataSource {
 
-    PostgresDataSourceDefault(final Server server, final String databaseName) {
+    PostgresDataSourceDefault(final PostgresServer server, final String databaseName) {
         super(server, databaseName);
     }
 

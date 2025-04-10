@@ -18,5 +18,10 @@ package org.adonix.postrise;
 
 import org.adonix.postrise.security.RoleSecuritySettings;
 
+/**
+ * Defines the configuration settings required to establish a connection to a
+ * PostgreSQL database. Implementations of this interface provide the necessary
+ * parameters for configuring the data source.
+ */
 public interface DataSourceSettings extends ConnectionPoolSettings, ConnectionSettingsWrite, RoleSecuritySettings {
 }

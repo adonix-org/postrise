@@ -30,6 +30,11 @@ abstract class PostriseDataSource implements ConnectionProvider {
     private final String databaseName;
     private RoleSecurityListener roleSecurity;
 
+    /**
+     * Subclass implementations should provide a default security setting.
+     * 
+     * @return the default {@link RoleSecurityListener} for this data source.
+     */
     protected abstract RoleSecurityListener getDefaultRoleSecurity();
 
     abstract String getJdbcUrl(final Server server);

@@ -18,9 +18,16 @@ package org.adonix.postrise;
 
 import java.sql.Connection;
 
+/**
+ * If PostgreSQL roles are not being used by the application, performance will
+ * be improved by using this data source.
+ * <p>
+ * The increase in performance is due to not having to {@code RESET ROLE} when
+ * acquiring each {@link Connection}.
+ */
 public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
-    public PostgresDataSourceNoRoles(final Server server, final String databaseName) {
+    public PostgresDataSourceNoRoles(final PostgresServer server, final String databaseName) {
         super(server, databaseName);
     }
 
