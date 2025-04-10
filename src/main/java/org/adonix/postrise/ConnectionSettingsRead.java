@@ -31,6 +31,8 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     String getJdbcUrl();
 
     /**
+     * Get the {@code LOGIN} username for this data source.
+     * 
      * @return the {@code LOGIN} username.
      */
     String getUsername();
@@ -39,7 +41,7 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
      * This property controls the default auto-commit behavior of connections
      * returned from the pool. It is a boolean value. Default: true
      * 
-     * @return the default auto-commit setting for this data source.
+     * @return the default auto-commit setting.
      */
     boolean isAutoCommit();
 
