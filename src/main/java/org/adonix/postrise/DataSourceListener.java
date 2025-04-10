@@ -19,13 +19,17 @@ package org.adonix.postrise;
 import java.util.EventListener;
 
 /**
- * Implementations will receive events during the lifecycle of a data source.
+ * Implementations of this interface will receive events during the lifecycle of
+ * a data source.
  * 
  * @see PostriseServer#addListener(DataSourceListener)
  */
 public interface DataSourceListener extends EventListener {
 
     /**
+     * Configure the data source when a {@link java.sql.Connection Connection} is
+     * requested.
+     * 
      * @param settings - the {@link DataSourceSettings} applied when creating a new
      *                 {@link ConnectionProvider} instance.
      */
