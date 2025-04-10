@@ -214,7 +214,7 @@
                         <version>${version.maven-javadoc-plugin}</version>
                         <configuration>
                             <source>${version.java}</source>
-                            <doclint>all,-missing</doclint>
+                            <!-- <doclint>all,-missing</doclint> -->
                         </configuration>
                         <executions>
                             <execution>
