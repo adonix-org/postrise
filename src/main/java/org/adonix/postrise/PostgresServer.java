@@ -32,7 +32,7 @@ public class PostgresServer extends PostriseServer {
     public static final Integer POSTGRES_DEFAULT_PORT = 5432;
 
     /**
-     * The public constructor.
+     * Construct a new {@link PostgresServer} instance.
      */
     public PostgresServer() {
         super();
