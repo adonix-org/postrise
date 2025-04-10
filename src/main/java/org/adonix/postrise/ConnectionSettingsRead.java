@@ -46,7 +46,9 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     boolean isAutoCommit();
 
     /**
-     * @return the {@link Properties} for this data source.
+     * Get the current {@link Properties} for this data source.
+     * 
+     * @return {@link Properties} for this data source.
      */
     Properties getDataSourceProperties();
 }

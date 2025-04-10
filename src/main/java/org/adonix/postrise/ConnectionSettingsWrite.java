@@ -48,7 +48,7 @@ interface ConnectionSettingsWrite extends ConnectionSettingsRead {
     void setAutoCommit(boolean isAutoCommit);
 
     /**
-     * Add any needed properties for the data source configuration.
+     * Add any properties for the data source configuration.
      * 
      * @param propertyName - data source property name.
      * @param value        - data source property value.
