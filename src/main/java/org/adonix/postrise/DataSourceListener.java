@@ -27,11 +27,11 @@ import java.util.EventListener;
 public interface DataSourceListener extends EventListener {
 
     /**
-     * Configure the data source when a {@link java.sql.Connection Connection} is
-     * requested.
+     * Configure the data source the first time a {@link java.sql.Connection
+     * Connection} is requested.
      * 
-     * @param settings - the {@link DataSourceSettings} applied when creating a new
-     *                 {@link ConnectionProvider} instance.
+     * @param settings - each new data source will be configured with these
+     *                 {@link DataSourceSettings}.
      */
     default void beforeCreate(DataSourceSettings settings) {
     }

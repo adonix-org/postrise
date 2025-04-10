@@ -26,21 +26,30 @@ package org.adonix.postrise;
 interface ConnectionSettingsWrite extends ConnectionSettingsRead {
 
     /**
+     * Set the {@code LOGIN} username for connecting to the data source.
+     * 
      * @param username - the data source {@code LOGIN} username.
      */
     void setUsername(String username);
 
     /**
+     * Set the {@code LOGIN} password for connecting to the data source.
+     * 
      * @param password - the data source {@code LOGIN} password.
      */
     void setPassword(String password);
 
     /**
+     * This property controls the default auto-commit behavior of connections
+     * returned from the pool. It is a boolean value. Default: true
+     * 
      * @param isAutoCommit - default auto commit setting for new data sources.
      */
     void setAutoCommit(boolean isAutoCommit);
 
     /**
+     * Add any needed properties for the data source configuration.
+     * 
      * @param propertyName - data source property name.
      * @param value        - data source property value.
      */

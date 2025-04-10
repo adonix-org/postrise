@@ -36,6 +36,9 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
     String getUsername();
 
     /**
+     * This property controls the default auto-commit behavior of connections
+     * returned from the pool. It is a boolean value. Default: true
+     * 
      * @return the default auto-commit setting for this data source.
      */
     boolean isAutoCommit();
