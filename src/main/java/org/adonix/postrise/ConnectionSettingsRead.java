@@ -41,7 +41,7 @@ interface ConnectionSettingsRead extends DatabaseNameProvider {
      * This property controls the default auto-commit behavior of connections
      * returned from the pool. It is a boolean value. Default: true
      * 
-     * @return the default auto-commit setting.
+     * @return the current auto-commit setting.
      */
     boolean isAutoCommit();
 
