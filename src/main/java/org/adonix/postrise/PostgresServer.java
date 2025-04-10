@@ -17,7 +17,7 @@
 package org.adonix.postrise;
 
 /**
- * A PostgreSQL specific {@link Server} implementation.
+ * A PostgreSQL {@link Server} implementation.
  */
 public class PostgresServer extends PostriseServer {
 
