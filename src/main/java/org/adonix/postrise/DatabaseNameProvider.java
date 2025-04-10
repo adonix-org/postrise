@@ -17,7 +17,7 @@
 package org.adonix.postrise;
 
 /**
- * Provides a database name.
+ * Implementations will provide a database name.
  */
 interface DatabaseNameProvider {
     /**
