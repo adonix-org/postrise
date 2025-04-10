@@ -27,6 +27,12 @@ import java.sql.Connection;
  */
 public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
+    /**
+     * Instances are created by {@link PostgresServer#createDataSource(String)}
+     * 
+     * @param server       - the parent of this data source.
+     * @param databaseName - name of the PostgreSQL database (case-sensitive).
+     */
     public PostgresDataSourceNoRoles(final PostgresServer server, final String databaseName) {
         super(server, databaseName);
     }

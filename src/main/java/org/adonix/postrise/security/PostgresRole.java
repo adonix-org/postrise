@@ -113,6 +113,8 @@ public final class PostgresRole {
     }
 
     /**
+     * Get the rolname from the {@code pg_roles} view.
+     * 
      * @return rolname from the {@code pg_roles} view.
      */
     public String getRoleName() {
@@ -120,6 +122,8 @@ public final class PostgresRole {
     }
 
     /**
+     * Get rolsuper from the {@code pg_roles} view.
+     * 
      * @return rolsuper from the {@code pg_roles} view.
      */
     public boolean isSuperUser() {
@@ -127,42 +131,54 @@ public final class PostgresRole {
     }
 
     /**
-     * @return rolcanlogin from the {@code pg_roles} view.
+     * Get {@code rolcanlogin} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolcanlogin}
      */
     public boolean isLoginRole() {
         return isLoginRole;
     }
 
     /**
-     * @return rolinherit from the {@code pg_roles} view.
+     * Get {@code rolinherit} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolinherit}
      */
     public boolean isInheritRole() {
         return isInheritRole;
     }
 
     /**
-     * @return rolcreaterole from the {@code pg_roles} view.
+     * Get {@code rolcreaterole} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolcreaterole}
      */
     public boolean isCreateRole() {
         return isCreateRole;
     }
 
     /**
-     * @return rolcreatedb from the {@code pg_roles} view.
+     * Get {@code rolcreatedb} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolcreatedb}
      */
     public boolean isCreateDbRole() {
         return isCreateDbRole;
     }
 
     /**
-     * @return rolreplication from the {@code pg_roles} view.
+     * Get {@code rolreplication} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolreplication}
      */
     public boolean isReplicationRole() {
         return isReplicationRole;
     }
 
     /**
-     * @return rolconnlimit from the {@code pg_roles} view.
+     * Get {@code rolconnlimit} from the {@code pg_roles} view.
+     * 
+     * @return {@code rolconnlimit}
      */
     public int getConnectionLimit() {
         return connectionLimit;

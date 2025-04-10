@@ -20,8 +20,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.adonix.postrise.security.PostgresRoleDAO;
 
+/**
+ * The default PostgreSQL data source created by
+ * {@link PostgresServer#createDataSource(String)}
+ */
 final class PostgresDataSourceDefault extends PostgresDataSource {
 
+    /**
+     * Instances are created by {@link PostgresServer#createDataSource(String)}
+     * 
+     * @param server       - the parent of this data source.
+     * @param databaseName - name of the PostgreSQL database (case-sensitive).
+     */
     PostgresDataSourceDefault(final PostgresServer server, final String databaseName) {
         super(server, databaseName);
     }
