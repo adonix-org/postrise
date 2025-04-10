@@ -26,7 +26,9 @@ import java.util.Properties;
 interface ConnectionSettingsRead extends DatabaseNameProvider {
 
     /**
-     * @return the JDBC Url for this data source.
+     * Get the JDBC URL for this data source.
+     * 
+     * @return the JDBC Url.
      */
     String getJdbcUrl();
 

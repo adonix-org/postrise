@@ -36,12 +36,30 @@ public interface DataSourceListener extends EventListener {
     default void beforeCreate(DataSourceSettings settings) {
     }
 
+    /**
+     * Subscribers to this event will be notified after a new
+     * {@link DataSourceContext} is created.
+     * 
+     * @param context - the new data source.
+     */
     default void afterCreate(DataSourceContext context) {
     }
 
+    /**
+     * Subscribers to this event will be notified before a
+     * {@link DataSourceContext} is closed.
+     * 
+     * @param context - the data source that is closing.
+     */
     default void beforeClose(DataSourceContext context) {
     }
 
+    /**
+     * Subscribers to this event will be notified after a
+     * {@link DataSourceContext} is closed.
+     * 
+     * @param context - the data source that is closed.
+     */
     default void afterClose(DataSourceContext context) {
     }
 }
