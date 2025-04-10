@@ -16,11 +16,24 @@
 
 package org.adonix.postrise;
 
+/**
+ * A PostgreSQL specific {@link Server} implementation.
+ */
 public class PostgresServer extends PostriseServer {
 
+    /**
+     * The default PostgreSQL host name.
+     */
     public static final String POSTGRES_DEFAULT_HOSTNAME = "localhost";
+
+    /**
+     * The default PostgreSQL port
+     */
     public static final Integer POSTGRES_DEFAULT_PORT = 5432;
 
+    /**
+     * The public constuctor.
+     */
     public PostgresServer() {
         super();
     }

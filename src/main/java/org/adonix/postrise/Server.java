@@ -20,6 +20,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * A logical parent for managing data sources.
+ */
 public interface Server extends AutoCloseable {
 
     /**

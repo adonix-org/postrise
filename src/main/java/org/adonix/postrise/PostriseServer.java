@@ -32,7 +32,10 @@ import java.util.function.ToIntFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class PostriseServer implements DataSourceListener, Server {
+/**
+ * A base implementation of the {@link Server} interface.
+ */
+abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
@@ -188,6 +191,11 @@ public abstract class PostriseServer implements DataSourceListener, Server {
      */
     @FunctionalInterface
     protected interface ActionThrows {
+        /**
+         * Executes the action, potentially throwing a checked exception.
+         *
+         * @throws Exception if an error occurs during execution.
+         */
         void run() throws Exception;
     }
 
@@ -308,18 +316,33 @@ public abstract class PostriseServer implements DataSourceListener, Server {
     // SERVER EVENTS - Server events which can be overridden.
     // --------------------------------------------------------------------------
 
+    /**
+     * Event will be dispatched during object construction.
+     */
     protected void onInit() {
         LOGGER.info("{}: server initialize", this);
     }
 
+    /**
+     * Event will be dispatched before the {@link Server} closes.
+     */
     protected void beforeClose() {
         LOGGER.info("{}: server closing...", this);
     }
 
+    /**
+     * Event will be dispatched after the {@link Server} closes.
+     */
     protected void afterClose() {
         LOGGER.info("{}: server closed", this);
     }
 
+    /**
+     * Event will be dispatched by exceptions thrown during
+     * {@link PostriseServer#runCatch(ActionThrows) runCatch()}.
+     * 
+     * @param e - the exception thrown.
+     */
     protected void onException(final Exception e) {
         LOGGER.error("{}: {}", this, e);
     }
