@@ -17,7 +17,9 @@
 package org.adonix.postrise;
 
 /**
- * Settings for the connection pool. Documentation is from HikariCP.
+ * Settings for the connection pool. Documentation references from <a href=
+ * "https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#gear-configuration-knobs-baby">HikariCP</a>.
+ * 
  */
 interface ConnectionPoolSettings {
 

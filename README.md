@@ -16,7 +16,7 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ![Code](./img/code.png)
 
-## 📚 Contents
+## :books: Contents
 
 [Install](#️-install)
 
@@ -28,9 +28,9 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 [Build](#️-build)
 
-## ⚙️ Install
+## :gear: Install
 
-💡 Find the latest **Postrise** version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
+:bulb: Find the latest **Postrise** version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
 
 #### Maven
 
@@ -55,11 +55,11 @@ dependencies {
 }
 ```
 
-## ⏱️ Quickstart
+## :stopwatch: Quickstart
 
 Create and configure a PostgreSQL server and data sources after [Install](#️-install).
 
-⚠️ An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
+:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
 
 Create a Java `class` extending [`PostgresServer`](src/main/java/org/adonix/postrise/PostgresServer.java):
 
@@ -116,7 +116,7 @@ public void beforeCreate(final DataSourceSettings settings) {
 }
 ```
 
-🔗 See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)
+:link: See also [pg_hba.conf](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html) and [HikariCP ](https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used)
 
 ##
 
@@ -153,11 +153,11 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 }
 ```
 
-## ⚡ Events
+## :zap: Events
 
 Subscribe to **Postrise** events.
 
-## 🔒 Security
+## :lock: Security
 
 If a non-privileged `ROLE` does not exist, create a secure PostgreSQL `LOGIN` role **without** `SUPERUSER` privileges:
 
@@ -175,7 +175,7 @@ CREATE ROLE my_login_user
             NOBYPASSRLS;
 ```
 
-💡 Grant the minimally required permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to as follows:
+:bulb: Grant the minimally required permissions to this `ROLE`, or delegate those permissions to a `NOLOGIN` role that the `LOGIN` role can switch to as follows:
 
 ```sql
 -- Recreate if exists
@@ -208,7 +208,7 @@ Example result set:
 |------------------|------------------|
 | my_login_user | my_application_role |
 
-🔗 See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html)
+:link: See also [Database Roles](https://www.postgresql.org/docs/current/database-roles.html), [Grant](https://www.postgresql.org/docs/current/sql-grant.html)
 
 ##
 
@@ -234,10 +234,10 @@ Built-in `ROLE` security settings are provided by [`RoleSecurityProvider`](src/m
 | **Name** | **Description** |
 | ---------------- | ------------------- |
 | POSTGRES_DEFAULT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER`. **No check** is performed when getting a connection with a different `ROLE`. |
-| POSTGRES_STRICT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER` or when switching from the `LOGIN` user to a different `ROLE` with `SUPERUSER`.<br><br>⚠️ There will be a performance penalty using STRICT security, so it is recommended for use **only during development**.|
+| POSTGRES_STRICT_ROLE_SECURITY | An exception will be thrown if logging in as a `SUPERUSER` or when switching from the `LOGIN` user to a different `ROLE` with `SUPERUSER`.<br><br>:warning: There will be a performance penalty using STRICT security, so it is recommended for use **only during development**.|
 | DISABLE_ROLE_SECURITY | No security checks are performed on any `ROLE`. Use this setting only if `SUPERUSER` is required. |
 
-💡 Custom security can be created by implementing the [`RoleSecurityListener`](src/main/java/org/adonix/postrise/security/RoleSecurityListener.java) interface.
+:bulb: Custom security can be created by implementing the [`RoleSecurityListener`](src/main/java/org/adonix/postrise/security/RoleSecurityListener.java) interface.
 
 ##
 
@@ -256,9 +256,9 @@ public class MyPostgresServer extends PostgresServer {
 }
 ```
 
-⚠️ An `UnsupportedOperationException` [will be thrown](src/main/java/org/adonix/postrise/PostgresDataSourceNoRoles.java) when attempting to acquire a connection with a given `ROLE`.
+:warning: An `UnsupportedOperationException` [will be thrown](src/main/java/org/adonix/postrise/PostgresDataSourceNoRoles.java) when attempting to acquire a connection with a given `ROLE`.
 
-## 🛠️ Build
+## :hammer_and_wrench: Build
 
 **Postrise** is a pure Java library that can easily be cloned and built locally.
 
@@ -270,7 +270,7 @@ The following prerequisites **must** be installed before building:
 
 ##
 
-💡 Before continuing, use this command to verify the expected Maven and Java versions are on your PATH:
+:bulb: Before continuing, use this command to verify the expected Maven and Java versions are on your PATH:
 
 ```bash
 mvn -v

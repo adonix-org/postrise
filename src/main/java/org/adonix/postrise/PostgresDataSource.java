@@ -29,7 +29,7 @@ public abstract class PostgresDataSource extends PostriseDataSource {
 
     /**
      * Subclass instances are created by
-     * {@link PostgresServer#createDataSource(String)}
+     * {@link PostgresServer#createDataSource(String) createDataSource(String)}
      * 
      * @param server       - the parent of this data source.
      * @param databaseName - name of the PostgreSQL database (case-sensitive).

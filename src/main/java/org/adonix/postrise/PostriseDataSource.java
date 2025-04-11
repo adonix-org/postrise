@@ -31,7 +31,7 @@ abstract class PostriseDataSource implements ConnectionProvider {
     private RoleSecurityListener roleSecurity;
 
     /**
-     * Subclass implementations should provide a default security setting.
+     * Subclass implementations need to provide a default security setting.
      * 
      * @return the default {@link RoleSecurityListener} for this data source.
      */
