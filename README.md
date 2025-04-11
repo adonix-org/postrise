@@ -18,15 +18,15 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ## :books: Contents
 
-[Install](#️-install)
+[Install](#gear-install)
 
-[Quickstart](#️-quickstart)
+[Quickstart](#stopwatch-quickstart)
 
-[Events](#-events)
+[Events](#zap-events)
 
-[Security](#-security)
+[Security](#lock-security)
 
-[Build](#️-build)
+[Build](#hammer_and_wrench-build)
 
 ## :gear: Install
 
@@ -57,9 +57,9 @@ dependencies {
 
 ## :stopwatch: Quickstart
 
-Create and configure a PostgreSQL server and data sources after [Install](#️-install).
+Create and configure a PostgreSQL server and data sources after [Install](#gear-install).
 
-:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
+:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#lock-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
 
 Create a Java `class` extending [`PostgresServer`](src/main/java/org/adonix/postrise/PostgresServer.java):
 
