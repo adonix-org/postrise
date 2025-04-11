@@ -51,7 +51,7 @@ Add the following to your `pom.xml`:
 
 Create and configure a PostgreSQL server and data sources after [Install](#gear-install).
 
-:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#lock-security) for creating a `NOSUPERUSER` role or to completely bypass that behavior when required.
+:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#lock-security) for creating a `NOSUPERUSER` role or to bypass that behavior as required.
 
 Create a Java `class` extending [`PostgresServer`](src/main/java/org/adonix/postrise/PostgresServer.java):
 
