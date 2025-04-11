@@ -168,7 +168,7 @@ Events will be dispatched to subscribers in the order they have been added to th
 
 ##
 
-It may also be useful to subscribe to events for a specific database. In that case, implement the [DatabaseListener](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server. Events to that object will be dispatched _after_ all `DatasourceListener` subscribers have been notified.
+It may also be useful to subscribe to events for a specific database. In that case, implement the [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server with `addListener(DatabaseListener)`. Events to that object will be dispatched _after_ all [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) subscribers have been notified.
 
 ##
 
