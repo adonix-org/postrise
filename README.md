@@ -32,7 +32,7 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 :bulb: Find the latest **Postrise** version and additional installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
 
-#### Maven
+Add the following to your `pom.xml`:
 
 ```xml
 <properties>
@@ -45,14 +45,6 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
     <version>${version.postrise}</version>
     <scope>compile</scope>
 </dependency>
-```
-
-#### Gradle
-
-```gradle
-dependencies {
-    implementation 'org.adonix:postrise:1.0.0'
-}
 ```
 
 ## :stopwatch: Quickstart
