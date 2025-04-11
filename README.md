@@ -151,16 +151,17 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 :bulb: Additional subscribers can be added to your server with the `addListener(DataSourceListener)` method.
 
-Events will be dispatched to subscribers in the order they have been added to the server. By default, the first subscriber to be notified is your server.
+Events will be dispatched to subscribers in the order they have been added to the server. By default, the first subscriber to be notified is your server. Override these methods in your server to subscribe to these events:
 
-| **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception is thrown during data source creation, the data source will be closed, and that exception will be thrown. |
-| afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                                  |
-| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                     |
-| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                      |
+| **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                              |
+| ------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception occurs during data source creation, the data source will be closed, and that exception will be thrown. |
+| afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                               |
+| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                  |
+| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                   |
+##
 
-#### DatabaseListener
+It may also be useful to subscribe to events for a specific database. In that case, implement the [DatabaseListener](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server. Events to that object will be dispatched *after* all `DatasourceListener` subscribers have been notified.
 
 ## :lock: Security
 
