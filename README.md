@@ -282,6 +282,8 @@ public class MyPostgresServer extends PostgresServer {
 
 :warning: If roles are disabled, an `UnsupportedOperationException` [will be thrown](src/main/java/org/adonix/postrise/PostgresDataSourceNoRoles.java) when attempting to acquire a connection from **Postrise** with a given `ROLE`.
 
+<br>
+
 ## :hammer_and_wrench: Build
 
 **Postrise** is a pure Java library that can easily be cloned and built locally.
