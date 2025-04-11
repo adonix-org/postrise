@@ -151,14 +151,16 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 :bulb: Additional subscribers can be added to your server with the `addListener(DataSourceListener)` method.
 
-Events will be dispatched to subscribers in the order they have been added to the server. The first subscriber is your server. If the same listener is added more than once, it will not change the order of events dispatch.
+Events will be dispatched to subscribers in the order they have been added to the server. By default, the first subscriber to be notified is your server.
 
-| **Event**    | **Description**                                        |
-| ------------ | ------------------------------------------------------ |
-| beforeCreate | Configure data sources. Set the username and password. |
-| afterCreate  | The data source has been created.                      |
-| beforeClose  |                                                        |
-| afterClose   |                                                        |
+| **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception is thrown during data source creation, the data source will be closed, and that exception will be thrown. |
+| afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                                  |
+| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                     |
+| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                      |
+
+#### DatabaseListener
 
 ## :lock: Security
 
