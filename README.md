@@ -7,14 +7,14 @@
 
 <a href="https://postrise.adonix.org">
     <picture>
-        <source srcset="./img/header-dark.png" media="(prefers-color-scheme: dark)">
-        <img src="./img/header-light.png" alt="Postrise" height="auto" width="550px"></img>
+        <source srcset="img/header-dark.png" media="(prefers-color-scheme: dark)">
+        <img src="img/header-light.png" alt="Postrise" height="auto" width="550px"></img>
     </picture>
 </a>
 
 Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from [PostgreSQL](https://www.postgresql.org). **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is provided by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
-![Code](./img/code.png)
+![Code](img/code.png)
 
 ## :books: Contents
 
