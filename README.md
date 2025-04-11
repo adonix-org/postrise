@@ -157,7 +157,7 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 :bulb: Additional subscribers can be added to your server with the `addListener(DataSourceListener)` method.
 
-Events will be dispatched to subscribers in the order they have been added to the server. By default, the first subscriber to be notified is your server. Override these methods in your server to subscribe to these events:
+Events will be dispatched to subscribers in the order they have been added to the server. The first subscriber notified will be your server. Override these methods in your server to subscribe to these events:
 
 | **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                              |
 | ------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
