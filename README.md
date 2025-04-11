@@ -28,6 +28,8 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 [Build](#hammer_and_wrench-build)
 
+<br>
+
 ## :gear: Install
 
 :bulb: Find the latest **Postrise** version and extra installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
@@ -46,6 +48,8 @@ Add the following to your `pom.xml`:
     <scope>compile</scope>
 </dependency>
 ```
+
+<br>
 
 ## :stopwatch: Quickstart
 
@@ -145,6 +149,8 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 }
 ```
 
+<br>
+
 ## :zap: Events
 
 **Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and receive all data source events. Override these methods on your server to subscribe to these events.
@@ -159,9 +165,21 @@ Events will be dispatched to subscribers in the order they have been added to th
 | afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                               |
 | beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                  |
 | afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                   |
+
 ##
 
-It may also be useful to subscribe to events for a specific database. In that case, implement the [DatabaseListener](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server. Events to that object will be dispatched *after* all `DatasourceListener` subscribers have been notified.
+It may also be useful to subscribe to events for a specific database. In that case, implement the [DatabaseListener](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server. Events to that object will be dispatched _after_ all `DatasourceListener` subscribers have been notified.
+
+##
+
+Finally, the server also has events that may be useful:
+
+-   onInit
+-   beforeClose
+-   afterClose
+-   onException
+
+<br>
 
 ## :lock: Security
 
