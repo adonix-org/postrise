@@ -153,7 +153,7 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 ## :zap: Events
 
-**Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and receive all data source events. Override these methods on your server to subscribe to these events.
+**Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and are able to receive all data source events. Override these methods on your server to subscribe to these events.
 
 :bulb: Additional subscribers can be added to your server with the `addListener(DataSourceListener)` method.
 
