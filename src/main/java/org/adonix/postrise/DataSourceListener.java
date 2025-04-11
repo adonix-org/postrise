@@ -37,7 +37,7 @@ public interface DataSourceListener extends EventListener {
     }
 
     /**
-     * Subscribers to this event will be notified after a new
+     * Subscribers to this event will be notified <b>after</b> a new
      * {@link DataSourceContext} is created.
      * 
      * @param context - the new data source.
@@ -46,7 +46,7 @@ public interface DataSourceListener extends EventListener {
     }
 
     /**
-     * Subscribers to this event will be notified before a
+     * Subscribers to this event will be notified <b>before</b> a
      * {@link DataSourceContext} is closed.
      * 
      * @param context - the data source that is closing.
@@ -55,7 +55,7 @@ public interface DataSourceListener extends EventListener {
     }
 
     /**
-     * Subscribers to this event will be notified after a
+     * Subscribers to this event will be notified <b>after</b> a
      * {@link DataSourceContext} is closed.
      * 
      * @param context - the data source that is closed.
