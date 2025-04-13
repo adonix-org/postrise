@@ -18,7 +18,7 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 ## :books: Contents
 
-[Install](#gear-install)
+[Install](#package-install)
 
 [Quickstart](#stopwatch-quickstart)
 
@@ -53,7 +53,7 @@ Add the following to your `pom.xml`:
 
 ## :stopwatch: Quickstart
 
-Create and configure a PostgreSQL server and data sources after [Install](#gear-install).
+Create and configure a PostgreSQL server and data sources after [Install](#package-install).
 
 :warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#lock-security) for creating a `NOSUPERUSER` role or to bypass that behavior as required.
 
