@@ -30,7 +30,7 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library for develo
 
 <br>
 
-## :gear: Install
+## :package: Install
 
 :bulb: Find the latest **Postrise** version and extra installation snippets in the [Maven Central Repository](https://central.sonatype.com/artifact/org.adonix/postrise).
 
