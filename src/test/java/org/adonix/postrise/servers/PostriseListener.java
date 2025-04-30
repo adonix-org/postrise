@@ -23,9 +23,11 @@ import org.adonix.postrise.DatabaseListener;
 
 public class PostriseListener implements DatabaseListener {
 
+    private static final String POSTRISE = "postrise";
+
     @Override
     public String getDatabaseName() {
-        return PostgresContainer.DB_NAME;
+        return POSTRISE;
     }
 
     @Override
