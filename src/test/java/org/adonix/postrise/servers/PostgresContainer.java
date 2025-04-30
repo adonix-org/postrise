@@ -95,7 +95,7 @@ public abstract class PostgresContainer extends PostgresServer {
             connection.setAutoCommit(true);
             for (final String script : scripts) {
                 final String sql = Files.readString(
-                        Paths.get(TestServer.class.getClassLoader().getResource(script).toURI()));
+                        Paths.get(PostgresContainer.class.getClassLoader().getResource(script).toURI()));
                 try (Statement stmt = connection.createStatement()) {
                     stmt.executeUpdate(sql);
                 }
