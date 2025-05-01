@@ -34,7 +34,7 @@ public final class RoleSecurityException extends SQLException {
     /**
      * {@code ROLE} exception messages will share the SECURITY prefix.
      */
-    private static final String MESSAGE_PREFIX = "SECURITY: ";
+    private static final String MESSAGE_PREFIX = "SECURITY:";
 
     /**
      * Create a {@code RoleSecurityException}.
@@ -42,6 +42,6 @@ public final class RoleSecurityException extends SQLException {
      * @param message - the {@code ROLE} security error message.
      */
     public RoleSecurityException(final String message) {
-        super(MESSAGE_PREFIX + message, INVALID_ROLE);
+        super(String.join(" ", MESSAGE_PREFIX, message), INVALID_ROLE);
     }
 }
