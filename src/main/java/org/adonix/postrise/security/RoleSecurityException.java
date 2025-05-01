@@ -25,7 +25,7 @@ public final class RoleSecurityException extends SQLException {
 
     private static final long serialVersionUID = 1L;
 
-	/**
+    /**
      * The SQL State "invalid_role_specification" passed to the super-class
      * {@link SQLException}.
      */
