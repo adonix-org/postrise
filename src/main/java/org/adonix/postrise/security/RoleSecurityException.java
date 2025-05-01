@@ -42,6 +42,6 @@ public final class RoleSecurityException extends SQLException {
      * @param message - the {@code ROLE} security error message.
      */
     public RoleSecurityException(final String message) {
-        super(MESSAGE_PREFIX + message.trim(), INVALID_ROLE);
+        super(MESSAGE_PREFIX + message, INVALID_ROLE);
     }
 }
