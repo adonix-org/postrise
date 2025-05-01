@@ -31,7 +31,7 @@ final class PostgresDataSourceDefault extends PostgresDataSource {
      * @param server       - the parent of this data source.
      * @param databaseName - name of the PostgreSQL database (case-sensitive).
      */
-    PostgresDataSourceDefault(final PostgresServer server, final String databaseName) {
+    PostgresDataSourceDefault(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 

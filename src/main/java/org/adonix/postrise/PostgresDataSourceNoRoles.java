@@ -33,7 +33,7 @@ public final class PostgresDataSourceNoRoles extends PostgresDataSource {
      * @param server       - the parent of this data source.
      * @param databaseName - name of the PostgreSQL database (case-sensitive).
      */
-    public PostgresDataSourceNoRoles(final PostgresServer server, final String databaseName) {
+    public PostgresDataSourceNoRoles(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 

@@ -34,7 +34,7 @@ public abstract class PostgresDataSource extends PostriseDataSource {
      * @param server       - the parent of this data source.
      * @param databaseName - name of the PostgreSQL database (case-sensitive).
      */
-    protected PostgresDataSource(final PostgresServer server, final String databaseName) {
+    protected PostgresDataSource(final Server server, final String databaseName) {
         super(server, databaseName);
         addDataSourceProperty("tcpKeepAlive", "true");
     }
