@@ -12,7 +12,7 @@
     </picture>
 </a>
 
-Get connected *FAST* with **Postrise**, a thread-safe Java library for developers to acquire pooled JDBC connections from [PostgreSQL](https://www.postgresql.org). **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is provided by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
+Get connected *FAST* with **Postrise**, a thread-safe Java library that enables developers to acquire pooled JDBC connections from [PostgreSQL](https://www.postgresql.org). **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is provided by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
 ![Code](img/code.png)
 
@@ -55,7 +55,7 @@ Add the following to your `pom.xml`:
 
 Create and configure a PostgreSQL server and data sources after [Install](#package-install).
 
-:warning: An exception will be thrown by **Postrise** if connecting as a `SUPERUSER`. See [Security](#lock-security) for creating a `NOSUPERUSER` role or to bypass that behavior as required.
+:warning: **Postrise** will throw an exception if connecting as a `SUPERUSER`. Refer to the [Security](#lock-security) section for instructions on creating a `NOSUPERUSER` role or bypassing this behavior if necessary.
 
 Create a Java `class` extending [`PostgresServer`](src/main/java/org/adonix/postrise/PostgresServer.java):
 
@@ -103,8 +103,8 @@ public void beforeCreate(final DataSourceSettings settings) {
     // Default username is the current OS user.
     settings.setUsername("my_login_user");
 
-    // Either set the password or use pg_hba.conf to configure
-    // secure access for your user.
+    // Set the password or configure secure access using pg_hba.conf
+    // for your user.
     settings.setPassword("In1g0M@nt0Ya");
 
     // For all other settings, it is recommended to begin with
@@ -285,7 +285,7 @@ GRANT my_application_role TO my_login_user;
 GRANT SELECT ON my_table TO my_application_role;
 ```
 
-Use SQL to query the session and current users on any connection:
+Use the following SQL to query the session and current users on any connection:
 
 ```sql
 SELECT session_user, current_user;
@@ -378,7 +378,7 @@ OS name: "mac os x", version: "15.3.2", arch: "aarch64", family: "mac"
 
 ##
 
-Create a working folder where the **Postrise** project will be installed and use the command-line to clone the repository into that folder:
+Create a working directory for the **Postrise** project and use the command line to clone the repository into it:
 
 ```bash
 git clone https://github.com/adonix-org/Postrise.git
