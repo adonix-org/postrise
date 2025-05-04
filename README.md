@@ -153,7 +153,7 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 ## :zap: Events
 
-The **Postrise** architecture supports listening to both the data source and server lifecycle.
+The **Postrise** architecture supports subscriptions to the data source and server lifecycle.
 
 Two interfaces are provided for data source events:
 
@@ -175,8 +175,8 @@ Implement these events as needed (the _default_ implementation is no-op):
 | ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception occurs during data source creation, the data source will be closed, and that exception will be thrown. <br><br>:bulb: This is the most common event to be implemented as it configures each data source. |
 | afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                                                                                                                                 |
-| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                                                                                                                    |
-| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                                                                                                                     |
+| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source will be closed.                                                                                                                                                                                                                                                |
+| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is now closed.                                                                                                                                                                                                                                                 |
 
 ##
 
