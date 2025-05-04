@@ -41,6 +41,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
 
     PostriseServer() {
         addListener(this);
+        LOGGER.info("{}: server initialize", this);
         onInit();
     }
 
@@ -212,6 +213,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
         } catch (final Exception e) {
             try {
                 onException(e);
+                LOGGER.error("{}: {}", this, e);
             } catch (final Exception ex) {
                 LOGGER.error("{}: {}", this, ex);
             }
@@ -320,21 +322,18 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * Event will be dispatched during object construction.
      */
     protected void onInit() {
-        LOGGER.info("{}: server initialize", this);
     }
 
     /**
      * Event will be dispatched before the {@link Server} closes.
      */
     protected void beforeClose() {
-        LOGGER.info("{}: server closing...", this);
     }
 
     /**
      * Event will be dispatched after the {@link Server} closes.
      */
     protected void afterClose() {
-        LOGGER.info("{}: server closed", this);
     }
 
     /**
@@ -344,7 +343,6 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * @param e - the exception thrown.
      */
     protected void onException(final Exception e) {
-        LOGGER.error("{}: {}", this, e);
     }
 
     // --------------------------------------------------------------------------
@@ -360,6 +358,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
                 return;
             }
             state = ServerState.CLOSING;
+            LOGGER.info("{}: server closing...", this);
 
             runCatch(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
@@ -371,6 +370,8 @@ abstract class PostriseServer implements DataSourceListener, Server {
             runCatch(databasePools::clear);
 
             state = ServerState.CLOSED;
+            LOGGER.info("{}: server closed", this);
+
             runCatch(this::afterClose);
 
         } finally {
