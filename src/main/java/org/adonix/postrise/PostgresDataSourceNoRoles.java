@@ -18,14 +18,27 @@ package org.adonix.postrise;
 
 import java.sql.Connection;
 
+/**
+ * If PostgreSQL roles are not being used by the application, performance will
+ * be improved by using this data source.
+ * <p>
+ * The increase in performance is due to not having to {@code RESET ROLE} when
+ * acquiring each {@link Connection}.
+ */
 public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
+    /**
+     * Instances are created by {@link PostgresServer#createDataSource(String)}
+     * 
+     * @param server       - the parent of this data source.
+     * @param databaseName - name of the PostgreSQL database (case-sensitive).
+     */
     public PostgresDataSourceNoRoles(final Server server, final String databaseName) {
         super(server, databaseName);
     }
 
     @Override
     public Connection getConnection(final String roleName) {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support roles");
+        throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support roles");
     }
 }

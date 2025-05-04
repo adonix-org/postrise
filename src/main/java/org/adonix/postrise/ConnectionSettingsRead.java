@@ -26,22 +26,31 @@ import java.util.Properties;
 interface ConnectionSettingsRead extends DatabaseNameProvider {
 
     /**
-     * @return the JDBC Url for this data source.
+     * Get the JDBC URL for this data source.
+     * 
+     * @return the JDBC Url.
      */
     String getJdbcUrl();
 
     /**
+     * Get the {@code LOGIN} username for this data source.
+     * 
      * @return the {@code LOGIN} username.
      */
     String getUsername();
 
     /**
-     * @return the default auto-commit setting for this data source.
+     * This property controls the default auto-commit behavior of connections
+     * returned from the pool. It is a boolean value. Default: true
+     * 
+     * @return the current auto-commit setting.
      */
     boolean isAutoCommit();
 
     /**
-     * @return the {@link Properties} for this data source.
+     * Get the current {@link Properties} for this data source.
+     * 
+     * @return {@link Properties} for this data source.
      */
     Properties getDataSourceProperties();
 }

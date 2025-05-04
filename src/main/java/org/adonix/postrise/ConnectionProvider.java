@@ -23,11 +23,15 @@ import java.sql.Connection;
  * using {@link DataSourceSettings} configured in the
  * {@link DataSourceListener#beforeCreate(DataSourceSettings) beforeCreate()}
  * event.
+ * <p>
+ * This interface is only used internally. The {@link DataSourceContext} and
+ * {@link DataSourceSettings} interfaces provide the relevant public access to
+ * all data sources.
  */
 interface ConnectionProvider extends AutoCloseable, DataSourceContext, DataSourceSettings {
     /**
-     * Closes this {@link ConnectionProvider}. Closing all data sources is handled
-     * by the {@link Server} implementation.
+     * Closes this {@link ConnectionProvider}. Closing contained data sources is
+     * handled by the {@link Server} implementation.
      */
     void close();
 }

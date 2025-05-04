@@ -19,25 +19,47 @@ package org.adonix.postrise;
 import java.util.EventListener;
 
 /**
- * Implementations will receive events during the lifecycle of a data source.
+ * Implementations of this interface will receive events during the lifecycle of
+ * a data source.
  * 
  * @see PostriseServer#addListener(DataSourceListener)
  */
 public interface DataSourceListener extends EventListener {
 
     /**
-     * @param settings - the {@link DataSourceSettings} applied when creating a new
-     *                 {@link ConnectionProvider} instance.
+     * Configure the data source the first time a {@link java.sql.Connection
+     * Connection} is requested.
+     * 
+     * @param settings - each new data source will be configured with these
+     *                 {@link DataSourceSettings}.
      */
     default void beforeCreate(DataSourceSettings settings) {
     }
 
+    /**
+     * Subscribers to this event will be notified <b>after</b> a new
+     * {@link DataSourceContext} is created.
+     * 
+     * @param context - the new data source.
+     */
     default void afterCreate(DataSourceContext context) {
     }
 
+    /**
+     * Subscribers to this event will be notified <b>before</b> a
+     * {@link DataSourceContext} is closed.
+     * 
+     * @param context - the data source that is closing.
+     */
     default void beforeClose(DataSourceContext context) {
     }
 
+    /**
+     * Subscribers to this event will be notified <b>after</b> a
+     * {@link DataSourceContext} is closed.
+     * 
+     * @param context - the data source that is closed.
+     */
     default void afterClose(DataSourceContext context) {
     }
 }

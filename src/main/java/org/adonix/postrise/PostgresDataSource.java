@@ -20,10 +20,20 @@ import static org.adonix.postrise.security.RoleSecurityProvider.POSTGRES_DEFAULT
 
 import org.adonix.postrise.security.RoleSecurityListener;
 
+/**
+ * PostgreSQL specific implementation of the PostriseDataSource.
+ */
 public abstract class PostgresDataSource extends PostriseDataSource {
 
     private static final String JDBC_POSTGRES_PREFIX = "jdbc:postgresql://";
 
+    /**
+     * Subclass instances are created by
+     * {@link PostgresServer#createDataSource(String) createDataSource(String)}
+     * 
+     * @param server       - the parent of this data source.
+     * @param databaseName - name of the PostgreSQL database (case-sensitive).
+     */
     protected PostgresDataSource(final Server server, final String databaseName) {
         super(server, databaseName);
         addDataSourceProperty("tcpKeepAlive", "true");

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * Postrise module requirements and exports.
+ */
 module org.adonix.postrise {
 
     requires com.zaxxer.hikari;

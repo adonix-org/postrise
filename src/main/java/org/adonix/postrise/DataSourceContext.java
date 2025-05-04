@@ -19,9 +19,15 @@ package org.adonix.postrise;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Implementation will provide a live data source ready to provide a
+ * {@link Connection}.
+ */
 public interface DataSourceContext extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsRead {
 
     /**
+     * Get a connection from this context.
+     * 
      * @return A {@link Connection} to the data source.
      * @throws SQLException if a database access error occurs.
      */

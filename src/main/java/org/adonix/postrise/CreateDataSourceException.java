@@ -21,8 +21,11 @@ package org.adonix.postrise;
  */
 public final class CreateDataSourceException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
-     * A {@link Server} will throw this exception if unable to create the data source.
+     * A {@link Server} will throw this exception if unable to create the data
+     * source.
      * 
      * @param cause - the exception thrown when creating the data source.
      */

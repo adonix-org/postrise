@@ -22,12 +22,16 @@ package org.adonix.postrise.security;
 public interface RoleSecuritySettings {
 
     /**
+     * Get the {@link RoleSecurityListener} for this implementation.
+     * 
      * @return the active {@link RoleSecurityListener}.
      * @see RoleSecurityProvider
      */
     RoleSecurityListener getRoleSecurity();
 
     /**
+     * Set the {@link RoleSecurityListener} for this implementation.
+     * 
      * @param listener - sets the active {@link RoleSecurityListener}
      * @see RoleSecurityProvider
      */
