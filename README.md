@@ -153,39 +153,95 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 ## :zap: Events
 
-**Postrise** supports listening to data source and server lifecycle events.
+The **Postrise** architecture supports listening to both the data source and server lifecycle.
 
-Two interfaces are provided for data source subscriptions:
+Two interfaces are provided for data source events:
 
 -   [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) - implementations will receive the events for all data sources.
 
--   [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) - implementations will only receive the events for the specified database.
+-   [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) - implementations will only receive data source events for the specified database.
 
 **Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and are automatically subscribed to their own data source events.
 
 :bulb: Additional subscribers can be added to your [`Server`](src/main/java/org/adonix/postrise/Server.java) with the `addListener(DataSourceListener)` and `addListener(DatabaseListener)` methods.
 
+:warning: Adding the same listener twice will generate an **error** in the log but will otherwise be ignored.
+
 Events are dispatched to each [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) in the order they were registered. Your server is always the first listener to receive notifications, followed by any additional [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) instances. If a [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) is present, it will be notified last.
 
 Implement these events as needed (the _default_ implementation is no-op):
 
-| **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                              |
-| ------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception occurs during data source creation, the data source will be closed, and that exception will be thrown. |
-| afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                               |
-| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                  |
-| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                   |
+| **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                                                                                                                                |
+| ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| beforeCreate | [DataSourceSettings](src/main/java/org/adonix/postrise/DataSourceSettings.java) | Subscribe to this event to configure the data source. If an exception occurs during data source creation, the data source will be closed, and that exception will be thrown. <br><br>:bulb: This is the most common event to be implemented as it configures each data source. |
+| afterCreate  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source has been created successfully.                                                                                                                                                                                                                                 |
+| beforeClose  | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closing.                                                                                                                                                                                                                                                    |
+| afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                                                                                                                     |
 
 ##
 
+#### Example:
+
+`MyDatabaseListener.java`
+
+```java
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.DatabaseListener;
+
+/**
+ * MyDatabaseListener will only receive events for the data source with the
+ * specified database name.
+ */
+public class MyDatabaseListener implements DatabaseListener {
+
+    @Override
+    public String getDatabaseName() {
+        return "my_database";
+    }
+
+    @Override
+    public void beforeCreate(final DataSourceSettings settings) {
+        settings.setUsername("my_login_user");
+    }
+}
+```
+
+`MyPostgresServer.java`
+
+```java
+import org.adonix.postrise.DataSourceSettings;
+import org.adonix.postrise.PostgresServer;
+
+public class MyPostgresServer extends PostgresServer {
+
+    public MyPostgresServer() {
+        /**
+         * Register MyDatabaseListener with MyPostgresServer.
+         */
+        addListener(new MyDatabaseListener());
+    }
+
+    /**
+     * This event will be dispatched for all data sources. Then if the database name
+     * matches MyDatabaseListener, beforeCreate will be called on that listener.
+     */
+    @Override
+    public void beforeCreate(final DataSourceSettings settings) {
+        settings.setMaxPoolSize(15);
+    }
+}
+```
+
 ##
 
-Finally, the server also has events that may be useful:
+Lastly, there are server-level events that may be useful. Override these methods in your server as needed:
 
--   onInit
--   beforeClose
--   afterClose
--   onException
+| **Event**   | **Parameter** | **Description**                                                                                                                                                            |
+| ----------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onInit      |               | Called during your server construction.                                                                                                                                    |
+| beforeClose |               | Your server is closing. Dispatched **before** any data sources are closed.                                                                                                 |
+| afterClose  |               | Your server is now closed. Dispatched **after** all data sources are closed.                                                                                               |
+| onException | Exception     | An unexpected `Exception` has occurred, and could not be thrown. For example during server close. <br><br>:bulb: By default, the exception will be logged as an **error**. |
 
 <br>
 
