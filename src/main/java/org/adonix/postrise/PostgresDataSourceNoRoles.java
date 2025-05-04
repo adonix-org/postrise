@@ -39,6 +39,6 @@ public final class PostgresDataSourceNoRoles extends PostgresDataSource {
 
     @Override
     public Connection getConnection(final String roleName) {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support roles");
+        throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support roles");
     }
 }
