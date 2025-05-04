@@ -153,11 +153,21 @@ try (final Connection connection = server.getConnection("my_database", "my_appli
 
 ## :zap: Events
 
-**Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and are able to receive all data source events. Override these methods on your server to subscribe to these events.
+**Postrise** supports listening to data source and server lifecycle events.
 
-:bulb: Additional subscribers can be added to your server with the `addListener(DataSourceListener)` method.
+Two interfaces are provided for data source subscriptions:
 
-Events will be dispatched to subscribers in the order they have been added to the server. The first subscriber notified will be your server. Override these methods in your server to subscribe to these events:
+-   [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) - implementations will receive the events for all data sources.
+
+-   [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) - implementations will only receive the events for the specified database.
+
+**Postrise** servers implement the [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) interface and are automatically subscribed to their own data source events.
+
+:bulb: Additional subscribers can be added to your [`Server`](src/main/java/org/adonix/postrise/Server.java) with the `addListener(DataSourceListener)` and `addListener(DatabaseListener)` methods.
+
+Events are dispatched to each [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) in the order they were registered. Your server is always the first listener to receive notifications, followed by any additional [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) instances. If a [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) is present, it will be notified last.
+
+Implement these events as needed (the _default_ implementation is no-op):
 
 | **Event**    | **Parameter**                                                                   | **Description**                                                                                                                                                              |
 | ------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -167,8 +177,6 @@ Events will be dispatched to subscribers in the order they have been added to th
 | afterClose   | [DataSourceContext](src/main/java/org/adonix/postrise/DataSourceContext.java)   | The data source is closed.                                                                                                                                                   |
 
 ##
-
-It may also be useful to subscribe to events for a specific database. In that case, implement the [`DatabaseListener`](src/main/java/org/adonix/postrise/DatabaseListener.java) interface and add that object to the server with `addListener(DatabaseListener)`. Events to that object will be dispatched _after_ all [`DataSourceListener`](src/main/java/org/adonix/postrise/DataSourceListener.java) subscribers have been notified.
 
 ##
 
