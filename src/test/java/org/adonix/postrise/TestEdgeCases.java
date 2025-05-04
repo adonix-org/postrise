@@ -113,6 +113,8 @@ class TestEdgeCases {
             });
         }
         assertThat(LOG_CAPTOR.getErrorLogs())
+                .contains("OnExceptionServer: java.lang.RuntimeException: Throw from runCatch()");
+        assertThat(LOG_CAPTOR.getErrorLogs())
                 .contains("OnExceptionServer: java.lang.RuntimeException: Do not throw exceptions from here");
     }
 

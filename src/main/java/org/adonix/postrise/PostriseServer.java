@@ -212,8 +212,8 @@ abstract class PostriseServer implements DataSourceListener, Server {
             action.run();
         } catch (final Exception e) {
             try {
-                onException(e);
                 LOGGER.error("{}: {}", this, e);
+                onException(e);
             } catch (final Exception ex) {
                 LOGGER.error("{}: {}", this, ex);
             }
