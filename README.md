@@ -180,7 +180,7 @@ Implement these events as needed (the _default_ implementation is no-op):
 
 ##
 
-#### Example:
+#### Example
 
 `MyDatabaseListener.java`
 
@@ -234,14 +234,16 @@ public class MyPostgresServer extends PostgresServer {
 
 ##
 
-Lastly, there are server-level events that may be useful. Override these methods in your server as needed:
+#### Server Events
+
+Lastly, there are server-level events that may be useful. Override these methods in your server as needed (the default implementation is no-op):
 
 | **Event**   | **Parameter** | **Description**                                                                                                                                                |
 | ----------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | onInit      |               | Called during your server construction.                                                                                                                        |
 | beforeClose |               | Your server is closing. Dispatched **before** any data sources are closed.                                                                                     |
 | afterClose  |               | Your server is now closed. Dispatched **after** all data sources are closed.                                                                                   |
-| onException | Exception     | An unexpected `Exception` has occurred that could not be thrown. For example during server close. <br><br>:bulb: The exception will be logged as an **error**. |
+| onException | Exception     | An unexpected `Exception` has occurred that should not be thrown, for example during server close. <br><br>:bulb: The exception will be logged as an **error**. |
 
 <br>
 
