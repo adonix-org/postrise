@@ -41,7 +41,7 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
 
     PostriseServer() {
 
-        // This server will be notified first of all data source events.
+        // This server will be notified first of all data source subscribers.
         addListener(this);
 
         LOGGER.info("{}: initializing server", this);
