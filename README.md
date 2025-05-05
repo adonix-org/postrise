@@ -238,12 +238,12 @@ public class MyPostgresServer extends PostgresServer {
 
 Lastly, there are server-level events that may be useful. Override these methods in your server as needed (the default implementation is no-op):
 
-| **Event**   | **Parameter** | **Description**                                                                                                                                                |
-| ----------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| onInit      |               | Called during your server construction.                                                                                                                        |
-| beforeClose |               | Your server is closing. Dispatched **before** any data sources are closed.                                                                                     |
-| afterClose  |               | Your server is now closed. Dispatched **after** all data sources are closed.                                                                                   |
-| onException | Exception     | An unexpected `Exception` has occurred that should not be thrown, for example during server close. <br><br>:bulb: The exception will be logged as an **error**. |
+| **Event**   | **Parameter** | **Description**                                                                                                                                                                                                         |
+| ----------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onInit      |               | Called during your server construction.                                                                                                                                                                                 |
+| beforeClose |               | Your server is closing. Dispatched **before** any data sources are closed.                                                                                                                                              |
+| afterClose  |               | Your server is now closed. Dispatched **after** all data sources are closed.                                                                                                                                            |
+| onException | Exception     | An unexpected `Exception` has occurred that should not normally be thrown — for example, while the server or data sources are in the process of closing. <br><br>:bulb: The exception will be logged as an **error**. |
 
 <br>
 
