@@ -16,10 +16,12 @@
 
 package org.adonix.postrise;
 
+import java.util.EventListener;
+
 /**
  * {@link Server} implementations can override these events as required.
  */
-interface ServerEvents {
+interface ServerEvents extends EventListener {
 
     /**
      * Event will be dispatched during {@link Server} construction.
