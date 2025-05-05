@@ -35,7 +35,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The base implementation of the {@link Server} interface.
  */
-abstract class PostriseServer implements DataSourceListener, Server, ServerEvents {
+abstract class PostriseServer implements DataSourceListener, Server, ServerListener {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 

@@ -21,7 +21,7 @@ import java.util.EventListener;
 /**
  * {@link Server} implementations can override these events as required.
  */
-interface ServerEvents extends EventListener {
+interface ServerListener extends EventListener {
 
     /**
      * Event will be dispatched during {@link Server} construction.

@@ -236,7 +236,7 @@ public class MyPostgresServer extends PostgresServer {
 
 #### Server Events
 
-Lastly, there are [server-level](src/main/java/org/adonix/postrise/ServerEvents.java) events that may be useful. Override these methods in your server as needed (the default implementation is no-op):
+Lastly, there are [server-level](src/main/java/org/adonix/postrise/ServerListener.java) events that may be useful. Override these methods in your server as needed (the default implementation is no-op):
 
 | **Event**   | **Parameter** | **Description**                                                                                                                                                                                                        |
 | ----------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
