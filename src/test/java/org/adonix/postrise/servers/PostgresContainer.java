@@ -55,7 +55,7 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    public void onInit() {
+    protected void onInit() {
         super.onInit();
         container = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
         container
@@ -75,7 +75,7 @@ public abstract class PostgresContainer extends PostgresServer {
     }
 
     @Override
-    public void afterClose() {
+    protected void afterClose() {
         super.afterClose();
         stopContainer();
     }
