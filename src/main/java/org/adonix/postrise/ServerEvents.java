@@ -43,8 +43,8 @@ interface ServerEvents extends EventListener {
 
     /**
      * Event will be dispatched when an exception occurs that should not be thrown.
-     * 
-     * @param e - the exception captured.
+     *
+     * @param e - the exception that was captured.
      */
     default void onException(final Exception e) {
     }
