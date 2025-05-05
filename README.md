@@ -386,7 +386,7 @@ Create a working directory for the **Postrise** project and use the command line
 git clone https://github.com/adonix-org/Postrise.git
 ```
 
-Next use that same command-line to switch to the **Postrise** folder.
+Next use that same command-line to switch to the **Postrise** folder:
 
 ```bash
 cd Postrise
