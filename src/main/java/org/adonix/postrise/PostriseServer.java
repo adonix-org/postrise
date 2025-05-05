@@ -322,7 +322,7 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
     }
 
     // --------------------------------------------------------------------------
-    // CLOSE - Clean shutdown of the server and data sources.
+    // CLOSE - Clean shutdown of the server and all data sources.
     // --------------------------------------------------------------------------
 
     @Override
