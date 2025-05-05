@@ -98,7 +98,7 @@ class TestEdgeCases {
         try (final PostgresServer server = new PostgresServer() {
 
             @Override
-            protected void onException(final Exception e) {
+            public void onException(final Exception e) {
                 super.onException(e);
                 throw new RuntimeException("Do not throw exceptions from here");
             }

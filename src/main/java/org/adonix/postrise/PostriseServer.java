@@ -35,7 +35,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The base implementation of the {@link Server} interface.
  */
-abstract class PostriseServer implements DataSourceListener, Server {
+abstract class PostriseServer implements DataSourceListener, Server, ServerEvents {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
@@ -318,37 +318,6 @@ abstract class PostriseServer implements DataSourceListener, Server {
     private void onAfterClose(final DataSourceContext context) {
         doEvent(context, listener -> listener.afterClose(context));
         LOGGER.info("{}: {} closed", this, context);
-    }
-
-    // --------------------------------------------------------------------------
-    // SERVER EVENTS - Server events which can be overridden.
-    // --------------------------------------------------------------------------
-
-    /**
-     * Event will be dispatched during {@link Server} construction.
-     */
-    protected void onInit() {
-    }
-
-    /**
-     * Event will be dispatched before the {@link Server} closes.
-     */
-    protected void beforeClose() {
-    }
-
-    /**
-     * Event will be dispatched after the {@link Server} closes.
-     */
-    protected void afterClose() {
-    }
-
-    /**
-     * Event will be dispatched by exceptions thrown during
-     * {@link PostriseServer#runCatch(ActionThrows) runCatch()}.
-     * 
-     * @param e - the exception thrown.
-     */
-    protected void onException(final Exception e) {
     }
 
     // --------------------------------------------------------------------------

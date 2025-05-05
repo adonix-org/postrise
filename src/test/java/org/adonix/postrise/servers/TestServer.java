@@ -19,14 +19,12 @@ package org.adonix.postrise.servers;
 public class TestServer extends PostgresContainer {
 
     @Override
-    protected void beforeClose() {
-        super.beforeClose();
+    public void beforeClose() {
         logStatus();
     }
 
     @Override
-    protected void afterClose() {
-        super.afterClose();
+    public void afterClose() {
         logStatus();
     }
 }
