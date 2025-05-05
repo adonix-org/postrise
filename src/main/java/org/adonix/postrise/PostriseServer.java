@@ -322,7 +322,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     /**
-     * Event will be dispatched during object construction.
+     * Event will be dispatched during {@link Server} construction.
      */
     protected void onInit() {
     }
