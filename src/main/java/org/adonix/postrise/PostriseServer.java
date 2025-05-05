@@ -188,7 +188,7 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
     }
 
     // --------------------------------------------------------------------------
-    // HELPERS - Utility functions.
+    // UTILITY - Helper functions.
     // --------------------------------------------------------------------------
 
     /**
@@ -232,6 +232,11 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
 
     private static final String getKey(final DatabaseListener listener) {
         return getKey(listener.getDatabaseName());
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
     }
 
     // --------------------------------------------------------------------------
@@ -353,10 +358,5 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
         } finally {
             writeState.unlock();
         }
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
     }
 }
