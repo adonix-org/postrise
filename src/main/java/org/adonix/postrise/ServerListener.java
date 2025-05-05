@@ -46,6 +46,6 @@ interface ServerListener extends EventListener {
      *
      * @param e - the exception that was captured.
      */
-    default void onException(final Exception e) {
+    default void onException(Exception e) {
     }
 }
