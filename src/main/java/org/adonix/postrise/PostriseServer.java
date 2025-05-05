@@ -87,6 +87,9 @@ abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     /**
+     * Create the data source for the specific database on-demand. On exception,
+     * the data source will be closed if it was opened, and the thrown exception
+     * will be wrapped by a {@link CreateDataSourceException}
      * 
      * @param databaseName - the name of the database for creating the
      *                     {@link ConnectionProvider}.
