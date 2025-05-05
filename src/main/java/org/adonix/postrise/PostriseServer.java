@@ -381,6 +381,6 @@ abstract class PostriseServer implements DataSourceListener, Server {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 }
