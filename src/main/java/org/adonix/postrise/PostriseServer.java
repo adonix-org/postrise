@@ -295,6 +295,8 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
      * @param settings
      */
     private void onBeforeCreate(final DataSourceSettings settings) {
+        LOGGER.info("{}: creating data source: {}...", this, settings);
+
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(settings);
         }
@@ -302,12 +304,11 @@ abstract class PostriseServer implements DataSourceListener, Server, ServerEvent
         if (listener != null) {
             listener.beforeCreate(settings);
         }
-        LOGGER.info("{}: creating data source: {}...", this, settings);
     }
 
     private void onAfterCreate(final DataSourceContext context) {
-        doEvent(context, listener -> listener.afterCreate(context));
         LOGGER.info("{}: data source created: {}", this, context);
+        doEvent(context, listener -> listener.afterCreate(context));
     }
 
     private void onBeforeClose(final DataSourceContext context) {
