@@ -24,7 +24,7 @@ import java.util.EventListener;
 interface ServerEvents extends EventListener {
 
     /**
-     * Event will be dispatched during {@link Server} construction.
+     * Event will be dispatched during the {@link Server} construction.
      */
     default void onInit() {
     }
