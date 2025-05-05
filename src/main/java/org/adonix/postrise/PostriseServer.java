@@ -33,15 +33,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A base implementation of the {@link Server} interface.
+ * The base implementation of the {@link Server} interface.
  */
 abstract class PostriseServer implements DataSourceListener, Server {
 
     private static final Logger LOGGER = LogManager.getLogger(PostriseServer.class);
 
     PostriseServer() {
+
+        // This server will be notified first of all data source events.
         addListener(this);
-        LOGGER.info("{}: server initialize", this);
+
+        LOGGER.info("{}: initializing server", this);
         onInit();
     }
 
@@ -148,7 +151,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
     }
 
     // --------------------------------------------------------------------------
-    // SERVER STATE - Thread-safe management of the Server state.
+    // SERVER STATE - Thread-safe management of this server state.
     // --------------------------------------------------------------------------
 
     /**
