@@ -40,10 +40,9 @@ interface ServerEvents {
     }
 
     /**
-     * Event will be dispatched by exceptions thrown during
-     * {@link PostriseServer#runCatch(ActionThrows) runCatch()}.
+     * Event will be dispatched when an exception occurs that should not be thrown.
      * 
-     * @param e - the exception thrown.
+     * @param e - the exception captured.
      */
     default void onException(final Exception e) {
     }
