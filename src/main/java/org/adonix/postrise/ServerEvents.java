@@ -24,19 +24,19 @@ import java.util.EventListener;
 interface ServerEvents extends EventListener {
 
     /**
-     * Event will be dispatched during the {@link Server} construction.
+     * Event will be dispatched during {@link Server} construction.
      */
     default void onInit() {
     }
 
     /**
-     * Event will be dispatched before the {@link Server} closes.
+     * Event will be dispatched <b>before</b> the {@link Server} closes.
      */
     default void beforeClose() {
     }
 
     /**
-     * Event will be dispatched after the {@link Server} closes.
+     * Event will be dispatched <b>after</b> the {@link Server} closes.
      */
     default void afterClose() {
     }
