@@ -368,10 +368,12 @@ abstract class PostriseServer implements DataSourceListener, Server {
                 LOGGER.warn("{}: extra close request ignored", this);
                 return;
             }
+
+            runCatch(this::beforeClose);
+
             state = ServerState.CLOSING;
             LOGGER.info("{}: server closing...", this);
 
-            runCatch(this::beforeClose);
             for (final ConnectionProvider provider : databasePools.values()) {
                 onBeforeClose(provider);
                 runCatch(provider::close);
