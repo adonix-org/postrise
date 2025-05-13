@@ -7,7 +7,7 @@
 
     <groupId>org.adonix</groupId>
     <artifactId>postrise</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Postrise</name>
