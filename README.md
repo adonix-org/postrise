@@ -29,6 +29,8 @@ Get connected *FAST* with **Postrise**, a thread-safe Java library enabling d
 
 [Build](#hammer_and_wrench-build)
 
+[Changelog](CHANGELOG.md)
+
 <br>
 
 ## :package: Install

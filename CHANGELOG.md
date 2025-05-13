@@ -13,16 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.2] - 2025-05-12
 
+### Added
+
+-   Changelog.
+
 ### Fixed
 
--   Dispatch the server beforeClose event prior to changing the server state to CLOSING.
+-   Dispatch the server beforeClose event **prior** to updating the server state to CLOSING.
 
 ## [1.0.1] - 2025-05-05
 
 ### Added
 
--   Completed [Javadoc](https://javadoc.io/doc/org.adonix/postrise).
--   Populated existing [README.md](README.md) with full project documentation.
+-   [Javadoc](https://javadoc.io/doc/org.adonix/postrise) inline comments.
+-   Populated [README.md](README.md) with full project documentation.
 
 ## [1.0.0] - 2025-03-12
 
