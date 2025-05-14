@@ -35,6 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Initial release with [PostgreSQL](https://www.postgresql.org) support.
 -   Role and permissions management.
 -   Delegation to [HikariCP](https://github.com/brettwooldridge/HikariCP) connection pooling.
--   Datasource and Database events.
+-   DataSource and Database events.
 -   Thread-safe server state management.
 -   [JUnit5](https://junit.org/junit5/) tests.
