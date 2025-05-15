@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+-   Log data source creation after all beforeCreate events.
+
 ## [1.0.2] - 2025-05-12
 
 ### Added

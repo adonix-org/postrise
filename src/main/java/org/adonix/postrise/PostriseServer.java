@@ -110,6 +110,8 @@ abstract class PostriseServer implements DataSourceListener, Server {
             throw new CreateDataSourceException(e);
         }
 
+        LOGGER.info("{}: creating data source: {}...", this, provider);
+
         // Create the first connection to validate settings, initialize the connection
         // pool, and send events to all listeners including "this".
         try (final Connection connection = provider.getConnection()) {
@@ -300,8 +302,6 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * @param settings
      */
     private void onBeforeCreate(final DataSourceSettings settings) {
-        LOGGER.info("{}: creating data source: {}...", this, settings);
-
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(settings);
         }
