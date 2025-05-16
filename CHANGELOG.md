@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--   Log data source creation after all beforeCreate events.
+-   Log data source creation **after** all the `beforeCreate` events have been dispatched.
 
 ## [1.0.2] - 2025-05-12
 
@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--   Dispatch the server beforeClose event **prior** to updating the server state to CLOSING.
+-   Dispatch the server `beforeClose` event **prior** to updating the server state to `CLOSING`.
 
 ## [1.0.1] - 2025-05-05
 
