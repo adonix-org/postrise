@@ -406,3 +406,9 @@ Or use this Maven command to build, test, and install **Postrise**:
 ```bash
 mvn clean install
 ```
+
+<br>
+
+## :memo: Changelog
+
+All notable changes to **Postrise** will be documented in [here](CHANGELOG.md).
