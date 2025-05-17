@@ -1,6 +1,6 @@
 [![JDK 11+](img/badge-jdk.svg)](https://www.oracle.com/java/technologies/downloads/)
 [![Apache 2.0 License](img/badge-license.svg)](https://github.com/adonix-org/postrise/blob/main/LICENSE)
-[![Javadoc](https://javadoc.io/badge2/org.adonix/postrise/Javadoc.svg?color=blue)](https://javadoc.io/doc/org.adonix/postrise)
+[![Javadoc](img/javadoc.svg)](https://javadoc.io/doc/org.adonix/postrise)
 [![Build](https://github.com/adonix-org/postrise/actions/workflows/build.yml/badge.svg)](https://github.com/adonix-org/postrise/actions/workflows/build.yml)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=alert_status)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
