@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Implementation will provide a live data source ready to provide a
+ * Implementations will provide a live data source ready to provide a
  * {@link Connection}.
  */
 public interface DataSourceContext extends ConnectionPoolSettings, ConnectionPoolStatus, ConnectionSettingsRead {
