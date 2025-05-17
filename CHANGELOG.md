@@ -11,6 +11,8 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.3] - 2025-05-17
+
 -   Only log the data source creation **after** all the `beforeCreate` events have been dispatched.
 
 ## [1.0.2] - 2025-05-12
