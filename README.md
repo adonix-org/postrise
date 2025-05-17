@@ -411,4 +411,4 @@ mvn clean install
 
 ## :memo: Changelog
 
-All notable changes to **Postrise** will be documented in [here](CHANGELOG.md).
+All notable changes to **Postrise** will be documented [here](CHANGELOG.md).
