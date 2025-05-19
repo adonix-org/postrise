@@ -1,6 +1,6 @@
-[![JDK 11+](img/badge-jdk.svg)](https://www.oracle.com/java/technologies/downloads/)
-[![Apache 2.0 License](img/badge-license.svg)](https://github.com/adonix-org/postrise/blob/main/LICENSE)
-[![Javadoc](img/badge-javadoc.svg)](https://javadoc.io/doc/org.adonix/postrise)
+[![JDK 11+](/img/badge-jdk.svg)](https://www.oracle.com/java/technologies/downloads/)
+[![Apache 2.0 License](/img/badge-license.svg)](https://github.com/adonix-org/postrise/blob/main/LICENSE)
+[![Javadoc](/img/badge-javadoc.svg)](https://javadoc.io/doc/org.adonix/postrise)
 [![Build](https://github.com/adonix-org/postrise/actions/workflows/build.yml/badge.svg)](https://github.com/adonix-org/postrise/actions/workflows/build.yml)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=alert_status)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=org.adonix%3Apostrise&metric=security_rating)](https://sonarcloud.io/summary/overall?id=org.adonix%3Apostrise)
@@ -15,7 +15,7 @@
 
 Get connected *FAST* with **Postrise**, a thread-safe Java library enabling developers to acquire pooled JDBC connections from [PostgreSQL](https://www.postgresql.org). **Postrise** provides a simple, object-oriented solution for configuring data sources while encouraging safe database access. The event-based architecture enables subscriptions to the data source lifecycle. Connection pooling is provided by the exceptional [HikariCP](https://github.com/brettwooldridge/HikariCP) implementation.
 
-![Code](img/code.png)
+![Code](/img/code.png)
 
 ## :books: Contents
 
