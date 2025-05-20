@@ -278,7 +278,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
     // SEND EVENTS - Send data source events to listeners including "this".
     // --------------------------------------------------------------------------
 
-    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
+    private synchronized void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
         for (final DataSourceListener listener : dataSourceListeners) {
             runCatch(() -> event.accept(listener));
         }
@@ -294,7 +294,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param settings
      */
-    private void onBeforeCreate(final DataSourceSettings settings) {
+    private synchronized void onBeforeCreate(final DataSourceSettings settings) {
         for (final DataSourceListener listener : dataSourceListeners) {
             listener.beforeCreate(settings);
         }
