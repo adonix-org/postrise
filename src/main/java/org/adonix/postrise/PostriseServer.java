@@ -279,7 +279,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
     // --------------------------------------------------------------------------
 
     private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
-        // The set requires manual syncronization on iteration.
+        // The set requires manual synchronization on iteration.
         synchronized (dataSourceListeners) {
             for (final DataSourceListener listener : dataSourceListeners) {
                 runCatch(() -> event.accept(listener));
@@ -298,7 +298,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * @param settings
      */
     private void onBeforeCreate(final DataSourceSettings settings) {
-        // The set requires manual syncronization on iteration.
+        // The set requires manual synchronization on iteration.
         synchronized (dataSourceListeners) {
             for (final DataSourceListener listener : dataSourceListeners) {
                 listener.beforeCreate(settings);
