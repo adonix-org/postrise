@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 import org.apache.logging.log4j.LogManager;
@@ -277,21 +278,13 @@ abstract class PostriseServer implements DataSourceListener, Server {
     // SEND EVENTS - Send data source events to listeners including "this".
     // --------------------------------------------------------------------------
 
-    /**
-     * Send an event to a {@link DataSourceListener}.
-     */
-    @FunctionalInterface
-    private interface DataSourceEvent {
-        void sendTo(DataSourceListener listener);
-    }
-
-    private void doEvent(final DataSourceContext context, final DataSourceEvent event) {
+    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
         for (final DataSourceListener listener : dataSourceListeners) {
-            runCatch(() -> event.sendTo(listener));
+            runCatch(() -> event.accept(listener));
         }
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
-            runCatch(() -> event.sendTo(listener));
+            runCatch(() -> event.accept(listener));
         }
     }
 
