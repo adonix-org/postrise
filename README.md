@@ -41,7 +41,7 @@ Add the following to your `pom.xml`:
 
 ```xml
 <properties>
-    <version.postrise>1.0.3</version.postrise>
+    <version.postrise>1.0.4</version.postrise>
 </properties>
 
 <dependency>

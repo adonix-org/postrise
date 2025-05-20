@@ -11,7 +11,7 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-## [1.0.4] - 2025-05-??
+## [1.0.4] - 2025-05-20
 
 ### Fixed
 
