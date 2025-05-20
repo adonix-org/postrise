@@ -11,7 +11,11 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--   The dataSourceListeners synchronized set is not thread-safe on iteration and requires manual synchronization
+## [1.0.4] - 2025-05-??
+
+### Fixed
+
+-   The dataSourceListeners synchronized set is not thread-safe during iteration and requires manual synchronization
 
 ## [1.0.3] - 2025-05-17
 
