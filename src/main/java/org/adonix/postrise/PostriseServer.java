@@ -278,9 +278,12 @@ abstract class PostriseServer implements DataSourceListener, Server {
     // SEND EVENTS - Send data source events to listeners including "this".
     // --------------------------------------------------------------------------
 
-    private synchronized void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            runCatch(() -> event.accept(listener));
+    private void doEvent(final DataSourceContext context, final Consumer<DataSourceListener> event) {
+        // The set requires manual syncronization on iteration.
+        synchronized (dataSourceListeners) {
+            for (final DataSourceListener listener : dataSourceListeners) {
+                runCatch(() -> event.accept(listener));
+            }
         }
         final DatabaseListener listener = databaseListeners.get(context.getDatabaseName());
         if (listener != null) {
@@ -294,9 +297,12 @@ abstract class PostriseServer implements DataSourceListener, Server {
      * 
      * @param settings
      */
-    private synchronized void onBeforeCreate(final DataSourceSettings settings) {
-        for (final DataSourceListener listener : dataSourceListeners) {
-            listener.beforeCreate(settings);
+    private void onBeforeCreate(final DataSourceSettings settings) {
+        // The set requires manual syncronization on iteration.
+        synchronized (dataSourceListeners) {
+            for (final DataSourceListener listener : dataSourceListeners) {
+                listener.beforeCreate(settings);
+            }
         }
         final DatabaseListener listener = databaseListeners.get(settings.getDatabaseName());
         if (listener != null) {
