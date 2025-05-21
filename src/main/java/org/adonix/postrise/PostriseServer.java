@@ -378,6 +378,7 @@ abstract class PostriseServer implements DataSourceListener, Server {
                 runCatch(provider::close);
                 onAfterClose(provider);
             }
+
             runCatch(dataSourceListeners::clear);
             runCatch(databaseListeners::clear);
             runCatch(databasePools::clear);
