@@ -11,6 +11,8 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+-   Clear DataSource listeners on server close.
+
 ## [1.0.4] - 2025-05-20
 
 ### Fixed
