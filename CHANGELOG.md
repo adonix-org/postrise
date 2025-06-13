@@ -9,6 +9,12 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Changed
+
+-   Updated dependencies via Dependabot:
+    -   org.junit.jupiter:junit-jupiter-engine from 5.13.0 to 5.13.1
+    -   org.junit.jupiter:junit-jupiter-params from 5.13.0 to 5.13.1
+
 ## [1.0.5] - 2025-06-02
 
 ### Changed
