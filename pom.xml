@@ -54,7 +54,7 @@
         <!--    dependency versions    -->
         <version.hikaricp>6.3.0</version.hikaricp>
         <version.log4j2>2.24.3</version.log4j2>
-        <version.postgresql.jdbc>42.7.6</version.postgresql.jdbc>
+        <version.postgresql.jdbc>42.7.7</version.postgresql.jdbc>
 
         <!--    test dependency versions    -->
         <version.assertj>3.27.3</version.assertj>
