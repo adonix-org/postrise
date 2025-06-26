@@ -5,6 +5,15 @@ All notable changes to **Postrise** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+-   Updated dependencies via Dependabot:
+    -   org.apache.logging.log4j:log4j-api from 2.24.3 to 2.25.0
+    -   org.testcontainers:postgresql from 1.21.1 to 1.21.2
+    -   org.sonatype.central:central-publishing-maven-plugin from 0.7.0 to 0.8.0
+
 ## [1.0.6] - 2025-06-12
 
 ### Changed
