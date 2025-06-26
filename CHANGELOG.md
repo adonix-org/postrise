@@ -19,7 +19,6 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   org.postgresql:postgresql from 42.7.6 to 42.7.7
-
 -   Updated dependencies via Dependabot:
     -   org.junit.jupiter:junit-jupiter-engine from 5.13.0 to 5.13.1
     -   org.junit.jupiter:junit-jupiter-params from 5.13.0 to 5.13.1
