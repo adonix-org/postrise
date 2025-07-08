@@ -11,8 +11,9 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Updated dependencies via Dependabot:
     -   org.apache.logging.log4j:log4j-api from 2.24.3 to 2.25.0
-    -   org.junit.jupiter:junit-jupiter-engine from 5.13.1 to 5.13.2
-    -   org.junit.jupiter:junit-jupiter-params from 5.13.1 to 5.13.2
+    -   org.apache.maven.plugins:maven-gpg-plugin from 3.2.7 to 3.2.8
+    -   org.junit.jupiter:junit-jupiter-engine from 5.13.1 to 5.13.3
+    -   org.junit.jupiter:junit-jupiter-params from 5.13.1 to 5.13.3
     -   org.sonatype.central:central-publishing-maven-plugin from 0.7.0 to 0.8.0
     -   org.testcontainers:postgresql from 1.21.1 to 1.21.3
 
