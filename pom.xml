@@ -52,14 +52,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--    dependency versions    -->
-        <version.hikaricp>6.3.0</version.hikaricp>
+        <version.hikaricp>7.0.1</version.hikaricp>
         <version.log4j2>2.25.1</version.log4j2>
         <version.postgresql.jdbc>42.7.7</version.postgresql.jdbc>
 
         <!--    test dependency versions    -->
-        <version.assertj>3.27.3</version.assertj>
-        <version.junit>5.13.3</version.junit>
-        <version.logcaptor>2.11.0</version.logcaptor>
+        <version.assertj>3.27.4</version.assertj>
+        <version.junit>5.13.4</version.junit>
+        <version.logcaptor>2.12.0</version.logcaptor>
         <version.slf4j>2.0.17</version.slf4j>
         <version.testcontainers>1.21.3</version.testcontainers>
 
