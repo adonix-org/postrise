@@ -9,6 +9,10 @@ and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+-   Updated dependencies via Dependabot:
+    -   com.zaxxer:HikariCP from 7.0.1 to 7.0.2
+    -   org.apache.maven.plugins:maven-javadoc-plugin from 3.11.2 to 3.11.3
+
 ## [1.0.7] - 2025-08-13
 
 ### Changed
