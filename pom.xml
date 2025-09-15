@@ -59,7 +59,7 @@
         <!--    test dependency versions    -->
         <version.assertj>3.27.4</version.assertj>
         <version.junit>5.13.4</version.junit>
-        <version.logcaptor>2.12.0</version.logcaptor>
+        <version.logcaptor>2.12.1</version.logcaptor>
         <version.slf4j>2.0.17</version.slf4j>
         <version.testcontainers>1.21.3</version.testcontainers>
 
