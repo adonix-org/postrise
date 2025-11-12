@@ -5,6 +5,23 @@ All notable changes to **Postrise** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and **Postrise** adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.9] - 2025-11-12
+
+### Changed
+
+-   Updated dependencies via Dependabot:
+    -   io.github.hakky54:logcaptor from 2.12.0 to 2.12.1
+    -   org.apache.logging.log4j:log4j-api from 2.25.1 to 2.25.2
+    -   org.apache.maven.plugins:maven-compiler-plugin from 3.14.0 to 3.14.1
+    -   org.apache.maven.plugins:maven-javadoc-plugin from 3.11.3 to 3.12.0
+    -   org.assertj:assertj-core from 3.27.4 to 3.27.6
+    -   org.jacoco:jacoco-maven-plugin from 0.8.13 to 0.8.14
+    -   org.junit.jupiter:junit-jupiter-engine from 5.13.4 to 6.0.1
+    -   org.junit.jupiter:junit-jupiter-params from 5.13.4 to 6.0.1
+    -   org.postgresql:postgresql from 42.7.7 to 42.7.8
+    -   org.sonarsource.scanner.maven:sonar-maven-plugin from 5.2.0.4988 to 5.3.0.6276
+    -   org.sonatype.central:central-publishing-maven-plugin from 0.8.0 to 0.9.0
+
 ## [1.0.8] - 2025-08-29
 
 ### Changed
