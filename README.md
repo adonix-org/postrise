@@ -1,4 +1,4 @@
-[![JDK 11+](https://badges.adonix.org/JDK/11+)](https://www.oracle.com/java/technologies/downloads/)
+[![JDK 11+](https://badges.adonix.org/JDK/11%2B)](https://www.oracle.com/java/technologies/downloads/)
 [![Apache 2.0 License](https://badges.adonix.org/License/Apache%202.0)](https://github.com/adonix-org/postrise/blob/main/LICENSE)
 [![Javadoc](https://badges.adonix.org/Javadoc/1.0.9)](https://javadoc.io/doc/org.adonix/postrise)
 [![Build](https://github.com/adonix-org/postrise/actions/workflows/build.yml/badge.svg)](https://github.com/adonix-org/postrise/actions/workflows/build.yml)
